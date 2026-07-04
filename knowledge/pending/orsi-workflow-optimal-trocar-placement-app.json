@@ -1,0 +1,109 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-optimal-trocar-placement-app",
+  "incompatible_when": [],
+  "procedure": [
+    "- V1 is manual-parameter only: simplified 2D abdominal-wall geometry plus depth correction.",
+    "- Do not add CT upload, DICOM parsing, segmentation, image registration, navigation, or patient-specific operative guidance unless the user explicitly starts a future imaging-input scope.",
+    "- Keep future CT readiness as clean model boundaries only: imaging adapters may later populate `PatientConfig`, `GeometryConfig`, and procedure target data, but the v1 UI and core geometry remain manual.",
+    "- Keep the educational disclaimer visible in the app and README.",
+    "- Static PNG/SVG export is optional; do not make `kaleido` a required dependency unless the user accepts the extra requirement.",
+    "1. Work from `Optimal_Trocar_Placement/trocar_model/`.",
+    "2. Keep Streamlit UI code in `main.py`; keep mathematical logic in `functions/geometry.py`, procedure presets in `functions/procedures.py`, scoring in `functions/scoring.py`, models in `functions/models.py`, visualization in `functions/visu",
+    "3. Preserve `input_source=\"manual_geometric_model\"` in config/layout models and exports.",
+    "4. For new procedure presets, add schematic target points, optional ports, target-field overlays, and warnings without creating operative instructions.",
+    "5. Keep exports limited to coordinate CSV, JSON config/layout data, interactive Plotly HTML, and optional static Plotly image export when available.",
+    "6. When dependencies change, update `Optimal_Trocar_Placement/trocar_model/requirements.txt`, `README.md`, `AGENTS.md`, and this skill.",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Optimal_Trocar_Placement\\trocar_model\\requirements.txt`",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Optimal_Trocar_Placement\\trocar_model -q`",
+    "- Import all app modules from `Optimal_Trocar_Placement/trocar_model`.",
+    "- Generate one layout for each supported procedure and confirm each returns at least three ports, finite coordinates, a Plotly figure, and a score from `0` to `14`.",
+    "- Smoke-start Streamlit from `Optimal_Trocar_Placement/trocar_model` and verify `http://localhost:<port>/_stcore/health` returns HTTP `200`.",
+    "- Confirm searches for CT/DICOM/upload/navigation features show only explicit v1 exclusion text, not implementation code.",
+    "- 2026-06-13: Migrated app installation and verification to `uv` hardlink mode and the explicit repo `.venv` interpreter.",
+    "- 2026-05-26: Created the v1 app workflow after adding `Optimal_Trocar_Placement/trocar_model/`. Required deltas: manual geometric model only, future CT readiness through structured data models, no CT/DICOM dependencies, and Streamlit smoke"
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** building, editing, running, or verifying the local Streamlit trocar-placement modeling app under `Optimal_Trocar_Placement/trocar_model/`.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Optimal Trocar Placement app",
+  "trigger_phrases": [
+    "ORSI",
+    "Optimal Trocar Placement app"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

@@ -22,8 +22,11 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 .\.venv\Scripts\python.exe scripts\validate_codex_config.py
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
+.\.venv\Scripts\python.exe scripts\discover_repositories.py
+.\.venv\Scripts\python.exe scripts\harvest_repositories.py
 git status --short --ignored
 ```
 
 **Iteration notes:**
 - 2026-07-04: Created the local MVP workflow with preview-only global publication and stdlib-only scripts.
+- 2026-07-04: Added local GitHub repository discovery and deep-harvest workflow; dirty repositories are recorded but blocked from candidate extraction.

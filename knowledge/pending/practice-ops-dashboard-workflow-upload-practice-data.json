@@ -1,0 +1,106 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-upload-practice-data",
+  "incompatible_when": [],
+  "procedure": [
+    "- Work from `C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard`.",
+    "- Set `DATABASE_URL`; upload-driven mode has no local snapshot fallback.",
+    "- Keep `PRACTICE_ID`, `PRACTICE_DISPLAY_NAME`, `PRACTICE_GESY_CODE`, and `PRACTICE_OWNER_EMAILS` aligned with the target practice deployment.",
+    "- Do not commit uploaded beneficiary files, remittance PDFs, patient data, or `.env` files.",
+    "1. Run `npm run dev`.",
+    "2. Sign in with an allowlisted account.",
+    "3. Open `/uploads`.",
+    "4. Upload the beneficiary CSV/XLSX first so patient rows are merged and missing KPI candidate tasks are generated.",
+    "5. Upload one or more standard Separate Remittance PDFs; watch each file progress through upload, extraction, reconciliation, and save.",
+    "6. Inspect `/patients`, `/kpi`, `/remittance`, and `/sources`.",
+    "- 2026-07-02 - Corrected remittance import source after feedback: Practice Dashboard must import raw PDF-extracted rows, then calculate summaries internally instead of trusting pre-aggregated summary CSVs.",
+    "- 2026-07-04 - Added per-file progress UI and metadata-only source retention.",
+    "- 2026-07-04 - Updated upload workflow to include Patients tab review and beneficiary merge semantics."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:12Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:12Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** New beneficiary CSV/XLSX or Separate Remittance PDF files.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: Upload practice data",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "Upload practice data"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

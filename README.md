@@ -21,5 +21,7 @@ Run from the repository root:
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 .\.venv\Scripts\python.exe scripts\validate_codex_config.py
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
+.\.venv\Scripts\python.exe scripts\discover_repositories.py
+.\.venv\Scripts\python.exe scripts\harvest_repositories.py
 git status --short --ignored
 ```

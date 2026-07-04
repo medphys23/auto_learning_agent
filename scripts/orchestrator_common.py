@@ -48,6 +48,12 @@ EXCLUDED_PARTS = {
     "dist",
     "build",
     ".next",
+    ".pytest_cache",
+    "data",
+    "data.backup",
+    "scraper_outputs",
+    "site-packages",
+    "vendor",
 }
 
 EXCLUDED_FILENAMES = {
@@ -60,8 +66,56 @@ EXCLUDED_FILENAMES = {
     "installation_id",
 }
 
-EXCLUDED_SUFFIXES = (".sqlite", ".sqlite-shm", ".sqlite-wal", ".pem", ".key", ".pfx", ".p12")
+EXCLUDED_SUFFIXES = (
+    ".sqlite",
+    ".sqlite-shm",
+    ".sqlite-wal",
+    ".db",
+    ".db-shm",
+    ".db-wal",
+    ".pem",
+    ".key",
+    ".pfx",
+    ".p12",
+    ".xlsx",
+    ".xls",
+    ".csv",
+    ".parquet",
+)
 SENSITIVE_NAME_FRAGMENTS = ("secret", "credential", "token", "password", "cache")
+
+HARVEST_TEXT_SUFFIXES = {
+    ".md",
+    ".mdc",
+    ".txt",
+    ".toml",
+    ".json",
+    ".yaml",
+    ".yml",
+    ".py",
+    ".ps1",
+    ".php",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".css",
+    ".sql",
+}
+HARVEST_FILENAMES = {
+    "agents.md",
+    "skills.md",
+    "readme.md",
+    "package.json",
+    "pyproject.toml",
+    "requirements.txt",
+    "composer.json",
+    "renv.lock",
+    "go.mod",
+    "cargo.toml",
+    "package-lock.json",
+}
+MAX_HARVEST_TEXT_BYTES = 256 * 1024
 
 REQUIRED_RECORD_FIELDS = [
     "id",
@@ -141,6 +195,12 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = "".join(json.dumps(record, sort_keys=True) + "\n" for record in records)
+    path.write_text(content, encoding="utf-8")
+
+
 def path_parts_lower(path: Path | str) -> list[str]:
     return [part.lower() for part in Path(path).parts]
 
@@ -150,6 +210,8 @@ def is_excluded_path(path: Path | str) -> bool:
     parts = path_parts_lower(p)
     name = p.name.lower()
     if any(part in EXCLUDED_PARTS for part in parts):
+        return True
+    if any(part.startswith("data.backup") for part in parts):
         return True
     if name in EXCLUDED_FILENAMES:
         return True
@@ -166,6 +228,46 @@ def should_audit_file(path: Path | str) -> bool:
         return False
     name = p.name.lower()
     return p.suffix.lower() in AUDIT_EXTENSIONS or name in AUDIT_FILENAMES or name.endswith(".rules")
+
+
+def should_harvest_text_file(path: Path | str, repo_root: Path | None = None) -> bool:
+    p = Path(path)
+    if is_excluded_path(p):
+        return False
+    if not p.exists() or not p.is_file():
+        return False
+    if p.stat().st_size > MAX_HARVEST_TEXT_BYTES:
+        return False
+    name = p.name.lower()
+    if name in HARVEST_FILENAMES:
+        return True
+    if p.suffix.lower() not in HARVEST_TEXT_SUFFIXES:
+        return False
+    if repo_root is None:
+        return True
+    try:
+        rel_parts = p.relative_to(repo_root).parts
+    except ValueError:
+        return False
+    top = rel_parts[0].lower() if rel_parts else ""
+    return top in {
+        ".github",
+        ".codex",
+        ".cursor",
+        "app",
+        "components",
+        "config",
+        "frontend",
+        "model",
+        "public",
+        "scripts",
+        "src",
+        "tests",
+        "test",
+        "scraping",
+        "kyd_scraping",
+        "orsimetrics",
+    } or len(rel_parts) == 1
 
 
 def sha256_file(path: Path) -> str:
@@ -191,6 +293,13 @@ def run_git(repo_path: Path, *args: str) -> str | None:
     return result.stdout.strip()
 
 
+def git_dirty_lines(repo_path: Path) -> list[str]:
+    status = run_git(repo_path, "status", "--short")
+    if not status:
+        return []
+    return [line for line in status.splitlines() if line.strip()]
+
+
 def tracked_or_walked_files(repo_path: Path) -> list[Path]:
     listed = run_git(repo_path, "ls-files", "-z")
     if listed is not None:
@@ -213,11 +322,18 @@ def fingerprint_repository(repo_path: Path) -> dict[str, Any]:
     return {
         "path": str(repo_path),
         "commit": run_git(repo_path, "rev-parse", "HEAD"),
+        "branch": run_git(repo_path, "branch", "--show-current"),
+        "remote": run_git(repo_path, "remote", "get-url", "origin"),
         "dirty": run_git(repo_path, "status", "--short"),
         "file_count": len(files),
         "digest": digest.hexdigest(),
         "fingerprinted_at": utc_now(),
     }
+
+
+def harvestable_text_files(repo_path: Path) -> list[Path]:
+    repo_path = repo_path.resolve()
+    return sorted(path for path in tracked_or_walked_files(repo_path) if should_harvest_text_file(path, repo_path))
 
 
 def load_repository_registry(config_path: Path) -> list[dict[str, Any]]:
@@ -275,6 +391,33 @@ def read_catalog(path: Path) -> list[dict[str, Any]]:
         if isinstance(record, dict):
             records.append(record)
     return records
+
+
+def catalog_entry(record: dict[str, Any], record_path: Path) -> dict[str, Any]:
+    evidence = record.get("evidence", {})
+    confidence = record.get("confidence", {})
+    return {
+        "id": record.get("id"),
+        "title": record.get("title"),
+        "type": record.get("type"),
+        "scope": record.get("scope"),
+        "status": record.get("status"),
+        "summary": record.get("summary"),
+        "tags": record.get("tags", []),
+        "record_path": record_path.as_posix(),
+        "source_repository": evidence.get("source_repository", ""),
+        "source_paths": evidence.get("source_paths", []),
+        "confidence": confidence,
+    }
+
+
+def merge_catalog_entries(catalog_path: Path, entries: list[dict[str, Any]]) -> None:
+    existing = read_catalog(catalog_path)
+    replacement_ids = {entry["id"] for entry in entries}
+    merged = [entry for entry in existing if entry.get("id") not in replacement_ids]
+    merged.extend(entries)
+    merged.sort(key=lambda item: str(item.get("id", "")))
+    write_jsonl(catalog_path, merged)
 
 
 def retrieval_budget(policy_path: Path) -> int:
@@ -376,6 +519,149 @@ def sample_candidate_record(record_id: str = "sample-record") -> dict[str, Any]:
             "last_retrieved_at": None,
         },
     }
+
+
+def update_record_common(
+    record: dict[str, Any],
+    *,
+    repo: dict[str, Any],
+    fingerprint: dict[str, Any],
+    title: str,
+    record_type: str,
+    summary: str,
+    tags: list[str],
+    trigger_phrases: list[str],
+    source_paths: list[str],
+    procedure: list[str],
+    verification: list[str],
+    confidence_score: float = 0.7,
+) -> dict[str, Any]:
+    now = utc_now()
+    repo_path = str(repo.get("path", ""))
+    stack_tags = [str(tag) for tag in repo.get("stack_tags", [])]
+    risk_tags = [str(tag) for tag in repo.get("risk_tags", [])]
+    record.update(
+        {
+            "title": title,
+            "type": record_type,
+            "scope": "repository",
+            "status": "candidate",
+            "summary": summary,
+            "trigger_phrases": trigger_phrases,
+            "tags": sorted(set(tags + stack_tags + risk_tags + [str(repo.get("id", ""))])),
+            "applicability": {
+                "languages": stack_tags,
+                "frameworks": stack_tags,
+                "runtimes": [],
+                "operating_systems": ["windows"],
+                "deployment_targets": [],
+                "repository_markers": [".git"],
+            },
+            "procedure": procedure,
+            "verification": verification or ["Review the source paths and validate the candidate before promotion."],
+            "evidence": {
+                "source_repository": repo_path,
+                "source_commit": fingerprint.get("commit") or "",
+                "source_paths": source_paths,
+                "task_or_issue": "local-github-repository-analysis",
+                "tests_executed": [],
+                "deployment_environment": "",
+                "deployment_evidence": "",
+                "accepted_by_user": False,
+                "production_observation_window": "",
+            },
+            "provenance": {
+                "created_at": now,
+                "updated_at": now,
+                "created_by": "harvest_repositories.py",
+                "supersedes": [],
+                "derived_from": source_paths,
+            },
+            "confidence": {"score": confidence_score, "rationale": "Deterministic extraction from repository policy files."},
+        }
+    )
+    return record
+
+
+def read_text_if_exists(path: Path) -> str:
+    if not path.exists() or is_excluded_path(path):
+        return ""
+    return path.read_text(encoding="utf-8", errors="replace")
+
+
+def extract_markdown_section(text: str, heading_prefix: str, level: int = 2) -> str:
+    marker = "#" * level + " "
+    wanted = heading_prefix.lower()
+    lines = text.splitlines()
+    start: int | None = None
+    for index, line in enumerate(lines):
+        lower = line.lower()
+        if lower.startswith(marker) and lower[len(marker) :].strip().startswith(wanted):
+            start = index + 1
+            break
+    if start is None:
+        return ""
+    end = len(lines)
+    for index in range(start, len(lines)):
+        if lines[index].startswith(marker):
+            end = index
+            break
+    return "\n".join(lines[start:end]).strip()
+
+
+def extract_code_block_commands(section_text: str) -> list[str]:
+    commands: list[str] = []
+    in_block = False
+    for line in section_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            in_block = not in_block
+            continue
+        if not in_block:
+            continue
+        if not stripped or stripped.startswith("#"):
+            continue
+        commands.append(stripped)
+    return commands
+
+
+def extract_constraint_lines(section_text: str) -> list[str]:
+    constraints: list[str] = []
+    keywords = ("never", "do not", "must", "forbidden", "not clinical", "simulation", "phi", "read-only")
+    for line in section_text.splitlines():
+        stripped = line.strip(" -")
+        if not stripped:
+            continue
+        lower = stripped.lower()
+        if any(keyword in lower for keyword in keywords):
+            constraints.append(stripped)
+    return constraints[:20]
+
+
+def extract_skill_sections(skills_text: str) -> list[dict[str, Any]]:
+    sections: list[dict[str, Any]] = []
+    lines = skills_text.splitlines()
+    current_title: str | None = None
+    current: list[str] = []
+    for line in lines:
+        if line.startswith("### "):
+            if current_title:
+                sections.append({"title": current_title, "body": "\n".join(current).strip()})
+            current_title = line[4:].strip()
+            current = []
+        elif current_title:
+            current.append(line)
+    if current_title:
+        sections.append({"title": current_title, "body": "\n".join(current).strip()})
+    return sections
+
+
+def summarize_markdown(text: str, fallback: str) -> str:
+    for line in text.splitlines():
+        stripped = line.strip(" -")
+        if stripped and not stripped.startswith("#") and not stripped.startswith("```"):
+            return stripped[:240]
+    return fallback
 
 
 def approval_required(record: dict[str, Any]) -> bool:

@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-office-pptx-metrics-decks",
+  "incompatible_when": [],
+  "procedure": [
+    "- Use the reviewed stable PPTX as the content baseline unless the user explicitly approves expansion.",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/deliverables/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master.pptx` as the latest accepted cholecystectomy master for export and any new iteration after ",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master_Manual_Source_for_Regeneration.pptx` as the prior manual source for v11 regeneration; before reg",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master_Manual_Source_for_Polish.pptx` as the prior manual polish source.",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v10_Delphi_Master.NR.pptx` as the manually edited NR source for the first v11 build.",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v9_Delphi_Master.pptx` as the exact user-edited source for reproducing v10; do not regenerate its content from the",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v8_Supervisor_Edited_Source_for_v9.pptx` as the archived supervisor-edited source for reproducing v9.",
+    "- When reproducing v8 specifically, use the archived user-edited v7 deck as the source, validate that Step 19 is absent, and preserve all non-number metric cells.",
+    "- Treat v4 as the historical stable source, v5 as exploratory expansion, and v6 as the previous Delphi master unless the user explicitly asks to go back.",
+    "- Use PowerPoint COM for PPTX writes on Windows; use `python-pptx` for read-only extraction and validation.",
+    "1. Inspect actual PPTX files and builder scripts before deciding what changed.",
+    "2. Extract baseline phases, step numbers, step descriptions, global errors, and critical global errors into structured rows.",
+    "3. When splitting or inserting steps, renumber all downstream metric rows sequentially as ordinary numeric steps; do not use lettered substeps.",
+    "4. When a reviewed PPTX already contains a manual deletion, validate the resulting numeric gap, renumber only downstream numeric rows, and compare non-number metric cells before/after.",
+    "5. Add or preserve a Delphi voting instruction slide before the first metric slide when the deck lacks one; use a target/options table for steps, errors, critical errors, missing items, and optional items.",
+    "6. Pack metric rows by measured content and phase logic. Normally use no more than 6 rows, but allow 7 when the text fits and doing so avoids a one-row continuation slide.",
+    "7. Format metric slide titles as `Phase <roman>: <phase title> | Steps X-Y` or `| Step X`, matching the exact visible rows. Preserve reviewed title typography; use Calibri 20 pt by default and widen long titles within the banner before redu",
+    "8. Preserve the v7-v11 table formatting for square checkbox bullets and numbered items in the error and critical-error columns.",
+    "9. Follow the version-specific table typography. For v11, keep the reviewed deck typography, retain the voting table at 13.5 pt, retain end-of-phase tables at Calibri 9.8 pt, and add Phase V reference notes only as unnumbered slide-level no",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`"
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** creating, repairing, or regenerating ORSI PowerPoint metrics decks, especially Delphi/PBP decks with table-heavy step/error rows.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Office PPTX metrics decks",
+  "trigger_phrases": [
+    "ORSI",
+    "Office PPTX metrics decks"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

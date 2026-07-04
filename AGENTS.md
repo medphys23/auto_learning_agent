@@ -31,6 +31,8 @@ Run from the repository root:
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 .\.venv\Scripts\python.exe scripts\validate_codex_config.py
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
+.\.venv\Scripts\python.exe scripts\discover_repositories.py
+.\.venv\Scripts\python.exe scripts\harvest_repositories.py
 git status --short --ignored
 ```
 
@@ -41,6 +43,8 @@ Maintain [`skills.md`](skills.md) beside this file. Document repeatable Codex wo
 - Global folders `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor` are read-only audit targets unless the user explicitly approves a separate publication step.
 - `scripts/publish_global_rules.py` is preview-only in this MVP and must refuse global writes.
 - Generated reports in `reports/*.md` are local outputs and are ignored by git.
+- Repository discovery and harvesting must remain read-only against registered source repositories.
+- Dirty registered repositories must be recorded in state/reports but skipped for candidate extraction.
 - Never harvest secrets, `.env` content, SQLite state, sessions, logs, plugin caches, dependency directories, build artifacts, or generated caches.
 - Knowledge promotion starts as local candidates. Global, canonical, security, sandbox, approval, model/provider, MCP, authentication, network, database, deployment, cost, retention, regulated-domain, destructive-command, or output-style changes require explicit approval metadata.
 

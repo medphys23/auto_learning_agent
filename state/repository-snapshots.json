@@ -1,3 +1,126 @@
 {
-  "repositories": {}
+  "repositories": {
+    "auto_learning_agent": {
+      "branch": "main",
+      "commit": "4e45d45e806355edaf4334a98593dc85d0f18aa8",
+      "digest": "58d8e7ca0f8fa3581411061b851a8b5d81229e89f8048e1a158aa02b19de9ba3",
+      "dirty": "M .cursor/rules/repo-verification.mdc\n M AGENTS.md\n M README.md\n M config/repositories.toml\n M knowledge/catalog.jsonl\n M scripts/harvest_repositories.py\n M scripts/orchestrator_common.py\n M skills.md\n M state/repository-snapshots.json\n M tests/test_orchestrator_mvp.py\n?? knowledge/pending/orsi-repository-constraints.json\n?? knowledge/pending/orsi-repository-profile.json\n?? knowledge/pending/orsi-verification-command-1.json\n?? knowledge/pending/orsi-verification-command-2.json\n?? knowledge/pending/orsi-verification-command-3.json\n?? knowledge/pending/orsi-verification-command-4.json\n?? knowledge/pending/orsi-verification-command-5.json\n?? knowledge/pending/orsi-verification-command-6.json\n?? knowledge/pending/orsi-verification-command-7.json\n?? knowledge/pending/orsi-workflow-ad-astra-chapter.json\n?? knowledge/pending/orsi-workflow-cholecystectomy-protocol-literature-updates.json\n?? knowledge/pending/orsi-workflow-delphi-expert-threshold-evidence-deck.json\n?? knowledge/pending/orsi-workflow-low-anterior-resection-metrics-deck.json\n?? knowledge/pending/orsi-workflow-markitdown-read-path.json\n?? knowledge/pending/orsi-workflow-office-pptx-metrics-decks.json\n?? knowledge/pending/orsi-workflow-optimal-trocar-placement-app.json\n?? knowledge/pending/orsi-workflow-repository-structure-hygiene.json\n?? knowledge/pending/orsi-workflow-right-hemicolectomy-metrics-package.json\n?? knowledge/pending/orsi-workflow-robotic-cholecystectomy-systematic-review.json\n?? knowledge/pending/practice-ops-dashboard-repository-constraints.json\n?? knowledge/pending/practice-ops-dashboard-repository-profile.json\n?? knowledge/pending/practice-ops-dashboard-verification-command-1.json\n?? knowledge/pending/practice-ops-dashboard-verification-command-2.json\n?? knowledge/pending/practice-ops-dashboard-verification-command-3.json\n?? knowledge/pending/practice-ops-dashboard-verification-command-4.json\n?? knowledge/pending/practice-ops-dashboard-workflow-beneficiary-import-merge.json\n?? knowledge/pending/practice-ops-dashboard-workflow-next-js-neon-vercel-practice-app.json\n?? knowledge/pending/practice-ops-dashboard-workflow-upload-practice-data.json\n?? scripts/discover_repositories.py",
+      "dirty_count": 39,
+      "file_count": 35,
+      "fingerprinted_at": "2026-07-04T22:02:21Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
+      "remote": "https://github.com/medphys23/auto_learning_agent.git"
+    },
+    "campania-transplant": {
+      "branch": "main",
+      "commit": "bb838809dd12d99bf096b96d39e3fe6a792c37de",
+      "digest": "491862bd032e80d8fda6dc616b7e029775a70ac5e6967f49772d2476e07f33b0",
+      "dirty": "M AGENTS.md\n M skills.md\n?? .cursor/",
+      "dirty_count": 3,
+      "file_count": 55,
+      "fingerprinted_at": "2026-07-04T22:02:21Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
+      "remote": "https://github.com/medphys23/campania_transplant.git"
+    },
+    "general-work": {
+      "branch": "main",
+      "commit": "225405e304eea69329de71f9bd36d76335936668",
+      "digest": "bd0ca711cea717e67331bef5a05b9693b5bd14c59b7950f0d64f553b65a55d0c",
+      "dirty": "M AGENTS.md\n M skills.md\n?? .cursor/\n?? .gitignore",
+      "dirty_count": 4,
+      "file_count": 3,
+      "fingerprinted_at": "2026-07-04T22:02:21Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
+      "remote": "https://github.com/medphys23/general_work.git"
+    },
+    "investment-binance": {
+      "branch": "main",
+      "commit": "812bd604d3bdb6594babb624ea4321afce66e898",
+      "digest": "8e7b315ad7ec2216ab7945d2debb4868dfa0d496fbbf160c409d05788eab5310",
+      "dirty": "M .cursor/rules/repo-core.mdc\n M .cursor/rules/repo-verification.mdc\n M .cursor/skills/binance-dashboard/SKILL.md\n M .streamlit/config.toml\n M AGENTS.md\n M scripts/register_paper_worker_startup.ps1\n M scripts/run_paper_worker_background.ps1\n M scripts/unregister_paper_worker_startup.ps1\n M skills.md\n M tests/test_policy.py",
+      "dirty_count": 10,
+      "file_count": 32,
+      "fingerprinted_at": "2026-07-04T22:02:22Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+      "remote": "https://github.com/medphys23/Investment_binance.git"
+    },
+    "kidney-federico": {
+      "branch": "main",
+      "commit": "351eac74bb1b8ae6269254a1c77cca02baa869df",
+      "digest": "644f16ed9d0076d4b8e41a4a81a1f1ee1ca8b1cd33ebb68a113a120997d36e87",
+      "dirty": "M .gitignore\n M AGENTS.md\n M skills.md\n?? .cursor/",
+      "dirty_count": 4,
+      "file_count": 168,
+      "fingerprinted_at": "2026-07-04T22:02:22Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
+      "remote": "https://github.com/medphys23/kidney_federico.git"
+    },
+    "orsi": {
+      "branch": "main",
+      "candidate_count": 19,
+      "commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+      "digest": "b6e4c511b0bcf4dfdbb1cf02fda4195d1ecd0378217f6ae5560fcb7908798b1f",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 220,
+      "fingerprinted_at": "2026-07-04T22:00:11Z",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+      "remote": "https://github.com/medphys23/ORSI.git"
+    },
+    "practice-ops-dashboard": {
+      "branch": "main",
+      "candidate_count": 9,
+      "commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+      "digest": "f939b2da91f5210a23f8255c2426dbfd1f7b5d8df0f48d239a6c1a3d2b1a3064",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 74,
+      "fingerprinted_at": "2026-07-04T22:00:12Z",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+      "remote": "https://github.com/medphys23/practice-ops-dashboard.git"
+    },
+    "ps-robot-adaptor": {
+      "branch": "main",
+      "commit": "ccdc0acc3c8c0155ff870e4cbacfa5f8f1eec2b4",
+      "digest": "8a003f353a697c2fc03856118a4dc88361e7565fc5ce1b4d9334fb1e52856f17",
+      "dirty": "M AGENTS.md\n M skills.md\n?? .cursor/rules/repo-core.mdc\n?? .cursor/rules/repo-verification.mdc",
+      "dirty_count": 4,
+      "file_count": 60,
+      "fingerprinted_at": "2026-07-04T22:02:23Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
+      "remote": "https://github.com/medphys23/PS_robot_adaptor.git"
+    },
+    "x-booking": {
+      "branch": "scraping",
+      "commit": "7c49184a85a4dff27ac97db3291651a5645f912f",
+      "digest": "057657103f3edf32a1770b574bb33f4fdecaa1252e87a4a766ba10fcb7975ad8",
+      "dirty": "M .cursor/rules/repo-verification.mdc\n M AGENTS.md\n M README.md\n M requirements.txt\n M scraping/__main__.py\n M skills.md\n?? .cursor/skills/practice-website-discovery/\n?? scraping/import_search_assist.py\n?? scraping/profile_rescrape.py\n?? scraping/web_discovery.py\n?? scraping/website_validate.py\n?? scripts/enrich-web-discovery.ps1\n?? scripts/rescrape-profiles.ps1\n?? scripts/validate-websites.ps1",
+      "dirty_count": 14,
+      "file_count": 35,
+      "fingerprinted_at": "2026-07-04T22:02:24Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+      "remote": "https://github.com/medphys23/X_booking.git"
+    },
+    "xenios-finances": {
+      "branch": "main",
+      "commit": "ceb9f07a5d660608fbd6366f6c40768b7584d465",
+      "digest": "75392d695b12779c2a1df14c083639b5bbc9d263021eae006e1468169fefece7",
+      "dirty": "M .gitignore\n M AGENTS.md\n M skills.md\n?? .cursor/",
+      "dirty_count": 4,
+      "file_count": 40,
+      "fingerprinted_at": "2026-07-04T22:02:24Z",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
+      "remote": "https://github.com/medphys23/Xenios_FInances.git"
+    }
+  }
 }

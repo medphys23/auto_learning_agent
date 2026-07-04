@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-right-hemicolectomy-metrics-package",
+  "incompatible_when": [],
+  "procedure": [
+    "- Treat `Orsi_Metrics_Research/projects/right_hemicolectomy/metrics/source/1.Right Hemicolectomy.docx` as the current RA-RHC metrics source unless the user provides a newer source.",
+    "- Treat `Orsi_Metrics_Research/projects/right_hemicolectomy/metrics/archive/ORSI_Robotic_Right_Hemicolectomy_PBP_Delphi_Master_v1.docx` as the carry-forward source for Phase XV transfer/handover rows when the current source lacks detailed P",
+    "- Use `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v8_Delphi_Master.pptx` only as the deck visual/style source.",
+    "- Use `Orsi_Metrics_Research/projects/robotic_cholecystectomy/study_protocol/archive/ORSI_Robotic_Cholecystectomy_Study_Protocol_v8.docx` only as the protocol style/template source.",
+    "- Do not use external literature unless the user explicitly asks; v2 content stays grounded in the supplied source and archived v1 master.",
+    "1. Parse the source table with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/right_hemicolectomy_metrics.py`; expect 14 detailed source phases plus carried-forward Phase XV.",
+    "2. Preserve source E/CE rows, tightening only obvious binary wording/typos without changing meaning.",
+    "3. Add proposed v2 error/critical-error candidates as step-specific Delphi candidates; keep them binary, video-assessable, and clearly separate from source-derived rows.",
+    "4. Build the DOCX Delphi master with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/metrics/build_right_hemicolectomy_delphi_master_v2.py`.",
+    "5. Build the PPTX deck with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/metrics/build_right_hemicolectomy_metrics_deck_v2.py`; use PowerPoint COM, preserve the archived cholecystectomy v8 visual system, pack no more than 6 me",
+    "6. Use curated phase-level global errors/critical errors on end-of-phase slides; do not copy step-specific rows into those global tables and do not embed step numbers in item text.",
+    "7. Export the PPTX review DOCX with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/metrics/export_right_hemicolectomy_metrics_deck_v2_to_word.py`; preserve PPTX-style table colors and compact layout.",
+    "8. Build the proposed-error report with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/metrics/build_right_hemicolectomy_new_error_report_v2.py`.",
+    "9. Build the study protocol with `Orsi_Metrics_Research/scripts/robotic_right_hemicolectomy/study_protocol/build_right_hemicolectomy_study_protocol_v1.py`; scan for leftover RA-Chole/cholecystectomy wording.",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\requirements.txt`",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_right_hemicolectomy\\metrics\\build_right_hemicolectomy_delphi_master_v2.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_right_hemicolectomy\\metrics\\build_right_hemicolectomy_metrics_deck_v2.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_right_hemicolectomy\\metrics\\export_right_hemicolectomy_metrics_deck_v2_to_word.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_right_hemicolectomy\\metrics\\build_right_hemicolectomy_new_error_report_v2.py`"
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** creating or iterating the robotic right hemicolectomy RA-RHC metrics deck, Delphi master, proposed-error report, or study protocol package.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Right hemicolectomy metrics package",
+  "trigger_phrases": [
+    "ORSI",
+    "Right hemicolectomy metrics package"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

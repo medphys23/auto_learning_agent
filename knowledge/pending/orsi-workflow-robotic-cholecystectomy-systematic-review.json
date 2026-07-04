@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-robotic-cholecystectomy-systematic-review",
+  "incompatible_when": [],
+  "procedure": [
+    "- Keep the original 56-source corpus under `literature/procedure/`, `literature/education/`, `literature/clinical/`, or `literature/curated/`. Store newly discovered legal full texts under `literature/full_text/<evidence_stream>/`; never co",
+    "- Use `systematic_review/systematic_review_manifest.json` as run memory before moving, deleting, screening, or extracting articles.",
+    "- Keep only `README.md` and `systematic_review_manifest.json` at the review root. Route outputs through the canonical `protocol/`, `search/`, `screening/`, `extraction/`, `appraisal/`, `synthesis/`, `manuscript/`, `prospective/`, and `archi",
+    "- Do not trust the manifest count alone for screening passes. Run a filesystem walk over `procedure/`, `education/`, `clinical/`, and `curated/`, and inspect project-level `systematic_review/` for stray imported PDFs that must be sorted or ",
+    "- Convert sources with `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research/scripts/to_markdown.py \"<source>\"`; read cached markdown rather than binary PDFs/DOCX.",
+    "- Record exact duplicates and DOI/title duplicates in the manifest before deletion; retain intentional curated duplicates only when the manifest marks them as `intentional_curated`.",
+    "- Treat the current corpus as the working evidence base, not proof of PRISMA completeness. A formal review requires reproducible search provenance, reconciled record counts, independent screening, design-specific risk-of-bias assessment, an",
+    "- Use these workflow states in order: `working_corpus_registered`, `search_provenance_reconstructed`, `formal_screening_complete`, `formal_extraction_complete`, `risk_of_bias_complete`, and `review_complete`. Do not advance a state while re",
+    "- Separate primary empirical RA-Chole threshold studies from systematic reviews, laparoscopic comparators, safety/outcome context, PBP/Delphi/credentialing methodology, preclinical evidence, and non-primary summaries.",
+    "- Assign manuscript evidence tiers deterministically: Tier 1 direct human learning/proficiency, Tier 2 direct assessment/video/OPI, Tier 3 contextual or secondary evidence, and Tier 4 preclinical or simulation evidence.",
+    "- Preserve case-complexity extraction fields for urgency, inflammation, BMI, prior surgery, adhesions, operative difficulty, bailout strategies, adjunct imaging, bleeding, and postoperative complications. Use `verification_required` rather ",
+    "- Use `verification_required` for missing or unsupported facts. Never infer a DOI, country, platform, threshold, or risk-of-bias judgment from filename wording alone.",
+    "- Codex owns Reviewer 1 fields. Preserve `reviewer_2_*` and adjudication fields for an independent human reviewer; never populate them from the Reviewer 1 pass.",
+    "- Do not use non-exportable AI-answer tools as formal database sources or PRISMA-count inputs. Search expansion uses reproducible database/registry exports only.",
+    "- Retrieve only records labeled `include_for_full_text`, `maybe_include_for_full_text`, or `high_priority_methodology`. Use PMC, Europe PMC, publisher open access, author manuscripts, repositories, guidelines, preprints, or explicitly autho",
+    "- Treat `build_preliminary_local_review.py` and `build_formal_review_planning_package.py` as historical rebuilders only. Their outputs and manifest snapshots are isolated under `archive/`; they do not update the current pipeline manifest.",
+    "1. Inspect `git status`, list root-level files under `literature/`, and list PDFs under project-level `systematic_review/`; new unsorted PDFs should not remain at either location after ingest.",
+    "2. Hash all candidate imports and canonical corpus files with SHA-256; use DOI/title checks for same-article PDFs whose hashes differ.",
+    "3. Move unique procedure-specific imports to `literature/procedure/` with `{LeadAuthor}_{Year}_{short_title}.pdf` names; do not move review-relevant PDFs into `systematic_review/`.",
+    "4. Record duplicate decisions in `duplicates[]` with duplicate path, canonical retained path, match type, action taken, and hash/DOI evidence before deleting duplicate imports."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** sorting RA-Chole literature imports, preparing or rerunning the expert-threshold systematic-review corpus, reconstructing searches, duplicate detection, formal screening/extraction, risk-of-bias work, or review planning un",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Robotic cholecystectomy systematic review",
+  "trigger_phrases": [
+    "ORSI",
+    "Robotic cholecystectomy systematic review"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

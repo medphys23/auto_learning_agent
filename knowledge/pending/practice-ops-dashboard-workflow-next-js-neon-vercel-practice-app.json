@@ -1,0 +1,113 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-next-js-neon-vercel-practice-app",
+  "incompatible_when": [],
+  "procedure": [
+    "- Work from `C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard`.",
+    "- Use Node.js `>=22.12.0`, npm, and the committed `package-lock.json`.",
+    "- Set `DATABASE_URL`, Neon Auth env vars, `ALLOWED_EMAILS`, and practice identity env vars locally or in Vercel before runtime checks.",
+    "- Do not add production dependencies, swap DB drivers, or introduce an ORM without user approval.",
+    "1. Use Next.js App Router conventions: Server Components for internal reads, client components only for browser state/interactivity, and route handlers for uploads/API endpoints.",
+    "2. Build dashboard pages for desktop and phone in the same pass: navigation stays a collapsible left sidebar on every viewport, route changes show a lightweight loader, tables use responsive/card-style fallbacks where needed, and dense char",
+    "3. For patient strategy views, keep KPI-age pool charts and raw active-beneficiary age distribution charts together so outreach planning can compare eligibility pools against the whole population.",
+    "4. For remittance analytics, preserve overview charts and add filterable invoice-line/service views with date ranges, category checkboxes, and annual/quarterly average trend lines.",
+    "5. Keep file-processing route handlers on the Node.js runtime. Do not move upload parsing to Edge.",
+    "6. Use Neon/Postgres through the existing module-scope `pg` pool in `src/lib/db.ts`; normalize Neon SSL mode to `verify-full`.",
+    "7. Keep runtime data tables scoped by `PRACTICE_ID` and keep secrets in env vars only.",
+    "8. For Vercel deploys, run verification first, then use Git-connected Preview/Production deployments or `vercel build` plus `vercel deploy --prebuilt` for custom CI.",
+    "9. If the user later approves `@vercel/functions`, call `attachDatabasePool(pool)` immediately after creating the `pg` pool.",
+    "- 2026-07-02 - Created initial Vercel-ready Next.js dashboard.",
+    "- 2026-07-04 - Reworked workflow from offline file imports to authenticated in-app uploads backed by Neon Postgres only.",
+    "- 2026-07-04 - Captured current working stack: Next.js 16 App Router, Neon Auth, `pg`, Vercel env/deploy flow, Node route handlers for uploads, and serverless PDF parser package tracing.",
+    "- 2026-07-04 - User clarified the dashboard must be viable on smartphones too; added responsive navigation/table/chart-label checks to the stack workflow.",
+    "- 2026-07-04 - User clarified the menu should remain a collapsible left sidebar on desktop and mobile; do not convert it to a horizontal top strip at phone/tablet breakpoints.",
+    "- 2026-07-04 - User rejected overlapping chart labels; for dense remittance/category charts, remove noisy labels and use tooltips plus summary rows.",
+    "- 2026-07-04 - User requested page-to-page loader animation, patient strategy charts with raw age distribution bins, and remittance date/service filters with average trend lines."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:12Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:12Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** New dashboard features, deployment fixes, auth/data plumbing, Vercel runtime failures, or future practice-dashboard scaffolds.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: Next.js + Neon + Vercel practice app",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "Next.js + Neon + Vercel practice app"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

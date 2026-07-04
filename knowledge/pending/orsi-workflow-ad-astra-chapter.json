@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-ad-astra-chapter",
+  "incompatible_when": [],
+  "procedure": [
+    "- Chapter assignment: Section VI \u2014 *Training for Surgery in Space*; author Niki Rashidian.",
+    "- Instructions PDF: `AD_Astra/references/instructions/Authors ToC and instructions_AI Robotics and Surgery in Space.pdf`.",
+    "- Springer limits: ~43,000 characters (~12 pages), max 50 Vancouver-numbered references, standalone 300 DPI JPEG/TIFF figures with alt text and minimum 5 x 7 inch target size.",
+    "- Read `AD_Astra/ad_astra_manifest.json` before searching the repo for literature already registered under `references_external`.",
+    "- For institutional/manual browser PDFs, use `.cache/incoming_literature/AD_Astra/` as the staging folder. Do not request credentials, export browser cookies, or use session tokens.",
+    "- For AD_Astra Word drafts, use Word COM unless a template overrides it. Default formatting is Times New Roman 11 pt body text, justified body/list/reference paragraphs, 6 pt spacing after headings and body/list/reference paragraphs, compac",
+    "1. Convert instructions or new PDFs with MarkItDown read path; do not read binary PDFs directly for analysis.",
+    "2. **Rename on ingest:** identify author/year/title \u2192 `{LeadAuthorLastName}_{Year}_{short_topic_slug}.{ext}`; never leave publisher-ID filenames. Rules: `AD_Astra/references/README.md`, `.cursor/rules/ad-astra-references.mdc`.",
+    "3. **Concept subfolder:** move to primary folder under `references/` (`simulation_based_education/`, `objective_skill_assessment/`, `ai_enhanced_training/`, `remote_and_jit_training/`, `space_training_context/`). Register in `references_loc",
+    "4. For `ingest incoming`, inspect `.cache/incoming_literature/AD_Astra/`, convert staged PDFs to markdown for identification, move only identified PDFs into curated `AD_Astra/references/` subfolders, regenerate final-path MarkItDown caches,",
+    "5. Register cross-repo ORSI PDFs in `ad_astra_manifest.json` \u2192 `references_external` with `copied_to_ad_astra: false` and matching `logical_name`; do not duplicate under `Orsi_Metrics_Research/` unless offline packaging is requested.",
+    "6. Write article-grounded extractions to `AD_Astra/evidence_summaries/<id>.md`; append summary id to `evidence_summaries` in the manifest.",
+    "7. Draft manuscripts in `AD_Astra/manuscript/drafts/`; promote current submission file to `manuscript/deliverables/` only when ready.",
+    "8. For DOCX drafts, render or recreate figures as standalone 300 DPI JPEG/TIFF assets with a minimum 5 x 7 inch target size, inspect for text overlap, track captions and alt text, insert figures with alt text, convert Markdown tables to com",
+    "9. On manuscript version bump, move superseded deliverable to `manuscript/archive/` and log in `manuscript_versions`.",
+    "- Confirm `AD_Astra/ad_astra_manifest.json` parses and lists the chapter metadata.",
+    "- After literature work, confirm new paths appear in `references_external`, `references_local`, or `evidence_summaries`.",
+    "- Local PDFs under `references/` use `{Author}_{Year}_{topic}` names and sit in a concept subfolder (not the root).",
+    "- MarkItDown cache exists for any PDF analyzed in the session.",
+    "- For `ingest incoming`, confirm `.cache/incoming_literature/AD_Astra/` no longer contains staged PDFs, final-path caches exist, and `AD_Astra/chapter_working_files/*` maps/logs were updated where applicable."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** drafting, literature extraction, reference tracking, or manuscript versioning for the Springer *Chirurgia ad Astra* book chapter on simulation, skill assessment, and AI-driven training (Chapter 22).",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: AD_Astra chapter",
+  "trigger_phrases": [
+    "ORSI",
+    "AD_Astra chapter"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

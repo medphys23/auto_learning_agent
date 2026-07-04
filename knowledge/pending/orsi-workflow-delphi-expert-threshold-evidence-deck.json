@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-delphi-expert-threshold-evidence-deck",
+  "incompatible_when": [],
+  "procedure": [
+    "- Use `Orsi_Metrics_Research/templates/metrics_template.pptx` as the ORSI theme source.",
+    "- Use `Orsi_Metrics_Research/projects/robotic_cholecystectomy/study_protocol/deliverables/ORSI_Robotic_Cholecystectomy_Study_Protocol_v11.docx` as the protocol source unless the user names a newer protocol.",
+    "- Primary evidence corpus is protocol references 15-29 under `literature/procedure/`; secondary PBP corpus is protocol references 3-12 where local source files exist under `literature/education/`.",
+    "- Treat `literature/procedure/learning-curve-robotic-cholecystectomy.docx` as a local summary only, not as a replacement for the missing Sheetz JAMA Surgery source.",
+    "- Use PowerPoint COM through `win32com.client` for PPTX creation and editing. Do not use `python-pptx` as the presentation editing engine.",
+    "- For committee-facing defense revisions after v2, create PPTX-only v3/v4 packages. Do not generate a Word report unless the user explicitly asks.",
+    "1. Run `Orsi_Metrics_Research/scripts/robotic_cholecystectomy/study_protocol/delphi_expert_threshold_evidence/main.py` from repo root.",
+    "2. Validate the theme deck, protocol DOCX, and local literature root before extraction.",
+    "3. Extract exact protocol expert benchmark language from the protocol, including the `>=30` direct RA-Chole pathway, the `>=10` RA-Chole plus `>=30` advanced robotic abdominal pathway, current independent robotic practice, consultant-level ",
+    "4. Resolve source files repo-wide before declaring a selected reference missing: check configured paths, filename/author/year matches, then cached MarkItDown content matches for DOI/title/author terms under local literature/reference/raw-do",
+    "5. Convert each selected local article to `.cache/markitdown/...md` via `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research/scripts/to_markdown.py` (or equivalent cache helper); read the cached markdown for extraction. Keep PyMuPDF for page/c",
+    "6. Classify each source into direct RA-Chole, robotic adoption/credentialing, PBP/metrics, transferable robotic expertise, or general learning-curve evidence.",
+    "7. Generate the v1/v2 PPTX, DOCX evidence report, JSON extraction file, and run log under the matching `study_protocol/deliverables/expert_threshold_evidence*` folder.",
+    "8. For evidence-defense revisions, run `main.py --version v2`; write to `study_protocol/deliverables/expert_threshold_evidence_v2/` and preserve the v1 generic package.",
+    "9. For committee-defense revisions after feedback that v2 is too weak, run `main.py --version v3`; write to `study_protocol/deliverables/expert_threshold_evidence_v3/`, generate only the PPTX, JSON, run log, and source-figure assets, and pr",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\requirements.txt`",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\delphi_expert_threshold_evidence\\main.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\delphi_expert_threshold_evidence\\main.py --version v2`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\delphi_expert_threshold_evidence\\main.py --version v3`"
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** creating or rerunning the Delphi consensus presentation that explains and defends the RA-Chole expert benchmark eligibility threshold.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Delphi expert threshold evidence deck",
+  "trigger_phrases": [
+    "ORSI",
+    "Delphi expert threshold evidence deck"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

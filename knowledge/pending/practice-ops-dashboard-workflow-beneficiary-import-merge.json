@@ -1,0 +1,104 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-beneficiary-import-merge",
+  "incompatible_when": [],
+  "procedure": [
+    "- Beneficiary files are source documents and must not be committed.",
+    "- Use a complete beneficiary list as the source of active patients for that practice.",
+    "- The default patient identity is normalized document ID; row-hash fallback is only for missing document IDs.",
+    "1. Parse the uploaded CSV/XLSX and reject the upload if it produces zero patient rows.",
+    "2. In one transaction, compare incoming patient IDs with currently active `beneficiaries` rows for the same `PRACTICE_ID`.",
+    "3. Insert new patients, update and reactivate returning patients, and mark omitted active patients `active=false` with inactive metadata.",
+    "4. Generate KPI candidate tasks from the incoming patients, but insert only missing task keys with `ON CONFLICT DO NOTHING`.",
+    "5. Never reset existing KPI task `status`, `completed_date`, `note`, or audit history during beneficiary reupload.",
+    "6. In default UI views, pass masked document IDs to client components; keep full IDs server-side.",
+    "- 2026-07-04 - User clarified beneficiary uploads should merge add/remove changes instead of rebuilding patients/KPIs from scratch.",
+    "- 2026-07-04 - Defaulted omitted patients to soft inactive rows, preserved KPI task workflow state, and masked document IDs in the Patients tab."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:12Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:12Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Changes to beneficiary CSV/XLSX parsing, patient directory behavior, KPI candidate generation, or upload reconciliation.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: Beneficiary import merge",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "Beneficiary import merge"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

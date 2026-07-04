@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-repository-structure-hygiene",
+  "incompatible_when": [],
+  "procedure": [
+    "- Use `AGENTS.md` \u2192 **Version-bump archival** as the authoritative rule.",
+    "- For `Orsi_Metrics_Research/projects/robotic_cholecystectomy/` and `Orsi_Metrics_Research/projects/right_hemicolectomy/`, keep current files visible in `metrics/source/`, `metrics/deliverables/`, `study_protocol/source/`, or `study_protoco",
+    "- Keep procedure literature under `Orsi_Metrics_Research/projects/<procedure>/literature/` (`procedure/`, `education/`, `clinical/`, `curated/`); add new PDFs there rather than repo-root `Orsi_Metrics_Research/references/` unless the file i",
+    "- Archive superseded files by default; do not delete non-temporary drafts unless the user explicitly asks.",
+    "- Keep cholecystectomy scripts under `Orsi_Metrics_Research/scripts/robotic_cholecystectomy/metrics/` or `Orsi_Metrics_Research/scripts/robotic_cholecystectomy/study_protocol/`; keep historical metrics builders under `Orsi_Metrics_Research/",
+    "1. Identify the **new current version** (highest accepted vN per artifact type) before moving anything.",
+    "2. **Metrics:** move superseded `..._v*` PPTX/DOCX from `metrics/deliverables/` \u2192 `metrics/archive/`. Leave only the current deck (+ optional current Word export) in `deliverables/`. Keep `metrics/source/` master unchanged unless the user r",
+    "3. **Study protocol:** move superseded `..._v*` DOCXs from `study_protocol/deliverables/` \u2192 `study_protocol/archive/`. Leave **one** current protocol in `deliverables/`. Keep the preserved template (e.g. v1) only under `study_protocol/sourc",
+    "4. Move other old drafts and retired builders to the relevant `archive/` folder.",
+    "5. **Systematic review:** keep only `README.md` and the manifest at root; move generated artifacts into purpose-specific subfolders and centralize active paths in `review_layout.py`.",
+    "6. Update all hardcoded paths in active scripts after any move; use repo-root discovery rather than fixed parent counts for nested scripts.",
+    "7. Update `AGENTS.md` first, then align `README.md` and this `skills.md` (and `.cursor/skills/repo-structure-hygiene/`).",
+    "8. Delete only temporary Office lock files after checking they are not active.",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\requirements.txt`",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\build_cholecystectomy_study_protocol.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\build_cholecystectomy_metrics_deck_v11.py`",
+    "- **`metrics/deliverables/`** contains only current-version metrics artifacts (no older `..._v*` files).",
+    "- **`study_protocol/deliverables/`** contains only the current protocol DOCX (no older `..._v*` files).",
+    "- **`study_protocol/source/`** holds preserved templates; no duplicate template copies in `deliverables/`."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** moving ORSI project artifacts, **creating or promoting a new versioned deliverable (vN)**, or cleaning old robotic cholecystectomy files. **Mandatory** at the end of [Office PPTX metrics decks](#office-pptx-metrics-decks) ",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Repository structure hygiene",
+  "trigger_phrases": [
+    "ORSI",
+    "Repository structure hygiene"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

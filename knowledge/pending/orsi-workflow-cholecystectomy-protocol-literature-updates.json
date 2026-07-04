@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-cholecystectomy-protocol-literature-updates",
+  "incompatible_when": [],
+  "procedure": [
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/study_protocol/source/ORSI_Robotic_Cholecystectomy_Study_Protocol_v1.docx` as the master template unless the user explicitly names another master.",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/literature/` as the canonical local literature root (`procedure/`, `education/`, `clinical/`, `curated/`). Do not use removed paths (`Orsi_Metrics_Research/references/proficien",
+    "- If the user says v1 is ground truth, create the next version directly from v1 and change only the requested definition/reference text; do not use a later version as the structural template.",
+    "- For each new pass, create a versioned DOCX copy with Word COM, such as `..._v2.docx`; do not overwrite v1.",
+    "- If the builder is synchronized with the requested protocol changes, run `Orsi_Metrics_Research/scripts/robotic_cholecystectomy/study_protocol/build_cholecystectomy_study_protocol.py`; otherwise create the next versioned DOCX by Word COM c",
+    "- Use only article-supported facts when updating thresholds or rationale. Keep literature synthesis conservative and cite the exact local articles used.",
+    "1. Snapshot v1 with a file hash before any copy/edit step.",
+    "2. Rename opaque reference PDFs to citation/title filenames before citing them.",
+    "3. Convert local article PDFs and summary DOCX to `.cache/markitdown/...md` via `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research/scripts/to_markdown.py` (or the local MarkItDown CLI); extract threshold-relevant facts from the cached markdo",
+    "4. Create the next versioned protocol DOCX from the user-designated master via Word COM.",
+    "5. Update only the copied DOCX sections required by the user. For v1-ground-truth passes, keep the v1 document order and structure intact and limit edits to participant definitions, directly related rationale text, and directly related refe",
+    "6. Use `RA-Chole` as the protocol abbreviation for robot-assisted cholecystectomy; do not introduce new `RA-C` wording in protocol deliverables.",
+    "7. Define full RA-Chole console cases as primary console performance of the main operative procedure, not observation, bedside assistance, simulation, or isolated modular participation.",
+    "8. Define novices as platform-console novices with `<5` total robotic console cases across all robotic procedures unless the user changes the construct-validity design.",
+    "9. Use the composite expert benchmark definition unless newer local literature or user direction changes it: consultant-level surgeons with current independent robotic console practice and either `>=30` full multiport RA-Chole cases as cons",
+    "- Confirm the v1 hash is unchanged.",
+    "- Confirm the new versioned DOCX exists and parses with `python-docx`.",
+    "- Verify the expected threshold strings, literature references, and questionnaire fields are present in the new DOCX.",
+    "- Open/save the new DOCX with Word COM when Word automation is available; if COM hangs, kill only automation-owned hidden `WINWORD.EXE` processes and report the validation gap.",
+    "- Confirm renamed PDFs exist and old opaque names are gone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** iterative edits to the robotic cholecystectomy study protocol, especially participant-threshold updates based on local literature in `Orsi_Metrics_Research/projects/robotic_cholecystectomy/literature/procedure/` and relate",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Cholecystectomy protocol literature updates",
+  "trigger_phrases": [
+    "ORSI",
+    "Cholecystectomy protocol literature updates"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

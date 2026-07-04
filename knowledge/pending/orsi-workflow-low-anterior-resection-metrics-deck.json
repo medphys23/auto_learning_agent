@@ -1,0 +1,106 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-low-anterior-resection-metrics-deck",
+  "incompatible_when": [],
+  "procedure": [
+    "- Treat `Orsi_Metrics_Research/projects/low_anterior_resection/source/LAR metrics ORSI - edited 24022026.doc` as the current LAR source unless the user provides a newer source.",
+    "- Convert the `.doc` to `source/LAR metrics ORSI - edited 24022026.docx` with Word COM before parsing; do not use the legacy `Orsi_Metrics_Research/references/LAR/` copy as the active source.",
+    "- Use `Orsi_Metrics_Research/templates/metrics_template.pptx` and PowerPoint COM for PPTX writes.",
+    "- Use the cholecystectomy metrics-deck discipline: versioned output, exact title ranges, source-count validation, table-bound checks, and PowerPoint export validation.",
+    "1. Build with `Orsi_Metrics_Research/scripts/build_lar_metrics_deck.py`; keep the script as the reproducible source of truth and do not hand-edit generated PPTX content.",
+    "2. Preserve the LAR-specific phase/subgroup numbering from the source (`I.1`, `IF.1`, `IM.1`, etc.); do not force cholecystectomy-style global numeric renumbering onto LAR subgroup rows.",
+    "3. Pack no more than 6 metric rows per slide and label every metric slide title with the exact visible step range.",
+    "4. Keep end-of-phase slides LAR-specific: source-listed E rows, source-listed CE rows, and DNTT/take-over trigger rows.",
+    "5. Create new versioned outputs in `projects/low_anterior_resection/deliverables/`; preserve earlier LAR versions unless the user asks to archive or replace them.",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\requirements.txt`",
+    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`",
+    "- `.\\.venv\\Scripts\\markitdown.exe --help`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\build_lar_metrics_deck.py`",
+    "- Validate the builder-reported source counts and the PPTX-derived counts match: 13 phase blocks, 96 metric rows, 77 errors, and 118 critical errors for the current 2026-02-24 source.",
+    "- Open/export the PPTX through PowerPoint COM; confirm the deck is readable, slide count is stable, metric titles include exact step ranges, and no table extends beyond slide bounds.",
+    "- 2026-06-21: Revised after feedback to use the cholecystectomy metrics-deck workflow for LAR. Required deltas: canonical project-source `.doc`, versioned v2 deck, exact range titles, reproducible COM builder, PPTX-derived source-count vali"
+  ],
+  "provenance": {
+    "created_at": "2026-07-04T22:00:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-04T22:00:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** creating or regenerating the robotic low anterior resection LAR metrics PPTX from the ORSI LAR source scoring sheet.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Low anterior resection metrics deck",
+  "trigger_phrases": [
+    "ORSI",
+    "Low anterior resection metrics deck"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}
