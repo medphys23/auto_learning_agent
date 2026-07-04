@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Orchestrator knowledge record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "id",
+    "title",
+    "type",
+    "scope",
+    "status",
+    "summary",
+    "trigger_phrases",
+    "tags",
+    "applicability",
+    "incompatible_when",
+    "procedure",
+    "verification",
+    "rollback",
+    "evidence",
+    "provenance",
+    "confidence",
+    "reuse"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "type": {
+      "type": "string",
+      "enum": ["workflow", "pattern", "decision", "failure", "command", "constraint", "preference", "reference", "anti_pattern"]
+    },
+    "scope": { "type": "string", "enum": ["global", "domain", "stack", "repository"] },
+    "status": { "type": "string", "enum": ["candidate", "validated", "production_proven", "canonical", "deprecated", "rejected"] },
+    "summary": { "type": "string", "minLength": 1 },
+    "trigger_phrases": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "applicability": { "type": "object" },
+    "incompatible_when": { "type": "array", "items": { "type": "string" } },
+    "procedure": { "type": "array", "items": { "type": "string" } },
+    "verification": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "rollback": { "type": "array", "items": { "type": "string" } },
+    "evidence": { "type": "object" },
+    "provenance": { "type": "object" },
+    "confidence": { "type": "object" },
+    "reuse": { "type": "object" }
+  }
+}

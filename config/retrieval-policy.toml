@@ -1,0 +1,20 @@
+index_first = true
+maximum_full_records_opened = 6
+maximum_central_knowledge_tokens = 12000
+
+[budgets]
+primary_records = 3
+supporting_records = 2
+failure_records = 1
+
+[ranking]
+ordered_factors = [
+  "exact_task_type_match",
+  "exact_stack_runtime_match",
+  "repository_marker_match",
+  "production_proven_or_canonical_status",
+  "successful_reuse_history",
+  "technical_recency",
+  "user_approved_preference",
+  "confidence_score",
+]

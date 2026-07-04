@@ -1,0 +1,32 @@
+candidate_first = true
+allow_low_risk_validated_promotion = true
+
+approval_required_for = [
+  "global_scope",
+  "canonical_status",
+  "architecture",
+  "dependency_selection",
+  "security",
+  "authentication",
+  "network_access",
+  "database_migration",
+  "production_deployment",
+  "cost_bearing_service",
+  "data_retention",
+  "regulated_domain",
+  "destructive_command",
+  "global_output_style",
+  "agent_permission",
+  "approval_policy",
+  "sandbox_policy",
+  "mcp_server",
+  "model_provider_configuration",
+]
+
+[score_weights]
+evidence_quality = 30
+verification_completeness = 20
+successful_reuse = 20
+scope_clarity = 10
+rollback_quality = 10
+recency_relevance = 10

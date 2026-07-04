@@ -1,0 +1,15 @@
+---
+description: auto_learning_agent verification commands
+alwaysApply: true
+---
+
+# Verification
+
+Run from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+.\.venv\Scripts\python.exe scripts\validate_codex_config.py
+.\.venv\Scripts\python.exe scripts\audit_global_instructions.py
+git status --short --ignored
+```

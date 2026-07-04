@@ -1,0 +1,10 @@
+---
+description: auto_learning_agent repository policy and local MVP orchestrator boundaries
+alwaysApply: true
+---
+
+# auto_learning_agent core rules
+
+This repository is the local MVP orchestrator control plane. It may audit and preview, but it must not directly mutate `C:\Users\ppyxe\.codex` or `C:\Users\ppyxe\.cursor` without a separate explicit approval task.
+
+Use Python 3.11 standard library scripts and the repo-local `.venv`. Keep generated reports ignored unless the user asks to track them.

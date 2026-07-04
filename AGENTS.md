@@ -1,0 +1,52 @@
+# auto_learning_agent - agent instructions
+
+Inherits global rules from `~/.codex/AGENTS.md` and `~/.cursor/rules/`.
+
+**Cursor mirror:** [`.cursor/rules/`](.cursor/rules/) - keep in sync with this file.
+
+## Purpose
+This repository is the local MVP for a governed Codex/Cursor orchestrator. It stores repository-local policy, read-only audit tooling, knowledge schemas, retrieval policy, and publication previews. It must not directly mutate user-level Codex or Cursor folders.
+
+## Stack
+- Python 3.11 standard library scripts.
+- TOML parsing uses `tomllib`.
+- Tests use `unittest`.
+- Existing PDF source material remains tracked as reference input.
+
+## Dependency isolation
+- Install Python packages only into the repo-root `.venv` unless an incompatible subproject has a documented local `.venv`.
+- Bootstrap on Windows with `uv venv --python 3.11 .venv`.
+- Use the shared `uv` cache on the same filesystem as the repo. Never use bare/global `pip`, `pip install --user`, `uv pip --system`, `--link-mode copy`, or `--no-cache`.
+- Keep `.venv/`, `venv/`, and generated dependency directories in `.gitignore` and out of git.
+
+## Uses from global catalog
+- Python 3.11 with repo-local `.venv`.
+- MarkItDown/PDF reading policy applies when analyzing future Office/PDF inputs.
+- No new production dependency is required for the MVP scripts.
+
+## Verification
+Run from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests
+.\.venv\Scripts\python.exe scripts\validate_codex_config.py
+.\.venv\Scripts\python.exe scripts\audit_global_instructions.py
+git status --short --ignored
+```
+
+## Repo skills catalog
+Maintain [`skills.md`](skills.md) beside this file. Document repeatable Codex workflows per `~/.codex/AGENTS.md`. Inherit cross-repo patterns from `~/.codex/skills.md`. Cursor mirror: `.cursor/skills/<name>/SKILL.md` when workflows exist.
+
+## Repo-specific rules
+- Global folders `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor` are read-only audit targets unless the user explicitly approves a separate publication step.
+- `scripts/publish_global_rules.py` is preview-only in this MVP and must refuse global writes.
+- Generated reports in `reports/*.md` are local outputs and are ignored by git.
+- Never harvest secrets, `.env` content, SQLite state, sessions, logs, plugin caches, dependency directories, build artifacts, or generated caches.
+- Knowledge promotion starts as local candidates. Global, canonical, security, sandbox, approval, model/provider, MCP, authentication, network, database, deployment, cost, retention, regulated-domain, destructive-command, or output-style changes require explicit approval metadata.
+
+## Stack propagation
+When introducing a new library, skill, or tool here, update `~/.codex/AGENTS.md` and propagate to other repos per global policy.
+
+## Git
+- Do not commit unless the user asks.
+- Single checkout only - never use `git worktree add`.

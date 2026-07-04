@@ -1,0 +1,44 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+# Repository-scoped Codex configuration for the local orchestrator MVP.
+# Provider, authentication, profile selection, notifications, and telemetry remain user-level settings.
+
+model_reasoning_effort = "medium"
+model_verbosity = "low"
+project_doc_fallback_filenames = ["TEAM_GUIDE.md", ".agents.md"]
+project_doc_max_bytes = 131072
+tool_output_token_limit = 16000
+
+developer_instructions = """
+This repository is the governed local MVP orchestration and knowledge control plane.
+Preserve existing global and repository instructions.
+Retrieve knowledge index-first and open only the minimum relevant records.
+Treat harvested lessons as candidates until evidence and promotion rules are satisfied.
+Never copy secrets, credentials, production payloads, PHI, or private datasets.
+Never declare production success without traceable production evidence.
+Never publish global Codex or Cursor changes without backups, diffs, syntax validation, conflict checks, and required approval.
+Keep repository-specific behavior local unless promotion criteria are met.
+"""
+
+[agents]
+max_threads = 3
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+[agents.workflow_router]
+description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
+config_file = "agents/workflow-router.toml"
+
+[agents.repository_harvester]
+description = "Inspects registered repositories read-only and creates evidence-backed knowledge candidates."
+config_file = "agents/repository-harvester.toml"
+
+[agents.knowledge_synthesizer]
+description = "Deduplicates candidates and proposes scoped promotions or deprecations."
+config_file = "agents/knowledge-synthesizer.toml"
+
+[agents.verifier]
+description = "Validates implementation, evidence, configuration, and publication readiness."
+config_file = "agents/verifier.toml"
+
+[sandbox_workspace_write]
+network_access = false

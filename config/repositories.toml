@@ -1,0 +1,7 @@
+[[repositories]]
+id = "auto_learning_agent"
+name = "auto_learning_agent"
+path = 'C:\Users\ppyxe\Documents\GitHub\auto_learning_agent'
+enabled = true
+scope = "orchestrator"
+notes = "Local MVP orchestrator repository."
