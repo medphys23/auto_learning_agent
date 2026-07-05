@@ -54,6 +54,18 @@ def backup_targets(targets: list[tuple[Path, Path, str]], backup_root: Path) -> 
     return backed_up
 
 
+def prune_backup_roots(backup_base: Path, keep: int) -> list[str]:
+    if keep < 1 or not backup_base.exists():
+        return []
+    backup_roots = sorted([path for path in backup_base.iterdir() if path.is_dir()], key=lambda path: path.name)
+    stale_roots = backup_roots[:-keep]
+    pruned: list[str] = []
+    for backup_root in stale_roots:
+        shutil.rmtree(backup_root)
+        pruned.append(str(backup_root))
+    return pruned
+
+
 def validate_master_targets(targets: list[tuple[Path, Path, str]]) -> None:
     missing = [str(source) for source, _, _ in targets if not source.exists()]
     if missing:
@@ -78,6 +90,7 @@ def write_publication_reports(
     mode: str,
     backup_root: Path | None,
     backed_up: list[str],
+    pruned_backups: list[str],
     applied: list[dict[str, Any]],
 ) -> Path:
     reports_dir.mkdir(parents=True, exist_ok=True)
@@ -93,6 +106,8 @@ def write_publication_reports(
     ]
     if backup_root:
         lines.append(f"- Backup root: `{backup_root}`")
+    if pruned_backups:
+        lines.append(f"- Pruned backups: {len(pruned_backups)}")
     lines.append("")
     if applied:
         lines.append("## Applied files")
@@ -116,6 +131,10 @@ def write_publication_reports(
         rollback_lines.append("")
         rollback_lines.append("Backed up targets:")
         rollback_lines.extend(f"- `{item}`" for item in backed_up)
+        if pruned_backups:
+            rollback_lines.append("")
+            rollback_lines.append("Pruned older backup roots:")
+            rollback_lines.extend(f"- `{item}`" for item in pruned_backups)
     else:
         rollback_lines.append("No backups were created because publication was preview-only.")
     write_text(rollback, "\n".join(rollback_lines))
@@ -127,6 +146,7 @@ def publish_global_rules(
     reports_dir: Path,
     master_root: Path,
     backup_base: Path,
+    backup_keep: int = 2,
     codex_home: Path = CODEX_HOME,
     cursor_home: Path = CURSOR_HOME,
     apply: bool = False,
@@ -141,6 +161,7 @@ def publish_global_rules(
             mode="preview-only",
             backup_root=None,
             backed_up=[],
+            pruned_backups=[],
             applied=[],
         )
         return {"mode": "preview", "report": str(report), "applied": []}
@@ -151,14 +172,22 @@ def publish_global_rules(
     backup_root = backup_base / timestamp
     backed_up = backup_targets(targets, backup_root)
     applied = apply_targets(targets)
+    pruned_backups = prune_backup_roots(backup_base, backup_keep)
     report = write_publication_reports(
         reports_dir,
         mode="applied",
         backup_root=backup_root,
         backed_up=backed_up,
+        pruned_backups=pruned_backups,
         applied=applied,
     )
-    return {"mode": "applied", "report": str(report), "backup_root": str(backup_root), "applied": applied}
+    return {
+        "mode": "applied",
+        "report": str(report),
+        "backup_root": str(backup_root),
+        "pruned_backups": pruned_backups,
+        "applied": applied,
+    }
 
 
 def main() -> int:
@@ -166,6 +195,7 @@ def main() -> int:
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
     parser.add_argument("--master-root", type=Path, default=Path("master"))
     parser.add_argument("--backup-base", type=Path, default=Path("backups") / "global-sync")
+    parser.add_argument("--backup-keep", type=int, default=2, help="Number of newest backup roots to retain after apply.")
     parser.add_argument("--codex-home", type=Path, default=CODEX_HOME)
     parser.add_argument("--cursor-home", type=Path, default=CURSOR_HOME)
     parser.add_argument("--preview", action="store_true", help="Generate master files and reports without global writes.")
@@ -177,6 +207,7 @@ def main() -> int:
             reports_dir=args.reports_dir,
             master_root=args.master_root,
             backup_base=args.backup_base,
+            backup_keep=args.backup_keep,
             codex_home=args.codex_home,
             cursor_home=args.cursor_home,
             apply=args.apply,
@@ -189,6 +220,8 @@ def main() -> int:
     print(f"Report: {result['report']}")
     if result.get("backup_root"):
         print(f"Backup root: {result['backup_root']}")
+    if result.get("pruned_backups"):
+        print(f"Pruned backups: {len(result['pruned_backups'])}")
     return 0
 
 

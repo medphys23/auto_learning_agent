@@ -2,12 +2,12 @@
   "repositories": {
     "auto_learning_agent": {
       "branch": "main",
-      "commit": "26af06d639a5ed896e910e53e041d51f9c127663",
-      "digest": "d41c7da7bd37d7404bbd81392378ca992f371126802a6450d31a19ab7d59b67a",
-      "dirty": "M knowledge/INDEX.md\n M knowledge/catalog.jsonl\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M reports/orchestrator-pipeline-summary.json\n M state/repository-snapshots.json\n?? backups/global-sync/20260705T091234Z/",
-      "dirty_count": 21,
-      "file_count": 181,
-      "fingerprinted_at": "2026-07-05T09:19:00Z",
+      "commit": "a0832b8606c23517633ac8fa2ae8a27995127065",
+      "digest": "b774a4cd8c60f21af8d9f5a58549e54c4d6a039112a75614010d0e393d805c72",
+      "dirty": "M knowledge/INDEX.md\n M scripts/publish_global_rules.py\n M scripts/run_orchestrator_pipeline.py\n M state/repository-snapshots.json\n M tests/test_orchestrator_mvp.py",
+      "dirty_count": 5,
+      "file_count": 269,
+      "fingerprinted_at": "2026-07-05T09:23:33Z",
       "harvest_schema_version": "safe-repo-knowledge-v3",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",

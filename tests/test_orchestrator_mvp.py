@@ -318,6 +318,7 @@ class OrchestratorMvpTests(unittest.TestCase):
                 reports_dir=Path("reports"),
                 master_root=Path("master"),
                 backup_base=Path("backups") / "global-sync",
+                backup_keep=2,
                 retrieval_query="orsi",
                 retrieval_status="candidate",
             )
@@ -330,6 +331,7 @@ class OrchestratorMvpTests(unittest.TestCase):
             reports_dir=Path("reports"),
             master_root=Path("master"),
             backup_base=Path("backups") / "global-sync",
+            backup_keep=2,
             retrieval_query="orsi",
             retrieval_status="candidate",
         )
@@ -343,6 +345,7 @@ class OrchestratorMvpTests(unittest.TestCase):
             reports_dir=Path("reports"),
             master_root=Path("master"),
             backup_base=Path("backups") / "global-sync",
+            backup_keep=2,
             retrieval_query="orsi",
             retrieval_status="candidate",
         )
@@ -350,6 +353,7 @@ class OrchestratorMvpTests(unittest.TestCase):
         self.assertEqual(len(publish_steps), 1)
         self.assertIn("--apply", publish_steps[0].command)
         self.assertIn("--confirm-global-write", publish_steps[0].command)
+        self.assertIn("--backup-keep", publish_steps[0].command)
 
     def test_pipeline_parses_clean_and_dirty_repo_output(self) -> None:
         discovered = parse_discovery_lines(
@@ -477,6 +481,34 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertTrue((Path(applied["backup_root"]) / "codex" / "AGENTS.md").exists())
             self.assertIn("Orchestrator Knowledge Layer", (codex / "AGENTS.md").read_text(encoding="utf-8"))
             self.assertTrue((cursor / "skills" / "orchestrator-knowledge" / "SKILL.md").exists())
+
+    def test_publish_prunes_old_backup_roots(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            backup_base = base / "backups"
+            for name in ("20260101T000000Z", "20260102T000000Z"):
+                old_root = backup_base / name
+                old_root.mkdir(parents=True)
+                (old_root / "marker.txt").write_text(name, encoding="utf-8")
+
+            applied = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=backup_base,
+                backup_keep=2,
+                codex_home=codex,
+                cursor_home=cursor,
+                apply=True,
+                confirm_global_write=True,
+            )
+
+            remaining = sorted(path.name for path in backup_base.iterdir() if path.is_dir())
+            self.assertEqual(len(remaining), 2)
+            self.assertNotIn("20260101T000000Z", remaining)
+            self.assertIn("20260102T000000Z", remaining)
+            self.assertIn(Path(applied["backup_root"]).name, remaining)
+            self.assertEqual(len(applied["pruned_backups"]), 1)
 
 
 if __name__ == "__main__":

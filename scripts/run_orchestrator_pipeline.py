@@ -143,6 +143,7 @@ def build_steps(
     reports_dir: Path,
     master_root: Path,
     backup_base: Path,
+    backup_keep: int,
     retrieval_query: str,
     retrieval_status: str,
 ) -> list[PipelineStep]:
@@ -189,6 +190,8 @@ def build_steps(
         str(master_root),
         "--backup-base",
         str(backup_base),
+        "--backup-keep",
+        str(backup_keep),
     ]
     if apply_global:
         publish_command.extend(["--apply", "--confirm-global-write"])
@@ -389,6 +392,7 @@ def main() -> int:
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
     parser.add_argument("--master-root", type=Path, default=Path("master"))
     parser.add_argument("--backup-base", type=Path, default=Path("backups") / "global-sync")
+    parser.add_argument("--backup-keep", type=int, default=2, help="Number of newest backup roots to retain after global apply.")
     parser.add_argument("--retrieval-query", default="orsi")
     parser.add_argument("--retrieval-status", default="candidate")
     parser.add_argument("--log-file", type=Path, default=Path("reports") / "orchestrator-pipeline.log")
@@ -406,6 +410,7 @@ def main() -> int:
             reports_dir=args.reports_dir,
             master_root=args.master_root,
             backup_base=args.backup_base,
+            backup_keep=args.backup_keep,
             retrieval_query=args.retrieval_query,
             retrieval_status=args.retrieval_status,
         )

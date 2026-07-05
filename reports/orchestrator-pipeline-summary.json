@@ -1,10 +1,10 @@
 {
-  "apply_global": true,
+  "apply_global": false,
   "failed_step": "",
-  "finished_at": "2026-07-05T09:19:06Z",
+  "finished_at": "2026-07-05T09:23:37Z",
   "log_file": "reports\\orchestrator-pipeline.log",
-  "mode": "apply-global",
-  "started_at": "2026-07-05T09:18:46Z",
+  "mode": "preview",
+  "started_at": "2026-07-05T09:23:20Z",
   "status": "completed",
   "steps": [
     {
@@ -16,14 +16,14 @@
         "-s",
         "tests"
       ],
-      "elapsed_seconds": 2.422,
+      "elapsed_seconds": 2.312,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:18:49Z",
+      "finished_at": "2026-07-05T09:23:22Z",
       "global_write": false,
       "name": "unit tests",
       "output_lines": 5,
       "repository_status": {},
-      "started_at": "2026-07-05T09:18:46Z"
+      "started_at": "2026-07-05T09:23:20Z"
     },
     {
       "command": [
@@ -32,12 +32,12 @@
       ],
       "elapsed_seconds": 0.141,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:18:49Z",
+      "finished_at": "2026-07-05T09:23:22Z",
       "global_write": false,
       "name": "validate local Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:18:49Z"
+      "started_at": "2026-07-05T09:23:22Z"
     },
     {
       "command": [
@@ -46,23 +46,23 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 8.453,
+      "elapsed_seconds": 9.047,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:18:57Z",
+      "finished_at": "2026-07-05T09:23:31Z",
       "global_write": false,
       "name": "audit global instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:18:49Z"
+      "started_at": "2026-07-05T09:23:22Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/discover_repositories.py"
       ],
-      "elapsed_seconds": 1.641,
+      "elapsed_seconds": 1.453,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:18:59Z",
+      "finished_at": "2026-07-05T09:23:33Z",
       "global_write": false,
       "name": "discover local repositories",
       "output_lines": 10,
@@ -136,23 +136,23 @@
           {
             "branch": "main",
             "clean": false,
-            "dirty_count": 21,
+            "dirty_count": 5,
             "name": "auto_learning_agent",
             "scope": "orchestrator"
           }
         ],
         "kind": "discovery"
       },
-      "started_at": "2026-07-05T09:18:57Z"
+      "started_at": "2026-07-05T09:23:31Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 5.921,
+      "elapsed_seconds": 3.359,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:19:05Z",
+      "finished_at": "2026-07-05T09:23:36Z",
       "global_write": false,
       "name": "harvest clean repositories",
       "output_lines": 10,
@@ -162,29 +162,29 @@
             "candidate_count": 7,
             "clean": true,
             "id": "campania-transplant",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 5,
             "clean": true,
             "id": "general-work",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 9,
             "clean": true,
             "id": "investment-binance",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 7,
             "clean": true,
             "id": "kidney-federico",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 22,
@@ -204,22 +204,22 @@
             "candidate_count": 6,
             "clean": true,
             "id": "ps-robot-adaptor",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 17,
             "clean": true,
             "id": "x-booking",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           },
           {
             "candidate_count": 7,
             "clean": true,
             "id": "xenios-finances",
-            "reason": "clean worktree",
-            "status": "harvested"
+            "reason": "unchanged",
+            "status": "skipped"
           }
         ],
         "dirty": [
@@ -233,7 +233,7 @@
         ],
         "kind": "harvest"
       },
-      "started_at": "2026-07-05T09:18:59Z"
+      "started_at": "2026-07-05T09:23:33Z"
     },
     {
       "command": [
@@ -244,14 +244,14 @@
         "--status",
         "candidate"
       ],
-      "elapsed_seconds": 0.157,
+      "elapsed_seconds": 0.204,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:19:05Z",
+      "finished_at": "2026-07-05T09:23:36Z",
       "global_write": false,
       "name": "retrieve knowledge smoke",
       "output_lines": 183,
       "repository_status": {},
-      "started_at": "2026-07-05T09:19:05Z"
+      "started_at": "2026-07-05T09:23:36Z"
     },
     {
       "command": [
@@ -265,12 +265,12 @@
       ],
       "elapsed_seconds": 0.218,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:19:05Z",
+      "finished_at": "2026-07-05T09:23:37Z",
       "global_write": false,
       "name": "synthesize top-level instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:19:05Z"
+      "started_at": "2026-07-05T09:23:36Z"
     },
     {
       "command": [
@@ -282,32 +282,18 @@
         "master",
         "--backup-base",
         "backups\\global-sync",
-        "--apply",
-        "--confirm-global-write"
+        "--backup-keep",
+        "2",
+        "--preview"
       ],
-      "elapsed_seconds": 0.36,
+      "elapsed_seconds": 0.219,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:19:06Z",
-      "global_write": true,
-      "name": "publish global rules",
-      "output_lines": 3,
-      "repository_status": {},
-      "started_at": "2026-07-05T09:19:05Z"
-    },
-    {
-      "command": [
-        "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
-        "scripts/validate_codex_config.py",
-        "--global"
-      ],
-      "elapsed_seconds": 0.14,
-      "exit_code": 0,
-      "finished_at": "2026-07-05T09:19:06Z",
+      "finished_at": "2026-07-05T09:23:37Z",
       "global_write": false,
-      "name": "validate global Codex TOML",
+      "name": "preview global publication",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:19:06Z"
+      "started_at": "2026-07-05T09:23:37Z"
     }
   ]
 }

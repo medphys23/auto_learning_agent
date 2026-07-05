@@ -2,22 +2,22 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-07-05T09:19:05Z
+Generated: 2026-07-05T09:23:36Z
 
 ## Coverage
 
 | Repository | Status | Candidates | Profile | Source map | Stack/deps | Verification | Workflows | Commands | Constraints |
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
 | auto_learning_agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 10 | yes |
-| campania-transplant | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
-| general-work | harvested | 5 | yes | yes | yes | yes | 0 | 0 | yes |
-| investment-binance | harvested | 9 | yes | yes | yes | yes | 1 | 3 | yes |
-| kidney-federico | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| campania-transplant | skipped | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| general-work | skipped | 5 | yes | yes | yes | yes | 0 | 0 | yes |
+| investment-binance | skipped | 9 | yes | yes | yes | yes | 1 | 3 | yes |
+| kidney-federico | skipped | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 | orsi | skipped | 22 | yes | yes | yes | yes | 10 | 7 | yes |
 | practice-ops-dashboard | skipped | 12 | yes | yes | yes | yes | 3 | 4 | yes |
-| ps-robot-adaptor | harvested | 6 | yes | yes | yes | yes | 0 | 1 | yes |
-| x-booking | harvested | 17 | yes | yes | yes | yes | 3 | 9 | yes |
-| xenios-finances | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| ps-robot-adaptor | skipped | 6 | yes | yes | yes | yes | 0 | 1 | yes |
+| x-booking | skipped | 17 | yes | yes | yes | yes | 3 | 9 | yes |
+| xenios-finances | skipped | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 
 ## Catalog Summary
 
