@@ -1,0 +1,206 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "languages": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "3a8b967fe6f0bdf319ab7ee9ef86ab0678d55166",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/client-onboarding/SKILL.md",
+      "AGENTS.md",
+      "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
+      "next-env.d.ts",
+      "scripts/clean-worktree.ps1",
+      "scripts/import-client.ts",
+      "scripts/validate-config.ts",
+      "src/app/[locale]/about/page.tsx",
+      "src/app/[locale]/book/page.tsx",
+      "src/app/[locale]/contact/page.tsx",
+      "tests/config.test.ts",
+      "tests/e2e/smoke.e2e.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "x-booking-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:04Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/client-onboarding/SKILL.md",
+      "AGENTS.md",
+      "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
+      "next-env.d.ts",
+      "scripts/clean-worktree.ps1",
+      "scripts/import-client.ts",
+      "scripts/validate-config.ts",
+      "src/app/[locale]/about/page.tsx",
+      "src/app/[locale]/book/page.tsx",
+      "src/app/[locale]/contact/page.tsx",
+      "tests/config.test.ts",
+      "tests/e2e/smoke.e2e.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:04Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/app/[locale]/about/page.tsx",
+          "src/app/[locale]/book/page.tsx",
+          "src/app/[locale]/contact/page.tsx",
+          "src/app/[locale]/emergency/page.tsx",
+          "src/app/[locale]/layout.tsx",
+          "src/app/[locale]/legal/[doc]/page.tsx",
+          "src/app/[locale]/page.tsx",
+          "src/app/[locale]/patient-info/page.tsx"
+        ],
+        "file_count": 43,
+        "suffixes": {
+          ".css": 1,
+          ".ts": 23,
+          ".tsx": 19
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
+          "next-env.d.ts",
+          "package.json",
+          "playwright.config.ts",
+          "README.md",
+          "skills.md",
+          "tailwind.config.ts"
+        ],
+        "file_count": 10,
+        "suffixes": {
+          ".json": 2,
+          ".md": 4,
+          ".ts": 4
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/client-onboarding/SKILL.md",
+          ".cursor/skills/development-on-dev01/SKILL.md",
+          ".cursor/skills/production-launch-dns-cutover/SKILL.md"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".md": 3,
+          ".mdc": 2
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/clean-worktree.ps1",
+          "scripts/import-client.ts",
+          "scripts/validate-config.ts",
+          "scripts/validate-production.ts"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".ps1": 1,
+          ".ts": 3
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/config.test.ts",
+          "tests/e2e/smoke.e2e.ts"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".ts": 2
+        }
+      }
+    ],
+    "harvestable_text_file_count": 64
+  },
+  "status": "candidate",
+  "summary": "Safe source map for X_booking: 5 harvestable areas, led by src, ., .cursor, scripts, tests.",
+  "tags": [
+    "architecture-map",
+    "beautifulsoup4",
+    "branch_sensitive",
+    "contact_data",
+    "local-github-analysis",
+    "no_patient_data",
+    "openpyxl",
+    "playwright",
+    "python",
+    "scraper",
+    "source-map",
+    "tqdm",
+    "x-booking"
+  ],
+  "title": "X_booking source and architecture map",
+  "trigger_phrases": [
+    "X_booking",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

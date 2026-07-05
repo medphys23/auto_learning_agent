@@ -1,0 +1,178 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "languages": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1f18c532e608eae147c250fab568d572e3f9a683",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "app/config/config.php",
+      "app/db/database.php",
+      "app/functions/budget_functions.php",
+      "public/assets/css/app.css",
+      "public/assets/js/app.js",
+      "public/budgets.php",
+      "requirements.txt"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "xenios-finances-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:05Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "app/config/config.php",
+      "app/db/database.php",
+      "app/functions/budget_functions.php",
+      "public/assets/css/app.css",
+      "public/assets/js/app.js",
+      "public/budgets.php",
+      "requirements.txt"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:05Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "app",
+        "examples": [
+          "app/config/config.php",
+          "app/db/database.php",
+          "app/functions/budget_functions.php",
+          "app/functions/dashboard_functions.php",
+          "app/functions/helpers.php",
+          "app/functions/logger.php",
+          "app/functions/recurring_functions.php",
+          "app/functions/transaction_functions.php"
+        ],
+        "file_count": 18,
+        "suffixes": {
+          ".php": 18
+        }
+      },
+      {
+        "area": "public",
+        "examples": [
+          "public/assets/css/app.css",
+          "public/assets/js/app.js",
+          "public/budgets.php",
+          "public/dashboard.php",
+          "public/index.php",
+          "public/settings.php",
+          "public/transaction_create.php",
+          "public/transaction_delete.php"
+        ],
+        "file_count": 11,
+        "suffixes": {
+          ".css": 1,
+          ".js": 1,
+          ".php": 9
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".mdc": 2
+        }
+      }
+    ],
+    "harvestable_text_file_count": 35
+  },
+  "status": "candidate",
+  "summary": "Safe source map for Xenios_FInances: 4 harvestable areas, led by app, public, ., .cursor.",
+  "tags": [
+    "architecture-map",
+    "bootstrap",
+    "chartjs",
+    "finance",
+    "local-github-analysis",
+    "local_only",
+    "mysql",
+    "php",
+    "source-map",
+    "xenios-finances"
+  ],
+  "title": "Xenios_FInances source and architecture map",
+  "trigger_phrases": [
+    "Xenios_FInances",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "languages": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_paths": [
+      "AGENTS.md",
+      "tests/test_calibration.py",
+      "tests/test_ds4_full.py",
+      "tests/test_ds4_layout.py",
+      "tests/test_golden_replay_determinism.py",
+      "tests/test_instrument_dof.py",
+      "tests/test_keyboard_input.py",
+      "tests/test_latency.py",
+      "tests/test_mapping_profile.py",
+      "tests/test_procedure_math.py",
+      "tests/test_session_logging.py",
+      "tests/test_sim_cart_state.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "ps-robot-adaptor-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:04Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md",
+      "tests/test_calibration.py",
+      "tests/test_ds4_full.py",
+      "tests/test_ds4_layout.py",
+      "tests/test_golden_replay_determinism.py",
+      "tests/test_instrument_dof.py",
+      "tests/test_keyboard_input.py",
+      "tests/test_latency.py",
+      "tests/test_mapping_profile.py",
+      "tests/test_procedure_math.py",
+      "tests/test_session_logging.py",
+      "tests/test_sim_cart_state.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:04Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for PS_robot_adaptor: 1 AGENTS command(s), 11 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "ci",
+    "deployment-signals",
+    "no_real_robot_control",
+    "ps-robot-adaptor",
+    "pygame",
+    "pyside6",
+    "pytest",
+    "python",
+    "robotics",
+    "simulation_only",
+    "tests",
+    "verification-profile"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": [
+      "tests/test_calibration.py",
+      "tests/test_ds4_full.py",
+      "tests/test_ds4_layout.py",
+      "tests/test_golden_replay_determinism.py",
+      "tests/test_instrument_dof.py",
+      "tests/test_keyboard_input.py",
+      "tests/test_latency.py",
+      "tests/test_mapping_profile.py",
+      "tests/test_procedure_math.py",
+      "tests/test_session_logging.py",
+      "tests/test_sim_cart_state.py"
+    ]
+  },
+  "title": "PS_robot_adaptor verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "PS_robot_adaptor",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    ".\\.venv\\Scripts\\python.exe -m pytest"
+  ]
+}

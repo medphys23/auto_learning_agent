@@ -1,0 +1,76 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [],
+    "languages": [],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.58
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "abff6dc4c37ad9d329791f1f10dda7ef518f6844",
+    "source_paths": [],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-work-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "registry_stack_tags": [],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for general_work: registry tags none; 0 tracked manifest file(s).",
+  "tags": [
+    "dependency-profile",
+    "general-work",
+    "manifest-profile",
+    "sandbox",
+    "stack-profile"
+  ],
+  "title": "general_work stack and dependency profile",
+  "trigger_phrases": [
+    "general_work",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

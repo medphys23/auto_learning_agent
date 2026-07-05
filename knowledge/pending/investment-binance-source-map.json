@@ -1,0 +1,209 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/binance-dashboard/SKILL.md",
+      "AGENTS.md",
+      "README.md",
+      "app.py",
+      "scripts/register_paper_worker_startup.ps1",
+      "scripts/run_paper_worker.ps1",
+      "scripts/run_paper_worker_background.ps1",
+      "src/__init__.py",
+      "src/analysis_engine.py",
+      "src/binance_client.py",
+      "tests/test_binance_client.py",
+      "tests/test_config.py",
+      "tests/test_indicators.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/binance-dashboard/SKILL.md",
+      "AGENTS.md",
+      "README.md",
+      "app.py",
+      "scripts/register_paper_worker_startup.ps1",
+      "scripts/run_paper_worker.ps1",
+      "scripts/run_paper_worker_background.ps1",
+      "src/__init__.py",
+      "src/analysis_engine.py",
+      "src/binance_client.py",
+      "tests/test_binance_client.py",
+      "tests/test_config.py",
+      "tests/test_indicators.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/__init__.py",
+          "src/analysis_engine.py",
+          "src/binance_client.py",
+          "src/config.py",
+          "src/indicators.py",
+          "src/ml.py",
+          "src/paper_trading.py",
+          "src/paper_worker.py"
+        ],
+        "file_count": 12,
+        "suffixes": {
+          ".py": 12
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_binance_client.py",
+          "tests/test_config.py",
+          "tests/test_indicators.py",
+          "tests/test_paper_trading.py",
+          "tests/test_policy.py",
+          "tests/test_storage_worker_ml.py"
+        ],
+        "file_count": 6,
+        "suffixes": {
+          ".py": 6
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "app.py",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".md": 3,
+          ".py": 1,
+          ".txt": 1
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/register_paper_worker_startup.ps1",
+          "scripts/run_paper_worker.ps1",
+          "scripts/run_paper_worker_background.ps1",
+          "scripts/unregister_paper_worker_startup.ps1"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".ps1": 4
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/binance-dashboard/SKILL.md"
+        ],
+        "file_count": 3,
+        "suffixes": {
+          ".md": 1,
+          ".mdc": 2
+        }
+      }
+    ],
+    "harvestable_text_file_count": 30
+  },
+  "status": "candidate",
+  "summary": "Safe source map for Investment_binance: 5 harvestable areas, led by src, tests, ., scripts, .cursor.",
+  "tags": [
+    "architecture-map",
+    "binance_public_api",
+    "finance",
+    "investment-binance",
+    "local-github-analysis",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "source-map",
+    "sqlite",
+    "streamlit"
+  ],
+  "title": "Investment_binance source and architecture map",
+  "trigger_phrases": [
+    "Investment_binance",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

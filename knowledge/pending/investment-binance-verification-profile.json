@@ -1,0 +1,133 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      "AGENTS.md",
+      "tests/test_binance_client.py",
+      "tests/test_config.py",
+      "tests/test_indicators.py",
+      "tests/test_paper_trading.py",
+      "tests/test_policy.py",
+      "tests/test_storage_worker_ml.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md",
+      "tests/test_binance_client.py",
+      "tests/test_config.py",
+      "tests/test_indicators.py",
+      "tests/test_paper_trading.py",
+      "tests/test_policy.py",
+      "tests/test_storage_worker_ml.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for Investment_binance: 3 AGENTS command(s), 6 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "binance_public_api",
+    "ci",
+    "deployment-signals",
+    "finance",
+    "investment-binance",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "sqlite",
+    "streamlit",
+    "tests",
+    "verification-profile"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": [
+      "tests/test_binance_client.py",
+      "tests/test_config.py",
+      "tests/test_indicators.py",
+      "tests/test_paper_trading.py",
+      "tests/test_policy.py",
+      "tests/test_storage_worker_ml.py"
+    ]
+  },
+  "title": "Investment_binance verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "Investment_binance",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    ".\\.venv\\Scripts\\python.exe -m unittest discover -s tests",
+    ".\\.venv\\Scripts\\python.exe -m compileall app.py src tests",
+    ".\\.venv\\Scripts\\python.exe -m streamlit run app.py --server.address 127.0.0.1 --server.port 8501"
+  ]
+}

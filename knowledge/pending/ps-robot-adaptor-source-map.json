@@ -1,0 +1,210 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "languages": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_paths": [
+      ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "docs/schemas/README.md",
+      "pyproject.toml",
+      "scripts/dev/update_requirements.ps1",
+      "src/teleop_replay/__init__.py",
+      "src/teleop_replay/deterministic_replay.py",
+      "src/teleop_sim/__init__.py",
+      "tests/test_calibration.py",
+      "tests/test_ds4_full.py",
+      "tests/test_ds4_layout.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "ps-robot-adaptor-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:03Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "docs/schemas/README.md",
+      "pyproject.toml",
+      "scripts/dev/update_requirements.ps1",
+      "src/teleop_replay/__init__.py",
+      "src/teleop_replay/deterministic_replay.py",
+      "src/teleop_sim/__init__.py",
+      "tests/test_calibration.py",
+      "tests/test_ds4_full.py",
+      "tests/test_ds4_layout.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:03Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/teleop_replay/__init__.py",
+          "src/teleop_replay/deterministic_replay.py",
+          "src/teleop_sim/__init__.py",
+          "src/teleop_sim/instrument_dof.py",
+          "src/teleop_sim/stub_backend.py",
+          "src/teleop_ui/__init__.py",
+          "src/teleop_ui/app.py",
+          "src/teleop_ui/app_sim_console.py"
+        ],
+        "file_count": 27,
+        "suffixes": {
+          ".json": 2,
+          ".py": 25
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_calibration.py",
+          "tests/test_ds4_full.py",
+          "tests/test_ds4_layout.py",
+          "tests/test_golden_replay_determinism.py",
+          "tests/test_instrument_dof.py",
+          "tests/test_keyboard_input.py",
+          "tests/test_latency.py",
+          "tests/test_mapping_profile.py"
+        ],
+        "file_count": 11,
+        "suffixes": {
+          ".py": 11
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "pyproject.toml",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".md": 3,
+          ".toml": 1,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/nonclinical-teleop-simulator-plan/reference.md",
+          ".cursor/skills/nonclinical-teleop-simulator-plan/SKILL.md"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".md": 2,
+          ".mdc": 3
+        }
+      },
+      {
+        "area": "docs",
+        "examples": [
+          "docs/schemas/README.md"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/dev/update_requirements.ps1"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".ps1": 1
+        }
+      }
+    ],
+    "harvestable_text_file_count": 50
+  },
+  "status": "candidate",
+  "summary": "Safe source map for PS_robot_adaptor: 6 harvestable areas, led by src, tests, ., .cursor, docs, scripts.",
+  "tags": [
+    "architecture-map",
+    "local-github-analysis",
+    "no_real_robot_control",
+    "ps-robot-adaptor",
+    "pygame",
+    "pyside6",
+    "pytest",
+    "python",
+    "robotics",
+    "simulation_only",
+    "source-map"
+  ],
+  "title": "PS_robot_adaptor source and architecture map",
+  "trigger_phrases": [
+    "PS_robot_adaptor",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

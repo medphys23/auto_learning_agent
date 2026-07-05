@@ -1,0 +1,110 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "graphviz",
+      "matplotlib",
+      "numpy",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "graphviz",
+      "matplotlib",
+      "numpy",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b479bf59bd0d0004a7bc2dc0f9f723da34916372",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "campania-transplant-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:00Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:00Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for campania_transplant: 2 AGENTS command(s), 0 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "campania-transplant",
+    "ci",
+    "deployment-signals",
+    "docx",
+    "graphviz",
+    "health_economics",
+    "matplotlib",
+    "not_clinical_decision_support",
+    "numpy",
+    "python",
+    "research",
+    "streamlit",
+    "tests",
+    "verification-profile"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": []
+  },
+  "title": "campania_transplant verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "campania_transplant",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    "uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r requirements.txt",
+    ".\\.venv\\Scripts\\python.exe -m compileall model figures scripts app.py -q"
+  ]
+}

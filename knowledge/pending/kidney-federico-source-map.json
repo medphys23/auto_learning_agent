@@ -1,0 +1,210 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "mamp",
+      "mysql",
+      "php",
+      "python"
+    ],
+    "languages": [
+      "mamp",
+      "mysql",
+      "php",
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "e397fc573c0183cc8cf3ed825f2f847bf777f916",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "config.py",
+      "frontend/admin/export_api.php",
+      "frontend/admin/export_api_schema.php",
+      "frontend/admin/export_filter_config.php",
+      "google_apps_script.js",
+      "scripts/apply_option_b_migration.py",
+      "scripts/ensure_mysql_database.py",
+      "scripts/execute_hospital_server.ps1",
+      "src/__init__.py",
+      "src/analysis/__init__.py",
+      "src/analysis/regressions.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "kidney-federico-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:02Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "config.py",
+      "frontend/admin/export_api.php",
+      "frontend/admin/export_api_schema.php",
+      "frontend/admin/export_filter_config.php",
+      "google_apps_script.js",
+      "scripts/apply_option_b_migration.py",
+      "scripts/ensure_mysql_database.py",
+      "scripts/execute_hospital_server.ps1",
+      "src/__init__.py",
+      "src/analysis/__init__.py",
+      "src/analysis/regressions.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:02Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "frontend",
+        "examples": [
+          "frontend/admin/export_api.php",
+          "frontend/admin/export_api_schema.php",
+          "frontend/admin/export_filter_config.php",
+          "frontend/admin/import_api.php",
+          "frontend/admin/lookup_api.php",
+          "frontend/admin/lookups.php",
+          "frontend/admin/patient_bulk.php",
+          "frontend/admin/smart_query_api.php"
+        ],
+        "file_count": 73,
+        "suffixes": {
+          ".json": 1,
+          ".php": 45,
+          ".py": 26,
+          ".txt": 1
+        }
+      },
+      {
+        "area": "src",
+        "examples": [
+          "src/__init__.py",
+          "src/analysis/__init__.py",
+          "src/analysis/regressions.py",
+          "src/analysis/statistics.py",
+          "src/database/__init__.py",
+          "src/database/connection.py",
+          "src/database/operations.py",
+          "src/database/schema.py"
+        ],
+        "file_count": 24,
+        "suffixes": {
+          ".py": 24
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/apply_option_b_migration.py",
+          "scripts/ensure_mysql_database.py",
+          "scripts/execute_hospital_server.ps1",
+          "scripts/git_pull_repo.ps1",
+          "scripts/hospital_pc_first_setup.ps1",
+          "scripts/local_machine_setup.py",
+          "scripts/local_setup_logon.ps1",
+          "scripts/package_portal_hosting.ps1"
+        ],
+        "file_count": 15,
+        "suffixes": {
+          ".ps1": 11,
+          ".py": 4
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "config.py",
+          "google_apps_script.js",
+          "init_db.py",
+          "main.py",
+          "migrate_data.py",
+          "migrate_schema.py",
+          "README.md"
+        ],
+        "file_count": 11,
+        "suffixes": {
+          ".js": 1,
+          ".md": 4,
+          ".py": 5,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".mdc": 2
+        }
+      }
+    ],
+    "harvestable_text_file_count": 125
+  },
+  "status": "candidate",
+  "summary": "Safe source map for kidney_federico: 5 harvestable areas, led by frontend, src, scripts, ., .cursor.",
+  "tags": [
+    "architecture-map",
+    "clinical_data",
+    "kidney-federico",
+    "local-github-analysis",
+    "mamp",
+    "mysql",
+    "phi",
+    "php",
+    "python",
+    "remote_portal",
+    "source-map"
+  ],
+  "title": "kidney_federico source and architecture map",
+  "trigger_phrases": [
+    "kidney_federico",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

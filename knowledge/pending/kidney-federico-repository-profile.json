@@ -1,0 +1,100 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "mamp",
+      "mysql",
+      "php",
+      "python"
+    ],
+    "languages": [
+      "mamp",
+      "mysql",
+      "php",
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "e397fc573c0183cc8cf3ed825f2f847bf777f916",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "kidney-federico-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:02Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:02Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 170,
+    "harvestable_text_file_count": 125,
+    "purpose_excerpt": "Clinical kidney transplant database and integrated research pipeline. PHP web dashboard on MAMP for patient records (demographics, pre-transplant workup, donor data, surgical details, post-operative care, follow-up); Python pipeline reads t",
+    "remote": "https://github.com/medphys23/kidney_federico.git",
+    "stack_excerpt": "**PHP 8.x** served via MAMP Apache (clinical dashboard + clinical API + public portal)."
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Clinical kidney transplant database and integrated research pipeline. PHP web dashboard on MAMP for patient records (demographics, pre-transplant workup, donor data, surgical details, post-operative care, follow-up); Python pipeline reads t",
+  "tags": [
+    "clinical_data",
+    "kidney-federico",
+    "local-github-analysis",
+    "mamp",
+    "mysql",
+    "phi",
+    "php",
+    "python",
+    "remote_portal",
+    "repository-profile"
+  ],
+  "title": "kidney_federico repository profile",
+  "trigger_phrases": [
+    "kidney_federico",
+    "kidney-federico",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

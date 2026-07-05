@@ -1,0 +1,150 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "languages": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "3a8b967fe6f0bdf319ab7ee9ef86ab0678d55166",
+    "source_paths": [
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "x-booking-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "dependencies": [
+        "@vercel/analytics",
+        "@vercel/speed-insights",
+        "next",
+        "react",
+        "react-dom",
+        "zod"
+      ],
+      "dev_dependencies": [
+        "@playwright/test",
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "eslint",
+        "eslint-config-next",
+        "postcss",
+        "tailwindcss",
+        "tsx",
+        "typescript",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "build",
+        "clean",
+        "dev",
+        "dev:clean",
+        "import:client",
+        "lint",
+        "start",
+        "test",
+        "test:e2e",
+        "test:watch",
+        "typecheck",
+        "validate:config",
+        "validate:production",
+        "verify",
+        "verify:launch"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:04Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:04Z"
+  },
+  "registry_stack_tags": [
+    "beautifulsoup4",
+    "openpyxl",
+    "playwright",
+    "python",
+    "tqdm"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for X_booking: registry tags beautifulsoup4, openpyxl, playwright, python, tqdm; 1 tracked manifest file(s).",
+  "tags": [
+    "beautifulsoup4",
+    "branch_sensitive",
+    "contact_data",
+    "dependency-profile",
+    "manifest-profile",
+    "no_patient_data",
+    "openpyxl",
+    "playwright",
+    "python",
+    "scraper",
+    "stack-profile",
+    "tqdm",
+    "x-booking"
+  ],
+  "title": "X_booking stack and dependency profile",
+  "trigger_phrases": [
+    "X_booking",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

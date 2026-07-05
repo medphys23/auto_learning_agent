@@ -1,0 +1,100 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "languages": [
+      "pygame",
+      "pyside6",
+      "pytest",
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "ps-robot-adaptor-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:03Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:03Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 62,
+    "harvestable_text_file_count": 50,
+    "purpose_excerpt": "Desktop **simulation-only** tooling for surgical teleoperation research: DualShock 4 input, controller diagnostics GUI, a four-arm research console with 3D instrument visualization and a 7-DOF instrument model, deterministic replay tests, J",
+    "remote": "https://github.com/medphys23/PS_robot_adaptor.git",
+    "stack_excerpt": "Python **3.11+** (pinned in `pyproject.toml`)."
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Desktop **simulation-only** tooling for surgical teleoperation research: DualShock 4 input, controller diagnostics GUI, a four-arm research console with 3D instrument visualization and a 7-DOF instrument model, deterministic replay tests, J",
+  "tags": [
+    "local-github-analysis",
+    "no_real_robot_control",
+    "ps-robot-adaptor",
+    "pygame",
+    "pyside6",
+    "pytest",
+    "python",
+    "repository-profile",
+    "robotics",
+    "simulation_only"
+  ],
+  "title": "PS_robot_adaptor repository profile",
+  "trigger_phrases": [
+    "PS_robot_adaptor",
+    "ps-robot-adaptor",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

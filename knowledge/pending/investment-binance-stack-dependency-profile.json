@@ -1,0 +1,126 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      "requirements.txt"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "requirements.txt",
+      "path": "requirements.txt",
+      "requirements": [
+        "streamlit>=1.57,<2",
+        "pandas>=2.3,<3",
+        "numpy>=2.2,<3",
+        "plotly>=6.7,<7",
+        "requests>=2.32,<3",
+        "scikit-learn>=1.7,<2"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "requirements.txt"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "registry_stack_tags": [
+    "binance_public_api",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "sqlite",
+    "streamlit"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for Investment_binance: registry tags binance_public_api, numpy, pandas, plotly, python, sqlite, streamlit; 1 tracked manifest file(s).",
+  "tags": [
+    "binance_public_api",
+    "dependency-profile",
+    "finance",
+    "investment-binance",
+    "manifest-profile",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "sqlite",
+    "stack-profile",
+    "streamlit"
+  ],
+  "title": "Investment_binance stack and dependency profile",
+  "trigger_phrases": [
+    "Investment_binance",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

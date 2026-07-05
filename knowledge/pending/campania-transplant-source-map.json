@@ -1,0 +1,179 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "graphviz",
+      "matplotlib",
+      "numpy",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "graphviz",
+      "matplotlib",
+      "numpy",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b479bf59bd0d0004a7bc2dc0f9f723da34916372",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "app.py",
+      "model/__init__.py",
+      "model/engine.py",
+      "model/params.py",
+      "packages.txt",
+      "scripts/compare_docx_versions.py",
+      "scripts/extract_docx.py",
+      "scripts/map_docx_media.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "campania-transplant-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:00Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "app.py",
+      "model/__init__.py",
+      "model/engine.py",
+      "model/params.py",
+      "packages.txt",
+      "scripts/compare_docx_versions.py",
+      "scripts/extract_docx.py",
+      "scripts/map_docx_media.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:00Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "app.py",
+          "packages.txt",
+          "PUSH_INSTRUCTIONS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 7,
+        "suffixes": {
+          ".md": 4,
+          ".py": 1,
+          ".txt": 2
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/compare_docx_versions.py",
+          "scripts/extract_docx.py",
+          "scripts/map_docx_media.py",
+          "scripts/repair_revised_docx.py",
+          "scripts/search_pdf_text.py"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".py": 5
+        }
+      },
+      {
+        "area": "model",
+        "examples": [
+          "model/__init__.py",
+          "model/engine.py",
+          "model/params.py"
+        ],
+        "file_count": 3,
+        "suffixes": {
+          ".py": 3
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".mdc": 2
+        }
+      }
+    ],
+    "harvestable_text_file_count": 17
+  },
+  "status": "candidate",
+  "summary": "Safe source map for campania_transplant: 4 harvestable areas, led by ., scripts, model, .cursor.",
+  "tags": [
+    "architecture-map",
+    "campania-transplant",
+    "docx",
+    "graphviz",
+    "health_economics",
+    "local-github-analysis",
+    "matplotlib",
+    "not_clinical_decision_support",
+    "numpy",
+    "python",
+    "research",
+    "source-map",
+    "streamlit"
+  ],
+  "title": "campania_transplant source and architecture map",
+  "trigger_phrases": [
+    "campania_transplant",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

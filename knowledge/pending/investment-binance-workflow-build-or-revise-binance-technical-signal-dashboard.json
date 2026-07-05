@@ -1,0 +1,116 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-workflow-build-or-revise-binance-technical-signal-dashboard",
+  "incompatible_when": [],
+  "procedure": [
+    "- User asks to build, revise, rerun, or extend the Binance technical signal dashboard.",
+    "- User adds indicators, symbols, timeframes, alert rules, or market thesis panels.",
+    "- Work from the repository root.",
+    "- Keep the app read-only and unauthenticated.",
+    "- Do not add trading execution, account API keys, withdrawals, or order management.",
+    "- Paper-trade tracking may write local SQLite files under `data/`, but it must use live Binance public market prices only.",
+    "- Do not require manual trade journal uploads for the active paper bot.",
+    "- Paper trades may open simulated longs (`paper_long`) or shorts (`paper_short`) from live public prices; mixed setups stay `observe`.",
+    "- Heavy analysis runs in the worker (`gather_cycle_data`), which persists a JSON `dashboard_snapshot` in `bot_state`; the dashboard reads that snapshot and only recomputes the single selected chart live.",
+    "- The reinforcement-style ML policy retrains every `200` closed trades (`PAPER_POLICY_BATCH`), with cold-start pass-through before `50`. It sets an advisory entry-probability threshold and a size multiplier within the `1%` risk ceiling and ",
+    "- Keep Streamlit indicators, the mobile Monitor view, and paper-bot trade state in separate dashboard tabs (`Monitor`, `Market Signals`, `Paper Bot & Trades`). Keep the PWA manifest/meta injection in `app.py` and theme in `.streamlit/config",
+    "- Preserve `6h`, `8h`, and `12h` as first-class timeframes unless the user explicitly removes them.",
+    "- Use USDC quote pairs for tracked coins unless the user explicitly asks for a different quote asset.",
+    "- Keep `1h`, `4h`, `12h`, `1d`, and `1w` as the key comparison timeframes.",
+    "1. Read `AGENTS.md` and this workflow.",
+    "2. Inspect existing app structure before editing: `app.py`, `src/config.py`, `src/binance_client.py`, `src/indicators.py`, `src/signals.py`, `src/analysis_engine.py`, `src/paper_worker.py`, `src/storage.py`, `src/paper_trading.py`, `src/ris",
+    "3. Update configuration first for symbols, timeframes, indicator periods, or data limits.",
+    "4. Keep Binance access inside `src/binance_client.py` and use public REST endpoints only.",
+    "5. Use the configured spot base URL fallback chain; prefer `data-api.binance.vision` for spot market data because `api.binance.com` may return regional `451` restrictions.",
+    "6. Keep futures context optional and non-blocking because `/fapi` endpoints may be region-blocked."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:**",
+  "tags": [
+    "binance_public_api",
+    "finance",
+    "investment-binance",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "repo-workflow",
+    "skills-md",
+    "sqlite",
+    "streamlit"
+  ],
+  "title": "Investment_binance workflow: Build or revise Binance technical signal dashboard",
+  "trigger_phrases": [
+    "Investment_binance",
+    "Build or revise Binance technical signal dashboard"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

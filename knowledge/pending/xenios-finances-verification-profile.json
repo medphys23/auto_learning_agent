@@ -1,0 +1,103 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "languages": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1f18c532e608eae147c250fab568d572e3f9a683",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "xenios-finances-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:05Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:05Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for Xenios_FInances: 2 AGENTS command(s), 0 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "bootstrap",
+    "chartjs",
+    "ci",
+    "deployment-signals",
+    "finance",
+    "local_only",
+    "mysql",
+    "php",
+    "tests",
+    "verification-profile",
+    "xenios-finances"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": []
+  },
+  "title": "Xenios_FInances verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "Xenios_FInances",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    "php -l public\\index.php",
+    "php -l app\\functions\\transaction_functions.php"
+  ]
+}

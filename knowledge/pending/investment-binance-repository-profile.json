@@ -1,0 +1,109 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 32,
+    "harvestable_text_file_count": 30,
+    "purpose_excerpt": "Local Binance technical signal dashboard for monitoring BNB, SUI, SOL, BTC, and ADA against USDC across multiple timeframes. The app analyzes public market data only and must never access exchange accounts, place trades, or automate real ex",
+    "remote": "https://github.com/medphys23/Investment_binance.git",
+    "stack_excerpt": "Python 3.11+"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Local Binance technical signal dashboard for monitoring BNB, SUI, SOL, BTC, and ADA against USDC across multiple timeframes. The app analyzes public market data only and must never access exchange accounts, place trades, or automate real ex",
+  "tags": [
+    "binance_public_api",
+    "finance",
+    "investment-binance",
+    "local-github-analysis",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "repository-profile",
+    "sqlite",
+    "streamlit"
+  ],
+  "title": "Investment_binance repository profile",
+  "trigger_phrases": [
+    "Investment_binance",
+    "investment-binance",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

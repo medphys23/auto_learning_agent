@@ -2,27 +2,27 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-07-05T09:03:04Z
+Generated: 2026-07-05T09:19:05Z
 
 ## Coverage
 
 | Repository | Status | Candidates | Profile | Source map | Stack/deps | Verification | Workflows | Commands | Constraints |
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
 | auto_learning_agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 10 | yes |
-| campania-transplant | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| general-work | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| investment-binance | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| kidney-federico | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
+| campania-transplant | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| general-work | harvested | 5 | yes | yes | yes | yes | 0 | 0 | yes |
+| investment-binance | harvested | 9 | yes | yes | yes | yes | 1 | 3 | yes |
+| kidney-federico | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 | orsi | skipped | 22 | yes | yes | yes | yes | 10 | 7 | yes |
 | practice-ops-dashboard | skipped | 12 | yes | yes | yes | yes | 3 | 4 | yes |
-| ps-robot-adaptor | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| x-booking | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| xenios-finances | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
+| ps-robot-adaptor | harvested | 6 | yes | yes | yes | yes | 0 | 1 | yes |
+| x-booking | harvested | 17 | yes | yes | yes | yes | 3 | 9 | yes |
+| xenios-finances | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 
 ## Catalog Summary
 
-Status counts: candidate=50.
-Type counts: command=21, constraint=3, reference=12, workflow=14.
+Status counts: candidate=108.
+Type counts: command=40, constraint=10, reference=40, workflow=18.
 
 No promoted knowledge records exist yet; current reusable knowledge remains candidate-first.
 

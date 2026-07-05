@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d1de303163dc07bb855ebc50697467a202148353",
+    "source_commit": "26af06d639a5ed896e910e53e041d51f9c127663",
     "source_paths": [
       "skills.md"
     ],
@@ -51,20 +51,22 @@
     "4. Preserve generated reports as ignored local artifacts unless the user explicitly asks to track them.",
     "5. For repository knowledge expansion, harvest only clean repos into candidate records and use coverage reports to explain blocked dirty repos.",
     "6. For unattended local operation, run `scripts\\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.",
+    "7. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.",
     "- 2026-07-04: Created the local MVP workflow with preview-only global publication and stdlib-only scripts.",
     "- 2026-07-04: Added local GitHub repository discovery and deep-harvest workflow; dirty repositories are recorded but blocked from candidate extraction.",
     "- 2026-07-05: Added top-level global instruction synthesis and guarded publication with backups, diffs, and explicit confirmation.",
     "- 2026-07-05: Expanded safe repository knowledge harvesting with source maps, stack/dependency profiles, verification profiles, coverage reports, and a full README operator manual.",
-    "- 2026-07-05: Added the `run_orchestrator_pipeline.py` startup pipeline with tqdm phase logs and guarded global apply mode."
+    "- 2026-07-05: Added the `run_orchestrator_pipeline.py` startup pipeline with tqdm phase logs and guarded global apply mode.",
+    "- 2026-07-05: Added colorama-backed clean/dirty/blocked repository status output to the pipeline log stream."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:55:18Z",
+    "created_at": "2026-07-05T09:12:30Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:55:18Z"
+    "updated_at": "2026-07-05T09:12:30Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

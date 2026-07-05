@@ -1,10 +1,10 @@
 {
   "apply_global": true,
   "failed_step": "",
-  "finished_at": "2026-07-05T09:03:05Z",
+  "finished_at": "2026-07-05T09:19:06Z",
   "log_file": "reports\\orchestrator-pipeline.log",
   "mode": "apply-global",
-  "started_at": "2026-07-05T09:02:47Z",
+  "started_at": "2026-07-05T09:18:46Z",
   "status": "completed",
   "steps": [
     {
@@ -18,26 +18,26 @@
       ],
       "elapsed_seconds": 2.422,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:02:49Z",
+      "finished_at": "2026-07-05T09:18:49Z",
       "global_write": false,
       "name": "unit tests",
       "output_lines": 5,
       "repository_status": {},
-      "started_at": "2026-07-05T09:02:47Z"
+      "started_at": "2026-07-05T09:18:46Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/validate_codex_config.py"
       ],
-      "elapsed_seconds": 0.156,
+      "elapsed_seconds": 0.141,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:02:49Z",
+      "finished_at": "2026-07-05T09:18:49Z",
       "global_write": false,
       "name": "validate local Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:02:49Z"
+      "started_at": "2026-07-05T09:18:49Z"
     },
     {
       "command": [
@@ -46,14 +46,14 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 8.625,
+      "elapsed_seconds": 8.453,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:02:58Z",
+      "finished_at": "2026-07-05T09:18:57Z",
       "global_write": false,
       "name": "audit global instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:02:49Z"
+      "started_at": "2026-07-05T09:18:49Z"
     },
     {
       "command": [
@@ -62,12 +62,40 @@
       ],
       "elapsed_seconds": 1.641,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:02:59Z",
+      "finished_at": "2026-07-05T09:18:59Z",
       "global_write": false,
       "name": "discover local repositories",
       "output_lines": 10,
       "repository_status": {
         "clean": [
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "campania_transplant",
+            "scope": "health_economics_research"
+          },
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "general_work",
+            "scope": "sandbox"
+          },
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "Investment_binance",
+            "scope": "finance_research"
+          },
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "kidney_federico",
+            "scope": "clinical_database"
+          },
           {
             "branch": "main",
             "clean": true,
@@ -81,83 +109,83 @@
             "dirty_count": 0,
             "name": "practice-ops-dashboard",
             "scope": "medical_practice_operations"
+          },
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "PS_robot_adaptor",
+            "scope": "simulation_research"
+          },
+          {
+            "branch": "dev01",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "X_booking",
+            "scope": "lead_scraper"
+          },
+          {
+            "branch": "main",
+            "clean": true,
+            "dirty_count": 0,
+            "name": "Xenios_FInances",
+            "scope": "personal_finance"
           }
         ],
         "dirty": [
           {
             "branch": "main",
             "clean": false,
-            "dirty_count": 40,
+            "dirty_count": 21,
             "name": "auto_learning_agent",
             "scope": "orchestrator"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 3,
-            "name": "campania_transplant",
-            "scope": "health_economics_research"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 4,
-            "name": "general_work",
-            "scope": "sandbox"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 10,
-            "name": "Investment_binance",
-            "scope": "finance_research"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 4,
-            "name": "kidney_federico",
-            "scope": "clinical_database"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 4,
-            "name": "PS_robot_adaptor",
-            "scope": "simulation_research"
-          },
-          {
-            "branch": "dev02",
-            "clean": false,
-            "dirty_count": 2,
-            "name": "X_booking",
-            "scope": "lead_scraper"
-          },
-          {
-            "branch": "main",
-            "clean": false,
-            "dirty_count": 4,
-            "name": "Xenios_FInances",
-            "scope": "personal_finance"
           }
         ],
         "kind": "discovery"
       },
-      "started_at": "2026-07-05T09:02:58Z"
+      "started_at": "2026-07-05T09:18:57Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 4.078,
+      "elapsed_seconds": 5.921,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:03:04Z",
+      "finished_at": "2026-07-05T09:19:05Z",
       "global_write": false,
       "name": "harvest clean repositories",
       "output_lines": 10,
       "repository_status": {
         "clean": [
+          {
+            "candidate_count": 7,
+            "clean": true,
+            "id": "campania-transplant",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
+          {
+            "candidate_count": 5,
+            "clean": true,
+            "id": "general-work",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
+          {
+            "candidate_count": 9,
+            "clean": true,
+            "id": "investment-binance",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
+          {
+            "candidate_count": 7,
+            "clean": true,
+            "id": "kidney-federico",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
           {
             "candidate_count": 22,
             "clean": true,
@@ -171,6 +199,27 @@
             "id": "practice-ops-dashboard",
             "reason": "unchanged",
             "status": "skipped"
+          },
+          {
+            "candidate_count": 6,
+            "clean": true,
+            "id": "ps-robot-adaptor",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
+          {
+            "candidate_count": 17,
+            "clean": true,
+            "id": "x-booking",
+            "reason": "clean worktree",
+            "status": "harvested"
+          },
+          {
+            "candidate_count": 7,
+            "clean": true,
+            "id": "xenios-finances",
+            "reason": "clean worktree",
+            "status": "harvested"
           }
         ],
         "dirty": [
@@ -180,60 +229,11 @@
             "id": "auto_learning_agent",
             "reason": "uncommitted changes present",
             "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "campania-transplant",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "general-work",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "investment-binance",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "kidney-federico",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "ps-robot-adaptor",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "x-booking",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
-          },
-          {
-            "candidate_count": 0,
-            "clean": false,
-            "id": "xenios-finances",
-            "reason": "uncommitted changes present",
-            "status": "blocked_dirty_worktree"
           }
         ],
         "kind": "harvest"
       },
-      "started_at": "2026-07-05T09:02:59Z"
+      "started_at": "2026-07-05T09:18:59Z"
     },
     {
       "command": [
@@ -244,14 +244,14 @@
         "--status",
         "candidate"
       ],
-      "elapsed_seconds": 0.172,
+      "elapsed_seconds": 0.157,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:03:04Z",
+      "finished_at": "2026-07-05T09:19:05Z",
       "global_write": false,
       "name": "retrieve knowledge smoke",
       "output_lines": 183,
       "repository_status": {},
-      "started_at": "2026-07-05T09:03:04Z"
+      "started_at": "2026-07-05T09:19:05Z"
     },
     {
       "command": [
@@ -263,14 +263,14 @@
         "--master-root",
         "master"
       ],
-      "elapsed_seconds": 0.25,
+      "elapsed_seconds": 0.218,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:03:04Z",
+      "finished_at": "2026-07-05T09:19:05Z",
       "global_write": false,
       "name": "synthesize top-level instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:03:04Z"
+      "started_at": "2026-07-05T09:19:05Z"
     },
     {
       "command": [
@@ -285,14 +285,14 @@
         "--apply",
         "--confirm-global-write"
       ],
-      "elapsed_seconds": 0.391,
+      "elapsed_seconds": 0.36,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:03:04Z",
+      "finished_at": "2026-07-05T09:19:06Z",
       "global_write": true,
       "name": "publish global rules",
       "output_lines": 3,
       "repository_status": {},
-      "started_at": "2026-07-05T09:03:04Z"
+      "started_at": "2026-07-05T09:19:05Z"
     },
     {
       "command": [
@@ -302,12 +302,12 @@
       ],
       "elapsed_seconds": 0.14,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:03:05Z",
+      "finished_at": "2026-07-05T09:19:06Z",
       "global_write": false,
       "name": "validate global Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:03:04Z"
+      "started_at": "2026-07-05T09:19:06Z"
     }
   ]
 }

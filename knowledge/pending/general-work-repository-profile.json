@@ -1,0 +1,84 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [],
+    "languages": [],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "abff6dc4c37ad9d329791f1f10dda7ef518f6844",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-work-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\general_work` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 6,
+    "harvestable_text_file_count": 5,
+    "purpose_excerpt": "Catch-all scratch repository for general work that does not yet have a dedicated project. Currently effectively empty (README + one spreadsheet); the agent should fill out this `AGENTS.md` properly once real code lands.",
+    "remote": "https://github.com/medphys23/general_work.git",
+    "stack_excerpt": "To be defined. No `requirements.txt`, `pyproject.toml`, or `package.json` yet. Inherits the global stack catalog by default; pick from it (Office COM, Python numerics, R, etc.) once the actual work is scoped."
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Catch-all scratch repository for general work that does not yet have a dedicated project. Currently effectively empty (README + one spreadsheet); the agent should fill out this `AGENTS.md` properly once real code lands.",
+  "tags": [
+    "general-work",
+    "local-github-analysis",
+    "repository-profile",
+    "sandbox"
+  ],
+  "title": "general_work repository profile",
+  "trigger_phrases": [
+    "general_work",
+    "general-work",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

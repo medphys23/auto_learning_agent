@@ -1,0 +1,117 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "languages": [
+      "bootstrap",
+      "chartjs",
+      "mysql",
+      "php"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1f18c532e608eae147c250fab568d572e3f9a683",
+    "source_paths": [
+      "requirements.txt"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "xenios-finances-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "requirements.txt",
+      "path": "requirements.txt",
+      "requirements": [
+        "php>=8.2",
+        "mysql>=8.0",
+        "apache>=2.4            # Provided by MAMP; used to serve `public/` as docroot",
+        "ext-pdo",
+        "ext-pdo_mysql",
+        "ext-mbstring",
+        "ext-json",
+        "ext-session",
+        "ext-filter",
+        "ext-openssl"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:05Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "requirements.txt"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:05Z"
+  },
+  "registry_stack_tags": [
+    "bootstrap",
+    "chartjs",
+    "mysql",
+    "php"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for Xenios_FInances: registry tags bootstrap, chartjs, mysql, php; 1 tracked manifest file(s).",
+  "tags": [
+    "bootstrap",
+    "chartjs",
+    "dependency-profile",
+    "finance",
+    "local_only",
+    "manifest-profile",
+    "mysql",
+    "php",
+    "stack-profile",
+    "xenios-finances"
+  ],
+  "title": "Xenios_FInances stack and dependency profile",
+  "trigger_phrases": [
+    "Xenios_FInances",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

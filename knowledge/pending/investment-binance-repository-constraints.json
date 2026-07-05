@@ -1,0 +1,106 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "languages": [
+      "binance_public_api",
+      "numpy",
+      "pandas",
+      "plotly",
+      "python",
+      "sqlite",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "investment-binance-repository-constraints",
+  "incompatible_when": [],
+  "procedure": [
+    "Keep Binance access read-only. Do not add authenticated Binance account endpoints, API keys, real trade placement, order management, withdrawals, or automated exchange execution.",
+    "Paper trading may open/follow/close local simulated positions only when based on live Binance public market prices. Do not use synthetic market data or manual trade uploads for the active paper bot.",
+    "The worker and dashboard share SQLite at `data/paper_bot.sqlite`; generated `data/` outputs must stay out of git.",
+    "Simulated leverage is research-only, starts at `1x`, and must never exceed `10x`.",
+    "The ML layer is a reinforcement-style batch policy: retrain every `200` closed trades (`PAPER_POLICY_BATCH`), cold-start pass-through before `50`, time-ordered split + calibration, and reward-driven advisory entry-probability threshold and size multiplier. The size multiplier only scales position size down within the `1%` risk ceiling; gating never overrides the leverage cap or scenario-based rules. Frame it as a reward-driven contextual policy, never a guarantee.",
+    "Keep predictions scenario-based: confidence, confluence, invalidation, and likely zones only. Do not present deterministic price guarantees.",
+    "Use USDC quote pairs for tracked coins. Do not switch back to USDT unless the user explicitly asks.",
+    "Spot market data must use the configured base URL fallback chain. Futures data is optional because `/fapi` endpoints may return regional `451` restrictions."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:01Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:01Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Safety and applicability constraints for Investment_binance.",
+  "tags": [
+    "binance_public_api",
+    "finance",
+    "investment-binance",
+    "no_real_trading",
+    "numpy",
+    "pandas",
+    "plotly",
+    "python",
+    "read_only_market_data",
+    "repo-agents",
+    "repository-constraints",
+    "sqlite",
+    "streamlit"
+  ],
+  "title": "Investment_binance repository constraints",
+  "trigger_phrases": [
+    "Investment_binance",
+    "constraints",
+    "safety",
+    "risk"
+  ],
+  "type": "constraint",
+  "verification": [
+    "Check AGENTS.md constraints before reusing this repository pattern elsewhere."
+  ]
+}

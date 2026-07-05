@@ -1,0 +1,122 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "languages": [
+      "beautifulsoup4",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "3a8b967fe6f0bdf319ab7ee9ef86ab0678d55166",
+    "source_paths": [
+      "AGENTS.md",
+      "tests/config.test.ts",
+      "tests/e2e/smoke.e2e.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "x-booking-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T09:19:04Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md",
+      "tests/config.test.ts",
+      "tests/e2e/smoke.e2e.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T09:19:04Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for X_booking: 9 AGENTS command(s), 2 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "beautifulsoup4",
+    "branch_sensitive",
+    "ci",
+    "contact_data",
+    "deployment-signals",
+    "no_patient_data",
+    "openpyxl",
+    "playwright",
+    "python",
+    "scraper",
+    "tests",
+    "tqdm",
+    "verification-profile",
+    "x-booking"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": [
+      "tests/config.test.ts",
+      "tests/e2e/smoke.e2e.ts"
+    ]
+  },
+  "title": "X_booking verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "X_booking",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    "npm run verify",
+    "npm run lint",
+    "npm run typecheck",
+    "npm run test",
+    "npm run validate:config",
+    "npm run build",
+    "npm run import:client -- --csv templates/onboarding/intake-template.csv --row 1 --dry-run",
+    "npm run validate:production",
+    "npm run test:e2e"
+  ]
+}
