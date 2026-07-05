@@ -1,0 +1,184 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      ".cursor/rules/ad-astra-references.mdc",
+      ".cursor/rules/orsi-core.mdc",
+      ".cursor/rules/orsi-metrics-content.mdc",
+      "AD_Astra/README.md",
+      "AD_Astra/references/README.md",
+      "AGENTS.md",
+      "Optimal_Trocar_Placement/trocar_model/README.md",
+      "Optimal_Trocar_Placement/trocar_model/requirements.txt",
+      "Orsi_Metrics_Research/requirements.txt",
+      "README.md",
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:40:49Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/ad-astra-references.mdc",
+      ".cursor/rules/orsi-core.mdc",
+      ".cursor/rules/orsi-metrics-content.mdc",
+      "AD_Astra/README.md",
+      "AD_Astra/references/README.md",
+      "AGENTS.md",
+      "Optimal_Trocar_Placement/trocar_model/README.md",
+      "Optimal_Trocar_Placement/trocar_model/requirements.txt",
+      "Orsi_Metrics_Research/requirements.txt",
+      "README.md",
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:40:49Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/ad-astra-references.mdc",
+          ".cursor/rules/orsi-core.mdc",
+          ".cursor/rules/orsi-metrics-content.mdc",
+          ".cursor/rules/orsi-pdf-literature.mdc",
+          ".cursor/rules/orsi-verification.mdc",
+          ".cursor/skills/ad-astra-chapter/SKILL.md",
+          ".cursor/skills/cholecystectomy-protocol-literature/SKILL.md",
+          ".cursor/skills/delphi-expert-threshold-evidence/SKILL.md"
+        ],
+        "file_count": 15,
+        "suffixes": {
+          ".md": 10,
+          ".mdc": 5
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "skills.md"
+        ],
+        "file_count": 3,
+        "suffixes": {
+          ".md": 3
+        }
+      },
+      {
+        "area": "AD_Astra",
+        "examples": [
+          "AD_Astra/README.md",
+          "AD_Astra/references/README.md"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".md": 2
+        }
+      },
+      {
+        "area": "Optimal_Trocar_Placement",
+        "examples": [
+          "Optimal_Trocar_Placement/trocar_model/README.md",
+          "Optimal_Trocar_Placement/trocar_model/requirements.txt"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".md": 1,
+          ".txt": 1
+        }
+      },
+      {
+        "area": "Orsi_Metrics_Research",
+        "examples": [
+          "Orsi_Metrics_Research/requirements.txt"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".txt": 1
+        }
+      }
+    ],
+    "harvestable_text_file_count": 23
+  },
+  "status": "candidate",
+  "summary": "Safe source map for ORSI: 5 harvestable areas, led by .cursor, ., AD_Astra, Optimal_Trocar_Placement, Orsi_Metrics_Research.",
+  "tags": [
+    "architecture-map",
+    "docx",
+    "local-github-analysis",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "research",
+    "source-map",
+    "streamlit"
+  ],
+  "title": "ORSI source and architecture map",
+  "trigger_phrases": [
+    "ORSI",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

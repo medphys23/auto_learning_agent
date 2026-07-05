@@ -1,0 +1,116 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      "AGENTS.md",
+      "tests/summary.test.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:40:50Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md",
+      "tests/summary.test.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:40:50Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for practice-ops-dashboard: 4 AGENTS command(s), 1 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "auth",
+    "ci",
+    "database",
+    "deployment-signals",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "tailwind",
+    "tests",
+    "typescript",
+    "vercel",
+    "verification-profile"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": [
+      "tests/summary.test.ts"
+    ]
+  },
+  "title": "practice-ops-dashboard verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": [
+    "npm run lint",
+    "npm run typecheck",
+    "npm run test",
+    "npm run build"
+  ]
+}

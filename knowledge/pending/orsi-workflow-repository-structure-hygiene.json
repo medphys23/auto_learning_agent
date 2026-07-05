@@ -65,13 +65,13 @@
     "- **`study_protocol/source/`** holds preserved templates; no duplicate template copies in `deliverables/`."
   ],
   "provenance": {
-    "created_at": "2026-07-04T22:00:11Z",
+    "created_at": "2026-07-05T08:40:50Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-04T22:00:11Z"
+    "updated_at": "2026-07-05T08:40:50Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

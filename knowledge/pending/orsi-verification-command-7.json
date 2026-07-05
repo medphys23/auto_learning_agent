@@ -46,13 +46,13 @@
     ".\\.venv\\Scripts\\python.exe -m streamlit run Optimal_Trocar_Placement\\trocar_model\\main.py"
   ],
   "provenance": {
-    "created_at": "2026-07-04T22:00:11Z",
+    "created_at": "2026-07-05T08:40:50Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-04T22:00:11Z"
+    "updated_at": "2026-07-05T08:40:50Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

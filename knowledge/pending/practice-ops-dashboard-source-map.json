@@ -1,0 +1,184 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/beneficiary-import-merge/SKILL.md",
+      "AGENTS.md",
+      "next-env.d.ts",
+      "package.json",
+      "src/app/(app)/kpi/page.tsx",
+      "src/app/(app)/layout.tsx",
+      "src/app/(app)/page.tsx",
+      "tests/summary.test.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:40:50Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".cursor/skills/beneficiary-import-merge/SKILL.md",
+      "AGENTS.md",
+      "next-env.d.ts",
+      "package.json",
+      "src/app/(app)/kpi/page.tsx",
+      "src/app/(app)/layout.tsx",
+      "src/app/(app)/page.tsx",
+      "tests/summary.test.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:40:50Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/app/(app)/kpi/page.tsx",
+          "src/app/(app)/layout.tsx",
+          "src/app/(app)/page.tsx",
+          "src/app/(app)/patients/page.tsx",
+          "src/app/(app)/remittance/page.tsx",
+          "src/app/(app)/sources/page.tsx",
+          "src/app/(app)/uploads/page.tsx",
+          "src/app/api/auth/[...path]/route.ts"
+        ],
+        "file_count": 53,
+        "suffixes": {
+          ".css": 1,
+          ".ts": 29,
+          ".tsx": 23
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "next-env.d.ts",
+          "package.json",
+          "README.md",
+          "skills.md",
+          "tailwind.config.ts",
+          "tsconfig.json",
+          "vitest.config.ts"
+        ],
+        "file_count": 8,
+        "suffixes": {
+          ".json": 2,
+          ".md": 3,
+          ".ts": 3
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/beneficiary-import-merge/SKILL.md",
+          ".cursor/skills/practice-ops-stack/SKILL.md"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".md": 2,
+          ".mdc": 2
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/summary.test.ts"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".ts": 1
+        }
+      }
+    ],
+    "harvestable_text_file_count": 66
+  },
+  "status": "candidate",
+  "summary": "Safe source map for practice-ops-dashboard: 4 harvestable areas, led by src, ., .cursor, tests.",
+  "tags": [
+    "architecture-map",
+    "auth",
+    "database",
+    "local-github-analysis",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "source-map",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard source and architecture map",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

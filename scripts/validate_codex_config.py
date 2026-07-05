@@ -6,8 +6,17 @@ from pathlib import Path
 from orchestrator_common import read_toml
 
 
-def toml_files(root: Path) -> list[Path]:
-    candidates = [root / ".codex" / "config.toml", *sorted((root / ".codex" / "agents").glob("*.toml")), *sorted((root / "config").glob("*.toml"))]
+def toml_files(root: Path, *, global_mode: bool = False) -> list[Path]:
+    if global_mode:
+        candidates = [root / "config.toml", *sorted((root / "agents").glob("*.toml"))]
+        return [path for path in candidates if path.exists()]
+    candidates = [
+        root / ".codex" / "config.toml",
+        *sorted((root / ".codex" / "agents").glob("*.toml")),
+        *sorted((root / "config").glob("*.toml")),
+        *sorted((root / "master" / "codex").glob("*.toml")),
+        *sorted((root / "master" / "codex" / "agents").glob("*.toml")),
+    ]
     return [path for path in candidates if path.exists()]
 
 
@@ -21,9 +30,9 @@ def validate_files(files: list[Path]) -> list[str]:
     return errors
 
 
-def validate_references(root: Path) -> list[str]:
+def validate_references(root: Path, *, global_mode: bool = False) -> list[str]:
     errors: list[str] = []
-    config = root / ".codex" / "config.toml"
+    config = root / "config.toml" if global_mode else root / ".codex" / "config.toml"
     if not config.exists():
         return [f"{config}: missing"]
     data = read_toml(config)
@@ -33,18 +42,23 @@ def validate_references(root: Path) -> list[str]:
             if not isinstance(value, dict):
                 continue
             config_file = value.get("config_file")
-            if config_file and not (root / ".codex" / str(config_file)).exists():
-                errors.append(f"agent {name} references missing .codex/{config_file}")
+            if config_file:
+                base = root if global_mode else root / ".codex"
+                if not (base / str(config_file)).exists():
+                    errors.append(f"agent {name} references missing {base / str(config_file)}")
     return errors
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate local Codex TOML files for the orchestrator MVP.")
+    parser = argparse.ArgumentParser(description="Validate local or global Codex TOML files for the orchestrator MVP.")
     parser.add_argument("--root", type=Path, default=Path("."))
+    parser.add_argument("--global", dest="global_mode", action="store_true", help="Treat --root as CODEX_HOME.")
     args = parser.parse_args()
     root = args.root.resolve()
-    files = toml_files(root)
-    errors = validate_files(files) + validate_references(root)
+    if args.global_mode and args.root == Path("."):
+        root = Path.home() / ".codex"
+    files = toml_files(root, global_mode=args.global_mode)
+    errors = validate_files(files) + validate_references(root, global_mode=args.global_mode)
     if errors:
         print("TOML validation failed:")
         for error in errors:

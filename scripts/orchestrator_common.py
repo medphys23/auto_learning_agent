@@ -114,6 +114,7 @@ HARVEST_FILENAMES = {
     "go.mod",
     "cargo.toml",
     "package-lock.json",
+    "dockerfile",
 }
 MAX_HARVEST_TEXT_BYTES = 256 * 1024
 

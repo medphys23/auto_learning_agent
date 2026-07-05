@@ -33,6 +33,9 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
 .\.venv\Scripts\python.exe scripts\discover_repositories.py
 .\.venv\Scripts\python.exe scripts\harvest_repositories.py
+.\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
+.\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
+.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
 git status --short --ignored
 ```
 
@@ -41,11 +44,14 @@ Maintain [`skills.md`](skills.md) beside this file. Document repeatable Codex wo
 
 ## Repo-specific rules
 - Global folders `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor` are read-only audit targets unless the user explicitly approves a separate publication step.
-- `scripts/publish_global_rules.py` is preview-only in this MVP and must refuse global writes.
+- `scripts/publish_global_rules.py` is preview-first and must refuse unconfirmed global writes.
+- `scripts/publish_global_rules.py --apply --confirm-global-write` may write global Codex/Cursor files only after the user explicitly requests global publication.
+- Global publication must create repo-local backups under `backups/global-sync/<timestamp>/` before writing.
 - Generated reports in `reports/*.md` are local outputs and are ignored by git.
 - Repository discovery and harvesting must remain read-only against registered source repositories.
 - Dirty registered repositories must be recorded in state/reports but skipped for candidate extraction.
 - Never harvest secrets, `.env` content, SQLite state, sessions, logs, plugin caches, dependency directories, build artifacts, or generated caches.
+- Harvested knowledge must be concise, provenance-backed candidate metadata; do not mirror raw repositories into this repo.
 - Knowledge promotion starts as local candidates. Global, canonical, security, sandbox, approval, model/provider, MCP, authentication, network, database, deployment, cost, retention, regulated-domain, destructive-command, or output-style changes require explicit approval metadata.
 
 ## Stack propagation

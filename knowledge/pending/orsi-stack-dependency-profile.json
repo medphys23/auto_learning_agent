@@ -1,0 +1,130 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_paths": [
+      "Optimal_Trocar_Placement/trocar_model/requirements.txt",
+      "Orsi_Metrics_Research/requirements.txt"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "requirements.txt",
+      "path": "Optimal_Trocar_Placement/trocar_model/requirements.txt",
+      "requirements": [
+        "streamlit>=1.40,<2",
+        "plotly>=6.1.1,<7",
+        "numpy>=1.26,<3",
+        "pandas>=2.2,<4",
+        "pydantic>=2.7,<3"
+      ]
+    },
+    {
+      "name": "requirements.txt",
+      "path": "Orsi_Metrics_Research/requirements.txt",
+      "requirements": [
+        "python-docx>=1.0,<2",
+        "pywin32>=306",
+        "python-pptx>=1.0.2,<2",
+        "PyMuPDF>=1.27,<2",
+        "markitdown[all]>=0.1.6,<0.2"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:40:49Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "Optimal_Trocar_Placement/trocar_model/requirements.txt",
+      "Orsi_Metrics_Research/requirements.txt"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:40:49Z"
+  },
+  "registry_stack_tags": [
+    "docx",
+    "office_com",
+    "pptx",
+    "python",
+    "streamlit"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for ORSI: registry tags docx, office_com, pptx, python, streamlit; 2 tracked manifest file(s).",
+  "tags": [
+    "dependency-profile",
+    "docx",
+    "manifest-profile",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "research",
+    "stack-profile",
+    "streamlit"
+  ],
+  "title": "ORSI stack and dependency profile",
+  "trigger_phrases": [
+    "ORSI",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

@@ -14,7 +14,7 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from discover_repositories import discover_repositories, write_registry  # noqa: E402
-from harvest_repositories import harvest_repositories  # noqa: E402
+from harvest_repositories import harvest_repositories, manifest_signals, source_map_summary  # noqa: E402
 from orchestrator_common import (  # noqa: E402
     extract_code_block_commands,
     extract_markdown_section,
@@ -25,7 +25,8 @@ from orchestrator_common import (  # noqa: E402
     should_harvest_text_file,
     validate_knowledge_record,
 )
-from publish_global_rules import preview_publication  # noqa: E402
+from publish_global_rules import publish_global_rules  # noqa: E402
+from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
 
 
 class OrchestratorMvpTests(unittest.TestCase):
@@ -123,12 +124,26 @@ class OrchestratorMvpTests(unittest.TestCase):
             pending = base / "pending"
             registry = [{"id": "demo_repo", "path": str(repo), "enabled": True}]
 
-            first = harvest_repositories(registry, state, pending, base / "catalog.jsonl", base / "reports")
-            second = harvest_repositories(registry, state, pending, base / "catalog.jsonl", base / "reports")
+            first = harvest_repositories(
+                registry,
+                state,
+                pending,
+                base / "catalog.jsonl",
+                base / "reports",
+                base / "knowledge" / "INDEX.md",
+            )
+            second = harvest_repositories(
+                registry,
+                state,
+                pending,
+                base / "catalog.jsonl",
+                base / "reports",
+                base / "knowledge" / "INDEX.md",
+            )
 
             self.assertEqual(first[0]["status"], "harvested")
             self.assertEqual(second[0]["status"], "skipped")
-            self.assertEqual(len(list(pending.glob("*.json"))), 1)
+            self.assertGreaterEqual(len(list(pending.glob("*.json"))), 4)
             self.assertIn("demo_repo", json.loads(state.read_text(encoding="utf-8"))["repositories"])
 
     def test_dirty_repo_is_registered_but_not_harvested(self) -> None:
@@ -147,6 +162,7 @@ class OrchestratorMvpTests(unittest.TestCase):
                 pending,
                 base / "catalog.jsonl",
                 base / "reports",
+                base / "knowledge" / "INDEX.md",
             )
 
             self.assertEqual(results[0]["status"], "blocked_dirty_worktree")
@@ -185,16 +201,64 @@ class OrchestratorMvpTests(unittest.TestCase):
                 pending,
                 catalog,
                 base / "reports",
+                base / "knowledge" / "INDEX.md",
             )
 
             self.assertEqual(results[0]["status"], "harvested")
             candidate_ids = {path.stem for path in pending.glob("*.json")}
             self.assertIn("clean-repo-repository-profile", candidate_ids)
+            self.assertIn("clean-repo-source-map", candidate_ids)
+            self.assertIn("clean-repo-stack-dependency-profile", candidate_ids)
+            self.assertIn("clean-repo-verification-profile", candidate_ids)
             self.assertIn("clean-repo-verification-command-1", candidate_ids)
             self.assertIn("clean-repo-repository-constraints", candidate_ids)
             self.assertIn("clean-repo-workflow-demo-workflow", candidate_ids)
-            catalog_ids = {json.loads(line)["id"] for line in catalog.read_text(encoding="utf-8").splitlines()}
+            catalog_entries = [json.loads(line) for line in catalog.read_text(encoding="utf-8").splitlines()]
+            catalog_ids = {entry["id"] for entry in catalog_entries}
             self.assertTrue(candidate_ids.issubset(catalog_ids))
+            self.assertTrue(all(Path(entry["record_path"]).exists() for entry in catalog_entries))
+            self.assertIn("clean_repo", (base / "reports" / "knowledge-coverage.md").read_text(encoding="utf-8"))
+            self.assertIn("Source map", (base / "reports" / "repository-knowledge-matrix.md").read_text(encoding="utf-8"))
+            self.assertIn("clean_repo", (base / "knowledge" / "INDEX.md").read_text(encoding="utf-8"))
+
+    def test_manifest_package_scripts_are_extracted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            (repo / "package.json").write_text(
+                json.dumps(
+                    {
+                        "scripts": {"test": "vitest", "build": "next build"},
+                        "dependencies": {"next": "16.0.0", "react": "19.0.0"},
+                        "devDependencies": {"vitest": "latest"},
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            signals = manifest_signals(repo)
+
+            self.assertEqual(signals[0]["path"], "package.json")
+            self.assertEqual(signals[0]["scripts"], ["build", "test"])
+            self.assertIn("next", signals[0]["dependencies"])
+
+    def test_source_map_excludes_sensitive_generated_and_data_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            (repo / "src").mkdir()
+            (repo / "src" / "app.py").write_text("print('ok')\n", encoding="utf-8")
+            (repo / "data").mkdir()
+            (repo / "data" / "leads.json").write_text("[]\n", encoding="utf-8")
+            (repo / "node_modules").mkdir()
+            (repo / "node_modules" / "pkg.js").write_text("bad\n", encoding="utf-8")
+            (repo / ".env").write_text("TOKEN=value\n", encoding="utf-8")
+
+            summary = source_map_summary(repo)
+            examples = [example for area in summary["areas"] for example in area["examples"]]
+
+            self.assertIn("src/app.py", examples)
+            self.assertNotIn("data/leads.json", examples)
+            self.assertNotIn("node_modules/pkg.js", examples)
+            self.assertNotIn(".env", examples)
 
     def test_harvest_excludes_sensitive_generated_and_data_paths(self) -> None:
         self.assertFalse(should_harvest_text_file(Path(r"C:\repo\.env")))
@@ -232,14 +296,125 @@ class OrchestratorMvpTests(unittest.TestCase):
 
             self.assertEqual(len(retrieved), 4)
 
-    def test_publication_is_preview_only(self) -> None:
+    def test_readme_contains_operator_manual_sections(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        for heading in (
+            "## Current Phase",
+            "## Master Publication Model",
+            "## Knowledge Lifecycle",
+            "## Safety Boundaries",
+            "## How To Know Whether A Repo Is Known",
+            "## Troubleshooting And Rollback",
+        ):
+            self.assertIn(heading, readme)
+
+    def write_minimal_global_home(self, base: Path) -> tuple[Path, Path]:
+        codex = base / ".codex"
+        cursor = base / ".cursor"
+        (codex / "agents").mkdir(parents=True)
+        (cursor / "rules").mkdir(parents=True)
+        (cursor / "skills").mkdir(parents=True)
+        (codex / "AGENTS.md").write_text(
+            "# Global Codex agent instructions\n\n## Working agreements\n- Preserve this rule.\n",
+            encoding="utf-8",
+        )
+        (codex / "skills.md").write_text(
+            "# Global Codex repeatable workflows\n\n### tqdm progress bars\n\n**Steps:**\n1. Keep this.\n",
+            encoding="utf-8",
+        )
+        (codex / "config.toml").write_text(
+            'model = "gpt-5.5"\n\n[plugins."github@openai-curated"]\nenabled = true\n\n[features]\njs_repl = false\n',
+            encoding="utf-8",
+        )
+        (cursor / "rules" / "00-orchestration.mdc").write_text(
+            "---\ndescription: Test rule\nalwaysApply: true\n---\n\n# Test rule\n",
+            encoding="utf-8",
+        )
+        return codex, cursor
+
+    def test_synthesis_preserves_existing_content_and_adds_orchestrator(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            reports = Path(tmp) / "reports"
-            report = preview_publication(reports)
-            self.assertTrue(report.exists())
-            self.assertIn("Global writes performed: false", report.read_text(encoding="utf-8"))
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            result = synthesize(
+                codex_home=codex,
+                cursor_home=cursor,
+                master_root=base / "master",
+                reports_dir=base / "reports",
+            )
+
+            agents = (base / "master" / "codex" / "AGENTS.md").read_text(encoding="utf-8")
+            skills = (base / "master" / "codex" / "skills.md").read_text(encoding="utf-8")
+            config = tomllib.loads((base / "master" / "codex" / "config.toml").read_text(encoding="utf-8"))
+
+            self.assertIn("Preserve this rule", agents)
+            self.assertIn("Orchestrator Knowledge Layer", agents)
+            self.assertIn("### tqdm progress bars", skills)
+            self.assertIn("### Orchestrator knowledge control plane", skills)
+            self.assertEqual(config["features"]["memories"], False)
+            self.assertIn("workflow_router", config["agents"])
+            self.assertTrue((base / "master" / "cursor" / "rules" / "06-orchestrator-knowledge.mdc").exists())
+            self.assertIn("codex_agents_sha256", result)
+
+    def test_config_merge_preserves_plugins_and_refuses_memory_true(self) -> None:
+        config = 'model = "gpt-5.5"\n\n[plugins."github@openai-curated"]\nenabled = true\n'
+        merged, report = merge_codex_config(config)
+        data = tomllib.loads(merged)
+        self.assertEqual(data["plugins"]["github@openai-curated"]["enabled"], True)
+        self.assertEqual(data["features"]["memories"], False)
+        self.assertIn("workflow_router", data["agents"])
+        self.assertTrue(report)
+
+        merged_again, _ = merge_codex_config(merged)
+        merged_again_data = tomllib.loads(merged_again)
+        self.assertEqual(
+            merged_again_data["agents"]["workflow_router"]["config_file"],
+            "agents/workflow-router.toml",
+        )
+
+        with self.assertRaises(ValueError):
+            merge_codex_config("[features]\nmemories = true\n")
+
+        with self.assertRaises(ValueError):
+            merge_codex_config("[agents.workflow_router]\nconfig_file = \"agents/other.toml\"\n")
+
+    def test_publish_requires_confirmation_and_applies_with_backups(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            preview = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+            )
+            self.assertEqual(preview["mode"], "preview")
+            self.assertIn("Global writes performed: false", (base / "reports" / "publication-preview.md").read_text(encoding="utf-8"))
+
             with self.assertRaises(RuntimeError):
-                preview_publication(reports, apply=True)
+                publish_global_rules(
+                    reports_dir=base / "reports",
+                    master_root=base / "master",
+                    backup_base=base / "backups",
+                    codex_home=codex,
+                    cursor_home=cursor,
+                    apply=True,
+                )
+
+            applied = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                apply=True,
+                confirm_global_write=True,
+            )
+            self.assertEqual(applied["mode"], "applied")
+            self.assertTrue((Path(applied["backup_root"]) / "codex" / "AGENTS.md").exists())
+            self.assertIn("Orchestrator Knowledge Layer", (codex / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertTrue((cursor / "skills" / "orchestrator-knowledge" / "SKILL.md").exists())
 
 
 if __name__ == "__main__":

@@ -1,0 +1,156 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_paths": [
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "dependencies": [
+        "@napi-rs/canvas",
+        "@neondatabase/auth",
+        "@vercel/analytics",
+        "@vercel/speed-insights",
+        "@xmldom/xmldom",
+        "csv-parse",
+        "fflate",
+        "lucide-react",
+        "next",
+        "pdfjs-dist",
+        "pg",
+        "react",
+        "react-dom",
+        "recharts",
+        "zod"
+      ],
+      "dev_dependencies": [
+        "@eslint/eslintrc",
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/pg",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "eslint",
+        "eslint-config-next",
+        "postcss",
+        "tailwindcss",
+        "tsx",
+        "typescript",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "build",
+        "dev",
+        "lint",
+        "start",
+        "test",
+        "typecheck",
+        "verify"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:40:50Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:40:50Z"
+  },
+  "registry_stack_tags": [
+    "nextjs",
+    "postgres",
+    "react",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for practice-ops-dashboard: registry tags nextjs, postgres, react, tailwind, typescript, vercel; 1 tracked manifest file(s).",
+  "tags": [
+    "auth",
+    "database",
+    "dependency-profile",
+    "manifest-profile",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "stack-profile",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard stack and dependency profile",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}
