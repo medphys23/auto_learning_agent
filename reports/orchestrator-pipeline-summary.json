@@ -1,10 +1,10 @@
 {
   "apply_global": true,
   "failed_step": "",
-  "finished_at": "2026-07-05T08:53:45Z",
+  "finished_at": "2026-07-05T08:55:23Z",
   "log_file": "reports\\orchestrator-pipeline.log",
   "mode": "apply-global",
-  "started_at": "2026-07-05T08:53:25Z",
+  "started_at": "2026-07-05T08:55:04Z",
   "status": "completed",
   "steps": [
     {
@@ -16,26 +16,26 @@
         "-s",
         "tests"
       ],
-      "elapsed_seconds": 2.766,
+      "elapsed_seconds": 2.609,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:27Z",
+      "finished_at": "2026-07-05T08:55:06Z",
       "global_write": false,
       "name": "unit tests",
       "output_lines": 5,
-      "started_at": "2026-07-05T08:53:25Z"
+      "started_at": "2026-07-05T08:55:04Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/validate_codex_config.py"
       ],
-      "elapsed_seconds": 0.156,
+      "elapsed_seconds": 0.25,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:28Z",
+      "finished_at": "2026-07-05T08:55:07Z",
       "global_write": false,
       "name": "validate local Codex TOML",
       "output_lines": 2,
-      "started_at": "2026-07-05T08:53:27Z"
+      "started_at": "2026-07-05T08:55:06Z"
     },
     {
       "command": [
@@ -44,39 +44,39 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 9.656,
+      "elapsed_seconds": 9.016,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:37Z",
+      "finished_at": "2026-07-05T08:55:16Z",
       "global_write": false,
       "name": "audit global instructions",
       "output_lines": 2,
-      "started_at": "2026-07-05T08:53:28Z"
+      "started_at": "2026-07-05T08:55:07Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/discover_repositories.py"
       ],
-      "elapsed_seconds": 1.844,
+      "elapsed_seconds": 1.812,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:39Z",
+      "finished_at": "2026-07-05T08:55:17Z",
       "global_write": false,
       "name": "discover local repositories",
       "output_lines": 10,
-      "started_at": "2026-07-05T08:53:37Z"
+      "started_at": "2026-07-05T08:55:16Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 5.0,
+      "elapsed_seconds": 4.891,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:44Z",
+      "finished_at": "2026-07-05T08:55:22Z",
       "global_write": false,
       "name": "harvest clean repositories",
       "output_lines": 10,
-      "started_at": "2026-07-05T08:53:39Z"
+      "started_at": "2026-07-05T08:55:17Z"
     },
     {
       "command": [
@@ -89,11 +89,11 @@
       ],
       "elapsed_seconds": 0.172,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:44Z",
+      "finished_at": "2026-07-05T08:55:22Z",
       "global_write": false,
       "name": "retrieve knowledge smoke",
-      "output_lines": 185,
-      "started_at": "2026-07-05T08:53:44Z"
+      "output_lines": 183,
+      "started_at": "2026-07-05T08:55:22Z"
     },
     {
       "command": [
@@ -105,13 +105,13 @@
         "--master-root",
         "master"
       ],
-      "elapsed_seconds": 0.25,
+      "elapsed_seconds": 0.234,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:45Z",
+      "finished_at": "2026-07-05T08:55:23Z",
       "global_write": false,
       "name": "synthesize top-level instructions",
       "output_lines": 2,
-      "started_at": "2026-07-05T08:53:44Z"
+      "started_at": "2026-07-05T08:55:22Z"
     },
     {
       "command": [
@@ -126,13 +126,13 @@
         "--apply",
         "--confirm-global-write"
       ],
-      "elapsed_seconds": 0.453,
+      "elapsed_seconds": 0.438,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:45Z",
+      "finished_at": "2026-07-05T08:55:23Z",
       "global_write": true,
       "name": "publish global rules",
       "output_lines": 3,
-      "started_at": "2026-07-05T08:53:45Z"
+      "started_at": "2026-07-05T08:55:23Z"
     },
     {
       "command": [
@@ -140,13 +140,13 @@
         "scripts/validate_codex_config.py",
         "--global"
       ],
-      "elapsed_seconds": 0.172,
+      "elapsed_seconds": 0.171,
       "exit_code": 0,
-      "finished_at": "2026-07-05T08:53:45Z",
+      "finished_at": "2026-07-05T08:55:23Z",
       "global_write": false,
       "name": "validate global Codex TOML",
       "output_lines": 2,
-      "started_at": "2026-07-05T08:53:45Z"
+      "started_at": "2026-07-05T08:55:23Z"
     }
   ]
 }

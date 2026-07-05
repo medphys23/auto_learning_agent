@@ -1,0 +1,239 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "d1de303163dc07bb855ebc50697467a202148353",
+    "source_paths": [
+      ".codex/agents/knowledge-synthesizer.toml",
+      ".codex/agents/repository-harvester.toml",
+      ".codex/agents/verifier.toml",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T082336Z/codex/skills.md",
+      "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
+      "config/promotion-policy.toml",
+      "config/repositories.toml",
+      "config/retrieval-policy.toml",
+      "master/codex/AGENTS.md",
+      "master/codex/skills.md",
+      "requirements.txt",
+      "scripts/audit_global_instructions.py",
+      "scripts/discover_repositories.py",
+      "scripts/harvest_repositories.py",
+      "tests/test_orchestrator_mvp.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "auto-learning-agent-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-07-05T08:55:18Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".codex/agents/knowledge-synthesizer.toml",
+      ".codex/agents/repository-harvester.toml",
+      ".codex/agents/verifier.toml",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T082336Z/codex/skills.md",
+      "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
+      "config/promotion-policy.toml",
+      "config/repositories.toml",
+      "config/retrieval-policy.toml",
+      "master/codex/AGENTS.md",
+      "master/codex/skills.md",
+      "requirements.txt",
+      "scripts/audit_global_instructions.py",
+      "scripts/discover_repositories.py",
+      "scripts/harvest_repositories.py",
+      "tests/test_orchestrator_mvp.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-05T08:55:18Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/audit_global_instructions.py",
+          "scripts/discover_repositories.py",
+          "scripts/harvest_repositories.py",
+          "scripts/orchestrator_common.py",
+          "scripts/promote_knowledge.py",
+          "scripts/publish_global_rules.py",
+          "scripts/retrieve_knowledge.py",
+          "scripts/run_orchestrator_pipeline.py"
+        ],
+        "file_count": 10,
+        "suffixes": {
+          ".py": 10
+        }
+      },
+      {
+        "area": "backups",
+        "examples": [
+          "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
+          "backups/global-sync/20260705T082336Z/codex/skills.md",
+          "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
+          "backups/global-sync/20260705T085151Z/codex/skills.md",
+          "backups/global-sync/20260705T085345Z/codex/AGENTS.md",
+          "backups/global-sync/20260705T085345Z/codex/skills.md"
+        ],
+        "file_count": 6,
+        "suffixes": {
+          ".md": 6
+        }
+      },
+      {
+        "area": ".codex",
+        "examples": [
+          ".codex/agents/knowledge-synthesizer.toml",
+          ".codex/agents/repository-harvester.toml",
+          ".codex/agents/verifier.toml",
+          ".codex/agents/workflow-router.toml",
+          ".codex/config.toml"
+        ],
+        "file_count": 5,
+        "suffixes": {
+          ".toml": 5
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
+        }
+      },
+      {
+        "area": "config",
+        "examples": [
+          "config/promotion-policy.toml",
+          "config/repositories.toml",
+          "config/retrieval-policy.toml"
+        ],
+        "file_count": 3,
+        "suffixes": {
+          ".toml": 3
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".mdc": 2
+        }
+      },
+      {
+        "area": "master",
+        "examples": [
+          "master/codex/AGENTS.md",
+          "master/codex/skills.md"
+        ],
+        "file_count": 2,
+        "suffixes": {
+          ".md": 2
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_orchestrator_mvp.py"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".py": 1
+        }
+      }
+    ],
+    "harvestable_text_file_count": 33
+  },
+  "status": "candidate",
+  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by scripts, backups, .codex, ., config, .cursor, master, tests.",
+  "tags": [
+    "architecture-map",
+    "auto_learning_agent",
+    "codex",
+    "cursor",
+    "global_config_preview",
+    "local-github-analysis",
+    "python",
+    "read_only_audit",
+    "source-map",
+    "stdlib"
+  ],
+  "title": "auto_learning_agent source and architecture map",
+  "trigger_phrases": [
+    "auto_learning_agent",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}
