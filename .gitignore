@@ -7,4 +7,5 @@ tmp/
 logs/
 backups/global-sync/
 reports/*.md
+reports/dependency-catalog-audit.json
 *.log

@@ -1,10 +1,10 @@
 {
-  "apply_global": false,
+  "apply_global": true,
   "failed_step": "",
-  "finished_at": "2026-07-05T09:23:37Z",
+  "finished_at": "2026-07-05T09:41:04Z",
   "log_file": "reports\\orchestrator-pipeline.log",
-  "mode": "preview",
-  "started_at": "2026-07-05T09:23:20Z",
+  "mode": "apply-global",
+  "started_at": "2026-07-05T09:40:24Z",
   "status": "completed",
   "steps": [
     {
@@ -16,14 +16,14 @@
         "-s",
         "tests"
       ],
-      "elapsed_seconds": 2.312,
+      "elapsed_seconds": 2.5,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:22Z",
+      "finished_at": "2026-07-05T09:40:27Z",
       "global_write": false,
       "name": "unit tests",
       "output_lines": 5,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:20Z"
+      "started_at": "2026-07-05T09:40:24Z"
     },
     {
       "command": [
@@ -32,12 +32,12 @@
       ],
       "elapsed_seconds": 0.141,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:22Z",
+      "finished_at": "2026-07-05T09:40:27Z",
       "global_write": false,
       "name": "validate local Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:22Z"
+      "started_at": "2026-07-05T09:40:27Z"
     },
     {
       "command": [
@@ -46,23 +46,23 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 9.047,
+      "elapsed_seconds": 8.781,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:31Z",
+      "finished_at": "2026-07-05T09:40:36Z",
       "global_write": false,
       "name": "audit global instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:22Z"
+      "started_at": "2026-07-05T09:40:27Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/discover_repositories.py"
       ],
-      "elapsed_seconds": 1.453,
+      "elapsed_seconds": 1.609,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:33Z",
+      "finished_at": "2026-07-05T09:40:37Z",
       "global_write": false,
       "name": "discover local repositories",
       "output_lines": 10,
@@ -136,23 +136,23 @@
           {
             "branch": "main",
             "clean": false,
-            "dirty_count": 5,
+            "dirty_count": 60,
             "name": "auto_learning_agent",
             "scope": "orchestrator"
           }
         ],
         "kind": "discovery"
       },
-      "started_at": "2026-07-05T09:23:31Z"
+      "started_at": "2026-07-05T09:40:36Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 3.359,
+      "elapsed_seconds": 3.625,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:36Z",
+      "finished_at": "2026-07-05T09:40:41Z",
       "global_write": false,
       "name": "harvest clean repositories",
       "output_lines": 10,
@@ -233,7 +233,23 @@
         ],
         "kind": "harvest"
       },
-      "started_at": "2026-07-05T09:23:33Z"
+      "started_at": "2026-07-05T09:40:37Z"
+    },
+    {
+      "command": [
+        "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
+        "scripts/audit_dependency_catalog.py",
+        "--reports-dir",
+        "reports"
+      ],
+      "elapsed_seconds": 22.422,
+      "exit_code": 0,
+      "finished_at": "2026-07-05T09:41:03Z",
+      "global_write": false,
+      "name": "audit dependency catalogs",
+      "output_lines": 2,
+      "repository_status": {},
+      "started_at": "2026-07-05T09:40:41Z"
     },
     {
       "command": [
@@ -244,14 +260,14 @@
         "--status",
         "candidate"
       ],
-      "elapsed_seconds": 0.204,
+      "elapsed_seconds": 0.141,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:36Z",
+      "finished_at": "2026-07-05T09:41:03Z",
       "global_write": false,
       "name": "retrieve knowledge smoke",
       "output_lines": 183,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:36Z"
+      "started_at": "2026-07-05T09:41:03Z"
     },
     {
       "command": [
@@ -263,14 +279,14 @@
         "--master-root",
         "master"
       ],
-      "elapsed_seconds": 0.218,
+      "elapsed_seconds": 0.203,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:37Z",
+      "finished_at": "2026-07-05T09:41:04Z",
       "global_write": false,
       "name": "synthesize top-level instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:36Z"
+      "started_at": "2026-07-05T09:41:03Z"
     },
     {
       "command": [
@@ -284,16 +300,32 @@
         "backups\\global-sync",
         "--backup-keep",
         "2",
-        "--preview"
+        "--apply",
+        "--confirm-global-write"
       ],
-      "elapsed_seconds": 0.219,
+      "elapsed_seconds": 0.375,
       "exit_code": 0,
-      "finished_at": "2026-07-05T09:23:37Z",
+      "finished_at": "2026-07-05T09:41:04Z",
+      "global_write": true,
+      "name": "publish global rules",
+      "output_lines": 4,
+      "repository_status": {},
+      "started_at": "2026-07-05T09:41:04Z"
+    },
+    {
+      "command": [
+        "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
+        "scripts/validate_codex_config.py",
+        "--global"
+      ],
+      "elapsed_seconds": 0.141,
+      "exit_code": 0,
+      "finished_at": "2026-07-05T09:41:04Z",
       "global_write": false,
-      "name": "preview global publication",
+      "name": "validate global Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T09:23:37Z"
+      "started_at": "2026-07-05T09:41:04Z"
     }
   ]
 }

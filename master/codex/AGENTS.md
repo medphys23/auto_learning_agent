@@ -198,6 +198,7 @@ Office stacks are paired: COM-first (preferred) vs pure-Python (fallback).
 | **Next.js medical marketing site** | Next.js 16+, React, TypeScript, Tailwind, Zod, Vitest, `@playwright/test` | X_booking (`dev01`) | Config-driven `ACTIVE_CLIENT`; bilingual `/en`/`/el`; Google Appointment Scheduling iframe only — no custom booking backend/OAuth/DB |
 | **Playwright Python scraping** | [`playwright`](https://pypi.org/project/playwright/), beautifulsoup4, openpyxl, [`tqdm`](https://pypi.org/project/tqdm/) | X_booking (`scraping`) | Two-phase discover→enrich; canonical `scrape.json` checkpoint; Windows `atomic_io`; resume launchers; never commit contact data |
 | **Terminal progress (required)** | [`tqdm`](https://pypi.org/project/tqdm/) | All long Python batch jobs | Meaningful `desc`, `unit`, postfix counters; see `~/.cursor/rules/05-tqdm-progress.mdc` and `~/.codex/skills.md` |
+| **Orchestrator startup pipeline** | `tqdm`, `colorama` | auto_learning_agent | Progress bars and colorized clean/dirty/blocked repository status output; install only in the repo-local `.venv` |
 
 **Choosing Word COM vs `python-docx`:** default to Word COM on Windows for any deliverable the user will review (masters, protocols, repaired papers). Use `python-docx` only as fallback or to parse COM-produced files in scripts that already follow that hybrid pattern.
 

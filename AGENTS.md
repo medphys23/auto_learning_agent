@@ -35,6 +35,7 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
 .\.venv\Scripts\python.exe scripts\discover_repositories.py
 .\.venv\Scripts\python.exe scripts\harvest_repositories.py
+.\.venv\Scripts\python.exe scripts\audit_dependency_catalog.py
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview

@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "26af06d639a5ed896e910e53e041d51f9c127663",
+    "source_commit": "4ab0ecdecc550036f61d70113cced0b2b68fdfac",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
@@ -39,9 +39,9 @@
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
-      "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
-      "backups/global-sync/20260705T082336Z/codex/skills.md",
-      "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T091234Z/codex/skills.md",
+      "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
       "config/promotion-policy.toml",
       "config/repositories.toml",
       "config/retrieval-policy.toml",
@@ -65,7 +65,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:12:29Z",
+    "created_at": "2026-07-05T09:27:13Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -75,9 +75,9 @@
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
-      "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
-      "backups/global-sync/20260705T082336Z/codex/skills.md",
-      "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
+      "backups/global-sync/20260705T091234Z/codex/skills.md",
+      "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
       "config/promotion-policy.toml",
       "config/repositories.toml",
       "config/retrieval-policy.toml",
@@ -90,7 +90,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:12:29Z"
+    "updated_at": "2026-07-05T09:27:13Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -104,23 +104,6 @@
   "scope": "repository",
   "source_map": {
     "areas": [
-      {
-        "area": "backups",
-        "examples": [
-          "backups/global-sync/20260705T082336Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T082336Z/codex/skills.md",
-          "backups/global-sync/20260705T085151Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T085151Z/codex/skills.md",
-          "backups/global-sync/20260705T085345Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T085345Z/codex/skills.md",
-          "backups/global-sync/20260705T085523Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T085523Z/codex/skills.md"
-        ],
-        "file_count": 10,
-        "suffixes": {
-          ".md": 10
-        }
-      },
       {
         "area": "scripts",
         "examples": [
@@ -164,6 +147,19 @@
         "suffixes": {
           ".md": 3,
           ".txt": 1
+        }
+      },
+      {
+        "area": "backups",
+        "examples": [
+          "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
+          "backups/global-sync/20260705T091234Z/codex/skills.md",
+          "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
+          "backups/global-sync/20260705T091906Z/codex/skills.md"
+        ],
+        "file_count": 4,
+        "suffixes": {
+          ".md": 4
         }
       },
       {
@@ -211,10 +207,10 @@
         }
       }
     ],
-    "harvestable_text_file_count": 37
+    "harvestable_text_file_count": 31
   },
   "status": "candidate",
-  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by backups, scripts, .codex, ., config, .cursor, master, tests.",
+  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by scripts, .codex, ., backups, config, .cursor, master, tests.",
   "tags": [
     "architecture-map",
     "auto_learning_agent",

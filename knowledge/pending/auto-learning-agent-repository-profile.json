@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "26af06d639a5ed896e910e53e041d51f9c127663",
+    "source_commit": "4ab0ecdecc550036f61d70113cced0b2b68fdfac",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -47,18 +47,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:12:29Z",
+    "created_at": "2026-07-05T09:27:13Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:12:29Z"
+    "updated_at": "2026-07-05T09:27:13Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 181,
-    "harvestable_text_file_count": 37,
+    "file_count": 194,
+    "harvestable_text_file_count": 31,
     "purpose_excerpt": "This repository is the local MVP for a governed Codex/Cursor orchestrator. It stores repository-local policy, read-only audit tooling, knowledge schemas, retrieval policy, and publication previews. It must not directly mutate user-level Cod",
     "remote": "https://github.com/medphys23/auto_learning_agent.git",
     "stack_excerpt": "Python 3.11 standard library scripts."

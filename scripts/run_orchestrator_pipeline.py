@@ -157,6 +157,7 @@ def build_steps(
         PipelineStep("audit global instructions", [py, "scripts/audit_global_instructions.py", "--reports-dir", str(reports_dir)]),
         PipelineStep("discover local repositories", [py, "scripts/discover_repositories.py"]),
         PipelineStep("harvest clean repositories", [py, "scripts/harvest_repositories.py"]),
+        PipelineStep("audit dependency catalogs", [py, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]),
         PipelineStep(
             "retrieve knowledge smoke",
             [

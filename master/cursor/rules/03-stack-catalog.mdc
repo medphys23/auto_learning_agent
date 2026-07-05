@@ -28,6 +28,7 @@ alwaysApply: true
 | Next.js medical site | Next.js, TypeScript, Tailwind, Zod, Vitest, Playwright e2e | X_booking (`dev01`) | `ACTIVE_CLIENT` config; Google iframe booking; not WordPress |
 | Playwright Python scrape | playwright, bs4, openpyxl, tqdm | X_booking (`scraping`) | Two-phase discover→enrich; `scrape.json` checkpoint; `atomic_io`; resume launchers; no committed contact data |
 | Terminal progress | tqdm | All long Python jobs | Required; `05-tqdm-progress.mdc` |
+| Orchestrator startup pipeline | tqdm, colorama | auto_learning_agent | Progress bars plus colorized clean/dirty/blocked repository status; repo-local `.venv` only |
 
 ## Office COM essentials
 

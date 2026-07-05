@@ -19,8 +19,9 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 4. Preserve generated reports as ignored local artifacts unless the user explicitly asks to track them.
 5. For repository knowledge expansion, harvest only clean repos into candidate records and use coverage reports to explain blocked dirty repos.
 6. For unattended local operation, run `scripts\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.
-7. Global publication keeps only the newest 2 backup roots under `backups/global-sync/` by default; override with `--backup-keep N` only when the user explicitly asks.
-8. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.
+7. Run `scripts\audit_dependency_catalog.py` when checking whether dependency manifests are reflected in repo/global stack catalogs; treat missing packages as review flags, not automatic promotion.
+8. Global publication keeps only the newest 2 backup roots under `backups/global-sync/` by default; override with `--backup-keep N` only when the user explicitly asks.
+9. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.
 
 **Verification:**
 ```powershell
@@ -29,6 +30,7 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 .\.venv\Scripts\python.exe scripts\audit_global_instructions.py
 .\.venv\Scripts\python.exe scripts\discover_repositories.py
 .\.venv\Scripts\python.exe scripts\harvest_repositories.py
+.\.venv\Scripts\python.exe scripts\audit_dependency_catalog.py
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
@@ -44,3 +46,5 @@ git status --short --ignored
 - 2026-07-05: Added the `run_orchestrator_pipeline.py` startup pipeline with tqdm phase logs and guarded global apply mode.
 - 2026-07-05: Added colorama-backed clean/dirty/blocked repository status output to the pipeline log stream.
 - 2026-07-05: User flagged excessive global-sync backups; publication now prunes older backup roots and retains the newest 2 by default.
+- 2026-07-05: User noticed `colorama` was missing from published global stack catalog; synthesis now injects the orchestrator pipeline `tqdm`/`colorama` row into generated Codex and Cursor stack catalogs.
+- 2026-07-05: Added dependency catalog audit report for `requirements.txt`, `pyproject.toml`, `package.json`, and common JS lockfiles; missing catalog mentions are review flags only.

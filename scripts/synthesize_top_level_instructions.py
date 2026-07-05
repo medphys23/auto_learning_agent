@@ -109,6 +109,16 @@ AGENT_REGISTRATIONS = {
     },
 }
 
+ORCHESTRATOR_STACK_ROW = (
+    "| **Orchestrator startup pipeline** | `tqdm`, `colorama` | auto_learning_agent | "
+    "Progress bars and colorized clean/dirty/blocked repository status output; install only in the repo-local `.venv` |"
+)
+
+CURSOR_ORCHESTRATOR_STACK_ROW = (
+    "| Orchestrator startup pipeline | tqdm, colorama | auto_learning_agent | "
+    "Progress bars plus colorized clean/dirty/blocked repository status; repo-local `.venv` only |"
+)
+
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
@@ -246,6 +256,25 @@ def replace_or_append_block(content: str, block: str) -> str:
     return content.rstrip() + "\n\n" + block + "\n"
 
 
+def insert_table_row_after(content: str, anchor: str, row: str) -> str:
+    if row in content:
+        return content
+    lines = content.splitlines()
+    for index, line in enumerate(lines):
+        if anchor in line:
+            lines.insert(index + 1, row)
+            return "\n".join(lines) + "\n"
+    return content.rstrip() + "\n\n" + row + "\n"
+
+
+def ensure_stack_catalog_entries(codex_agents: str) -> str:
+    return insert_table_row_after(codex_agents, "| **Terminal progress (required)** |", ORCHESTRATOR_STACK_ROW)
+
+
+def ensure_cursor_stack_catalog_entries(cursor_rule: str) -> str:
+    return insert_table_row_after(cursor_rule, "| Terminal progress |", CURSOR_ORCHESTRATOR_STACK_ROW)
+
+
 def replace_or_append_skill(content: str, section: str) -> str:
     heading = "### Orchestrator knowledge control plane"
     if heading in content:
@@ -362,7 +391,7 @@ def synthesize(
     codex_skills = read_text(codex_home / "skills.md")
     codex_config = read_text(codex_home / "config.toml")
 
-    generated_agents = replace_or_append_block(codex_agents, orchestrator_markdown_block())
+    generated_agents = ensure_stack_catalog_entries(replace_or_append_block(codex_agents, orchestrator_markdown_block()))
     generated_skills = replace_or_append_skill(codex_skills, orchestrator_skill_section())
     generated_config, config_report = merge_codex_config(codex_config)
 
@@ -387,7 +416,10 @@ def synthesize(
     cursor_rule_dir = cursor_home / "rules"
     (master_cursor / "rules").mkdir(parents=True, exist_ok=True)
     for path in sorted(cursor_rule_dir.glob("*.mdc")):
-        shutil.copy2(path, master_cursor / "rules" / path.name)
+        if path.name == "03-stack-catalog.mdc":
+            write_text(master_cursor / "rules" / path.name, ensure_cursor_stack_catalog_entries(read_text(path)))
+        else:
+            shutil.copy2(path, master_cursor / "rules" / path.name)
     write_text(master_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
     write_text(master_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
 

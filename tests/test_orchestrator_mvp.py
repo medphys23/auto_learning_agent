@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
+from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line  # noqa: E402
 from discover_repositories import discover_repositories, write_registry  # noqa: E402
 from harvest_repositories import harvest_repositories, manifest_signals, source_map_summary  # noqa: E402
 from orchestrator_common import (  # noqa: E402
@@ -242,6 +243,51 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertEqual(signals[0]["scripts"], ["build", "test"])
             self.assertIn("next", signals[0]["dependencies"])
 
+    def test_dependency_catalog_audit_flags_missing_packages(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            repo = base / "repo"
+            repo.mkdir()
+            (repo / "AGENTS.md").write_text("# repo\n\n## Stack\n- Python\n- requests\n", encoding="utf-8")
+            (repo / "requirements.txt").write_text("requests==2.32.0\ncolorama==0.4.6\n", encoding="utf-8")
+            (repo / "package.json").write_text(
+                json.dumps({"dependencies": {"react": "19.0.0"}, "devDependencies": {"vitest": "latest"}}),
+                encoding="utf-8",
+            )
+            codex = base / ".codex"
+            cursor = base / ".cursor"
+            (codex).mkdir()
+            (cursor / "rules").mkdir(parents=True)
+            (codex / "AGENTS.md").write_text("requests\nreact\n", encoding="utf-8")
+            (codex / "skills.md").write_text("", encoding="utf-8")
+            (cursor / "rules" / "03-stack-catalog.mdc").write_text("react\n", encoding="utf-8")
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'repo'\n"
+                "name = 'repo'\n"
+                f"path = '{repo.as_posix()}'\n"
+                "enabled = true\n",
+                encoding="utf-8",
+            )
+
+            result = audit_dependency_catalog(
+                registry_path=registry,
+                reports_dir=base / "reports",
+                codex_home=codex,
+                cursor_home=cursor,
+            )
+
+            audited = result["repositories"][0]
+            self.assertEqual(audited["package_count"], 4)
+            self.assertIn("colorama", audited["missing_from_global_catalog"])
+            self.assertIn("vitest", audited["missing_from_repo_catalog"])
+            self.assertTrue((base / "reports" / "dependency-catalog-audit.md").exists())
+
+    def test_requirement_line_parser_skips_options_and_extracts_names(self) -> None:
+        self.assertEqual(parse_requirement_line("pandas[excel]>=2.0 ; python_version>'3.10'", "requirements.txt")["name"], "pandas")
+        self.assertIsNone(parse_requirement_line("--extra-index-url https://example.invalid", "requirements.txt"))
+
     def test_source_map_excludes_sensitive_generated_and_data_paths(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
@@ -396,6 +442,13 @@ class OrchestratorMvpTests(unittest.TestCase):
             "---\ndescription: Test rule\nalwaysApply: true\n---\n\n# Test rule\n",
             encoding="utf-8",
         )
+        (cursor / "rules" / "03-stack-catalog.mdc").write_text(
+            "# Stack catalog\n\n"
+            "| Stack | Packages | Used in | Rule |\n"
+            "|-------|----------|---------|------|\n"
+            "| Terminal progress | tqdm | All long Python jobs | Required |\n",
+            encoding="utf-8",
+        )
         return codex, cursor
 
     def test_synthesis_preserves_existing_content_and_adds_orchestrator(self) -> None:
@@ -411,12 +464,15 @@ class OrchestratorMvpTests(unittest.TestCase):
 
             agents = (base / "master" / "codex" / "AGENTS.md").read_text(encoding="utf-8")
             skills = (base / "master" / "codex" / "skills.md").read_text(encoding="utf-8")
+            cursor_stack = (base / "master" / "cursor" / "rules" / "03-stack-catalog.mdc").read_text(encoding="utf-8")
             config = tomllib.loads((base / "master" / "codex" / "config.toml").read_text(encoding="utf-8"))
 
             self.assertIn("Preserve this rule", agents)
             self.assertIn("Orchestrator Knowledge Layer", agents)
+            self.assertIn("colorama", agents)
             self.assertIn("### tqdm progress bars", skills)
             self.assertIn("### Orchestrator knowledge control plane", skills)
+            self.assertIn("colorama", cursor_stack)
             self.assertEqual(config["features"]["memories"], False)
             self.assertIn("workflow_router", config["agents"])
             self.assertTrue((base / "master" / "cursor" / "rules" / "06-orchestrator-knowledge.mdc").exists())
