@@ -26,6 +26,7 @@ from orchestrator_common import (  # noqa: E402
     validate_knowledge_record,
 )
 from publish_global_rules import publish_global_rules  # noqa: E402
+from run_orchestrator_pipeline import build_steps  # noqa: E402
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
 
 
@@ -307,6 +308,48 @@ class OrchestratorMvpTests(unittest.TestCase):
             "## Troubleshooting And Rollback",
         ):
             self.assertIn(heading, readme)
+
+    def test_pipeline_requires_confirmation_for_global_apply(self) -> None:
+        with self.assertRaises(ValueError):
+            build_steps(
+                python_executable="python",
+                apply_global=True,
+                confirm_global_write=False,
+                reports_dir=Path("reports"),
+                master_root=Path("master"),
+                backup_base=Path("backups") / "global-sync",
+                retrieval_query="orsi",
+                retrieval_status="candidate",
+            )
+
+    def test_pipeline_builds_preview_and_apply_steps(self) -> None:
+        preview_steps = build_steps(
+            python_executable="python",
+            apply_global=False,
+            confirm_global_write=False,
+            reports_dir=Path("reports"),
+            master_root=Path("master"),
+            backup_base=Path("backups") / "global-sync",
+            retrieval_query="orsi",
+            retrieval_status="candidate",
+        )
+        self.assertIn("--preview", preview_steps[-1].command)
+        self.assertFalse(preview_steps[-1].global_write)
+
+        apply_steps = build_steps(
+            python_executable="python",
+            apply_global=True,
+            confirm_global_write=True,
+            reports_dir=Path("reports"),
+            master_root=Path("master"),
+            backup_base=Path("backups") / "global-sync",
+            retrieval_query="orsi",
+            retrieval_status="candidate",
+        )
+        publish_steps = [step for step in apply_steps if step.global_write]
+        self.assertEqual(len(publish_steps), 1)
+        self.assertIn("--apply", publish_steps[0].command)
+        self.assertIn("--confirm-global-write", publish_steps[0].command)
 
     def write_minimal_global_home(self, base: Path) -> tuple[Path, Path]:
         codex = base / ".codex"

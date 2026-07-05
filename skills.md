@@ -9,6 +9,7 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 **Preconditions:**
 - Work from `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent`.
 - Use the repo-local `.venv` interpreter.
+- Install utility requirements with `uv pip install --python .\.venv\Scripts\python.exe --link-mode hardlink -r requirements.txt`.
 - Treat global Codex/Cursor folders as read-only unless a separate approved publication task exists.
 
 **Steps:**
@@ -17,6 +18,7 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 3. Run audit and validation scripts before reporting readiness.
 4. Preserve generated reports as ignored local artifacts unless the user explicitly asks to track them.
 5. For repository knowledge expansion, harvest only clean repos into candidate records and use coverage reports to explain blocked dirty repos.
+6. For unattended local operation, run `scripts\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.
 
 **Verification:**
 ```powershell
@@ -28,6 +30,7 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
 git status --short --ignored
 ```
 
@@ -36,3 +39,4 @@ git status --short --ignored
 - 2026-07-04: Added local GitHub repository discovery and deep-harvest workflow; dirty repositories are recorded but blocked from candidate extraction.
 - 2026-07-05: Added top-level global instruction synthesis and guarded publication with backups, diffs, and explicit confirmation.
 - 2026-07-05: Expanded safe repository knowledge harvesting with source maps, stack/dependency profiles, verification profiles, coverage reports, and a full README operator manual.
+- 2026-07-05: Added the `run_orchestrator_pipeline.py` startup pipeline with tqdm phase logs and guarded global apply mode.

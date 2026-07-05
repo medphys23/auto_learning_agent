@@ -2,7 +2,7 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-07-05T08:40:51Z
+Generated: 2026-07-05T08:53:44Z
 
 ## Coverage
 
@@ -13,8 +13,8 @@ Generated: 2026-07-05T08:40:51Z
 | general-work | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | investment-binance | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | kidney-federico | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| orsi | harvested | 22 | yes | yes | yes | yes | 10 | 7 | yes |
-| practice-ops-dashboard | harvested | 12 | yes | yes | yes | yes | 3 | 4 | yes |
+| orsi | skipped | 22 | yes | yes | yes | yes | 10 | 7 | yes |
+| practice-ops-dashboard | skipped | 12 | yes | yes | yes | yes | 3 | 4 | yes |
 | ps-robot-adaptor | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | x-booking | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | xenios-finances | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |

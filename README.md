@@ -29,6 +29,15 @@ The repo is in the master knowledge expansion phase.
 - `master/` contains generated Codex/Cursor top-level instruction previews.
 - `backups/global-sync/` stores global publication backups when publication is explicitly applied.
 
+## Local Setup
+
+Use the repo-local environment. The startup pipeline requires `tqdm` for real terminal progress bars.
+
+```powershell
+if (-not (Test-Path .\.venv\Scripts\python.exe)) { uv venv --python 3.11 .venv }
+uv pip install --python .\.venv\Scripts\python.exe --link-mode hardlink -r requirements.txt
+```
+
 ## Master Publication Model
 
 Global publication is guarded and explicit.
@@ -39,6 +48,32 @@ Global publication is guarded and explicit.
 4. Every apply creates backups under `backups/global-sync/<timestamp>/`, writes rollback notes, and verifies source/target hashes.
 
 This README/knowledge expansion work does not require another global publication. Publish again only when a new global instruction change is intentionally approved.
+
+## Startup Pipeline
+
+The startup pipeline runs the local orchestrator workflow with `tqdm` progress and writes logs under `reports/`.
+
+Preview mode performs validation, audit, discovery, harvest, retrieval smoke, synthesis, and publication preview without writing global folders:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
+```
+
+Official global apply mode performs the same local checks and then writes the generated top-level instructions into `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --apply-global --confirm-global-write
+```
+
+Pipeline outputs:
+
+- `reports/orchestrator-pipeline.log`
+- `reports/orchestrator-pipeline-summary.md`
+- `reports/orchestrator-pipeline-summary.json`
+- `reports/publication-applied.md` when global publication is applied
+- `reports/global-publication-rollback.md` with backup restore notes
+
+The pipeline uses local Python scripts and local clones. It does not call GitHub APIs or consume Codex model tokens.
 
 ## Repository Registry And Clean Gate
 
@@ -135,6 +170,7 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\promote_knowledge.py
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
 ```
 
 Use `--apply` on promotion or global publication only when the requested state change is intentional and allowed by policy.
@@ -152,6 +188,7 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
 git status --short --ignored
 ```
 

@@ -11,11 +11,13 @@ This repository is the local MVP for a governed Codex/Cursor orchestrator. It st
 - Python 3.11 standard library scripts.
 - TOML parsing uses `tomllib`.
 - Tests use `unittest`.
+- Startup pipeline progress uses `tqdm` from the repo-local `.venv`.
 - Existing PDF source material remains tracked as reference input.
 
 ## Dependency isolation
 - Install Python packages only into the repo-root `.venv` unless an incompatible subproject has a documented local `.venv`.
 - Bootstrap on Windows with `uv venv --python 3.11 .venv`.
+- Install repo utility requirements with `uv pip install --python .\.venv\Scripts\python.exe --link-mode hardlink -r requirements.txt`.
 - Use the shared `uv` cache on the same filesystem as the repo. Never use bare/global `pip`, `pip install --user`, `uv pip --system`, `--link-mode copy`, or `--no-cache`.
 - Keep `.venv/`, `venv/`, and generated dependency directories in `.gitignore` and out of git.
 
@@ -36,6 +38,7 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
 git status --short --ignored
 ```
 
@@ -46,6 +49,7 @@ Maintain [`skills.md`](skills.md) beside this file. Document repeatable Codex wo
 - Global folders `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor` are read-only audit targets unless the user explicitly approves a separate publication step.
 - `scripts/publish_global_rules.py` is preview-first and must refuse unconfirmed global writes.
 - `scripts/publish_global_rules.py --apply --confirm-global-write` may write global Codex/Cursor files only after the user explicitly requests global publication.
+- `scripts/run_orchestrator_pipeline.py --apply-global --confirm-global-write` runs the local pipeline and then performs the same guarded global publication.
 - Global publication must create repo-local backups under `backups/global-sync/<timestamp>/` before writing.
 - Generated reports in `reports/*.md` are local outputs and are ignored by git.
 - Repository discovery and harvesting must remain read-only against registered source repositories.
