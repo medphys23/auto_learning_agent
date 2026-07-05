@@ -2,13 +2,13 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-07-05T08:55:22Z
+Generated: 2026-07-05T09:03:04Z
 
 ## Coverage
 
 | Repository | Status | Candidates | Profile | Source map | Stack/deps | Verification | Workflows | Commands | Constraints |
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
-| auto_learning_agent | harvested | 16 | yes | yes | yes | yes | 1 | 10 | yes |
+| auto_learning_agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 10 | yes |
 | campania-transplant | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | general-work | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
 | investment-binance | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |

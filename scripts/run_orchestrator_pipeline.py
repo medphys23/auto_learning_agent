@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 import time
@@ -29,6 +30,109 @@ def write_text(path: Path, content: str) -> None:
 
 def command_text(command: list[str]) -> str:
     return " ".join(f'"{item}"' if " " in item else item for item in command)
+
+
+def strip_ansi(value: str) -> str:
+    return re.sub(r"\x1b\[[0-9;]*m", "", value)
+
+
+def colorize(value: str, color: str, reset: str) -> str:
+    return f"{color}{value}{reset}" if color else value
+
+
+def parse_discovery_lines(lines: list[str]) -> list[dict[str, Any]]:
+    repos: list[dict[str, Any]] = []
+    pattern = re.compile(r"^(?P<name>.+?): branch=(?P<branch>.*?) dirty=(?P<dirty>\d+) scope=(?P<scope>.*)$")
+    for line in lines:
+        match = pattern.match(strip_ansi(line).strip())
+        if not match:
+            continue
+        dirty_count = int(match.group("dirty"))
+        repos.append(
+            {
+                "name": match.group("name"),
+                "branch": match.group("branch"),
+                "dirty_count": dirty_count,
+                "scope": match.group("scope"),
+                "clean": dirty_count == 0,
+            }
+        )
+    return repos
+
+
+def parse_harvest_lines(lines: list[str]) -> list[dict[str, Any]]:
+    repos: list[dict[str, Any]] = []
+    pattern = re.compile(r"^(?P<id>[^:]+): (?P<status>[a-z_]+) \((?P<reason>.*?), candidates=(?P<candidates>\d+)\)$")
+    for line in lines:
+        match = pattern.match(strip_ansi(line).strip())
+        if not match:
+            continue
+        status = match.group("status")
+        repos.append(
+            {
+                "id": match.group("id"),
+                "status": status,
+                "reason": match.group("reason"),
+                "candidate_count": int(match.group("candidates")),
+                "clean": status in {"harvested", "skipped"},
+            }
+        )
+    return repos
+
+
+def repo_status_insights(step_name: str, output: list[str]) -> dict[str, Any]:
+    if step_name == "discover local repositories":
+        repos = parse_discovery_lines(output)
+        return {
+            "kind": "discovery",
+            "clean": [repo for repo in repos if repo["clean"]],
+            "dirty": [repo for repo in repos if not repo["clean"]],
+        }
+    if step_name == "harvest clean repositories":
+        repos = parse_harvest_lines(output)
+        return {
+            "kind": "harvest",
+            "clean": [repo for repo in repos if repo["clean"]],
+            "dirty": [repo for repo in repos if not repo["clean"]],
+        }
+    return {}
+
+
+def emit_repo_status(
+    insights: dict[str, Any],
+    *,
+    log_handle: Any,
+    progress: Any,
+    green: str,
+    yellow: str,
+    red: str,
+    cyan: str,
+    reset: str,
+) -> None:
+    if not insights:
+        return
+    kind = str(insights.get("kind", "repositories"))
+    clean = list(insights.get("clean", []))
+    dirty = list(insights.get("dirty", []))
+    header = f"[repos:{kind}] clean={len(clean)} dirty={len(dirty)}"
+    progress.write(colorize(header, cyan, reset))
+    log_handle.write(f"\n{strip_ansi(header)}\n")
+    for repo in clean:
+        if kind == "discovery":
+            line = f"  CLEAN {repo['name']} branch={repo['branch']} scope={repo['scope']}"
+        else:
+            line = f"  CLEAN {repo['id']} status={repo['status']} candidates={repo['candidate_count']}"
+        progress.write(colorize(line, green, reset))
+        log_handle.write(strip_ansi(line) + "\n")
+    for repo in dirty:
+        if kind == "discovery":
+            line = f"  DIRTY {repo['name']} branch={repo['branch']} dirty={repo['dirty_count']} scope={repo['scope']}"
+            color = yellow
+        else:
+            line = f"  BLOCKED {repo['id']} status={repo['status']} candidates={repo['candidate_count']}"
+            color = red
+        progress.write(colorize(line, color, reset))
+        log_handle.write(strip_ansi(line) + "\n")
 
 
 def build_steps(
@@ -96,7 +200,18 @@ def build_steps(
     return steps
 
 
-def run_step(step: PipelineStep, *, log_handle: Any, verbose: bool, progress: Any) -> dict[str, Any]:
+def run_step(
+    step: PipelineStep,
+    *,
+    log_handle: Any,
+    verbose: bool,
+    progress: Any,
+    green: str = "",
+    yellow: str = "",
+    red: str = "",
+    cyan: str = "",
+    reset: str = "",
+) -> dict[str, Any]:
     started = utc_now()
     start_time = time.monotonic()
     log_handle.write(f"\n## {step.name}\n")
@@ -115,12 +230,25 @@ def run_step(step: PipelineStep, *, log_handle: Any, verbose: bool, progress: An
     )
     assert process.stdout is not None
     output_lines = 0
+    output: list[str] = []
     for line in process.stdout:
         output_lines += 1
+        output.append(line.rstrip())
         log_handle.write(line)
         if verbose:
             progress.write(line.rstrip())
     return_code = process.wait()
+    insights = repo_status_insights(step.name, output)
+    emit_repo_status(
+        insights,
+        log_handle=log_handle,
+        progress=progress,
+        green=green,
+        yellow=yellow,
+        red=red,
+        cyan=cyan,
+        reset=reset,
+    )
     elapsed = round(time.monotonic() - start_time, 3)
     finished = utc_now()
     log_handle.write(f"\nFinished: {finished}\n")
@@ -137,6 +265,7 @@ def run_step(step: PipelineStep, *, log_handle: Any, verbose: bool, progress: An
         "elapsed_seconds": elapsed,
         "exit_code": return_code,
         "output_lines": output_lines,
+        "repository_status": insights,
     }
 
 
@@ -162,6 +291,26 @@ def write_summary(reports_dir: Path, result: dict[str, Any]) -> None:
         )
     if result.get("failed_step"):
         lines.extend(["", f"Failed step: `{result['failed_step']}`"])
+    repository_sections = [
+        step for step in result["steps"] if step.get("repository_status", {}).get("kind") in {"discovery", "harvest"}
+    ]
+    if repository_sections:
+        lines.extend(["", "## Repository Status", ""])
+        for step in repository_sections:
+            status = step["repository_status"]
+            lines.append(f"### {step['name']}")
+            lines.append("")
+            lines.append(f"- Clean: {len(status.get('clean', []))}")
+            lines.append(f"- Dirty/blocked: {len(status.get('dirty', []))}")
+            for repo in status.get("clean", []):
+                name = repo.get("name") or repo.get("id")
+                detail = repo.get("branch") or repo.get("status")
+                lines.append(f"- CLEAN `{name}` {detail}")
+            for repo in status.get("dirty", []):
+                name = repo.get("name") or repo.get("id")
+                detail = f"dirty={repo.get('dirty_count')}" if "dirty_count" in repo else str(repo.get("status"))
+                lines.append(f"- DIRTY/BLOCKED `{name}` {detail}")
+            lines.append("")
     write_text(reports_dir / "orchestrator-pipeline-summary.md", "\n".join(lines))
 
 
@@ -175,10 +324,12 @@ def run_pipeline(
 ) -> int:
     try:
         from tqdm import tqdm
+        from colorama import Fore, Style, init as colorama_init
     except ModuleNotFoundError:
-        print("ERROR: tqdm is required for this pipeline.")
+        print("ERROR: tqdm and colorama are required for this pipeline.")
         print(r"Install locally with: uv pip install --python .\.venv\Scripts\python.exe --link-mode hardlink -r requirements.txt")
         return 3
+    colorama_init()
 
     reports_dir.mkdir(parents=True, exist_ok=True)
     log_file.parent.mkdir(parents=True, exist_ok=True)
@@ -194,7 +345,17 @@ def run_pipeline(
         with tqdm(total=len(steps), desc="orchestrator pipeline", unit="step", dynamic_ncols=True) as progress:
             for step in steps:
                 progress.set_postfix_str(step.name[:40])
-                result = run_step(step, log_handle=log_handle, verbose=verbose, progress=progress)
+                result = run_step(
+                    step,
+                    log_handle=log_handle,
+                    verbose=verbose,
+                    progress=progress,
+                    green=Fore.GREEN,
+                    yellow=Fore.YELLOW,
+                    red=Fore.RED,
+                    cyan=Fore.CYAN,
+                    reset=Style.RESET_ALL,
+                )
                 results.append(result)
                 progress.update(1)
                 if result["exit_code"] != 0:

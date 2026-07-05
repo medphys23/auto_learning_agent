@@ -11,7 +11,7 @@ This repository is the local MVP for a governed Codex/Cursor orchestrator. It st
 - Python 3.11 standard library scripts.
 - TOML parsing uses `tomllib`.
 - Tests use `unittest`.
-- Startup pipeline progress uses `tqdm` from the repo-local `.venv`.
+- Startup pipeline progress uses `tqdm` and `colorama` from the repo-local `.venv`.
 - Existing PDF source material remains tracked as reference input.
 
 ## Dependency isolation

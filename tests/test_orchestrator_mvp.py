@@ -26,7 +26,7 @@ from orchestrator_common import (  # noqa: E402
     validate_knowledge_record,
 )
 from publish_global_rules import publish_global_rules  # noqa: E402
-from run_orchestrator_pipeline import build_steps  # noqa: E402
+from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
 
 
@@ -350,6 +350,25 @@ class OrchestratorMvpTests(unittest.TestCase):
         self.assertEqual(len(publish_steps), 1)
         self.assertIn("--apply", publish_steps[0].command)
         self.assertIn("--confirm-global-write", publish_steps[0].command)
+
+    def test_pipeline_parses_clean_and_dirty_repo_output(self) -> None:
+        discovered = parse_discovery_lines(
+            [
+                "ORSI: branch=main dirty=0 scope=research_training",
+                "X_booking: branch=dev02 dirty=2 scope=lead_scraper",
+            ]
+        )
+        self.assertEqual([repo["name"] for repo in discovered if repo["clean"]], ["ORSI"])
+        self.assertEqual([repo["name"] for repo in discovered if not repo["clean"]], ["X_booking"])
+
+        harvested = parse_harvest_lines(
+            [
+                "orsi: skipped (unchanged, candidates=22)",
+                "x-booking: blocked_dirty_worktree (uncommitted changes present, candidates=0)",
+            ]
+        )
+        self.assertEqual([repo["id"] for repo in harvested if repo["clean"]], ["orsi"])
+        self.assertEqual([repo["id"] for repo in harvested if not repo["clean"]], ["x-booking"])
 
     def write_minimal_global_home(self, base: Path) -> tuple[Path, Path]:
         codex = base / ".codex"

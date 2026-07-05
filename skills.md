@@ -19,6 +19,7 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 4. Preserve generated reports as ignored local artifacts unless the user explicitly asks to track them.
 5. For repository knowledge expansion, harvest only clean repos into candidate records and use coverage reports to explain blocked dirty repos.
 6. For unattended local operation, run `scripts\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.
+7. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.
 
 **Verification:**
 ```powershell
@@ -40,3 +41,4 @@ git status --short --ignored
 - 2026-07-05: Added top-level global instruction synthesis and guarded publication with backups, diffs, and explicit confirmation.
 - 2026-07-05: Expanded safe repository knowledge harvesting with source maps, stack/dependency profiles, verification profiles, coverage reports, and a full README operator manual.
 - 2026-07-05: Added the `run_orchestrator_pipeline.py` startup pipeline with tqdm phase logs and guarded global apply mode.
+- 2026-07-05: Added colorama-backed clean/dirty/blocked repository status output to the pipeline log stream.

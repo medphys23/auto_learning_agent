@@ -31,7 +31,7 @@ The repo is in the master knowledge expansion phase.
 
 ## Local Setup
 
-Use the repo-local environment. The startup pipeline requires `tqdm` for real terminal progress bars.
+Use the repo-local environment. The startup pipeline requires `tqdm` for real terminal progress bars and `colorama` for readable Windows console colors.
 
 ```powershell
 if (-not (Test-Path .\.venv\Scripts\python.exe)) { uv venv --python 3.11 .venv }
@@ -51,7 +51,7 @@ This README/knowledge expansion work does not require another global publication
 
 ## Startup Pipeline
 
-The startup pipeline runs the local orchestrator workflow with `tqdm` progress and writes logs under `reports/`.
+The startup pipeline runs the local orchestrator workflow with `tqdm` progress, colorized clean/dirty repository status, and saved logs under `reports/`.
 
 Preview mode performs validation, audit, discovery, harvest, retrieval smoke, synthesis, and publication preview without writing global folders:
 
@@ -74,6 +74,12 @@ Pipeline outputs:
 - `reports/global-publication-rollback.md` with backup restore notes
 
 The pipeline uses local Python scripts and local clones. It does not call GitHub APIs or consume Codex model tokens.
+
+Terminal colors:
+
+- Green `CLEAN`: repository is clean or safely harvested/skipped as unchanged.
+- Yellow `DIRTY`: repository discovery found local uncommitted changes.
+- Red `BLOCKED`: harvest refused candidate extraction because the worktree is dirty.
 
 ## Repository Registry And Clean Gate
 
