@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
+from audit_context_budget import audit_context_budget  # noqa: E402
 from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line  # noqa: E402
 from discover_repositories import discover_repositories, write_registry  # noqa: E402
 from harvest_repositories import harvest_repositories, manifest_signals, source_map_summary  # noqa: E402
@@ -367,6 +368,7 @@ class OrchestratorMvpTests(unittest.TestCase):
                 backup_keep=2,
                 retrieval_query="orsi",
                 retrieval_status="candidate",
+                profile="legacy",
             )
 
     def test_pipeline_builds_preview_and_apply_steps(self) -> None:
@@ -380,6 +382,7 @@ class OrchestratorMvpTests(unittest.TestCase):
             backup_keep=2,
             retrieval_query="orsi",
             retrieval_status="candidate",
+            profile="legacy",
         )
         self.assertIn("--preview", preview_steps[-1].command)
         self.assertFalse(preview_steps[-1].global_write)
@@ -394,12 +397,42 @@ class OrchestratorMvpTests(unittest.TestCase):
             backup_keep=2,
             retrieval_query="orsi",
             retrieval_status="candidate",
+            profile="legacy",
         )
         publish_steps = [step for step in apply_steps if step.global_write]
         self.assertEqual(len(publish_steps), 1)
         self.assertIn("--apply", publish_steps[0].command)
         self.assertIn("--confirm-global-write", publish_steps[0].command)
         self.assertIn("--backup-keep", publish_steps[0].command)
+
+        optimized_steps = build_steps(
+            python_executable="python",
+            apply_global=False,
+            confirm_global_write=False,
+            reports_dir=Path("reports"),
+            master_root=Path("master"),
+            backup_base=Path("backups") / "global-sync",
+            backup_keep=2,
+            retrieval_query="orsi",
+            retrieval_status="candidate",
+            profile="optimized",
+        )
+        self.assertIn("--profile", optimized_steps[-1].command)
+        self.assertIn("optimized", optimized_steps[-1].command)
+
+        with self.assertRaises(ValueError):
+            build_steps(
+                python_executable="python",
+                apply_global=True,
+                confirm_global_write=True,
+                reports_dir=Path("reports"),
+                master_root=Path("master"),
+                backup_base=Path("backups") / "global-sync",
+                backup_keep=2,
+                retrieval_query="orsi",
+                retrieval_status="candidate",
+                profile="optimized",
+            )
 
     def test_pipeline_parses_clean_and_dirty_repo_output(self) -> None:
         discovered = parse_discovery_lines(
@@ -478,6 +511,49 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertTrue((base / "master" / "cursor" / "rules" / "06-orchestrator-knowledge.mdc").exists())
             self.assertIn("codex_agents_sha256", result)
 
+    def test_optimized_synthesis_writes_shadow_artifacts_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            result = synthesize(
+                codex_home=codex,
+                cursor_home=cursor,
+                master_root=base / "master",
+                reports_dir=base / "reports",
+                profile="optimized",
+            )
+
+            optimized_agents = base / "master" / "optimized" / "codex" / "AGENTS.md"
+            optimized_config = base / "master" / "optimized" / "codex" / "config" / "orchestrator-managed.toml"
+            self.assertEqual(result["profile"], "optimized")
+            self.assertTrue(optimized_agents.exists())
+            self.assertTrue(optimized_config.exists())
+            self.assertFalse((base / "master" / "codex" / "AGENTS.md").exists())
+            self.assertLessEqual(optimized_agents.stat().st_size, 8192)
+            self.assertIn("Global Codex instructions", optimized_agents.read_text(encoding="utf-8"))
+            self.assertNotIn("plugins.", optimized_config.read_text(encoding="utf-8"))
+            self.assertTrue((base / "reports" / "repository-compatibility-matrix.md").exists())
+            self.assertTrue((base / "reports" / "optimized-config-merge-preview.md").exists())
+            self.assertTrue((base / "reports" / "optimized-cutover-plan.md").exists())
+
+    def test_context_budget_audit_writes_reports(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            repo = base / "repo"
+            repo.mkdir()
+            (repo / "AGENTS.md").write_text("# Repo\n", encoding="utf-8")
+            result = audit_context_budget(
+                repo_root=repo,
+                codex_home=codex,
+                cursor_home=cursor,
+                master_root=base / "master",
+                reports_dir=base / "reports",
+            )
+
+            self.assertGreater(result["persistent_estimated_tokens"], 0)
+            self.assertTrue((base / "reports" / "context-budget-baseline.md").exists())
+
     def test_config_merge_preserves_plugins_and_refuses_memory_true(self) -> None:
         config = 'model = "gpt-5.5"\n\n[plugins."github@openai-curated"]\nenabled = true\n'
         merged, report = merge_codex_config(config)
@@ -537,6 +613,34 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertTrue((Path(applied["backup_root"]) / "codex" / "AGENTS.md").exists())
             self.assertIn("Orchestrator Knowledge Layer", (codex / "AGENTS.md").read_text(encoding="utf-8"))
             self.assertTrue((cursor / "skills" / "orchestrator-knowledge" / "SKILL.md").exists())
+
+    def test_optimized_publication_is_preview_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            before_agents = (codex / "AGENTS.md").read_text(encoding="utf-8")
+            preview = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                profile="optimized",
+            )
+            self.assertEqual(preview["mode"], "optimized-preview")
+            self.assertEqual(before_agents, (codex / "AGENTS.md").read_text(encoding="utf-8"))
+
+            with self.assertRaises(RuntimeError):
+                publish_global_rules(
+                    reports_dir=base / "reports",
+                    master_root=base / "master",
+                    backup_base=base / "backups",
+                    codex_home=codex,
+                    cursor_home=cursor,
+                    apply=True,
+                    confirm_global_write=True,
+                    profile="optimized",
+                )
 
     def test_publish_prunes_old_backup_roots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

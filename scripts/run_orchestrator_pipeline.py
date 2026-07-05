@@ -146,15 +146,19 @@ def build_steps(
     backup_keep: int,
     retrieval_query: str,
     retrieval_status: str,
+    profile: str,
 ) -> list[PipelineStep]:
     if apply_global and not confirm_global_write:
         raise ValueError("--apply-global requires --confirm-global-write")
+    if profile == "optimized" and apply_global:
+        raise ValueError("optimized profile is preview-only; use a separate cutover task for global apply")
 
     py = python_executable
     steps = [
         PipelineStep("unit tests", [py, "-m", "unittest", "discover", "-s", "tests"]),
         PipelineStep("validate local Codex TOML", [py, "scripts/validate_codex_config.py"]),
         PipelineStep("audit global instructions", [py, "scripts/audit_global_instructions.py", "--reports-dir", str(reports_dir)]),
+        PipelineStep("audit context budget", [py, "scripts/audit_context_budget.py", "--reports-dir", str(reports_dir), "--master-root", str(master_root)]),
         PipelineStep("discover local repositories", [py, "scripts/discover_repositories.py"]),
         PipelineStep("harvest clean repositories", [py, "scripts/harvest_repositories.py"]),
         PipelineStep("audit dependency catalogs", [py, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]),
@@ -179,6 +183,8 @@ def build_steps(
                 str(reports_dir),
                 "--master-root",
                 str(master_root),
+                "--profile",
+                profile,
             ],
         ),
     ]
@@ -193,6 +199,8 @@ def build_steps(
         str(backup_base),
         "--backup-keep",
         str(backup_keep),
+        "--profile",
+        profile,
     ]
     if apply_global:
         publish_command.extend(["--apply", "--confirm-global-write"])
@@ -340,7 +348,7 @@ def run_pipeline(
     started_at = utc_now()
     results: list[dict[str, Any]] = []
     failed_step = ""
-    mode = "apply-global" if apply_global else "preview"
+    mode = f"{'apply-global' if apply_global else 'preview'}:{'optimized' if any('--profile' in step.command and 'optimized' in step.command for step in steps) else 'legacy'}"
 
     with log_file.open("w", encoding="utf-8") as log_handle:
         log_handle.write("# Orchestrator Pipeline Log\n")
@@ -396,6 +404,7 @@ def main() -> int:
     parser.add_argument("--backup-keep", type=int, default=2, help="Number of newest backup roots to retain after global apply.")
     parser.add_argument("--retrieval-query", default="orsi")
     parser.add_argument("--retrieval-status", default="candidate")
+    parser.add_argument("--profile", choices=("legacy", "optimized"), default="legacy")
     parser.add_argument("--log-file", type=Path, default=Path("reports") / "orchestrator-pipeline.log")
     parser.add_argument("--verbose", action="store_true", help="Echo subprocess output through tqdm.write while logging.")
     args = parser.parse_args()
@@ -414,6 +423,7 @@ def main() -> int:
             backup_keep=args.backup_keep,
             retrieval_query=args.retrieval_query,
             retrieval_status=args.retrieval_status,
+            profile=args.profile,
         )
     except ValueError as exc:
         print(f"ERROR: {exc}")

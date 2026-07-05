@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import json
 import shutil
 from pathlib import Path
 from typing import Any
 
-from orchestrator_common import read_toml, sha256_file, utc_now
+from orchestrator_common import git_dirty_lines, load_repository_registry, read_toml, sha256_file, utc_now
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -118,6 +119,111 @@ CURSOR_ORCHESTRATOR_STACK_ROW = (
     "| Orchestrator startup pipeline | tqdm, colorama | auto_learning_agent | "
     "Progress bars plus colorized clean/dirty/blocked repository status; repo-local `.venv` only |"
 )
+
+OPTIMIZED_AGENTS_MAX_BYTES = 8192
+
+OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
+
+## Core Rules
+- Read the nearest applicable repository instructions before non-trivial edits.
+- Make the smallest complete change that satisfies the task.
+- Preserve public interfaces unless the task explicitly requires changing them.
+- Do not commit, push, amend, force-push, reset, clean, delete user work, or run destructive Git commands without explicit approval.
+- Never expose or hardcode secrets, credentials, tokens, PHI, private datasets, or production payloads.
+- Use the repository's existing package manager, local environment, and lockfile.
+- Ask before adding a new production dependency.
+- Follow repository-defined verification and report exact commands, exit status, skipped checks, and residual risks.
+- Global publication and high-risk configuration changes require explicit approval.
+- Detailed workflows are loaded on demand from repository instructions, skills, or the orchestrator knowledge catalog.
+
+## Orchestrator Knowledge
+- Use `C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent` only for non-trivial cross-repo, migration, review, global-config, or repeatable-workflow tasks.
+- Query `knowledge/INDEX.md` and `knowledge/catalog.jsonl` before opening full records.
+- Open the minimum relevant records and apply compatibility checks for repository, stack, OS, runtime, data sensitivity, and risk.
+- Treat dirty repositories as advisory only; never promote uncommitted work as reusable knowledge.
+- Repository-specific instructions override generalized reusable knowledge.
+"""
+
+OPTIMIZED_SKILLS: dict[str, str] = {
+    "orchestrator-knowledge": """---
+name: orchestrator-knowledge
+description: Retrieve minimum governed knowledge from auto_learning_agent for non-trivial cross-repo or repeatable work.
+---
+
+# Orchestrator Knowledge
+
+Use for cross-repo work, reviews, migrations, global instruction changes, or repeatable workflows.
+
+1. Read active global and repository instructions.
+2. Query `knowledge/INDEX.md` and `knowledge/catalog.jsonl`.
+3. Open only directly relevant records.
+4. Check repository, stack, runtime, OS, data, and risk compatibility.
+5. Verify through the target repository's `AGENTS.md`.
+6. Record new reusable lessons as candidates, not global rules.
+""",
+    "python-environment": """---
+name: python-environment
+description: Bootstrap and use repo-local Python environments with uv and hardlinked package storage.
+---
+
+# Python Environment
+
+Use the repository-local `.venv` and `uv` with hardlink mode. Never install project dependencies globally.
+
+Default Windows bootstrap:
+
+```powershell
+uv venv --python 3.11 .venv
+uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r requirements.txt
+```
+""",
+    "office-com-deliverable": """---
+name: office-com-deliverable
+description: Create or repair review-grade Word and PowerPoint deliverables on Windows using Office COM.
+---
+
+# Office COM Deliverables
+
+Prefer Word/PowerPoint COM for review-grade `.docx` and `.pptx` authoring on Windows. Use Python Office libraries only for parsing, tests, fallback, or explicit user opt-in. Always close documents and quit COM apps in `finally`.
+""",
+    "document-read-path": """---
+name: document-read-path
+description: Read Office/PDF/XLSX sources through a cached text conversion before loading binary content into context.
+---
+
+# Document Read Path
+
+Convert trusted local documents into cached Markdown/text before analysis. Use repository-local dependencies and never commit conversion caches.
+""",
+    "lead-scraper": """---
+name: lead-scraper
+description: Build or maintain Playwright lead scrapers with resume checkpoints, tqdm progress, and contact-data safeguards.
+---
+
+# Lead Scraper
+
+Use only on scraper repositories or scraper branches. Keep outputs under ignored `data/`, use resume-safe checkpoints, tqdm progress, polite delays, and never commit scraped contact exports.
+""",
+    "repository-scaffold": """---
+name: repository-scaffold
+description: Scaffold required repository instruction, verification, skill, Cursor mirror, and ignore files.
+disable-model-invocation: true
+---
+
+# Repository Scaffold
+
+Create root `AGENTS.md`, `skills.md`, `.cursor/rules/`, and `.gitignore` entries for new trusted repositories. Keep global behavior minimal and repository behavior local.
+""",
+    "stack-selection": """---
+name: stack-selection
+description: Select known repository stacks and dependency policies without loading the full global stack catalog.
+---
+
+# Stack Selection
+
+Use repository manifests, `AGENTS.md`, and dependency audit reports first. Promote a package to global guidance only when it becomes a reusable cross-repo convention.
+""",
+}
 
 
 def read_text(path: Path) -> str:
@@ -380,13 +486,205 @@ def write_diff_report(report_path: Path, comparisons: list[tuple[str, str, str]]
     write_text(report_path, "\n".join(lines))
 
 
+def write_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def optimized_config_fragment() -> str:
+    lines = [
+        "# Orchestrator-owned Codex config preview.",
+        "# This fragment is not a full active config.toml copy.",
+        "",
+        "[agents]",
+        "max_threads = 3",
+        "max_depth = 1",
+        "job_max_runtime_seconds = 1800",
+        "",
+    ]
+    for name, values in AGENT_REGISTRATIONS.items():
+        lines.extend(
+            [
+                f"[agents.{name}]",
+                f"description = \"{values['description']}\"",
+                f"config_file = \"{values['config_file']}\"",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_optimized_config_preview(reports_dir: Path, codex_config: str, fragment: str) -> None:
+    diff = "\n".join(
+        difflib.unified_diff(
+            codex_config.splitlines(),
+            fragment.splitlines(),
+            fromfile="active/codex/config.toml",
+            tofile="optimized/orchestrator-managed.toml",
+            lineterm="",
+        )
+    )
+    write_text(
+        reports_dir / "optimized-config-merge-preview.md",
+        "# Optimized Config Merge Preview\n\n"
+        f"Generated: {utc_now()}\n\n"
+        "The optimized path writes a narrow orchestrator-owned fragment only. It does not copy or apply the full active config.\n\n"
+        "```diff\n"
+        f"{diff if diff else '# No changes'}\n"
+        "```\n",
+    )
+    write_json(
+        reports_dir / "optimized-config-merge-preview.json",
+        {
+            "generated_at": utc_now(),
+            "mode": "preview-only",
+            "active_config_bytes": len(codex_config.encode("utf-8")),
+            "optimized_fragment_bytes": len(fragment.encode("utf-8")),
+            "owned_keys": ["agents.max_threads", "agents.max_depth", "agents.job_max_runtime_seconds", *[f"agents.{name}" for name in AGENT_REGISTRATIONS]],
+            "applied": False,
+        },
+    )
+
+
+def repository_instruction_paths(repo_path: Path) -> list[Path]:
+    paths = [repo_path / "AGENTS.md", repo_path / "skills.md"]
+    paths.extend(sorted(repo_path.glob("*/AGENTS.md")))
+    return [path for path in paths if path.exists() and path.is_file()]
+
+
+def estimate_tokens(text: str) -> int:
+    return max(1, len(text) // 4) if text else 0
+
+
+def write_repository_compatibility_reports(reports_dir: Path, optimized_agents: str) -> None:
+    repositories = load_repository_registry(REPO_ROOT / "config" / "repositories.toml")
+    rows: list[dict[str, Any]] = []
+    for repo in repositories:
+        repo_path = Path(str(repo.get("path", "")))
+        instruction_paths = repository_instruction_paths(repo_path) if repo_path.exists() else []
+        instruction_bytes = sum(path.stat().st_size for path in instruction_paths)
+        instruction_text = "\n".join(read_text(path) for path in instruction_paths)
+        dirty = git_dirty_lines(repo_path) if repo_path.exists() else []
+        rows.append(
+            {
+                "id": repo.get("id"),
+                "path": str(repo_path),
+                "dirty_count": len(dirty),
+                "instruction_files": [str(path) for path in instruction_paths],
+                "repository_instruction_bytes": instruction_bytes,
+                "optimized_chain_estimated_tokens": estimate_tokens(optimized_agents) + estimate_tokens(instruction_text),
+                "mentions_global_skills": ".codex/skills.md" in instruction_text.lower() or "~/.codex/skills.md" in instruction_text.lower(),
+                "mentions_global_stack_catalog": "global catalog" in instruction_text.lower() or "stack catalog" in instruction_text.lower(),
+            }
+        )
+    write_json(reports_dir / "repository-compatibility-matrix.json", {"generated_at": utc_now(), "repositories": rows})
+    lines = [
+        "# Repository Compatibility Matrix",
+        "",
+        f"Generated: {utc_now()}",
+        "",
+        "Preview-only analysis. No registered source repositories were modified.",
+        "",
+        "| Repository | Dirty | Instruction files | Repo bytes | Optimized chain est. tokens | Global skill ref | Stack catalog ref |",
+        "| --- | ---: | ---: | ---: | ---: | --- | --- |",
+    ]
+    for row in rows:
+        lines.append(
+            f"| `{row['id']}` | {row['dirty_count']} | {len(row['instruction_files'])} | {row['repository_instruction_bytes']} | "
+            f"{row['optimized_chain_estimated_tokens']} | {str(row['mentions_global_skills']).lower()} | {str(row['mentions_global_stack_catalog']).lower()} |"
+        )
+    write_text(reports_dir / "repository-compatibility-matrix.md", "\n".join(lines))
+
+
+def write_optimized_cutover_plan(reports_dir: Path, optimized_agents_path: Path) -> None:
+    result = {
+        "generated_at": utc_now(),
+        "applied": False,
+        "cutover_allowed": False,
+        "optimized_agents_path": str(optimized_agents_path),
+        "required_future_command": ".\\.venv\\Scripts\\python.exe scripts\\plan_optimized_cutover.py",
+        "requires_explicit_user_approval": True,
+    }
+    write_json(reports_dir / "optimized-cutover-plan.json", result)
+    write_text(
+        reports_dir / "optimized-cutover-plan.md",
+        "# Optimized Cutover Plan\n\n"
+        f"Generated: {result['generated_at']}\n\n"
+        "- Status: preview only\n"
+        "- No active global files were modified.\n"
+        "- Legacy remains the default profile.\n"
+        "- Future cutover must be a separate explicit task with backups, hash verification, canary checks, and rollback.\n",
+    )
+
+
+def synthesize_optimized(
+    *,
+    codex_home: Path,
+    cursor_home: Path,
+    master_root: Path,
+    reports_dir: Path,
+) -> dict[str, Any]:
+    codex_config = read_text(codex_home / "config.toml")
+    optimized_root = master_root / "optimized"
+    optimized_codex = optimized_root / "codex"
+    optimized_cursor = optimized_root / "cursor"
+    optimized_skills = optimized_root / "agents" / "skills"
+
+    agents = OPTIMIZED_GLOBAL_AGENTS
+    agents_bytes = len(agents.encode("utf-8"))
+    if agents_bytes > OPTIMIZED_AGENTS_MAX_BYTES:
+        raise ValueError(f"optimized AGENTS.md exceeds {OPTIMIZED_AGENTS_MAX_BYTES} bytes: {agents_bytes}")
+    write_text(optimized_codex / "AGENTS.md", agents)
+    write_text(optimized_root / "shared" / "orchestrator-layer.md", orchestrator_markdown_block())
+    fragment = optimized_config_fragment()
+    write_text(optimized_codex / "config" / "orchestrator-managed.toml", fragment)
+    for filename, content in AGENT_FILES.items():
+        write_text(optimized_codex / "agents" / filename, content)
+    for name, content in OPTIMIZED_SKILLS.items():
+        write_text(optimized_skills / name / "SKILL.md", content)
+    write_text(optimized_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
+    write_text(optimized_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
+
+    write_optimized_config_preview(reports_dir, codex_config, fragment)
+    write_repository_compatibility_reports(reports_dir, agents)
+    write_optimized_cutover_plan(reports_dir, optimized_codex / "AGENTS.md")
+    write_text(
+        reports_dir / "top-level-synthesis.md",
+        "# Top-Level Synthesis\n\n"
+        f"Generated: {utc_now()}\n\n"
+        "- Profile: optimized\n"
+        "- Generated preview-only optimized Codex artifacts under `master/optimized/codex/`.\n"
+        "- Generated preview-only optimized skills under `master/optimized/agents/skills/`.\n"
+        "- No active global files were modified.\n",
+    )
+    return {
+        "profile": "optimized",
+        "master_root": str(optimized_root),
+        "reports_dir": str(reports_dir),
+        "codex_agents_bytes": agents_bytes,
+        "codex_agents_sha256": sha256_file(optimized_codex / "AGENTS.md"),
+        "config_fragment_sha256": sha256_file(optimized_codex / "config" / "orchestrator-managed.toml"),
+    }
+
+
 def synthesize(
     *,
     codex_home: Path = CODEX_HOME,
     cursor_home: Path = CURSOR_HOME,
     master_root: Path = REPO_ROOT / "master",
     reports_dir: Path = REPO_ROOT / "reports",
+    profile: str = "legacy",
 ) -> dict[str, Any]:
+    if profile == "optimized":
+        return synthesize_optimized(
+            codex_home=codex_home,
+            cursor_home=cursor_home,
+            master_root=master_root,
+            reports_dir=reports_dir,
+        )
+    if profile != "legacy":
+        raise ValueError(f"unsupported synthesis profile: {profile}")
+
     codex_agents = read_text(codex_home / "AGENTS.md")
     codex_skills = read_text(codex_home / "skills.md")
     codex_config = read_text(codex_home / "config.toml")
@@ -446,6 +744,7 @@ def synthesize(
     )
 
     return {
+        "profile": "legacy",
         "master_root": str(master_root),
         "reports_dir": str(reports_dir),
         "codex_agents_sha256": sha256_file(master_codex / "AGENTS.md"),
@@ -461,12 +760,14 @@ def main() -> int:
     parser.add_argument("--cursor-home", type=Path, default=CURSOR_HOME)
     parser.add_argument("--master-root", type=Path, default=REPO_ROOT / "master")
     parser.add_argument("--reports-dir", type=Path, default=REPO_ROOT / "reports")
+    parser.add_argument("--profile", choices=("legacy", "optimized"), default="legacy")
     args = parser.parse_args()
     result = synthesize(
         codex_home=args.codex_home,
         cursor_home=args.cursor_home,
         master_root=args.master_root,
         reports_dir=args.reports_dir,
+        profile=args.profile,
     )
     print(f"Synthesized top-level instructions under {result['master_root']}")
     print(f"Reports written to {result['reports_dir']}")

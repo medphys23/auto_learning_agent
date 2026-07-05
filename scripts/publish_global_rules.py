@@ -151,8 +151,29 @@ def publish_global_rules(
     cursor_home: Path = CURSOR_HOME,
     apply: bool = False,
     confirm_global_write: bool = False,
+    profile: str = "legacy",
 ) -> dict[str, Any]:
-    synthesize(codex_home=codex_home, cursor_home=cursor_home, master_root=master_root, reports_dir=reports_dir)
+    if profile == "optimized" and apply:
+        raise RuntimeError("optimized profile is preview-only; global apply requires a separate cutover task")
+    synthesize(codex_home=codex_home, cursor_home=cursor_home, master_root=master_root, reports_dir=reports_dir, profile=profile)
+    if profile == "optimized":
+        optimized_agents = master_root / "optimized" / "codex" / "AGENTS.md"
+        optimized_config = master_root / "optimized" / "codex" / "config" / "orchestrator-managed.toml"
+        validate_master_targets(
+            [
+                (optimized_agents, codex_home / "AGENTS.md", "optimized/codex/AGENTS.md"),
+                (optimized_config, codex_home / "config.toml", "optimized/codex/config/orchestrator-managed.toml"),
+            ]
+        )
+        report = write_publication_reports(
+            reports_dir,
+            mode="optimized-preview-only",
+            backup_root=None,
+            backed_up=[],
+            pruned_backups=[],
+            applied=[],
+        )
+        return {"mode": "optimized-preview", "report": str(report), "applied": []}
     targets = publication_targets(master_root, codex_home, cursor_home)
     validate_master_targets(targets)
     if not apply:
@@ -201,6 +222,7 @@ def main() -> int:
     parser.add_argument("--preview", action="store_true", help="Generate master files and reports without global writes.")
     parser.add_argument("--apply", action="store_true", help="Apply generated files to global Codex/Cursor folders.")
     parser.add_argument("--confirm-global-write", action="store_true", help="Required with --apply.")
+    parser.add_argument("--profile", choices=("legacy", "optimized"), default="legacy")
     args = parser.parse_args()
     try:
         result = publish_global_rules(
@@ -212,6 +234,7 @@ def main() -> int:
             cursor_home=args.cursor_home,
             apply=args.apply,
             confirm_global_write=args.confirm_global_write,
+            profile=args.profile,
         )
     except RuntimeError as exc:
         print(f"ERROR: {exc}")

@@ -5,7 +5,12 @@ __pycache__/
 .cache/
 tmp/
 logs/
+Optimize Token Usage.pdf
 backups/global-sync/
 reports/*.md
 reports/dependency-catalog-audit.json
+reports/context-budget-baseline.json
+reports/optimized-config-merge-preview.json
+reports/optimized-cutover-plan.json
+reports/repository-compatibility-matrix.json
 *.log

@@ -1,0 +1,23 @@
+# Orchestrator-owned Codex config preview.
+# This fragment is not a full active config.toml copy.
+
+[agents]
+max_threads = 3
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+[agents.workflow_router]
+description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
+config_file = "agents/workflow-router.toml"
+
+[agents.repository_harvester]
+description = "Inspects registered repositories read-only and creates evidence-backed knowledge candidates."
+config_file = "agents/repository-harvester.toml"
+
+[agents.knowledge_synthesizer]
+description = "Deduplicates candidates and proposes scoped promotions or deprecations."
+config_file = "agents/knowledge-synthesizer.toml"
+
+[agents.verifier]
+description = "Validates implementation, evidence, configuration, and publication readiness."
+config_file = "agents/verifier.toml"
