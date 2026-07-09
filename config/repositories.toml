@@ -9,6 +9,7 @@ scope = 'orchestrator'
 risk_tags = ['global_config_preview', 'read_only_audit']
 stack_tags = ['codex', 'cursor', 'python', 'stdlib']
 harvest_mode = 'deep_when_clean'
+allow_dirty_harvest = true
 notes = 'Local MVP orchestrator repository.'
 
 [[repositories]]

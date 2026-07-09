@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "4ab0ecdecc550036f61d70113cced0b2b68fdfac",
+    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -46,17 +46,18 @@
     "Global publication must create repo-local backups under `backups/global-sync/<timestamp>/` before writing.",
     "Repository discovery and harvesting must remain read-only against registered source repositories.",
     "Dirty registered repositories must be recorded in state/reports but skipped for candidate extraction.",
+    "Exception: this orchestrator repository has `allow_dirty_harvest = true` because running the orchestrator normally regenerates local state, reports, knowledge candidates, and master previews. This exception is local to `auto_learning_agent`; do not reuse it for source repos without explicit approval.",
     "Never harvest secrets, `.env` content, SQLite state, sessions, logs, plugin caches, dependency directories, build artifacts, or generated caches.",
     "Harvested knowledge must be concise, provenance-backed candidate metadata; do not mirror raw repositories into this repo."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:27:13Z",
+    "created_at": "2026-07-09T12:07:31Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:27:13Z"
+    "updated_at": "2026-07-09T12:07:31Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

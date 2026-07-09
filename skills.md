@@ -18,11 +18,12 @@ Inherits cross-repo patterns from `~/.codex/skills.md`. Dual canonical: mirror e
 3. Run audit and validation scripts before reporting readiness.
 4. Preserve generated reports as ignored local artifacts unless the user explicitly asks to track them.
 5. For repository knowledge expansion, harvest only clean repos into candidate records and use coverage reports to explain blocked dirty repos.
-6. For unattended local operation, run `scripts\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.
-7. Run `scripts\audit_dependency_catalog.py` when checking whether dependency manifests are reflected in repo/global stack catalogs; treat missing packages as review flags, not automatic promotion.
-8. Use `--profile optimized` for the token-optimized profile; pair it with global apply only when `config/context-optimization.toml` allows it and the user explicitly provides `--confirm-global-write`.
-9. Global publication keeps only the newest 2 backup roots under `backups/global-sync/` by default; override with `--backup-keep N` only when the user explicitly asks.
-10. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.
+6. Treat `auto_learning_agent` as the only dirty-harvest exception because orchestrator runs regenerate local state, reports, candidates, and master previews; the exception is configured with `allow_dirty_harvest = true`.
+7. For unattended local operation, run `scripts\run_orchestrator_pipeline.py --preview`; use `--apply-global --confirm-global-write` only for explicit global publication.
+8. Run `scripts\audit_dependency_catalog.py` when checking whether dependency manifests are reflected in repo/global stack catalogs; treat missing packages as review flags, not automatic promotion.
+9. Use `--profile optimized` for the token-optimized profile; pair it with global apply only when `config/context-optimization.toml` allows it and the user explicitly provides `--confirm-global-write`.
+10. Global publication keeps only the newest 2 backup roots under `backups/global-sync/` by default; override with `--backup-keep N` only when the user explicitly asks.
+11. Read colorized pipeline output: green `CLEAN`, yellow `DIRTY`, red `BLOCKED`.
 
 **Verification:**
 ```powershell
@@ -60,6 +61,7 @@ git status --short --ignored
 - 2026-07-05: Added Shadow v1 token-optimization profile; legacy remains default, optimized writes preview artifacts under `master/optimized/` and refuses global apply.
 - 2026-07-09: Optimized profile became the default local profile with guarded global apply, slim global skills index generation, repo-scoped retrieval, repo hint previews, and a manual optimized knowledge cycle.
 - 2026-07-09: Added one-command optimized cutover wrapper for harvest, readiness, preview, and optional confirmed global publication.
+- 2026-07-09: Added a local `auto_learning_agent` dirty-harvest exception; other dirty registered repos remain blocked unless explicitly approved and configured.
 
 ### Optimized knowledge cycle and cutover
 
@@ -79,7 +81,7 @@ git status --short --ignored
 4. Use `scripts\retrieve_knowledge_for_repo.py --cwd <repo>` from registered repositories when optimized instructions point to the central catalog.
 5. Preview repo hint propagation with `scripts\propagate_orchestrator_retrieval_hints.py`; do not apply without explicit approval.
 6. For approved global cutover, run `scripts\publish_global_rules.py --apply --confirm-global-write --profile optimized`; verify backups under `backups\global-sync\` and `backups\legacy-pre-optimized\`.
-7. For the single-command path, run `scripts\run_optimized_cutover.py`; add `--allow-dirty` to bypass only dirty-repo blockers, and add `--apply --confirm-global-write` only when global publication is explicitly approved.
+7. For the single-command path, run `scripts\run_optimized_cutover.py`; add `--allow-dirty` to bypass only dirty-repo blockers, and add `--apply --confirm-global-write` only when global publication and registered repo hint propagation are explicitly approved.
 
 **Verification:**
 ```powershell
@@ -93,4 +95,4 @@ git status --short --ignored
 
 **Iteration notes:**
 - 2026-07-09: Added manual optimized harvest/readiness cycle, config-gated optimized publication, slim skills index, repo-scoped retrieval CLI, and preview-first repository hint propagation.
-- 2026-07-09: Added `run_optimized_cutover.py` and PowerShell wrapper for one-command harvest, readiness, preview, and optional confirmed global publication.
+- 2026-07-09: Added `run_optimized_cutover.py` and PowerShell wrapper for one-command harvest, readiness, preview, optional confirmed global publication, and registered repo hint propagation.

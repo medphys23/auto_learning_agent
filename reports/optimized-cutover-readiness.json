@@ -1,24 +1,48 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 111,
+    "catalog_entry_count": 121,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
-        "dirty_count": 60,
-        "id": "auto_learning_agent"
+        "dirty_count": 1,
+        "id": "campania-transplant"
+      },
+      {
+        "dirty_count": 1,
+        "id": "general-work"
+      },
+      {
+        "dirty_count": 1,
+        "id": "investment-binance"
+      },
+      {
+        "dirty_count": 1,
+        "id": "kidney-federico"
+      },
+      {
+        "dirty_count": 1,
+        "id": "orsi"
+      },
+      {
+        "dirty_count": 1,
+        "id": "practice-ops-dashboard"
+      },
+      {
+        "dirty_count": 1,
+        "id": "ps-robot-adaptor"
+      },
+      {
+        "dirty_count": 1,
+        "id": "x-booking"
+      },
+      {
+        "dirty_count": 1,
+        "id": "xenios-finances"
       }
     ],
     "harvested_repositories": [
-      "campania-transplant",
-      "general-work",
-      "investment-binance",
-      "kidney-federico",
-      "orsi",
-      "practice-ops-dashboard",
-      "ps-robot-adaptor",
-      "x-booking",
-      "xenios-finances"
+      "auto_learning_agent"
     ],
     "missing_required_record_families": {}
   },
@@ -56,12 +80,12 @@
       "passed": true
     },
     {
-      "detail": "1 dirty blocker(s)",
+      "detail": "9 dirty blocker(s)",
       "name": "no_dirty_blockers",
       "passed": false
     }
   ],
-  "generated_at": "2026-07-09T11:55:12Z",
+  "generated_at": "2026-07-09T12:08:10Z",
   "optimized_agents_exists": true,
   "optimized_agents_sha256": "916273165f23715050fd37318eff9cb63a6dc22069176439ac3f382e5b1679ea",
   "requires_explicit_user_approval": true,

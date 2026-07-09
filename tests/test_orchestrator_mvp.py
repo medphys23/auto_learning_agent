@@ -177,6 +177,46 @@ class OrchestratorMvpTests(unittest.TestCase):
             snapshot = json.loads(state.read_text(encoding="utf-8"))["repositories"]["dirty_repo"]
             self.assertEqual(snapshot["harvest_status"], "blocked_dirty_worktree")
 
+    def test_dirty_repo_can_be_harvested_with_explicit_registry_exception(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            repo = base / "dirty_allowed"
+            repo.mkdir()
+            self.init_git_repo(repo)
+            (repo / "AGENTS.md").write_text(
+                "# dirty allowed\n\n"
+                "## Purpose\nDemo.\n\n"
+                "## Verification\n```powershell\npython -m unittest\n```\n",
+                encoding="utf-8",
+            )
+            state = base / "state.json"
+            pending = base / "pending"
+
+            results = harvest_repositories(
+                [
+                    {
+                        "id": "dirty_allowed",
+                        "name": "dirty_allowed",
+                        "path": str(repo),
+                        "enabled": True,
+                        "allow_dirty_harvest": True,
+                    }
+                ],
+                state,
+                pending,
+                base / "catalog.jsonl",
+                base / "reports",
+                base / "knowledge" / "INDEX.md",
+            )
+
+            self.assertEqual(results[0]["status"], "harvested")
+            self.assertEqual(results[0]["reason"], "dirty worktree allowed by registry")
+            self.assertGreater(results[0]["dirty_count"], 0)
+            self.assertGreater(len(list(pending.glob("dirty-allowed-*.json"))), 0)
+            snapshot = json.loads(state.read_text(encoding="utf-8"))["repositories"]["dirty_allowed"]
+            self.assertEqual(snapshot["harvest_status"], "harvested")
+            self.assertGreater(snapshot["dirty_count"], 0)
+
     def test_clean_repo_generates_candidates_and_catalog(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)

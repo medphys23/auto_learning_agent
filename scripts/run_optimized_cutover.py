@@ -87,7 +87,20 @@ def main() -> int:
         print("ERROR: optimized global publication failed.")
         return apply_exit
 
+    hints_exit = run(
+        [
+            sys.executable,
+            "scripts/propagate_orchestrator_retrieval_hints.py",
+            "--apply",
+            "--confirm-repo-write",
+        ]
+    )
+    if hints_exit != 0:
+        print("ERROR: repository hint propagation failed.")
+        return hints_exit
+
     print("Optimized global publication completed.")
+    print("Repository retrieval hints applied.")
     return 0
 
 

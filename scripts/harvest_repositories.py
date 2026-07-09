@@ -621,8 +621,9 @@ def harvest_repositories(
         snapshot["dirty_count"] = len(dirty)
         snapshot["harvest_schema_version"] = HARVEST_SCHEMA_VERSION
         previous = state["repositories"].get(repo_id, {})
+        allow_dirty_harvest = bool(repo.get("allow_dirty_harvest", False))
 
-        if dirty:
+        if dirty and not allow_dirty_harvest:
             snapshot["harvest_status"] = "blocked_dirty_worktree"
             state["repositories"][repo_id] = snapshot
             results.append(
@@ -672,10 +673,11 @@ def harvest_repositories(
             {
                 "id": repo_id,
                 "status": "harvested",
-                "reason": "clean worktree",
-                "dirty_count": 0,
+                "reason": "dirty worktree allowed by registry" if dirty else "clean worktree",
+                "dirty_count": len(dirty),
                 "digest": fingerprint["digest"],
                 "candidate_count": len(candidates),
+                "dirty_paths": dirty[:20],
             }
         )
 

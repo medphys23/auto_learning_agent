@@ -1,0 +1,88 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "auto-learning-agent-verification-command-16",
+  "incompatible_when": [],
+  "procedure": [
+    ".\\.venv\\Scripts\\python.exe scripts\\run_optimized_cutover.py --allow-dirty"
+  ],
+  "provenance": {
+    "created_at": "2026-07-09T12:07:31Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-09T12:07:31Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Canonical verification command from auto_learning_agent: .\\.venv\\Scripts\\python.exe scripts\\run_optimized_cutover.py --allow-dirty",
+  "tags": [
+    "auto_learning_agent",
+    "codex",
+    "cursor",
+    "global_config_preview",
+    "python",
+    "read_only_audit",
+    "repo-agents",
+    "stdlib",
+    "verification-command"
+  ],
+  "title": "auto_learning_agent verification command 16",
+  "trigger_phrases": [
+    "auto_learning_agent",
+    "verification",
+    ".\\.venv\\Scripts\\python.exe scripts\\run_optimized_cutover.py --allow-dirty"
+  ],
+  "type": "command",
+  "verification": [
+    "Run only when the repository AGENTS.md says the command applies to touched files."
+  ]
+}

@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "4ab0ecdecc550036f61d70113cced0b2b68fdfac",
+    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
@@ -39,18 +39,19 @@
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
-      "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
-      "backups/global-sync/20260705T091234Z/codex/skills.md",
-      "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/master/codex/AGENTS.md",
+      "config/context-optimization.toml",
       "config/promotion-policy.toml",
       "config/repositories.toml",
-      "config/retrieval-policy.toml",
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
+      "master/optimized/codex/AGENTS.md",
       "requirements.txt",
+      "scripts/audit_context_budget.py",
+      "scripts/audit_dependency_catalog.py",
       "scripts/audit_global_instructions.py",
-      "scripts/discover_repositories.py",
-      "scripts/harvest_repositories.py",
       "tests/test_orchestrator_mvp.py"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -65,7 +66,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:27:13Z",
+    "created_at": "2026-07-09T12:07:30Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -75,22 +76,23 @@
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
-      "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
-      "backups/global-sync/20260705T091234Z/codex/skills.md",
-      "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
+      "backups/legacy-pre-optimized/20260709T115514Z/master/codex/AGENTS.md",
+      "config/context-optimization.toml",
       "config/promotion-policy.toml",
       "config/repositories.toml",
-      "config/retrieval-policy.toml",
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
+      "master/optimized/codex/AGENTS.md",
       "requirements.txt",
+      "scripts/audit_context_budget.py",
+      "scripts/audit_dependency_catalog.py",
       "scripts/audit_global_instructions.py",
-      "scripts/discover_repositories.py",
-      "scripts/harvest_repositories.py",
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:27:13Z"
+    "updated_at": "2026-07-09T12:07:30Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -107,18 +109,19 @@
       {
         "area": "scripts",
         "examples": [
+          "scripts/audit_context_budget.py",
+          "scripts/audit_dependency_catalog.py",
           "scripts/audit_global_instructions.py",
           "scripts/discover_repositories.py",
           "scripts/harvest_repositories.py",
           "scripts/orchestrator_common.py",
-          "scripts/promote_knowledge.py",
-          "scripts/publish_global_rules.py",
-          "scripts/retrieve_knowledge.py",
-          "scripts/run_orchestrator_pipeline.py"
+          "scripts/plan_optimized_cutover.py",
+          "scripts/promote_knowledge.py"
         ],
-        "file_count": 10,
+        "file_count": 19,
         "suffixes": {
-          ".py": 10
+          ".ps1": 2,
+          ".py": 17
         }
       },
       {
@@ -152,10 +155,10 @@
       {
         "area": "backups",
         "examples": [
-          "backups/global-sync/20260705T091234Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T091234Z/codex/skills.md",
-          "backups/global-sync/20260705T091906Z/codex/AGENTS.md",
-          "backups/global-sync/20260705T091906Z/codex/skills.md"
+          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/skills.md"
         ],
         "file_count": 4,
         "suffixes": {
@@ -165,13 +168,26 @@
       {
         "area": "config",
         "examples": [
+          "config/context-optimization.toml",
           "config/promotion-policy.toml",
           "config/repositories.toml",
           "config/retrieval-policy.toml"
         ],
+        "file_count": 4,
+        "suffixes": {
+          ".toml": 4
+        }
+      },
+      {
+        "area": "master",
+        "examples": [
+          "master/codex/AGENTS.md",
+          "master/codex/skills.md",
+          "master/optimized/codex/AGENTS.md"
+        ],
         "file_count": 3,
         "suffixes": {
-          ".toml": 3
+          ".md": 3
         }
       },
       {
@@ -186,17 +202,6 @@
         }
       },
       {
-        "area": "master",
-        "examples": [
-          "master/codex/AGENTS.md",
-          "master/codex/skills.md"
-        ],
-        "file_count": 2,
-        "suffixes": {
-          ".md": 2
-        }
-      },
-      {
         "area": "tests",
         "examples": [
           "tests/test_orchestrator_mvp.py"
@@ -207,10 +212,10 @@
         }
       }
     ],
-    "harvestable_text_file_count": 31
+    "harvestable_text_file_count": 42
   },
   "status": "candidate",
-  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by scripts, .codex, ., backups, config, .cursor, master, tests.",
+  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by scripts, .codex, ., backups, config, master, .cursor, tests.",
   "tags": [
     "architecture-map",
     "auto_learning_agent",

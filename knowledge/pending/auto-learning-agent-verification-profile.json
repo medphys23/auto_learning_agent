@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "4ab0ecdecc550036f61d70113cced0b2b68fdfac",
+    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
     "source_paths": [
       "AGENTS.md",
       "tests/test_orchestrator_mvp.py"
@@ -47,14 +47,14 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:27:13Z",
+    "created_at": "2026-07-09T12:07:31Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md",
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:27:13Z"
+    "updated_at": "2026-07-09T12:07:31Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -67,7 +67,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for auto_learning_agent: 10 AGENTS command(s), 1 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for auto_learning_agent: 19 AGENTS command(s), 1 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
     "auto_learning_agent",
     "ci",
@@ -104,12 +104,21 @@
     ".\\.venv\\Scripts\\python.exe -m unittest discover -s tests",
     ".\\.venv\\Scripts\\python.exe scripts\\validate_codex_config.py",
     ".\\.venv\\Scripts\\python.exe scripts\\audit_global_instructions.py",
+    ".\\.venv\\Scripts\\python.exe scripts\\audit_context_budget.py",
     ".\\.venv\\Scripts\\python.exe scripts\\discover_repositories.py",
     ".\\.venv\\Scripts\\python.exe scripts\\harvest_repositories.py",
+    ".\\.venv\\Scripts\\python.exe scripts\\audit_dependency_catalog.py",
     ".\\.venv\\Scripts\\python.exe scripts\\retrieve_knowledge.py --query orsi --status candidate",
-    ".\\.venv\\Scripts\\python.exe scripts\\synthesize_top_level_instructions.py --preview",
-    ".\\.venv\\Scripts\\python.exe scripts\\publish_global_rules.py --preview",
-    ".\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview",
+    ".\\.venv\\Scripts\\python.exe scripts\\retrieve_knowledge_for_repo.py --cwd .",
+    ".\\.venv\\Scripts\\python.exe scripts\\synthesize_top_level_instructions.py --preview --profile legacy",
+    ".\\.venv\\Scripts\\python.exe scripts\\synthesize_top_level_instructions.py --preview --profile optimized",
+    ".\\.venv\\Scripts\\python.exe scripts\\publish_global_rules.py --preview --profile legacy",
+    ".\\.venv\\Scripts\\python.exe scripts\\publish_global_rules.py --preview --profile optimized",
+    ".\\.venv\\Scripts\\python.exe scripts\\propagate_orchestrator_retrieval_hints.py",
+    ".\\.venv\\Scripts\\python.exe scripts\\run_optimized_knowledge_cycle.py --strict",
+    ".\\.venv\\Scripts\\python.exe scripts\\run_optimized_cutover.py --allow-dirty",
+    ".\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview --profile legacy",
+    ".\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview --profile optimized",
     "git status --short --ignored"
   ]
 }

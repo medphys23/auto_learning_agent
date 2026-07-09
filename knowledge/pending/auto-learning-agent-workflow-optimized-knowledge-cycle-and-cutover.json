@@ -1,0 +1,100 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover",
+  "incompatible_when": [],
+  "procedure": [
+    "- Work from `C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent`.",
+    "- Use `.\\.venv\\Scripts\\python.exe`.",
+    "- Clean registered repositories before strict readiness runs; dirty repositories are listed as blockers.",
+    "- Global publication still requires explicit `--apply --confirm-global-write`.",
+    "- Cross-repo hint writes require both `--apply --confirm-repo-write` and `allow_other_repository_writes = true`.",
+    "1. Run `scripts\\run_optimized_knowledge_cycle.py` to refresh discovery, harvest, optimized synthesis, context budget, and readiness reports.",
+    "2. Review `reports\\optimized-cutover-readiness.md`; treat `NO-GO` as a blocker for global cutover.",
+    "3. Preview optimized publication with `scripts\\publish_global_rules.py --preview --profile optimized`.",
+    "4. Use `scripts\\retrieve_knowledge_for_repo.py --cwd <repo>` from registered repositories when optimized instructions point to the central catalog.",
+    "5. Preview repo hint propagation with `scripts\\propagate_orchestrator_retrieval_hints.py`; do not apply without explicit approval.",
+    "6. For approved global cutover, run `scripts\\publish_global_rules.py --apply --confirm-global-write --profile optimized`; verify backups under `backups\\global-sync\\` and `backups\\legacy-pre-optimized\\`.",
+    "7. For the single-command path, run `scripts\\run_optimized_cutover.py`; add `--allow-dirty` to bypass only dirty-repo blockers, and add `--apply --confirm-global-write` only when global publication and registered repo hint propagation are e",
+    "- 2026-07-09: Added manual optimized harvest/readiness cycle, config-gated optimized publication, slim skills index, repo-scoped retrieval CLI, and preview-first repository hint propagation.",
+    "- 2026-07-09: Added `run_optimized_cutover.py` and PowerShell wrapper for one-command harvest, readiness, preview, optional confirmed global publication, and registered repo hint propagation."
+  ],
+  "provenance": {
+    "created_at": "2026-07-09T12:07:31Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-09T12:07:31Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Requests to refresh optimized orchestrator knowledge, evaluate optimized cutover readiness, publish optimized global rules, or add retrieval hints to registered repositories.",
+  "tags": [
+    "auto_learning_agent",
+    "codex",
+    "cursor",
+    "global_config_preview",
+    "python",
+    "read_only_audit",
+    "repo-workflow",
+    "skills-md",
+    "stdlib"
+  ],
+  "title": "auto_learning_agent workflow: Optimized knowledge cycle and cutover",
+  "trigger_phrases": [
+    "auto_learning_agent",
+    "Optimized knowledge cycle and cutover"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

@@ -5,4 +5,4 @@ maximum_retrieved_records = 3
 maximum_retrieved_knowledge_estimated_tokens = 4000
 preserve_legacy_outputs = true
 allow_global_apply = true
-allow_other_repository_writes = false
+allow_other_repository_writes = true

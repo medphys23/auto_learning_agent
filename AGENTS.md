@@ -63,6 +63,7 @@ Maintain [`skills.md`](skills.md) beside this file. Document repeatable Codex wo
 - Generated reports in `reports/*.md` are local outputs and are ignored by git.
 - Repository discovery and harvesting must remain read-only against registered source repositories.
 - Dirty registered repositories must be recorded in state/reports but skipped for candidate extraction.
+- Exception: this orchestrator repository has `allow_dirty_harvest = true` because running the orchestrator normally regenerates local state, reports, knowledge candidates, and master previews. This exception is local to `auto_learning_agent`; do not reuse it for source repos without explicit approval.
 - Never harvest secrets, `.env` content, SQLite state, sessions, logs, plugin caches, dependency directories, build artifacts, or generated caches.
 - Harvested knowledge must be concise, provenance-backed candidate metadata; do not mirror raw repositories into this repo.
 - Knowledge promotion starts as local candidates. Global, canonical, security, sandbox, approval, model/provider, MCP, authentication, network, database, deployment, cost, retention, regulated-domain, destructive-command, or output-style changes require explicit approval metadata.
@@ -73,3 +74,13 @@ When introducing a new library, skill, or tool here, update `~/.codex/AGENTS.md`
 ## Git
 - Do not commit unless the user asks.
 - Single checkout only - never use `git worktree add`.
+
+<!-- BEGIN ORCHESTRATOR-MANAGED: knowledge-retrieval -->
+
+## Orchestrator Knowledge (Optimized)
+- Index-first: `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\knowledge\INDEX.md` then `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\knowledge\catalog.jsonl`.
+- Repo-scoped retrieval: `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\scripts\retrieve_knowledge_for_repo.py --cwd C:\Users\ppyxe\Documents\GitHub\auto_learning_agent`.
+- Open only shortlisted full records; repo `AGENTS.md` overrides catalog guidance.
+
+<!-- END ORCHESTRATOR-MANAGED: knowledge-retrieval -->
+
