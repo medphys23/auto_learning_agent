@@ -1,12 +1,21 @@
 from __future__ import annotations
 
 import argparse
+import difflib
 import shutil
 from pathlib import Path
 from typing import Any
 
 from orchestrator_common import sha256_file, utc_now
-from synthesize_top_level_instructions import CODEX_HOME, CURSOR_HOME, REPO_ROOT, synthesize
+from synthesize_top_level_instructions import (
+    AGENT_REGISTRATIONS,
+    CODEX_HOME,
+    CURSOR_HOME,
+    REPO_ROOT,
+    insert_key_in_table,
+    read_toml_text,
+    synthesize,
+)
 
 
 def write_text(path: Path, content: str) -> None:
@@ -40,6 +49,61 @@ def publication_targets(master_root: Path, codex_home: Path, cursor_home: Path) 
     return targets
 
 
+def optimized_file_targets(master_root: Path, codex_home: Path, cursor_home: Path) -> list[tuple[Path, Path, str]]:
+    optimized_root = master_root / "optimized"
+    targets: list[tuple[Path, Path, str]] = [
+        (optimized_root / "codex" / "AGENTS.md", codex_home / "AGENTS.md", "codex/AGENTS.md"),
+        (optimized_root / "codex" / "skills-index.md", codex_home / "skills.md", "codex/skills.md"),
+    ]
+    for source in sorted((optimized_root / "codex" / "agents").glob("*.toml")):
+        targets.append((source, codex_home / "agents" / source.name, f"codex/agents/{source.name}"))
+    for source in sorted((optimized_root / "agents" / "skills").glob("*/SKILL.md")):
+        name = source.parent.name
+        targets.append((source, cursor_home / "skills" / name / "SKILL.md", f"cursor/skills/{name}/SKILL.md"))
+        targets.append((source, codex_home / "skills" / name / "SKILL.md", f"codex/skills/{name}/SKILL.md"))
+    rule = optimized_root / "cursor" / "rules" / "06-orchestrator-knowledge.mdc"
+    targets.append((rule, cursor_home / "rules" / rule.name, f"cursor/rules/{rule.name}"))
+    return targets
+
+
+def optimized_backup_targets(
+    targets: list[tuple[Path, Path, str]],
+    codex_home: Path,
+    backup_root: Path,
+) -> list[str]:
+    backup_targets_list = list(targets)
+    backup_targets_list.append((codex_home / "config.toml", codex_home / "config.toml", "codex/config.toml"))
+    return backup_targets(backup_targets_list, backup_root)
+
+
+def snapshot_tree(source: Path, target: Path) -> None:
+    if not source.exists():
+        write_text(target.with_suffix(target.suffix + ".missing"), f"Missing before optimized cutover: {source}")
+        return
+    if source.is_dir():
+        shutil.copytree(source, target, dirs_exist_ok=True)
+    else:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+
+
+def create_legacy_pre_optimized_snapshot(
+    *,
+    timestamp: str,
+    master_root: Path,
+    codex_home: Path,
+    cursor_home: Path,
+    snapshot_base: Path,
+) -> Path:
+    snapshot_root = snapshot_base / timestamp
+    snapshot_tree(master_root / "codex", snapshot_root / "master" / "codex")
+    snapshot_tree(codex_home / "AGENTS.md", snapshot_root / "active" / "codex" / "AGENTS.md")
+    snapshot_tree(codex_home / "skills.md", snapshot_root / "active" / "codex" / "skills.md")
+    snapshot_tree(codex_home / "config.toml", snapshot_root / "active" / "codex" / "config.toml")
+    snapshot_tree(cursor_home / "rules", snapshot_root / "active" / "cursor" / "rules")
+    return snapshot_root
+
+
 def backup_targets(targets: list[tuple[Path, Path, str]], backup_root: Path) -> list[str]:
     backed_up: list[str] = []
     for _, target, label in targets:
@@ -70,6 +134,74 @@ def validate_master_targets(targets: list[tuple[Path, Path, str]]) -> None:
     missing = [str(source) for source, _, _ in targets if not source.exists()]
     if missing:
         raise RuntimeError("Generated master files are missing: " + ", ".join(missing))
+
+
+def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str, list[str]]:
+    read_toml_text(fragment)
+    merged = active_config
+    report: list[str] = []
+    if not merged.startswith("#:schema "):
+        merged = "#:schema https://developers.openai.com/codex/config-schema.json\n" + merged
+        report.append("Added Codex config schema header.")
+    data = read_toml_text(merged)
+    agents = data.get("agents", {})
+    if agents and not isinstance(agents, dict):
+        raise RuntimeError("[agents] exists but is not a TOML table")
+    if not isinstance(agents, dict):
+        agents = {}
+    for key, line in (
+        ("max_threads", "max_threads = 3"),
+        ("max_depth", "max_depth = 1"),
+        ("job_max_runtime_seconds", "job_max_runtime_seconds = 1800"),
+    ):
+        if key not in agents:
+            merged = insert_key_in_table(merged, "agents", line, key)
+            report.append(f"Inserted agents.{key}.")
+    data = read_toml_text(merged)
+    agents = data.get("agents", {})
+    if not isinstance(agents, dict):
+        raise RuntimeError("[agents] exists but is not a TOML table")
+    for name, values in AGENT_REGISTRATIONS.items():
+        existing = agents.get(name)
+        if existing:
+            if not isinstance(existing, dict) or existing.get("config_file") != values["config_file"]:
+                raise RuntimeError(f"Refusing to overwrite existing custom agent registration: {name}")
+            continue
+        merged += (
+            f"\n[agents.{name}]\n"
+            f"description = \"{values['description']}\"\n"
+            f"config_file = \"{values['config_file']}\"\n"
+        )
+        report.append(f"Inserted agents.{name}.")
+    read_toml_text(merged)
+    return merged, report
+
+
+def apply_optimized_config(source: Path, target: Path, reports_dir: Path) -> dict[str, Any]:
+    active = target.read_text(encoding="utf-8") if target.exists() else ""
+    fragment = source.read_text(encoding="utf-8")
+    merged, report = merge_optimized_codex_config(active, fragment)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(merged.rstrip() + "\n", encoding="utf-8")
+    diff = "\n".join(
+        difflib.unified_diff(
+            active.splitlines(),
+            merged.splitlines(),
+            fromfile="active/codex/config.toml",
+            tofile="merged/codex/config.toml",
+            lineterm="",
+        )
+    )
+    write_text(
+        reports_dir / "optimized-config-merge-applied.md",
+        "# Optimized Config Merge Applied\n\n"
+        f"Generated: {utc_now()}\n\n"
+        + "\n".join(f"- {item}" for item in report)
+        + "\n\n```diff\n"
+        f"{diff if diff else '# No changes'}\n"
+        "```\n",
+    )
+    return {"label": "codex/config.toml", "target": str(target), "sha256": sha256_file(target), "merge_report": report}
 
 
 def apply_targets(targets: list[tuple[Path, Path, str]]) -> list[dict[str, Any]]:
@@ -154,17 +286,57 @@ def publish_global_rules(
     profile: str = "legacy",
 ) -> dict[str, Any]:
     if profile == "optimized" and apply:
-        raise RuntimeError("optimized profile is preview-only; global apply requires a separate cutover task")
+        config = REPO_ROOT / "config" / "context-optimization.toml"
+        if config.exists():
+            data = read_toml_text(config.read_text(encoding="utf-8"))
+            if not bool(data.get("allow_global_apply", False)):
+                raise RuntimeError("optimized global apply is disabled by config/context-optimization.toml")
     synthesize(codex_home=codex_home, cursor_home=cursor_home, master_root=master_root, reports_dir=reports_dir, profile=profile)
     if profile == "optimized":
         optimized_agents = master_root / "optimized" / "codex" / "AGENTS.md"
+        optimized_skills_index = master_root / "optimized" / "codex" / "skills-index.md"
         optimized_config = master_root / "optimized" / "codex" / "config" / "orchestrator-managed.toml"
+        targets = optimized_file_targets(master_root, codex_home, cursor_home)
         validate_master_targets(
             [
                 (optimized_agents, codex_home / "AGENTS.md", "optimized/codex/AGENTS.md"),
+                (optimized_skills_index, codex_home / "skills.md", "optimized/codex/skills-index.md"),
                 (optimized_config, codex_home / "config.toml", "optimized/codex/config/orchestrator-managed.toml"),
+                *targets,
             ]
         )
+        if apply:
+            if not confirm_global_write:
+                raise RuntimeError("global publication requires --confirm-global-write")
+            timestamp = utc_now().replace(":", "").replace("-", "")
+            backup_root = backup_base / timestamp
+            legacy_snapshot = create_legacy_pre_optimized_snapshot(
+                timestamp=timestamp,
+                master_root=master_root,
+                codex_home=codex_home,
+                cursor_home=cursor_home,
+                snapshot_base=backup_base.parent / "legacy-pre-optimized",
+            )
+            backed_up = optimized_backup_targets(targets, codex_home, backup_root)
+            applied = apply_targets(targets)
+            applied.append(apply_optimized_config(optimized_config, codex_home / "config.toml", reports_dir))
+            pruned_backups = prune_backup_roots(backup_base, backup_keep)
+            report = write_publication_reports(
+                reports_dir,
+                mode="optimized-applied",
+                backup_root=backup_root,
+                backed_up=backed_up + [f"legacy pre-optimized snapshot: {legacy_snapshot}"],
+                pruned_backups=pruned_backups,
+                applied=applied,
+            )
+            return {
+                "mode": "optimized-applied",
+                "report": str(report),
+                "backup_root": str(backup_root),
+                "legacy_snapshot": str(legacy_snapshot),
+                "pruned_backups": pruned_backups,
+                "applied": applied,
+            }
         report = write_publication_reports(
             reports_dir,
             mode="optimized-preview-only",
@@ -212,6 +384,10 @@ def publish_global_rules(
 
 
 def main() -> int:
+    default_profile = "legacy"
+    context_config = REPO_ROOT / "config" / "context-optimization.toml"
+    if context_config.exists():
+        default_profile = str(read_toml_text(context_config.read_text(encoding="utf-8")).get("default_profile", "legacy"))
     parser = argparse.ArgumentParser(description="Preview or publish top-level Codex/Cursor orchestrator instructions.")
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
     parser.add_argument("--master-root", type=Path, default=Path("master"))
@@ -222,7 +398,7 @@ def main() -> int:
     parser.add_argument("--preview", action="store_true", help="Generate master files and reports without global writes.")
     parser.add_argument("--apply", action="store_true", help="Apply generated files to global Codex/Cursor folders.")
     parser.add_argument("--confirm-global-write", action="store_true", help="Required with --apply.")
-    parser.add_argument("--profile", choices=("legacy", "optimized"), default="legacy")
+    parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
     args = parser.parse_args()
     try:
         result = publish_global_rules(

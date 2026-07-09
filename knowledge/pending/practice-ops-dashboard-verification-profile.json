@@ -34,9 +34,12 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
     "source_paths": [
       "AGENTS.md",
+      "tests/certificates.test.ts",
+      "tests/dictationText.test.ts",
+      "tests/patientPresentation.test.ts",
       "tests/summary.test.ts"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
@@ -51,14 +54,17 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:22Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md",
+      "tests/certificates.test.ts",
+      "tests/dictationText.test.ts",
+      "tests/patientPresentation.test.ts",
       "tests/summary.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:22Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -71,7 +77,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for practice-ops-dashboard: 4 AGENTS command(s), 1 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for practice-ops-dashboard: 4 AGENTS command(s), 4 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
     "auth",
     "ci",
@@ -92,6 +98,9 @@
     "ci": [],
     "deployment": [],
     "tests": [
+      "tests/certificates.test.ts",
+      "tests/dictationText.test.ts",
+      "tests/patientPresentation.test.ts",
       "tests/summary.test.ts"
     ]
   },

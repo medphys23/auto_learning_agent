@@ -34,18 +34,20 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
     "source_paths": [
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       ".cursor/skills/beneficiary-import-merge/SKILL.md",
       "AGENTS.md",
       "next-env.d.ts",
-      "package.json",
+      "onboarding.md",
+      "src/app/(app)/certificates/page.tsx",
       "src/app/(app)/kpi/page.tsx",
       "src/app/(app)/layout.tsx",
-      "src/app/(app)/page.tsx",
-      "tests/summary.test.ts"
+      "tests/certificates.test.ts",
+      "tests/dictationText.test.ts",
+      "tests/patientPresentation.test.ts"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
     "task_or_issue": "local-github-repository-analysis",
@@ -59,7 +61,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:22Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/repo-core.mdc",
@@ -67,14 +69,16 @@
       ".cursor/skills/beneficiary-import-merge/SKILL.md",
       "AGENTS.md",
       "next-env.d.ts",
-      "package.json",
+      "onboarding.md",
+      "src/app/(app)/certificates/page.tsx",
       "src/app/(app)/kpi/page.tsx",
       "src/app/(app)/layout.tsx",
-      "src/app/(app)/page.tsx",
-      "tests/summary.test.ts"
+      "tests/certificates.test.ts",
+      "tests/dictationText.test.ts",
+      "tests/patientPresentation.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:22Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -91,20 +95,20 @@
       {
         "area": "src",
         "examples": [
+          "src/app/(app)/certificates/page.tsx",
           "src/app/(app)/kpi/page.tsx",
           "src/app/(app)/layout.tsx",
           "src/app/(app)/page.tsx",
           "src/app/(app)/patients/page.tsx",
           "src/app/(app)/remittance/page.tsx",
           "src/app/(app)/sources/page.tsx",
-          "src/app/(app)/uploads/page.tsx",
-          "src/app/api/auth/[...path]/route.ts"
+          "src/app/(app)/uploads/page.tsx"
         ],
-        "file_count": 53,
+        "file_count": 78,
         "suffixes": {
           ".css": 1,
-          ".ts": 29,
-          ".tsx": 23
+          ".ts": 48,
+          ".tsx": 29
         }
       },
       {
@@ -112,17 +116,17 @@
         "examples": [
           "AGENTS.md",
           "next-env.d.ts",
+          "onboarding.md",
           "package.json",
           "README.md",
           "skills.md",
           "tailwind.config.ts",
-          "tsconfig.json",
-          "vitest.config.ts"
+          "tsconfig.json"
         ],
-        "file_count": 8,
+        "file_count": 9,
         "suffixes": {
           ".json": 2,
-          ".md": 3,
+          ".md": 4,
           ".ts": 3
         }
       },
@@ -132,26 +136,33 @@
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc",
           ".cursor/skills/beneficiary-import-merge/SKILL.md",
-          ".cursor/skills/practice-ops-stack/SKILL.md"
+          ".cursor/skills/certificate-generation-email/SKILL.md",
+          ".cursor/skills/new-practice-onboarding/SKILL.md",
+          ".cursor/skills/practice-ops-stack/SKILL.md",
+          ".cursor/skills/server-query-view-models/SKILL.md",
+          ".cursor/skills/upload-practice-data/SKILL.md"
         ],
-        "file_count": 4,
+        "file_count": 8,
         "suffixes": {
-          ".md": 2,
+          ".md": 6,
           ".mdc": 2
         }
       },
       {
         "area": "tests",
         "examples": [
+          "tests/certificates.test.ts",
+          "tests/dictationText.test.ts",
+          "tests/patientPresentation.test.ts",
           "tests/summary.test.ts"
         ],
-        "file_count": 1,
+        "file_count": 4,
         "suffixes": {
-          ".ts": 1
+          ".ts": 4
         }
       }
     ],
-    "harvestable_text_file_count": 66
+    "harvestable_text_file_count": 99
   },
   "status": "candidate",
   "summary": "Safe source map for practice-ops-dashboard: 4 harvestable areas, led by src, ., .cursor, tests.",

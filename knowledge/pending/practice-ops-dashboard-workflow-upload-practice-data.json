@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
     "source_paths": [
       "skills.md"
     ],
@@ -47,26 +47,28 @@
   "procedure": [
     "- Work from `C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard`.",
     "- Set `DATABASE_URL`; upload-driven mode has no local snapshot fallback.",
-    "- Keep `PRACTICE_ID`, `PRACTICE_DISPLAY_NAME`, `PRACTICE_GESY_CODE`, and `PRACTICE_OWNER_EMAILS` aligned with the target practice deployment.",
-    "- Do not commit uploaded beneficiary files, remittance PDFs, patient data, or `.env` files.",
+    "- Keep `PRACTICE_ID`, `PRACTICE_DISPLAY_NAME`, `PRACTICE_GESY_CODE`, `PRACTICE_DOCTOR_GENDER`, and `PRACTICE_OWNER_EMAILS` aligned with the target practice deployment.",
+    "- Do not commit uploaded beneficiary files, remittance PDFs, patient data, generated PDFs, signatures, or `.env` files.",
     "1. Run `npm run dev`.",
     "2. Sign in with an allowlisted account.",
     "3. Open `/uploads`.",
-    "4. Upload the beneficiary CSV/XLSX first so patient rows are merged and missing KPI candidate tasks are generated.",
+    "4. Upload the beneficiary CSV/XLSX first so patient rows are merged, demographics/email are available, and missing KPI candidate tasks are generated.",
     "5. Upload one or more standard Separate Remittance PDFs; watch each file progress through upload, extraction, reconciliation, and save.",
     "6. Inspect `/patients`, `/kpi`, `/remittance`, and `/sources`.",
+    "7. Open `/certificates`, upload the doctor signature if needed, create/download a template PDF, and optionally send a test email when SMTP is configured.",
     "- 2026-07-02 - Corrected remittance import source after feedback: Practice Dashboard must import raw PDF-extracted rows, then calculate summaries internally instead of trusting pre-aggregated summary CSVs.",
     "- 2026-07-04 - Added per-file progress UI and metadata-only source retention.",
-    "- 2026-07-04 - Updated upload workflow to include Patients tab review and beneficiary merge semantics."
+    "- 2026-07-04 - Updated upload workflow to include Patients tab review and beneficiary merge semantics.",
+    "- 2026-07-09 - Updated from README/onboarding: first-use setup now includes certificate signature upload and certificate creation/email smoke checks after beneficiary import."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:22Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:22Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -79,7 +81,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Triggered by:** New beneficiary CSV/XLSX or Separate Remittance PDF files.",
+  "summary": "**Triggered by:** New beneficiary CSV/XLSX files, Separate Remittance PDF files, first-use setup for a deployment, or manual acceptance after environment changes.",
   "tags": [
     "auth",
     "database",

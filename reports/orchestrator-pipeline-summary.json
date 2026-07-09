@@ -1,10 +1,10 @@
 {
   "apply_global": false,
   "failed_step": "",
-  "finished_at": "2026-07-05T14:33:48Z",
+  "finished_at": "2026-07-09T11:45:45Z",
   "log_file": "reports\\orchestrator-pipeline.log",
   "mode": "preview:optimized",
-  "started_at": "2026-07-05T14:33:03Z",
+  "started_at": "2026-07-09T11:44:26Z",
   "status": "completed",
   "steps": [
     {
@@ -16,28 +16,28 @@
         "-s",
         "tests"
       ],
-      "elapsed_seconds": 4.375,
+      "elapsed_seconds": 8.344,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:08Z",
+      "finished_at": "2026-07-09T11:44:34Z",
       "global_write": false,
       "name": "unit tests",
       "output_lines": 5,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:03Z"
+      "started_at": "2026-07-09T11:44:26Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/validate_codex_config.py"
       ],
-      "elapsed_seconds": 0.141,
+      "elapsed_seconds": 0.25,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:08Z",
+      "finished_at": "2026-07-09T11:44:35Z",
       "global_write": false,
       "name": "validate local Codex TOML",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:08Z"
+      "started_at": "2026-07-09T11:44:34Z"
     },
     {
       "command": [
@@ -46,14 +46,14 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 8.922,
+      "elapsed_seconds": 20.188,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:17Z",
+      "finished_at": "2026-07-09T11:44:55Z",
       "global_write": false,
       "name": "audit global instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:08Z"
+      "started_at": "2026-07-09T11:44:35Z"
     },
     {
       "command": [
@@ -64,23 +64,23 @@
         "--master-root",
         "master"
       ],
-      "elapsed_seconds": 0.172,
+      "elapsed_seconds": 0.297,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:17Z",
+      "finished_at": "2026-07-09T11:44:55Z",
       "global_write": false,
       "name": "audit context budget",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:17Z"
+      "started_at": "2026-07-09T11:44:55Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/discover_repositories.py"
       ],
-      "elapsed_seconds": 1.734,
+      "elapsed_seconds": 2.047,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:18Z",
+      "finished_at": "2026-07-09T11:44:57Z",
       "global_write": false,
       "name": "discover local repositories",
       "output_lines": 10,
@@ -154,23 +154,23 @@
           {
             "branch": "main",
             "clean": false,
-            "dirty_count": 15,
+            "dirty_count": 59,
             "name": "auto_learning_agent",
             "scope": "orchestrator"
           }
         ],
         "kind": "discovery"
       },
-      "started_at": "2026-07-05T14:33:17Z"
+      "started_at": "2026-07-09T11:44:55Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 3.953,
+      "elapsed_seconds": 5.578,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:22Z",
+      "finished_at": "2026-07-09T11:45:03Z",
       "global_write": false,
       "name": "harvest clean repositories",
       "output_lines": 10,
@@ -212,7 +212,7 @@
             "status": "skipped"
           },
           {
-            "candidate_count": 12,
+            "candidate_count": 15,
             "clean": true,
             "id": "practice-ops-dashboard",
             "reason": "unchanged",
@@ -251,7 +251,7 @@
         ],
         "kind": "harvest"
       },
-      "started_at": "2026-07-05T14:33:18Z"
+      "started_at": "2026-07-09T11:44:57Z"
     },
     {
       "command": [
@@ -260,14 +260,14 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 23.484,
+      "elapsed_seconds": 39.344,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:46Z",
+      "finished_at": "2026-07-09T11:45:42Z",
       "global_write": false,
       "name": "audit dependency catalogs",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:22Z"
+      "started_at": "2026-07-09T11:45:03Z"
     },
     {
       "command": [
@@ -278,14 +278,14 @@
         "--status",
         "candidate"
       ],
-      "elapsed_seconds": 0.141,
+      "elapsed_seconds": 0.203,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:46Z",
+      "finished_at": "2026-07-09T11:45:42Z",
       "global_write": false,
       "name": "retrieve knowledge smoke",
       "output_lines": 183,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:46Z"
+      "started_at": "2026-07-09T11:45:42Z"
     },
     {
       "command": [
@@ -299,14 +299,14 @@
         "--profile",
         "optimized"
       ],
-      "elapsed_seconds": 0.812,
+      "elapsed_seconds": 1.078,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:47Z",
+      "finished_at": "2026-07-09T11:45:43Z",
       "global_write": false,
       "name": "synthesize top-level instructions",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:46Z"
+      "started_at": "2026-07-09T11:45:42Z"
     },
     {
       "command": [
@@ -324,14 +324,14 @@
         "optimized",
         "--preview"
       ],
-      "elapsed_seconds": 0.844,
+      "elapsed_seconds": 1.078,
       "exit_code": 0,
-      "finished_at": "2026-07-05T14:33:48Z",
+      "finished_at": "2026-07-09T11:45:45Z",
       "global_write": false,
       "name": "preview global publication",
       "output_lines": 2,
       "repository_status": {},
-      "started_at": "2026-07-05T14:33:47Z"
+      "started_at": "2026-07-09T11:45:43Z"
     }
   ]
 }

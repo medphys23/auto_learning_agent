@@ -32,7 +32,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "393f9a3859c93b31618389da5c77ae29c7a08ee7",
+    "source_commit": "83c4b221523a71085664eedc589e1d259ad34a75",
     "source_paths": [
       "skills.md"
     ],
@@ -65,13 +65,13 @@
     "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\delphi_expert_threshold_evidence\\main.py --version v3`"
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:21Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:21Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

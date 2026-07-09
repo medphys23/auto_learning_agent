@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
     "source_paths": [
       "package.json"
     ],
@@ -49,6 +49,7 @@
       "dependencies": [
         "@napi-rs/canvas",
         "@neondatabase/auth",
+        "@pdf-lib/fontkit",
         "@vercel/analytics",
         "@vercel/speed-insights",
         "@xmldom/xmldom",
@@ -56,6 +57,8 @@
         "fflate",
         "lucide-react",
         "next",
+        "nodemailer",
+        "pdf-lib",
         "pdfjs-dist",
         "pg",
         "react",
@@ -67,6 +70,7 @@
         "@eslint/eslintrc",
         "@tailwindcss/postcss",
         "@types/node",
+        "@types/nodemailer",
         "@types/pg",
         "@types/react",
         "@types/react-dom",
@@ -98,13 +102,13 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:22Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:22Z"
   },
   "registry_stack_tags": [
     "nextjs",

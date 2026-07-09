@@ -16,10 +16,14 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\harvest_repositories.py
 .\.venv\Scripts\python.exe scripts\audit_dependency_catalog.py
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
+.\.venv\Scripts\python.exe scripts\retrieve_knowledge_for_repo.py --cwd .
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview --profile legacy
 .\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview --profile optimized
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile legacy
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile optimized
+.\.venv\Scripts\python.exe scripts\propagate_orchestrator_retrieval_hints.py
+.\.venv\Scripts\python.exe scripts\run_optimized_knowledge_cycle.py --strict
+.\.venv\Scripts\python.exe scripts\run_optimized_cutover.py --allow-dirty
 .\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile legacy
 .\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile optimized
 git status --short --ignored

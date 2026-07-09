@@ -1,0 +1,105 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-new-practice-onboarding",
+  "incompatible_when": [],
+  "procedure": [
+    "- Use the same GitHub repo; do not fork or duplicate code for a standard new GESY practice setup.",
+    "- Prefer one Vercel project and one separate Neon Postgres project per doctor. A shared database with different `PRACTICE_ID` values is possible but not recommended for patient/financial data isolation.",
+    "- Collect the doctor's practice name, GESY code, doctor gender, allowlisted user emails, SMTP mailbox/app password, and first beneficiary export before handover.",
+    "- Remember that `src/lib/config.ts` has Dr. Alexia fallback defaults; missing practice env vars can put the wrong name/code on PDFs and pages.",
+    "1. Create a new Neon project or isolated production branch, copy the pooled `DATABASE_URL`, enable Neon Auth, copy `NEON_AUTH_BASE_URL`, and generate a unique `NEON_AUTH_COOKIE_SECRET`.",
+    "2. Create a new Vercel project linked to this repository with the default Next.js build settings.",
+    "3. Set Production and Preview env vars from `.env.example`: `DATABASE_URL`, `PRACTICE_ID`, `PRACTICE_DISPLAY_NAME`, `PRACTICE_GESY_CODE`, `PRACTICE_DOCTOR_GENDER`, `PRACTICE_OWNER_EMAILS`, Neon Auth vars, `ALLOWED_EMAILS`, and SMTP vars if ",
+    "4. Redeploy after env var changes; Vercel applies env changes only to new deployments.",
+    "5. Sign up with an allowlisted email, sign in, and confirm the home page and certificates show the correct practice name and GESY code.",
+    "6. Inside the dashboard, upload the beneficiary file, upload remittance PDFs if available, upload the doctor signature, create a test certificate, and send a test email only after SMTP is configured.",
+    "7. For local development on the new practice, use `.env.local` with that practice's env values and preferably a separate Neon dev branch.",
+    "- 2026-07-09 - Updated from unpushed `onboarding.md` and README: standard new-doctor deployment is same repo plus new Vercel project, new Neon DB/Auth, full env set, first uploads, signature setup, and certificate smoke tests."
+  ],
+  "provenance": {
+    "created_at": "2026-07-09T11:40:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-09T11:40:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Deploying this dashboard for another doctor or clinic, creating a new Vercel/Neon environment, changing practice identity env vars, or following `onboarding.md`.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: New practice onboarding",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "New practice onboarding"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

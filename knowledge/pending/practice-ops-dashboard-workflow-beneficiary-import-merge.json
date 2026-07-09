@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1b4bc70756f486c00880580abe5bd9fa0fe985c4",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
     "source_paths": [
       "skills.md"
     ],
@@ -48,23 +48,27 @@
     "- Beneficiary files are source documents and must not be committed.",
     "- Use a complete beneficiary list as the source of active patients for that practice.",
     "- The default patient identity is normalized document ID; row-hash fallback is only for missing document IDs.",
+    "- Treat `internationalName`, `localName`, `birthDate`, `age`, `sex`, `nationality`, document fields, phone, email, and registration date as the canonical patient field set parsed by `src/lib/beneficiaryParser.ts`.",
     "1. Parse the uploaded CSV/XLSX and reject the upload if it produces zero patient rows.",
-    "2. In one transaction, compare incoming patient IDs with currently active `beneficiaries` rows for the same `PRACTICE_ID`.",
-    "3. Insert new patients, update and reactivate returning patients, and mark omitted active patients `active=false` with inactive metadata.",
-    "4. Generate KPI candidate tasks from the incoming patients, but insert only missing task keys with `ON CONFLICT DO NOTHING`.",
-    "5. Never reset existing KPI task `status`, `completed_date`, `note`, or audit history during beneficiary reupload.",
-    "6. In default UI views, pass masked document IDs to client components; keep full IDs server-side.",
+    "2. Match headers by normalized aliases first; use positional fallbacks only when no alias matches, preserving the README beneficiary schema order.",
+    "3. In one transaction, compare incoming patient IDs with currently active `beneficiaries` rows for the same `PRACTICE_ID`.",
+    "4. Insert new patients, update and reactivate returning patients, and mark omitted active patients `active=false` with inactive metadata.",
+    "5. Generate KPI candidate tasks from the incoming patients, but insert only missing task keys with `ON CONFLICT DO NOTHING`.",
+    "6. Never reset existing KPI task `status`, `completed_date`, `note`, or audit history during beneficiary reupload.",
+    "7. Preserve `localName`, `internationalName`, and raw `sex`; certificate generation depends on them for language-specific names and gender-aware Greek grammar.",
+    "8. In default UI views, pass masked document IDs to client components; keep full IDs server-side.",
     "- 2026-07-04 - User clarified beneficiary uploads should merge add/remove changes instead of rebuilding patients/KPIs from scratch.",
-    "- 2026-07-04 - Defaulted omitted patients to soft inactive rows, preserved KPI task workflow state, and masked document IDs in the Patients tab."
+    "- 2026-07-04 - Defaulted omitted patients to soft inactive rows, preserved KPI task workflow state, and masked document IDs in the Patients tab.",
+    "- 2026-07-09 - Updated from unpushed README: beneficiary fields are now explicitly the canonical source for certificate names, patient sex, email send eligibility, patient search, and KPI eligibility."
   ],
   "provenance": {
-    "created_at": "2026-07-05T08:40:50Z",
+    "created_at": "2026-07-09T11:40:22Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T08:40:50Z"
+    "updated_at": "2026-07-09T11:40:22Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -77,7 +81,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Triggered by:** Changes to beneficiary CSV/XLSX parsing, patient directory behavior, KPI candidate generation, or upload reconciliation.",
+  "summary": "**Triggered by:** Changes to beneficiary CSV/XLSX parsing, patient directory behavior, patient identity/demographics, certificate patient data, KPI candidate generation, or upload reconciliation.",
   "tags": [
     "auth",
     "database",

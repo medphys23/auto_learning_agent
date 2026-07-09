@@ -1,8 +1,8 @@
-default_profile = "legacy"
+default_profile = "optimized"
 global_agents_max_bytes = 8192
 global_skills_index_max_bytes = 4096
 maximum_retrieved_records = 3
 maximum_retrieved_knowledge_estimated_tokens = 4000
 preserve_legacy_outputs = true
-allow_global_apply = false
+allow_global_apply = true
 allow_other_repository_writes = false

@@ -28,6 +28,10 @@ from orchestrator_common import (  # noqa: E402
     validate_knowledge_record,
 )
 from publish_global_rules import publish_global_rules  # noqa: E402
+from propagate_orchestrator_retrieval_hints import propagate_hints  # noqa: E402
+from retrieve_knowledge_for_repo import retrieve_for_repo  # noqa: E402
+from run_optimized_cutover import build_cycle_command  # noqa: E402
+from run_optimized_knowledge_cycle import build_steps as build_optimized_cycle_steps  # noqa: E402
 from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
 
@@ -420,19 +424,22 @@ class OrchestratorMvpTests(unittest.TestCase):
         self.assertIn("--profile", optimized_steps[-1].command)
         self.assertIn("optimized", optimized_steps[-1].command)
 
-        with self.assertRaises(ValueError):
-            build_steps(
-                python_executable="python",
-                apply_global=True,
-                confirm_global_write=True,
-                reports_dir=Path("reports"),
-                master_root=Path("master"),
-                backup_base=Path("backups") / "global-sync",
-                backup_keep=2,
-                retrieval_query="orsi",
-                retrieval_status="candidate",
-                profile="optimized",
-            )
+        optimized_apply_steps = build_steps(
+            python_executable="python",
+            apply_global=True,
+            confirm_global_write=True,
+            reports_dir=Path("reports"),
+            master_root=Path("master"),
+            backup_base=Path("backups") / "global-sync",
+            backup_keep=2,
+            retrieval_query="orsi",
+            retrieval_status="candidate",
+            profile="optimized",
+        )
+        optimized_publish_steps = [step for step in optimized_apply_steps if step.global_write]
+        self.assertEqual(len(optimized_publish_steps), 1)
+        self.assertIn("--apply", optimized_publish_steps[0].command)
+        self.assertIn("optimized", optimized_publish_steps[0].command)
 
     def test_pipeline_parses_clean_and_dirty_repo_output(self) -> None:
         discovered = parse_discovery_lines(
@@ -525,12 +532,16 @@ class OrchestratorMvpTests(unittest.TestCase):
 
             optimized_agents = base / "master" / "optimized" / "codex" / "AGENTS.md"
             optimized_config = base / "master" / "optimized" / "codex" / "config" / "orchestrator-managed.toml"
+            optimized_skills = base / "master" / "optimized" / "codex" / "skills-index.md"
             self.assertEqual(result["profile"], "optimized")
             self.assertTrue(optimized_agents.exists())
+            self.assertTrue(optimized_skills.exists())
             self.assertTrue(optimized_config.exists())
             self.assertFalse((base / "master" / "codex" / "AGENTS.md").exists())
             self.assertLessEqual(optimized_agents.stat().st_size, 8192)
+            self.assertLessEqual(optimized_skills.stat().st_size, 4096)
             self.assertIn("Global Codex instructions", optimized_agents.read_text(encoding="utf-8"))
+            self.assertIn("orchestrator-knowledge", optimized_skills.read_text(encoding="utf-8"))
             self.assertNotIn("plugins.", optimized_config.read_text(encoding="utf-8"))
             self.assertTrue((base / "reports" / "repository-compatibility-matrix.md").exists())
             self.assertTrue((base / "reports" / "optimized-config-merge-preview.md").exists())
@@ -614,10 +625,11 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertIn("Orchestrator Knowledge Layer", (codex / "AGENTS.md").read_text(encoding="utf-8"))
             self.assertTrue((cursor / "skills" / "orchestrator-knowledge" / "SKILL.md").exists())
 
-    def test_optimized_publication_is_preview_only(self) -> None:
+    def test_optimized_publication_applies_with_backups_and_config_merge(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             codex, cursor = self.write_minimal_global_home(base)
+            before_config = (codex / "config.toml").read_text(encoding="utf-8")
             before_agents = (codex / "AGENTS.md").read_text(encoding="utf-8")
             preview = publish_global_rules(
                 reports_dir=base / "reports",
@@ -629,6 +641,7 @@ class OrchestratorMvpTests(unittest.TestCase):
             )
             self.assertEqual(preview["mode"], "optimized-preview")
             self.assertEqual(before_agents, (codex / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertEqual(before_config, (codex / "config.toml").read_text(encoding="utf-8"))
 
             with self.assertRaises(RuntimeError):
                 publish_global_rules(
@@ -638,9 +651,29 @@ class OrchestratorMvpTests(unittest.TestCase):
                     codex_home=codex,
                     cursor_home=cursor,
                     apply=True,
-                    confirm_global_write=True,
                     profile="optimized",
                 )
+
+            applied = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                apply=True,
+                confirm_global_write=True,
+                profile="optimized",
+            )
+            self.assertEqual(applied["mode"], "optimized-applied")
+            self.assertTrue((Path(applied["backup_root"]) / "codex" / "AGENTS.md").exists())
+            self.assertTrue((Path(applied["legacy_snapshot"]) / "active" / "codex" / "AGENTS.md").exists())
+            self.assertIn("Global Codex instructions", (codex / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertIn("Global Codex skills index", (codex / "skills.md").read_text(encoding="utf-8"))
+            self.assertIn("[plugins.\"github@openai-curated\"]", (codex / "config.toml").read_text(encoding="utf-8"))
+            self.assertIn("workflow_router", tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"])
+            self.assertTrue((cursor / "rules" / "06-orchestrator-knowledge.mdc").exists())
+            self.assertTrue((cursor / "skills" / "lead-scraper" / "SKILL.md").exists())
+            self.assertTrue((codex / "skills" / "lead-scraper" / "SKILL.md").exists())
 
     def test_publish_prunes_old_backup_roots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -669,6 +702,117 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertIn("20260102T000000Z", remaining)
             self.assertIn(Path(applied["backup_root"]).name, remaining)
             self.assertEqual(len(applied["pruned_backups"]), 1)
+
+    def test_optimized_cycle_builds_expected_steps(self) -> None:
+        steps = build_optimized_cycle_steps(python_executable="python", reports_dir=Path("reports"), skip_dependency_audit=False)
+        names = [step.name for step in steps]
+        self.assertEqual(names[0], "discover repositories")
+        self.assertIn("audit dependency catalog", names)
+        self.assertIn("synthesize optimized instructions", names)
+
+        fast_steps = build_optimized_cycle_steps(python_executable="python", reports_dir=Path("reports"), skip_dependency_audit=True)
+        self.assertNotIn("audit dependency catalog", [step.name for step in fast_steps])
+
+    def test_optimized_cutover_builds_dirty_override_cycle_command(self) -> None:
+        command = build_cycle_command(
+            python_executable="python",
+            allow_dirty=True,
+            skip_dependency_audit=True,
+            verbose=True,
+        )
+        self.assertEqual(command[:3], ["python", "scripts/run_optimized_knowledge_cycle.py", "--strict"])
+        self.assertIn("--continue-on-dirty", command)
+        self.assertIn("--skip-dependency-audit", command)
+        self.assertIn("--verbose", command)
+
+    def test_retrieve_knowledge_for_repo_resolves_registry_and_inlines_records(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            repo = base / "repo"
+            repo.mkdir()
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'demo-repo'\n"
+                "name = 'demo'\n"
+                f"path = '{repo.as_posix()}'\n"
+                "enabled = true\n",
+                encoding="utf-8",
+            )
+            record = sample_candidate_record("demo-repo-repository-profile")
+            record["tags"] = ["demo-repo"]
+            record_path = base / "knowledge" / "pending" / "demo-repo-repository-profile.json"
+            record_path.parent.mkdir(parents=True)
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            catalog = base / "knowledge" / "catalog.jsonl"
+            catalog.write_text(
+                json.dumps(
+                    {
+                        "id": record["id"],
+                        "title": record["title"],
+                        "type": record["type"],
+                        "scope": record["scope"],
+                        "status": record["status"],
+                        "summary": record["summary"],
+                        "tags": record["tags"],
+                        "record_path": str(record_path),
+                        "confidence": record["confidence"],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            policy = base / "retrieval-policy.toml"
+            policy.write_text("[budgets]\nprimary_records = 3\nsupporting_records = 0\nfailure_records = 0\n", encoding="utf-8")
+            context = base / "context.toml"
+            context.write_text("maximum_retrieved_records = 3\nmaximum_retrieved_knowledge_estimated_tokens = 4000\n", encoding="utf-8")
+
+            result = retrieve_for_repo(
+                cwd=repo,
+                repositories_path=registry,
+                catalog_path=catalog,
+                policy_path=policy,
+                context_config_path=context,
+                query="",
+                status="candidate",
+                include_records=True,
+                limit=None,
+            )
+
+            self.assertEqual(result["repository"]["id"], "demo-repo")
+            self.assertEqual(result["count"], 1)
+            self.assertIn("verification", result["records"][0])
+
+    def test_repo_hint_propagation_preview_does_not_write(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            repo = base / "repo"
+            repo.mkdir()
+            agents = repo / "AGENTS.md"
+            agents.write_text("# Repo\n", encoding="utf-8")
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'demo-repo'\n"
+                "name = 'demo'\n"
+                f"path = '{repo.as_posix()}'\n"
+                "enabled = true\n",
+                encoding="utf-8",
+            )
+            config = base / "context.toml"
+            config.write_text("allow_other_repository_writes = false\n", encoding="utf-8")
+
+            result = propagate_hints(
+                repositories_path=registry,
+                reports_dir=base / "reports",
+                config_path=config,
+                apply=False,
+                confirm_repo_write=False,
+            )
+
+            self.assertEqual(result["results"][0]["status"], "preview")
+            self.assertNotIn("ORCHESTRATOR-MANAGED: knowledge-retrieval", agents.read_text(encoding="utf-8"))
+            self.assertIn("ORCHESTRATOR-MANAGED: knowledge-retrieval", (base / "reports" / "repo-orchestrator-hints-preview.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

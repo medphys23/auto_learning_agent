@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from orchestrator_common import utc_now
+from orchestrator_common import read_toml, utc_now
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -151,7 +151,9 @@ def build_steps(
     if apply_global and not confirm_global_write:
         raise ValueError("--apply-global requires --confirm-global-write")
     if profile == "optimized" and apply_global:
-        raise ValueError("optimized profile is preview-only; use a separate cutover task for global apply")
+        config_path = ROOT / "config" / "context-optimization.toml"
+        if config_path.exists() and not bool(read_toml(config_path).get("allow_global_apply", False)):
+            raise ValueError("optimized global apply is disabled by config/context-optimization.toml")
 
     py = python_executable
     steps = [
@@ -394,6 +396,10 @@ def run_pipeline(
 
 
 def main() -> int:
+    context_config = ROOT / "config" / "context-optimization.toml"
+    default_profile = "legacy"
+    if context_config.exists():
+        default_profile = str(read_toml(context_config).get("default_profile", "legacy"))
     parser = argparse.ArgumentParser(description="Run the local orchestrator pipeline with tqdm progress logs.")
     parser.add_argument("--preview", action="store_true", help="Run without global writes. This is the default.")
     parser.add_argument("--apply-global", action="store_true", help="Apply final generated instructions to global Codex/Cursor folders.")
@@ -404,7 +410,7 @@ def main() -> int:
     parser.add_argument("--backup-keep", type=int, default=2, help="Number of newest backup roots to retain after global apply.")
     parser.add_argument("--retrieval-query", default="orsi")
     parser.add_argument("--retrieval-status", default="candidate")
-    parser.add_argument("--profile", choices=("legacy", "optimized"), default="legacy")
+    parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
     parser.add_argument("--log-file", type=Path, default=Path("reports") / "orchestrator-pipeline.log")
     parser.add_argument("--verbose", action="store_true", help="Echo subprocess output through tqdm.write while logging.")
     args = parser.parse_args()

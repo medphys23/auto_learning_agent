@@ -1,0 +1,107 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-server-query-and-view-models",
+  "incompatible_when": [],
+  "procedure": [
+    "- Pages under `src/app/(app)/` should stay Server Components unless browser-only APIs are required.",
+    "- All runtime queries must filter by `PRACTICE_ID` from `practiceConfig()`.",
+    "- Full `PatientRecord` (including raw `documentId`, `localName`, `internationalName`, `sex`) is for server-side certificate generation and `loadPatientById()` \u2014 not default page props.",
+    "- Do not use `loadPatients()` or `loadPracticeSnapshot()` for page rendering.",
+    "1. Decide the **smallest serializable shape** the client needs; add or extend a view-model type (`PatientDirectoryRow`, `CertificatePatientOption`, `KpiWorklistRow`, chart DTOs, etc.).",
+    "2. Add or extend a loader in `src/lib/db.ts` with an explicit `SELECT` column list \u2014 never `SELECT *` for UI routes.",
+    "3. Mask document IDs in SQL with `maskedDocumentSql` when the UI shows an identifier; keep full IDs server-side.",
+    "4. Expose the loader through `src/lib/store.ts`; call it from `page.tsx`, not from client components directly.",
+    "5. Pass the result as props to a `\"use client\"` component only for filters, sorting, charts, forms, or dictation.",
+    "6. Prefer **one SSR payload + client-side filter/sort** over refetch-on-keystroke unless the dataset is too large for memory.",
+    "7. Push **aggregations** (`COUNT`, `GROUP BY`, `SUM`, `LIMIT`) into Postgres when building dashboard/remittance summaries.",
+    "8. For mutations, return the **narrowest updated row** (e.g. `KpiWorklistRow`) or binary output (PDF/ZIP), not full domain records.",
+    "9. For certificate create/send, accept `patientId` in the POST body, then `loadPatientById()` server-side inside the route handler.",
+    "- 2026-07-09 - Documented RSC-first loaders, SQL column projection, masked IDs, per-page view models, load-once/filter-client pattern, and on-demand full patient load for certificate APIs. Added after patient/remittance loader refactors and"
+  ],
+  "provenance": {
+    "created_at": "2026-07-09T11:40:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-09T11:40:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** New pages, new client tables/filters, new API routes, widening/narrowing data loaders, PHI exposure review, or performance work on initial page load.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: Server query and view models",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "Server query and view models"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

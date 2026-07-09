@@ -121,6 +121,7 @@ CURSOR_ORCHESTRATOR_STACK_ROW = (
 )
 
 OPTIMIZED_AGENTS_MAX_BYTES = 8192
+OPTIMIZED_SKILLS_INDEX_MAX_BYTES = 4096
 
 OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 
@@ -223,6 +224,17 @@ description: Select known repository stacks and dependency policies without load
 
 Use repository manifests, `AGENTS.md`, and dependency audit reports first. Promote a package to global guidance only when it becomes a reusable cross-repo convention.
 """,
+}
+
+
+OPTIMIZED_SKILLS_INDEX_TRIGGERS = {
+    "orchestrator-knowledge": "cross-repo work, reviews, migrations, global-config changes, or repeatable workflows",
+    "python-environment": "repo-local Python bootstraps, dependency installs, or uv environment repair",
+    "office-com-deliverable": "review-grade Word or PowerPoint authoring on Windows",
+    "document-read-path": "reading PDF, DOCX, PPTX, XLSX, or HTML inputs for analysis",
+    "lead-scraper": "Playwright lead scrapers, resume checkpoints, tqdm, or contact-data safeguards",
+    "repository-scaffold": "new trusted repositories under Documents/GitHub",
+    "stack-selection": "choosing known stacks or deciding whether a dependency pattern should be promoted",
 }
 
 
@@ -514,6 +526,30 @@ def optimized_config_fragment() -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def optimized_skills_index() -> str:
+    lines = [
+        "# Global Codex skills index",
+        "",
+        "Slim optimized index. Load the matching on-demand `SKILL.md` only when its trigger applies.",
+        "",
+        "| Skill | Trigger |",
+        "| --- | --- |",
+    ]
+    for name in sorted(OPTIMIZED_SKILLS):
+        lines.append(f"| `{name}` | {OPTIMIZED_SKILLS_INDEX_TRIGGERS[name]} |")
+    lines.extend(
+        [
+            "",
+            "Canonical knowledge remains in `C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\knowledge\\INDEX.md` and `knowledge\\catalog.jsonl`.",
+        ]
+    )
+    content = "\n".join(lines).rstrip() + "\n"
+    size = len(content.encode("utf-8"))
+    if size > OPTIMIZED_SKILLS_INDEX_MAX_BYTES:
+        raise ValueError(f"optimized skills index exceeds {OPTIMIZED_SKILLS_INDEX_MAX_BYTES} bytes: {size}")
+    return content
+
+
 def write_optimized_config_preview(reports_dir: Path, codex_config: str, fragment: str) -> None:
     diff = "\n".join(
         difflib.unified_diff(
@@ -635,6 +671,7 @@ def synthesize_optimized(
     if agents_bytes > OPTIMIZED_AGENTS_MAX_BYTES:
         raise ValueError(f"optimized AGENTS.md exceeds {OPTIMIZED_AGENTS_MAX_BYTES} bytes: {agents_bytes}")
     write_text(optimized_codex / "AGENTS.md", agents)
+    write_text(optimized_codex / "skills-index.md", optimized_skills_index())
     write_text(optimized_root / "shared" / "orchestrator-layer.md", orchestrator_markdown_block())
     fragment = optimized_config_fragment()
     write_text(optimized_codex / "config" / "orchestrator-managed.toml", fragment)
@@ -663,6 +700,7 @@ def synthesize_optimized(
         "reports_dir": str(reports_dir),
         "codex_agents_bytes": agents_bytes,
         "codex_agents_sha256": sha256_file(optimized_codex / "AGENTS.md"),
+        "codex_skills_index_sha256": sha256_file(optimized_codex / "skills-index.md"),
         "config_fragment_sha256": sha256_file(optimized_codex / "config" / "orchestrator-managed.toml"),
     }
 

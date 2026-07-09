@@ -1,0 +1,108 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-certificate-generation-and-email",
+  "incompatible_when": [],
+  "procedure": [
+    "- Beneficiary rows must include the best available `localName`, `internationalName`, `sex`, and `email`; patient data comes from uploads, not manual certificate-only records.",
+    "- Set `PRACTICE_DOCTOR_GENDER` for Greek doctor grammar. Default is `female`; use `male` only for male doctors.",
+    "- Configure `CERTIFICATE_SMTP_USER` and `CERTIFICATE_SMTP_PASS` before using \"Send to patient\"; optional SMTP host/port/from env vars may override auto-detection.",
+    "- Keep doctor signature images in Postgres and never commit uploaded signatures or generated patient PDFs.",
+    "- Custom certificates support one selected language only; structured template certificates may use `both`.",
+    "1. Route all patient display decisions through `src/lib/certificates/patientPresentation.ts`: Greek certificates use `localName` first, English certificates use `internationalName` first, and both fall back to `displayName`.",
+    "2. Normalize patient sex with `normalizePatientSex()` and use the shared Greek phrase helpers for certificate paragraphs and Greek email greetings; unrecognized values must fall back to slash/neutral forms.",
+    "3. Read practice identity through `practiceConfig()` so `PRACTICE_DISPLAY_NAME`, `PRACTICE_GESY_CODE`, and `PRACTICE_DOCTOR_GENDER` affect PDFs and email consistently.",
+    "4. Generate PDFs with `pdf-lib`, embedded Noto Sans fonts, the GESY logo, and the optional doctor signature; use `createCertificates()` so `both` creates Greek first, then English.",
+    "5. Keep certificate filenames patient-scoped and language-suffixed; bilingual downloads should return a ZIP and bilingual sends should attach both PDFs.",
+    "6. Build SMTP email through `buildCertificateEmailContent()` and `sendCertificateEmail()` so GESY-branded HTML, text fallback, logo CID, and PDF attachments stay together.",
+    "7. `POST /api/certificates/send` must require an active patient with an email address, generate PDFs, send via SMTP, and record the dispatch audit with the returned message ID.",
+    "8. Preserve custom certificate browser dictation as UI-only Web Speech API behavior; finalized speech segments accumulate in the textarea and the user can edit before creating or sending.",
+    "- 2026-07-09 - Added from latest push: patient presentation helpers, gender-aware Greek certificate grammar, language-specific patient names, `PRACTICE_DOCTOR_GENDER`, branded SMTP email content, bilingual PDF/email behavior, and focused ce",
+    "- 2026-07-09 - Updated from unpushed README: certificates now cover six templates, custom dictation, signature storage, PDF/ZIP download, SMTP send, and dispatch audit expectations."
+  ],
+  "provenance": {
+    "created_at": "2026-07-09T11:40:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-09T11:40:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Changes to `/certificates`, certificate templates, custom certificate dictation, PDF rendering, ZIP downloads, doctor signature handling, SMTP certificate email, audit dispatch records, patient name selection, or Greek cer",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: Certificate generation and email",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "Certificate generation and email"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}
