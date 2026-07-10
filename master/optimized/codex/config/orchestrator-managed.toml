@@ -2,9 +2,10 @@
 # This fragment is not a full active config.toml copy.
 
 [agents]
-max_threads = 3
+max_threads = 4
 max_depth = 1
 job_max_runtime_seconds = 1800
+interrupt_message = true
 
 [agents.workflow_router]
 description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
@@ -21,3 +22,15 @@ config_file = "agents/knowledge-synthesizer.toml"
 [agents.verifier]
 description = "Validates implementation, evidence, configuration, and publication readiness."
 config_file = "agents/verifier.toml"
+
+[agents.luna_worker]
+description = "Fast worker for explicit, repetitive, deterministic, low-risk, and easily validated tasks."
+config_file = "agents/luna_worker.toml"
+
+[agents.terra_worker]
+description = "General engineering worker for routine implementation, debugging, refactoring, testing, and repository analysis."
+config_file = "agents/terra_worker.toml"
+
+[agents.sol_specialist]
+description = "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work."
+config_file = "agents/sol_specialist.toml"

@@ -34,6 +34,7 @@ from run_optimized_cutover import build_cycle_command  # noqa: E402
 from run_optimized_knowledge_cycle import build_steps as build_optimized_cycle_steps  # noqa: E402
 from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
+from validate_codex_routing import validate_routing_event  # noqa: E402
 
 
 class OrchestratorMvpTests(unittest.TestCase):
@@ -711,9 +712,73 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertIn("Global Codex skills index", (codex / "skills.md").read_text(encoding="utf-8"))
             self.assertIn("[plugins.\"github@openai-curated\"]", (codex / "config.toml").read_text(encoding="utf-8"))
             self.assertIn("workflow_router", tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"])
+            self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["model"], "gpt-5.6-terra")
+            self.assertEqual(
+                tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["model_reasoning_effort"],
+                "medium",
+            )
+            self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["max_threads"], 4)
+            self.assertTrue(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["interrupt_message"])
             self.assertTrue((cursor / "rules" / "06-orchestrator-knowledge.mdc").exists())
             self.assertTrue((cursor / "skills" / "lead-scraper" / "SKILL.md").exists())
             self.assertTrue((codex / "skills" / "lead-scraper" / "SKILL.md").exists())
+
+    def test_optimized_synthesis_adds_adaptive_gpt56_agents(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            synthesize(
+                codex_home=codex,
+                cursor_home=cursor,
+                master_root=base / "master",
+                reports_dir=base / "reports",
+                profile="optimized",
+            )
+
+            agents_dir = base / "master" / "optimized" / "codex" / "agents"
+            expected = {
+                "luna_worker.toml": ("luna_worker", "gpt-5.6-luna", "low"),
+                "terra_worker.toml": ("terra_worker", "gpt-5.6-terra", "medium"),
+                "sol_specialist.toml": ("sol_specialist", "gpt-5.6-sol", "xhigh"),
+            }
+            for filename, (name, model, effort) in expected.items():
+                with self.subTest(filename=filename):
+                    data = tomllib.loads((agents_dir / filename).read_text(encoding="utf-8"))
+                    self.assertEqual(data["name"], name)
+                    self.assertEqual(data["model"], model)
+                    self.assertEqual(data["model_reasoning_effort"], effort)
+                    self.assertTrue(data["description"])
+                    self.assertTrue(data["developer_instructions"])
+
+            config = tomllib.loads((base / "master" / "optimized" / "codex" / "config" / "orchestrator-managed.toml").read_text(encoding="utf-8"))
+            for name in ("workflow_router", "repository_harvester", "knowledge_synthesizer", "verifier", "luna_worker", "terra_worker", "sol_specialist"):
+                self.assertIn(name, config["agents"])
+            self.assertIn("Adaptive GPT-5.6 Model Routing", (base / "master" / "optimized" / "codex" / "AGENTS.md").read_text(encoding="utf-8"))
+
+    def test_routing_event_validation_rejects_missing_fields_and_sensitive_notes(self) -> None:
+        event = {
+            "timestamp_utc": "2026-07-10T12:00:00Z",
+            "repository": "auto_learning_agent",
+            "task_category": "config_migration",
+            "risk_level": "high",
+            "initial_route": "terra_worker",
+            "final_route": "sol_specialist",
+            "escalated": True,
+            "escalation_reason": "Architecture and rollback review",
+            "validation_status": "passed",
+            "outcome": "success",
+            "reusable_pattern": True,
+            "notes": "High-risk model-routing config changes should validate models before global activation.",
+        }
+        self.assertEqual(validate_routing_event(event), [])
+
+        missing = dict(event)
+        missing.pop("timestamp_utc")
+        self.assertTrue(any("timestamp_utc" in error for error in validate_routing_event(missing)))
+
+        sensitive = dict(event)
+        sensitive["notes"] = "token should not appear here"
+        self.assertTrue(any("sensitive" in error for error in validate_routing_event(sensitive)))
 
     def test_publish_prunes_old_backup_roots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

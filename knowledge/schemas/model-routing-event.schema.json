@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex adaptive model routing event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "timestamp_utc",
+    "repository",
+    "task_category",
+    "risk_level",
+    "initial_route",
+    "final_route",
+    "escalated",
+    "escalation_reason",
+    "validation_status",
+    "outcome",
+    "reusable_pattern",
+    "notes"
+  ],
+  "properties": {
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "task_category": {
+      "type": "string"
+    },
+    "risk_level": {
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "initial_route": {
+      "enum": ["direct", "luna_worker", "terra_worker", "sol_specialist"]
+    },
+    "final_route": {
+      "enum": ["direct", "luna_worker", "terra_worker", "sol_specialist"]
+    },
+    "escalated": {
+      "type": "boolean"
+    },
+    "escalation_reason": {
+      "type": ["string", "null"]
+    },
+    "validation_status": {
+      "enum": ["passed", "failed", "partial"]
+    },
+    "outcome": {
+      "enum": ["success", "failure", "partial"]
+    },
+    "reusable_pattern": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 500
+    }
+  }
+}

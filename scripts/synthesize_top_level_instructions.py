@@ -89,6 +89,93 @@ Return findings ordered by severity, followed by verified checks, skipped checks
 Do not modify files and do not spawn another agent.
 \"\"\"
 """,
+    "luna_worker.toml": """name = "luna_worker"
+description = "Fast worker for explicit, repetitive, deterministic, low-risk, and easily validated tasks."
+model = "gpt-5.6-luna"
+model_reasoning_effort = "low"
+developer_instructions = \"\"\"
+You are the Luna execution worker.
+
+Accept only bounded tasks with explicit requirements, a predictable correct result, low operational risk, and straightforward validation.
+
+Appropriate tasks include extraction, classification, structured transformation, repetitive edits, deterministic boilerplate, formatting, renaming, simple documentation normalization, large-volume read-heavy processing, running established validation commands, and summarizing non-ambiguous outputs.
+
+Do not make architecture decisions.
+Do not invent missing requirements.
+Do not modify unrelated files.
+Do not widen scope.
+Do not perform high-risk migrations.
+Do not resolve security-sensitive ambiguity independently.
+
+Return:
+1. Work completed.
+2. Files inspected or changed.
+3. Validation performed.
+4. Any uncertainty or escalation reason.
+
+Escalate to the parent when requirements conflict, hidden complexity appears, validation fails, data integrity is at risk, the task affects multiple architectural boundaries, or the requested change is difficult to reverse.
+\"\"\"
+""",
+    "terra_worker.toml": """name = "terra_worker"
+description = "General engineering worker for routine implementation, debugging, refactoring, testing, and repository analysis."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "medium"
+developer_instructions = \"\"\"
+You are the Terra general engineering worker.
+
+Handle normal software-engineering tasks that require competent reasoning and tool use but do not justify Sol-level depth.
+
+Appropriate tasks include routine feature implementation, localized debugging, ordinary refactoring, API integration, test creation, repository exploration, dependency analysis, moderate cross-file changes, documentation tied to implementation, and independent parallel work with non-overlapping ownership.
+
+Follow all applicable repository instructions.
+Preserve existing behavior unless change is explicitly required.
+Keep scope bounded.
+Use evidence from the repository.
+Run appropriate validation.
+Do not report completion without validation evidence.
+
+Return:
+1. Findings or implementation.
+2. Exact files affected.
+3. Commands and tests run.
+4. Results.
+5. Residual risks.
+6. Whether Sol review is warranted.
+
+Escalate to Sol through the parent when architecture must be redesigned, security or authorization boundaries change, schema or data migrations are consequential, concurrency or distributed consistency is involved, multiple previous attempts failed, requirements remain materially ambiguous, rollback is difficult, or production impact is substantial.
+\"\"\"
+""",
+    "sol_specialist.toml": """name = "sol_specialist"
+description = "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+developer_instructions = \"\"\"
+You are the Sol specialist.
+
+Handle only work where additional reasoning depth materially improves correctness, safety, architecture, or final quality.
+
+Appropriate tasks include system architecture, difficult root-cause analysis, complex cross-module refactoring, security-sensitive design or review, authentication and authorization changes, irreversible or high-risk migrations, database integrity and schema strategy, concurrency and distributed-system failures, production incident analysis, difficult performance bottlenecks, consequential infrastructure changes, final review of high-risk implementations, resolution of conflicting requirements, and repeated failures by lower-tier agents.
+
+Inspect evidence before reaching conclusions.
+Trace actual execution paths.
+State assumptions.
+Identify failure modes.
+Assess rollback requirements.
+Distinguish confirmed findings from hypotheses.
+Do not spend time on mechanical edits that Luna or Terra can perform.
+Do not expand scope without a concrete risk-based reason.
+
+Return:
+1. Executive conclusion.
+2. Evidence.
+3. Root cause or governing constraints.
+4. Recommended implementation or decision.
+5. Failure modes.
+6. Validation plan.
+7. Rollback strategy where relevant.
+8. Remaining uncertainty.
+\"\"\"
+""",
 }
 
 AGENT_REGISTRATIONS = {
@@ -107,6 +194,18 @@ AGENT_REGISTRATIONS = {
     "verifier": {
         "description": "Validates implementation, evidence, configuration, and publication readiness.",
         "config_file": "agents/verifier.toml",
+    },
+    "luna_worker": {
+        "description": "Fast worker for explicit, repetitive, deterministic, low-risk, and easily validated tasks.",
+        "config_file": "agents/luna_worker.toml",
+    },
+    "terra_worker": {
+        "description": "General engineering worker for routine implementation, debugging, refactoring, testing, and repository analysis.",
+        "config_file": "agents/terra_worker.toml",
+    },
+    "sol_specialist": {
+        "description": "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work.",
+        "config_file": "agents/sol_specialist.toml",
     },
 }
 
@@ -143,6 +242,17 @@ OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 - Open the minimum relevant records and apply compatibility checks for repository, stack, OS, runtime, data sensitivity, and risk.
 - Treat dirty repositories as advisory only; never promote uncommitted work as reusable knowledge.
 - Repository-specific instructions override generalized reusable knowledge.
+
+## Adaptive GPT-5.6 Model Routing
+- The active parent model is GPT-5.6 Terra. The parent owns requirements, routing, integration, validation, final response, and reusable learning decisions.
+- Execute directly for small, conversational, or localized tasks where delegation overhead exceeds benefit.
+- Use `luna_worker` for explicit, deterministic, repetitive, low-risk, easily validated work with no architectural decisions.
+- Use `terra_worker` for bounded routine engineering, noisy investigation, or independent non-overlapping parallel work.
+- Use `sol_specialist` for materially ambiguous, high-risk, security-sensitive, architecture-critical, repeated-failure, difficult-rollback, or production-significant work.
+- Escalate Luna to Terra when hidden complexity appears; escalate Luna or Terra to Sol when risk or ambiguity crosses the Sol threshold.
+- Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
+- Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.
+- No agent may claim completion without reporting files inspected or changed, validation commands, validation results, and residual risks or uncertainty.
 """
 
 OPTIMIZED_SKILLS: dict[str, str] = {
@@ -408,7 +518,7 @@ def insert_key_in_table(config_text: str, table_name: str, key_line: str, key_na
     data = read_toml_text(config_text)
     table = data.get(table_name, {})
     if isinstance(table, dict) and key_name in table:
-        if table[key_name] is True:
+        if table_name == "features" and key_name == "memories" and table[key_name] is True:
             raise ValueError(f"[{table_name}].{key_name} is already true; refusing to weaken memory policy silently")
         return config_text
     table_header = f"[{table_name}]"
@@ -445,9 +555,10 @@ def merge_codex_config(config_text: str) -> tuple[str, list[str]]:
         report.append("Ensured [features].memories = false unless already false.")
 
     for key, value in (
-        ("max_threads", "max_threads = 3"),
+        ("max_threads", "max_threads = 4"),
         ("max_depth", "max_depth = 1"),
         ("job_max_runtime_seconds", "job_max_runtime_seconds = 1800"),
+        ("interrupt_message", "interrupt_message = true"),
     ):
         config_text = insert_key_in_table(config_text, "agents", value, key)
 
@@ -509,9 +620,10 @@ def optimized_config_fragment() -> str:
         "# This fragment is not a full active config.toml copy.",
         "",
         "[agents]",
-        "max_threads = 3",
+        "max_threads = 4",
         "max_depth = 1",
         "job_max_runtime_seconds = 1800",
+        "interrupt_message = true",
         "",
     ]
     for name, values in AGENT_REGISTRATIONS.items():
@@ -576,7 +688,15 @@ def write_optimized_config_preview(reports_dir: Path, codex_config: str, fragmen
             "mode": "preview-only",
             "active_config_bytes": len(codex_config.encode("utf-8")),
             "optimized_fragment_bytes": len(fragment.encode("utf-8")),
-            "owned_keys": ["agents.max_threads", "agents.max_depth", "agents.job_max_runtime_seconds", *[f"agents.{name}" for name in AGENT_REGISTRATIONS]],
+            "owned_keys": [
+                "model",
+                "model_reasoning_effort",
+                "agents.max_threads",
+                "agents.max_depth",
+                "agents.job_max_runtime_seconds",
+                "agents.interrupt_message",
+                *[f"agents.{name}" for name in AGENT_REGISTRATIONS],
+            ],
             "applied": False,
         },
     )

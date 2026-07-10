@@ -1,0 +1,21 @@
+---
+description: Require tqdm progress bars for long-running Python batch jobs and scrapers
+alwaysApply: true
+---
+
+# tqdm progress bars (required)
+
+When implementing or modifying **long-running Python work** (scrapers, batch transforms, training loops, migrations, large file processing):
+
+1. **Always use [`tqdm`](https://pypi.org/project/tqdm/)** so the user sees live progress in the terminal.
+2. Wrap outer loops (categories, files, pages, specialties) and meaningful inner loops (rows, profiles, chunks) with descriptive bars.
+3. Set **`desc`** to a short human label and **`unit`** to the item being counted (`specialty`, `page`, `row`, `file`, etc.).
+4. Use **`set_postfix` / `set_postfix_str`** for counters that matter during the run (unique records, errors, current label).
+5. Prefer **`tqdm.auto`** or a shared helper (e.g. repo `progress.py`) for Windows terminal compatibility.
+6. Do **not** rely on sparse `print()`/log lines as the only progress signal for jobs expected to run more than ~30 seconds.
+
+Skip tqdm only for trivial loops (few iterations), HTTP request handlers, or tests where a bar adds noise.
+
+**Repo mirror:** document repeatable tqdm patterns in repo `skills.md` → `.cursor/skills/tqdm-progress/SKILL.md`.
+
+**Global catalog:** `~/.codex/AGENTS.md → ## Logging and long-running jobs`.

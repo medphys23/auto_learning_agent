@@ -18,6 +18,10 @@ from synthesize_top_level_instructions import (
 )
 
 
+TARGET_PARENT_MODEL = "gpt-5.6-terra"
+TARGET_PARENT_REASONING_EFFORT = "medium"
+
+
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
@@ -136,6 +140,42 @@ def validate_master_targets(targets: list[tuple[Path, Path, str]]) -> None:
         raise RuntimeError("Generated master files are missing: " + ", ".join(missing))
 
 
+def set_root_key(config_text: str, key: str, value_line: str) -> tuple[str, bool]:
+    lines = config_text.splitlines()
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("["):
+            break
+        if stripped.startswith(f"{key} "):
+            if stripped == value_line:
+                return config_text, False
+            lines[index] = value_line
+            return "\n".join(lines) + "\n", True
+    insert_at = 1 if lines and lines[0].startswith("#:schema ") else 0
+    lines.insert(insert_at, value_line)
+    return "\n".join(lines) + "\n", True
+
+
+def set_key_in_table(config_text: str, table_name: str, key_name: str, value_line: str) -> tuple[str, bool]:
+    table_header = f"[{table_name}]"
+    lines = config_text.splitlines()
+    for index, line in enumerate(lines):
+        if line.strip() != table_header:
+            continue
+        insert_at = index + 1
+        while insert_at < len(lines) and not lines[insert_at].lstrip().startswith("["):
+            stripped = lines[insert_at].strip()
+            if stripped.startswith(f"{key_name} "):
+                if stripped == value_line:
+                    return config_text, False
+                lines[insert_at] = value_line
+                return "\n".join(lines) + "\n", True
+            insert_at += 1
+        lines.insert(insert_at, value_line)
+        return "\n".join(lines) + "\n", True
+    return config_text.rstrip() + f"\n\n{table_header}\n{value_line}\n", True
+
+
 def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str, list[str]]:
     read_toml_text(fragment)
     merged = active_config
@@ -143,6 +183,13 @@ def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str
     if not merged.startswith("#:schema "):
         merged = "#:schema https://developers.openai.com/codex/config-schema.json\n" + merged
         report.append("Added Codex config schema header.")
+    for key, line, label in (
+        ("model", f'model = "{TARGET_PARENT_MODEL}"', "model"),
+        ("model_reasoning_effort", f'model_reasoning_effort = "{TARGET_PARENT_REASONING_EFFORT}"', "model_reasoning_effort"),
+    ):
+        merged, changed = set_root_key(merged, key, line)
+        if changed:
+            report.append(f"Set {label}.")
     data = read_toml_text(merged)
     agents = data.get("agents", {})
     if agents and not isinstance(agents, dict):
@@ -150,13 +197,14 @@ def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str
     if not isinstance(agents, dict):
         agents = {}
     for key, line in (
-        ("max_threads", "max_threads = 3"),
+        ("max_threads", "max_threads = 4"),
         ("max_depth", "max_depth = 1"),
         ("job_max_runtime_seconds", "job_max_runtime_seconds = 1800"),
+        ("interrupt_message", "interrupt_message = true"),
     ):
-        if key not in agents:
-            merged = insert_key_in_table(merged, "agents", line, key)
-            report.append(f"Inserted agents.{key}.")
+        merged, changed = set_key_in_table(merged, "agents", key, line)
+        if changed:
+            report.append(f"Set agents.{key}.")
     data = read_toml_text(merged)
     agents = data.get("agents", {})
     if not isinstance(agents, dict):
