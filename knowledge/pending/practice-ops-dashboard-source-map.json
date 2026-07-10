@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
+    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
     "source_paths": [
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
@@ -61,7 +61,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-09T11:40:22Z",
+    "created_at": "2026-07-10T16:24:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/repo-core.mdc",
@@ -78,7 +78,7 @@
       "tests/patientPresentation.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T11:40:22Z"
+    "updated_at": "2026-07-10T16:24:14Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -104,10 +104,10 @@
           "src/app/(app)/sources/page.tsx",
           "src/app/(app)/uploads/page.tsx"
         ],
-        "file_count": 78,
+        "file_count": 79,
         "suffixes": {
           ".css": 1,
-          ".ts": 48,
+          ".ts": 49,
           ".tsx": 29
         }
       },
@@ -162,7 +162,7 @@
         }
       }
     ],
-    "harvestable_text_file_count": 99
+    "harvestable_text_file_count": 100
   },
   "status": "candidate",
   "summary": "Safe source map for practice-ops-dashboard: 4 harvestable areas, led by src, ., .cursor, tests.",

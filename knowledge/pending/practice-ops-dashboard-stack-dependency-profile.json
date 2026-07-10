@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "fd6e896d4eef0ec764d54bd935191bac8bf037a1",
+    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
     "source_paths": [
       "package.json"
     ],
@@ -102,13 +102,13 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-09T11:40:22Z",
+    "created_at": "2026-07-10T16:24:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T11:40:22Z"
+    "updated_at": "2026-07-10T16:24:14Z"
   },
   "registry_stack_tags": [
     "nextjs",

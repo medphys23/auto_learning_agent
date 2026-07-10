@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "60d0757d5c72e43f56c39c060a7e569b5887e900",
+    "source_commit": "acce19a0c944802b8a33d9665fbb806597c2c2fa",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
@@ -45,6 +45,7 @@
       "config/context-optimization.toml",
       "config/promotion-policy.toml",
       "config/repositories.toml",
+      "knowledge/model-routing/README.md",
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
@@ -66,7 +67,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-09T12:07:30Z",
+    "created_at": "2026-07-10T16:23:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -82,6 +83,7 @@
       "config/context-optimization.toml",
       "config/promotion-policy.toml",
       "config/repositories.toml",
+      "knowledge/model-routing/README.md",
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
@@ -92,7 +94,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T12:07:30Z"
+    "updated_at": "2026-07-10T16:23:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -118,10 +120,27 @@
           "scripts/plan_optimized_cutover.py",
           "scripts/promote_knowledge.py"
         ],
-        "file_count": 19,
+        "file_count": 22,
         "suffixes": {
-          ".ps1": 2,
-          ".py": 17
+          ".ps1": 4,
+          ".py": 18
+        }
+      },
+      {
+        "area": "backups",
+        "examples": [
+          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/skills.md",
+          "backups/legacy-pre-optimized/20260709T120209Z/active/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T120209Z/active/codex/skills.md",
+          "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
+          "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
+        ],
+        "file_count": 16,
+        "suffixes": {
+          ".md": 16
         }
       },
       {
@@ -150,19 +169,6 @@
         "suffixes": {
           ".md": 3,
           ".txt": 1
-        }
-      },
-      {
-        "area": "backups",
-        "examples": [
-          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
-          "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
-          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/AGENTS.md",
-          "backups/legacy-pre-optimized/20260709T115514Z/master/codex/skills.md"
-        ],
-        "file_count": 4,
-        "suffixes": {
-          ".md": 4
         }
       },
       {
@@ -202,6 +208,16 @@
         }
       },
       {
+        "area": "knowledge",
+        "examples": [
+          "knowledge/model-routing/README.md"
+        ],
+        "file_count": 1,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
         "area": "tests",
         "examples": [
           "tests/test_orchestrator_mvp.py"
@@ -212,10 +228,10 @@
         }
       }
     ],
-    "harvestable_text_file_count": 42
+    "harvestable_text_file_count": 58
   },
   "status": "candidate",
-  "summary": "Safe source map for auto_learning_agent: 8 harvestable areas, led by scripts, .codex, ., backups, config, master, .cursor, tests.",
+  "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, backups, .codex, ., config, master, .cursor, knowledge.",
   "tags": [
     "architecture-map",
     "auto_learning_agent",
