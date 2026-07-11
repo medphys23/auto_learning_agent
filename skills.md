@@ -63,6 +63,25 @@ git status --short --ignored
 - 2026-07-09: Added one-command optimized cutover wrapper for harvest, readiness, preview, and optional confirmed global publication.
 - 2026-07-09: Added a local `auto_learning_agent` dirty-harvest exception; other dirty registered repos remain blocked unless explicitly approved and configured.
 
+### Governed Graphify integration
+
+**Triggered by:** Requests to install Graphify, generate a repository architecture graph, or add Graphify guidance to registered repositories.
+
+**Steps:**
+1. Install the user-local CLI with `uv tool install graphifyy`; do not add it as a repository dependency.
+2. Bootstrap registered repositories with the guarded Graphify propagation command; keep all `graphify-out/` artifacts ignored and local.
+3. Run `scripts\run_graphify_cycle.py` to update per-repository code graphs and the federated graph with two concurrent repositories.
+4. Query federated scope by default with `scripts\query_graph.py`; use local or repository scope when exact context is needed, then verify conclusions in source and tests.
+5. Dirty and risk-tagged repositories may contribute code-only graphs, but dirty state remains ineligible for knowledge promotion.
+
+**Verification:**
+```powershell
+graphify --version
+.\.venv\Scripts\python.exe scripts\propagate_graphify_integration.py
+.\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
+.\.venv\Scripts\python.exe scripts\query_graph.py query "How does repository knowledge propagation work?"
+```
+
 ### Optimized knowledge cycle and cutover
 
 **Triggered by:** Requests to refresh optimized orchestrator knowledge, evaluate optimized cutover readiness, publish optimized global rules, or add retrieval hints to registered repositories.

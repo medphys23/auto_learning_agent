@@ -29,3 +29,13 @@
 - Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
 - Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.
 - No agent may claim completion without reporting files inspected or changed, validation commands, validation results, and residual risks or uncertainty.
+
+<!-- BEGIN ORCHESTRATOR-MANAGED: graphify-policy -->
+
+## Graphify architectural index
+
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed. Verify against actual source and direct search for exact behavior, configuration, contracts, security, migrations, tests, assertions, error handling, and edits. Graphify is an index, not source of truth.
+
+Keep source and federated graphs local. Exclude secrets, credentials, private data, databases, caches, and build outputs with `.graphifyignore`; do not use remote/document/media/database extraction without repository-specific approval. Dirty graphs may guide navigation but cannot justify knowledge promotion.
+
+<!-- END ORCHESTRATOR-MANAGED: graphify-policy -->

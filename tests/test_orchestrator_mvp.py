@@ -29,10 +29,20 @@ from orchestrator_common import (  # noqa: E402
 )
 from publish_global_rules import publish_global_rules  # noqa: E402
 from propagate_orchestrator_retrieval_hints import propagate_hints  # noqa: E402
+from propagate_graphify_integration import policy_block, propagate_graphify, replace_or_append  # noqa: E402
+from query_graph import build_query_command, resolve_graph  # noqa: E402
 from retrieve_knowledge_for_repo import retrieve_for_repo  # noqa: E402
 from run_optimized_cutover import build_cycle_command  # noqa: E402
 from run_optimized_knowledge_cycle import build_steps as build_optimized_cycle_steps  # noqa: E402
 from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
+from run_graphify_cycle import (  # noqa: E402
+    merge_graphs,
+    parse_version,
+    preflight_repository,
+    scan_graph,
+    structural_graph_sha256,
+    write_empty_repository_graph,
+)
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
 from validate_codex_routing import validate_routing_event  # noqa: E402
 
@@ -431,6 +441,9 @@ class OrchestratorMvpTests(unittest.TestCase):
         )
         self.assertIn("--preview", preview_steps[-1].command)
         self.assertFalse(preview_steps[-1].global_write)
+        preview_names = [step.name for step in preview_steps]
+        self.assertLess(preview_names.index("discover local repositories"), preview_names.index("refresh repository graphs"))
+        self.assertLess(preview_names.index("refresh repository graphs"), preview_names.index("harvest clean repositories"))
 
         apply_steps = build_steps(
             python_executable="python",
@@ -811,6 +824,8 @@ class OrchestratorMvpTests(unittest.TestCase):
     def test_optimized_cycle_builds_expected_steps(self) -> None:
         steps = build_optimized_cycle_steps(python_executable="python", reports_dir=Path("reports"), skip_dependency_audit=False)
         names = [step.name for step in steps]
+        self.assertLess(names.index("discover repositories"), names.index("refresh repository graphs"))
+        self.assertLess(names.index("refresh repository graphs"), names.index("harvest repositories"))
         self.assertEqual(names[0], "discover repositories")
         self.assertIn("audit dependency catalog", names)
         self.assertIn("synthesize optimized instructions", names)
@@ -918,6 +933,127 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertEqual(result["results"][0]["status"], "preview")
             self.assertNotIn("ORCHESTRATOR-MANAGED: knowledge-retrieval", agents.read_text(encoding="utf-8"))
             self.assertIn("ORCHESTRATOR-MANAGED: knowledge-retrieval", (base / "reports" / "repo-orchestrator-hints-preview.md").read_text(encoding="utf-8"))
+
+    def test_graphify_propagation_preview_is_non_mutating_and_flags_sensitive_repos(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            eligible = base / "eligible"
+            sensitive = base / "sensitive"
+            eligible.mkdir()
+            sensitive.mkdir()
+            (eligible / "AGENTS.md").write_text("# Eligible\n", encoding="utf-8")
+            (sensitive / "AGENTS.md").write_text("# Sensitive\n", encoding="utf-8")
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'eligible'\n"
+                f"path = '{eligible.as_posix()}'\n"
+                "enabled = true\n"
+                "risk_tags = []\n\n"
+                "[[repositories]]\n"
+                "id = 'sensitive'\n"
+                f"path = '{sensitive.as_posix()}'\n"
+                "enabled = true\n"
+                "risk_tags = ['phi']\n",
+                encoding="utf-8",
+            )
+            config = base / "context.toml"
+            config.write_text("allow_other_repository_writes = false\n", encoding="utf-8")
+
+            result = propagate_graphify(
+                repositories_path=registry,
+                reports_dir=base / "reports",
+                config_path=config,
+                apply=False,
+                confirm_repo_write=False,
+            )
+
+            self.assertEqual(result["results"][0]["status"], "preview")
+            self.assertEqual(result["results"][1]["status"], "preview")
+            self.assertIn("phi", result["results"][1]["risk_tags"])
+            self.assertNotIn("graphify-policy", (eligible / "AGENTS.md").read_text(encoding="utf-8"))
+            report = (base / "reports" / "graphify-propagation-preview.md").read_text(encoding="utf-8")
+            self.assertIn("sensitive", report)
+
+    def test_graphify_policy_block_replacement_is_idempotent(self) -> None:
+        first = replace_or_append("# Repo\n", policy_block())
+        self.assertEqual(replace_or_append(first, policy_block()), first)
+
+    def test_graphify_version_preflight_and_security_scan(self) -> None:
+        self.assertEqual(parse_version("graphify 0.9.12"), (0, 9, 12))
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self.assertEqual(set(preflight_repository(repo)), {"missing-.graphifyignore", "graphify-out-not-ignored"})
+            (repo / ".graphifyignore").write_text("\n".join(sorted({".env", ".env.*", "*.key", "*.pem", "data/", "graphify-out/", "*.sqlite"})) + "\n", encoding="utf-8")
+            (repo / ".gitignore").write_text("graphify-out/\n", encoding="utf-8")
+            self.assertEqual(preflight_repository(repo), [])
+            graph = repo / "graph.json"
+            graph.write_text(json.dumps({"nodes": [{"id": "x", "source_file": "src/app.py"}], "links": []}), encoding="utf-8")
+            self.assertTrue(scan_graph(graph)["passed"])
+            first_hash = structural_graph_sha256(graph)
+            graph.write_text(json.dumps({"nodes": [{"id": "x", "source_file": "src/app.py", "community": 99}], "links": []}), encoding="utf-8")
+            self.assertEqual(structural_graph_sha256(graph), first_hash)
+            graph.write_text(json.dumps({"nodes": [{"id": "x", "source_file": "data/private.csv"}], "links": []}), encoding="utf-8")
+            self.assertFalse(scan_graph(graph)["passed"])
+
+    def test_federated_merge_uses_registry_ids_and_conservative_import_bridges(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            inputs = []
+            for repo_id in ("repo-a", "repo-b"):
+                graph = base / repo_id / "graphify-out" / "graph.json"
+                graph.parent.mkdir(parents=True)
+                graph.write_text(
+                    json.dumps(
+                        {
+                            "directed": False,
+                            "multigraph": False,
+                            "graph": {},
+                            "nodes": [
+                                {"id": "caller", "label": "caller", "file_type": "code"},
+                                {"id": "shared", "label": "shared_package", "norm_label": "shared_package", "file_type": "concept"},
+                            ],
+                            "links": [{"source": "caller", "target": "shared", "relation": "imports"}],
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                inputs.append({"id": repo_id, "graph_path": str(graph), "graph_sha256": repo_id, "branch": "main", "commit": repo_id, "dirty": True})
+            output = base / "federated" / "graph.json"
+            provenance = base / "federated" / "provenance.json"
+
+            summary = merge_graphs(inputs, output, provenance, "graphify 0.9.12")
+            merged = json.loads(output.read_text(encoding="utf-8"))
+            node_ids = {node["id"] for node in merged["nodes"]}
+
+            self.assertIn("repo::repo-a", node_ids)
+            self.assertIn("repo-a::shared", node_ids)
+            self.assertTrue(any(node_id.startswith("shared::import::") for node_id in node_ids))
+            self.assertEqual(summary["bridge_count"], 1)
+            self.assertTrue(all(item["dirty"] for item in summary["inputs"]))
+
+    def test_empty_code_repository_gets_explicit_local_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            graph = write_empty_repository_graph(repo, "docs-only")
+            self.assertTrue(graph.exists())
+            self.assertTrue((repo / "graphify-out" / "GRAPH_REPORT.md").exists())
+            self.assertTrue((repo / "graphify-out" / "graph.html").exists())
+            data = json.loads(graph.read_text(encoding="utf-8"))
+            self.assertTrue(data["graph"]["empty_code_graph"])
+
+    def test_query_graph_defaults_to_federated_and_builds_scoped_commands(self) -> None:
+        self.assertEqual(resolve_graph(scope="federated", repo_id=""), ROOT / "graphify-out" / "federated" / "graph.json")
+        self.assertEqual(resolve_graph(scope="local", repo_id=""), ROOT / "graphify-out" / "graph.json")
+        command = build_query_command(
+            executable=Path("graphify"),
+            operation="query",
+            values=["architecture"],
+            graph=Path("federated.json"),
+            budget=750,
+        )
+        self.assertIn("--graph", command)
+        self.assertEqual(command[-2:], ["--budget", "750"])
 
 
 if __name__ == "__main__":

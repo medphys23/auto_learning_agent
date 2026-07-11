@@ -13,4 +13,6 @@ reports/context-budget-baseline.json
 reports/optimized-config-merge-preview.json
 reports/optimized-cutover-plan.json
 reports/repository-compatibility-matrix.json
+reports/graphify-cycle-summary.json
 *.log
+graphify-out/

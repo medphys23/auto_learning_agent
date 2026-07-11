@@ -17,6 +17,9 @@ CURSOR_HOME = Path.home() / ".cursor"
 ORCHESTRATOR_BLOCK_ID = "global-knowledge-layer"
 ORCHESTRATOR_BEGIN = f"<!-- BEGIN ORCHESTRATOR-MANAGED: {ORCHESTRATOR_BLOCK_ID} -->"
 ORCHESTRATOR_END = f"<!-- END ORCHESTRATOR-MANAGED: {ORCHESTRATOR_BLOCK_ID} -->"
+GRAPHIFY_BLOCK_ID = "graphify-policy"
+GRAPHIFY_BEGIN = f"<!-- BEGIN ORCHESTRATOR-MANAGED: {GRAPHIFY_BLOCK_ID} -->"
+GRAPHIFY_END = f"<!-- END ORCHESTRATOR-MANAGED: {GRAPHIFY_BLOCK_ID} -->"
 
 AGENT_FILES = {
     "workflow-router.toml": """name = "workflow_router"
@@ -476,10 +479,43 @@ Use when a task is non-trivial, cross-repo, review-heavy, migration-like, repeat
 """
 
 
+def graphify_policy_block() -> str:
+    return f"""{GRAPHIFY_BEGIN}
+
+## Graphify architectural index
+
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed. Verify against actual source and direct search for exact behavior, configuration, contracts, security, migrations, tests, assertions, error handling, and edits. Graphify is an index, not source of truth.
+
+Keep source and federated graphs local. Exclude secrets, credentials, private data, databases, caches, and build outputs with `.graphifyignore`; do not use remote/document/media/database extraction without repository-specific approval. Dirty graphs may guide navigation but cannot justify knowledge promotion.
+
+{GRAPHIFY_END}"""
+
+
+def cursor_graphify_rule() -> str:
+    return """---
+description: Governed Graphify architectural index and source-verification policy
+alwaysApply: true
+---
+
+Use the governed federated Graphify graph first for repository orientation, architecture, relationships, symbols, and likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed.
+
+Graphify is an index, not source of truth: use direct reads and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, and edits. Keep graph artifacts local, respect `.graphifyignore`, and do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+"""
+
+
 def replace_or_append_block(content: str, block: str) -> str:
     if ORCHESTRATOR_BEGIN in content and ORCHESTRATOR_END in content:
         start = content.index(ORCHESTRATOR_BEGIN)
         end = content.index(ORCHESTRATOR_END, start) + len(ORCHESTRATOR_END)
+        return content[:start].rstrip() + "\n\n" + block + "\n\n" + content[end:].lstrip()
+    return content.rstrip() + "\n\n" + block + "\n"
+
+
+def replace_or_append_graphify_block(content: str) -> str:
+    block = graphify_policy_block()
+    if GRAPHIFY_BEGIN in content and GRAPHIFY_END in content:
+        start = content.index(GRAPHIFY_BEGIN)
+        end = content.index(GRAPHIFY_END, start) + len(GRAPHIFY_END)
         return content[:start].rstrip() + "\n\n" + block + "\n\n" + content[end:].lstrip()
     return content.rstrip() + "\n\n" + block + "\n"
 
@@ -786,7 +822,7 @@ def synthesize_optimized(
     optimized_cursor = optimized_root / "cursor"
     optimized_skills = optimized_root / "agents" / "skills"
 
-    agents = OPTIMIZED_GLOBAL_AGENTS
+    agents = replace_or_append_graphify_block(OPTIMIZED_GLOBAL_AGENTS)
     agents_bytes = len(agents.encode("utf-8"))
     if agents_bytes > OPTIMIZED_AGENTS_MAX_BYTES:
         raise ValueError(f"optimized AGENTS.md exceeds {OPTIMIZED_AGENTS_MAX_BYTES} bytes: {agents_bytes}")
@@ -800,6 +836,7 @@ def synthesize_optimized(
     for name, content in OPTIMIZED_SKILLS.items():
         write_text(optimized_skills / name / "SKILL.md", content)
     write_text(optimized_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
+    write_text(optimized_cursor / "rules" / "07-graphify.mdc", cursor_graphify_rule())
     write_text(optimized_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
 
     write_optimized_config_preview(reports_dir, codex_config, fragment)
@@ -847,7 +884,9 @@ def synthesize(
     codex_skills = read_text(codex_home / "skills.md")
     codex_config = read_text(codex_home / "config.toml")
 
-    generated_agents = ensure_stack_catalog_entries(replace_or_append_block(codex_agents, orchestrator_markdown_block()))
+    generated_agents = ensure_stack_catalog_entries(
+        replace_or_append_graphify_block(replace_or_append_block(codex_agents, orchestrator_markdown_block()))
+    )
     generated_skills = replace_or_append_skill(codex_skills, orchestrator_skill_section())
     generated_config, config_report = merge_codex_config(codex_config)
 
@@ -877,6 +916,7 @@ def synthesize(
         else:
             shutil.copy2(path, master_cursor / "rules" / path.name)
     write_text(master_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
+    write_text(master_cursor / "rules" / "07-graphify.mdc", cursor_graphify_rule())
     write_text(master_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
 
     comparisons = [

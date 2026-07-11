@@ -1,0 +1,42 @@
+# Graphify is an architectural index, never a data or secret inventory.
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*secret*
+*credential*
+*token*
+*password*
+
+# Runtime state, exports, and generated data.
+.git/
+.venv/
+venv/
+__pycache__/
+.cache/
+tmp/
+logs/
+data/
+sessions/
+reports/
+backups/
+graphify-out/
+*.db
+*.sqlite
+*.sqlite-*
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+
+# Do not index user-level agent state or vendor/dependency/build trees.
+.codex/cache/
+.cursor/cache/
+node_modules/
+dist/
+build/
+vendor/
+# Governed Graphify exclusions: architecture index, never data inventory.

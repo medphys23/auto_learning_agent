@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "acce19a0c944802b8a33d9665fbb806597c2c2fa",
+    "source_commit": "5c2e84e43bc35ca97e7f80275bfcefad06be6ab2",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
@@ -67,7 +67,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:23:55Z",
+    "created_at": "2026-07-11T07:41:13Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -94,7 +94,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:23:55Z"
+    "updated_at": "2026-07-11T07:41:13Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -121,9 +121,60 @@
           "scripts/promote_knowledge.py"
         ],
         "file_count": 22,
+        "graph_node_count": 237,
         "suffixes": {
           ".ps1": 4,
           ".py": 18
+        }
+      },
+      {
+        "area": "master",
+        "examples": [
+          "master/codex/AGENTS.md",
+          "master/codex/skills.md",
+          "master/optimized/codex/AGENTS.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 72,
+        "suffixes": {
+          ".md": 3
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_orchestrator_mvp.py"
+        ],
+        "file_count": 1,
+        "graph_node_count": 41,
+        "suffixes": {
+          ".py": 1
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 35,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
+        }
+      },
+      {
+        "area": "knowledge",
+        "examples": [
+          "knowledge/model-routing/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 2,
+        "suffixes": {
+          ".md": 1
         }
       },
       {
@@ -138,9 +189,10 @@
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
         ],
-        "file_count": 16,
+        "file_count": 20,
+        "graph_node_count": 0,
         "suffixes": {
-          ".md": 16
+          ".md": 20
         }
       },
       {
@@ -153,22 +205,9 @@
           ".codex/config.toml"
         ],
         "file_count": 5,
+        "graph_node_count": 0,
         "suffixes": {
           ".toml": 5
-        }
-      },
-      {
-        "area": ".",
-        "examples": [
-          "AGENTS.md",
-          "README.md",
-          "requirements.txt",
-          "skills.md"
-        ],
-        "file_count": 4,
-        "suffixes": {
-          ".md": 3,
-          ".txt": 1
         }
       },
       {
@@ -180,20 +219,9 @@
           "config/retrieval-policy.toml"
         ],
         "file_count": 4,
+        "graph_node_count": 0,
         "suffixes": {
           ".toml": 4
-        }
-      },
-      {
-        "area": "master",
-        "examples": [
-          "master/codex/AGENTS.md",
-          "master/codex/skills.md",
-          "master/optimized/codex/AGENTS.md"
-        ],
-        "file_count": 3,
-        "suffixes": {
-          ".md": 3
         }
       },
       {
@@ -203,35 +231,19 @@
           ".cursor/rules/repo-verification.mdc"
         ],
         "file_count": 2,
+        "graph_node_count": 0,
         "suffixes": {
           ".mdc": 2
         }
-      },
-      {
-        "area": "knowledge",
-        "examples": [
-          "knowledge/model-routing/README.md"
-        ],
-        "file_count": 1,
-        "suffixes": {
-          ".md": 1
-        }
-      },
-      {
-        "area": "tests",
-        "examples": [
-          "tests/test_orchestrator_mvp.py"
-        ],
-        "file_count": 1,
-        "suffixes": {
-          ".py": 1
-        }
       }
     ],
-    "harvestable_text_file_count": 58
+    "graph_index_used": true,
+    "graph_node_count": 735,
+    "graph_source_file_count": 49,
+    "harvestable_text_file_count": 62
   },
   "status": "candidate",
-  "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, backups, .codex, ., config, master, .cursor, knowledge.",
+  "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, master, tests, ., knowledge, backups, .codex, config.",
   "tags": [
     "architecture-map",
     "auto_learning_agent",

@@ -1,0 +1,509 @@
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any
+
+from orchestrator_common import git_dirty_lines, load_repository_registry, run_git, utc_now
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MIN_GRAPHIFY_VERSION = (0, 9, 12)
+BRIDGE_SCHEMA_VERSION = "federated-graph-v1"
+SECRET_PATTERNS = (
+    re.compile(r"sk-[A-Za-z0-9_-]{16,}"),
+    re.compile(r"(?i)password\s*[:=]\s*[\"'][^\"']+"),
+    re.compile(r"(?i)(?:postgres|mysql|mongodb(?:\+srv)?)://[^\s\"']+"),
+    re.compile(r"(?i)api[_-]?key\s*[:=]\s*[\"'][^\"']+"),
+)
+PROHIBITED_SOURCE_PARTS = {".env", ".venv", "backups", "cache", "data", "logs", "node_modules", "reports", "sessions", "vendor"}
+PROHIBITED_SOURCE_SUFFIXES = {".csv", ".db", ".key", ".parquet", ".pem", ".pfx", ".sqlite", ".tsv", ".xls", ".xlsx"}
+BRIDGE_NODE_TYPES = {"class", "enum", "interface", "module", "namespace", "package"}
+GENERIC_BRIDGE_LABELS = {"app", "config", "data", "index", "main", "model", "service", "test", "tests", "type", "utils"}
+REQUIRED_GRAPHIFYIGNORE = {".env", ".env.*", "*.key", "*.pem", "data/", "graphify-out/", "*.sqlite"}
+
+
+def write_text(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content.rstrip() + "\n", encoding="utf-8")
+
+
+def write_json(path: Path, data: Any) -> None:
+    write_text(path, json.dumps(data, indent=2, sort_keys=True))
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def structural_graph_sha256(path: Path) -> str:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    volatile = {"community", "community_name", "built_at", "built_at_commit"}
+    nodes = [{key: value for key, value in node.items() if key not in volatile} for node in data.get("nodes", [])]
+    links = [{key: value for key, value in link.items() if key not in volatile} for link in data.get("links", data.get("edges", []))]
+    canonical = {
+        "nodes": sorted(nodes, key=lambda item: str(item.get("id", ""))),
+        "links": sorted(links, key=lambda item: (str(item.get("source", "")), str(item.get("target", "")), str(item.get("relation", item.get("type", ""))))),
+    }
+    return hashlib.sha256(json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def parse_version(value: str) -> tuple[int, int, int]:
+    match = re.search(r"(\d+)\.(\d+)\.(\d+)", value)
+    if not match:
+        raise ValueError(f"unable to parse Graphify version: {value!r}")
+    return tuple(int(part) for part in match.groups())
+
+
+def find_graphify() -> Path:
+    found = shutil.which("graphify")
+    if found:
+        return Path(found)
+    uv = shutil.which("uv")
+    if uv:
+        result = subprocess.run([uv, "tool", "dir", "--bin"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+        if result.returncode == 0:
+            candidate = Path(result.stdout.strip()) / ("graphify.exe" if os.name == "nt" else "graphify")
+            if candidate.exists():
+                return candidate
+    raise RuntimeError("Graphify is not installed or discoverable through uv tool dir --bin")
+
+
+def graphify_version(executable: Path) -> str:
+    result = subprocess.run([str(executable), "--version"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or "graphify --version failed")
+    version = result.stdout.strip()
+    if parse_version(version) < MIN_GRAPHIFY_VERSION:
+        raise RuntimeError(f"Graphify {version} is too old; require >= {'.'.join(map(str, MIN_GRAPHIFY_VERSION))}")
+    return version
+
+
+def has_ignore_line(path: Path, expected: str) -> bool:
+    if not path.exists():
+        return False
+    return expected in {line.strip() for line in path.read_text(encoding="utf-8", errors="replace").splitlines()}
+
+
+def preflight_repository(repo_path: Path) -> list[str]:
+    problems: list[str] = []
+    graphifyignore = repo_path / ".graphifyignore"
+    if not graphifyignore.exists():
+        problems.append("missing-.graphifyignore")
+    else:
+        lines = {line.strip() for line in graphifyignore.read_text(encoding="utf-8", errors="replace").splitlines()}
+        missing = sorted(REQUIRED_GRAPHIFYIGNORE - lines)
+        if missing:
+            problems.append("missing-exclusions=" + ",".join(missing))
+    if not has_ignore_line(repo_path / ".gitignore", "graphify-out/"):
+        problems.append("graphify-out-not-ignored")
+    return problems
+
+
+def scan_graph(path: Path) -> dict[str, Any]:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    secret_counts = [len(pattern.findall(text)) for pattern in SECRET_PATTERNS]
+    prohibited_sources: set[str] = set()
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError as exc:
+        return {"passed": False, "secret_pattern_count": sum(secret_counts), "prohibited_source_count": 0, "error": str(exc)}
+    for node in data.get("nodes", []):
+        source = str(node.get("source_file", "")).replace("\\", "/")
+        parts = {part.lower() for part in Path(source).parts}
+        suffix = Path(source).suffix.lower()
+        if parts & PROHIBITED_SOURCE_PARTS or suffix in PROHIBITED_SOURCE_SUFFIXES:
+            prohibited_sources.add(source)
+    return {
+        "passed": sum(secret_counts) == 0 and not prohibited_sources,
+        "secret_pattern_count": sum(secret_counts),
+        "prohibited_source_count": len(prohibited_sources),
+    }
+
+
+def run_command(command: list[str], *, cwd: Path, env: dict[str, str]) -> tuple[int, str]:
+    result = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    output = "\n".join(part.strip() for part in (result.stdout, result.stderr) if part.strip())
+    return int(result.returncode), output
+
+
+def write_empty_repository_graph(repo_path: Path, repo_id: str) -> Path:
+    out = repo_path / "graphify-out"
+    graph = out / "graph.json"
+    data = {
+        "directed": False,
+        "multigraph": False,
+        "graph": {"empty_code_graph": True},
+        "nodes": [{
+            "id": f"repo::{repo_id}",
+            "label": repo_id,
+            "file_type": "repository",
+            "source_file": "AGENTS.md",
+            "source_location": "",
+            "community": 0,
+        }],
+        "links": [],
+        "hyperedges": [],
+    }
+    write_json(graph, data)
+    write_text(
+        out / "GRAPH_REPORT.md",
+        f"# {repo_id} Code Graph\n\nNo supported code files were found during governed code-only extraction. Documentation and data files were intentionally excluded.",
+    )
+    write_text(
+        out / "graph.html",
+        "<!doctype html><html><head><meta charset=\"utf-8\"><title>Empty code graph</title></head>"
+        f"<body><h1>{repo_id}</h1><p>No supported code files were found. Documentation and data were excluded.</p></body></html>",
+    )
+    return graph
+
+
+def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: bool, ast_workers: int) -> dict[str, Any]:
+    repo_id = str(repo["id"])
+    repo_path = Path(str(repo["path"]))
+    started = time.monotonic()
+    result: dict[str, Any] = {
+        "id": repo_id,
+        "status": "failed",
+        "dirty": bool(git_dirty_lines(repo_path)),
+        "branch": run_git(repo_path, "branch", "--show-current") or "",
+        "commit": run_git(repo_path, "rev-parse", "HEAD") or "",
+        "preflight": [],
+        "commands": [],
+    }
+    problems = preflight_repository(repo_path)
+    result["preflight"] = problems
+    if problems:
+        result.update(status="skipped", reason=",".join(problems), elapsed_seconds=round(time.monotonic() - started, 3))
+        return result
+    graph = repo_path / "graphify-out" / "graph.json"
+    env = dict(os.environ)
+    env["GRAPHIFY_MAX_WORKERS"] = str(max(1, ast_workers))
+    if graph.exists() and not force:
+        command = [str(executable), "update", ".", "--force"]
+    else:
+        command = [str(executable), "extract", ".", "--code-only"]
+    code, output = run_command(command, cwd=repo_path, env=env)
+    result["commands"].append({"command": command, "exit_code": code, "output_tail": output.splitlines()[-8:]})
+    if code != 0 or not graph.exists():
+        if "found 0 code" in output or "graph is empty" in output:
+            graph = write_empty_repository_graph(repo_path, repo_id)
+            result.update(
+                status="empty",
+                reason="no-supported-code",
+                graph_path=str(graph),
+                graph_sha256=sha256_file(graph),
+                structural_sha256=structural_graph_sha256(graph),
+                security_scan={"passed": True, "secret_pattern_count": 0, "prohibited_source_count": 0},
+                elapsed_seconds=round(time.monotonic() - started, 3),
+            )
+            return result
+        result.update(reason="graph-build-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        return result
+    cluster = [str(executable), "cluster-only", ".", "--no-label"]
+    code, output = run_command(cluster, cwd=repo_path, env=env)
+    result["commands"].append({"command": cluster, "exit_code": code, "output_tail": output.splitlines()[-8:]})
+    if code != 0:
+        result.update(reason="graph-cluster-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        return result
+    scan = scan_graph(graph)
+    result["security_scan"] = scan
+    if not scan["passed"]:
+        result.update(status="excluded", reason="security-scan-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        return result
+    result.update(
+        status="built",
+        graph_path=str(graph),
+        graph_sha256=sha256_file(graph),
+        structural_sha256=structural_graph_sha256(graph),
+        elapsed_seconds=round(time.monotonic() - started, 3),
+    )
+    return result
+
+
+def normalized_bridge_key(node: dict[str, Any], imported_ids: set[str]) -> tuple[str, str] | None:
+    node_id = str(node.get("id", ""))
+    label = str(node.get("label", "")).strip()
+    normalized = str(node.get("norm_label", label)).strip().lower()
+    node_type = str(node.get("type") or node.get("node_type") or "").lower()
+    metadata = node.get("metadata", {}) if isinstance(node.get("metadata"), dict) else {}
+    qualified = str(metadata.get("fqn") or metadata.get("qualified_name") or metadata.get("full_name") or "").strip().lower()
+    if qualified:
+        return (node_type or "symbol", qualified)
+    if node_type in BRIDGE_NODE_TYPES and len(normalized) >= 4 and normalized not in GENERIC_BRIDGE_LABELS:
+        return (node_type, normalized)
+    if node_id in imported_ids and len(normalized) >= 3 and normalized not in GENERIC_BRIDGE_LABELS:
+        return ("import", normalized)
+    return None
+
+
+def merge_graphs(repositories: list[dict[str, Any]], output_path: Path, provenance_path: Path, version: str) -> dict[str, Any]:
+    merged_nodes: list[dict[str, Any]] = []
+    merged_links: list[dict[str, Any]] = []
+    bridge_members: dict[tuple[str, str], list[tuple[str, str]]] = {}
+    input_meta: list[dict[str, Any]] = []
+    for repo in sorted(repositories, key=lambda item: str(item["id"])):
+        repo_id = str(repo["id"])
+        graph_path_value = str(repo.get("graph_path", ""))
+        data = json.loads(Path(graph_path_value).read_text(encoding="utf-8")) if graph_path_value else {"nodes": [], "links": []}
+        links = data.get("links", data.get("edges", []))
+        imported_ids = {
+            str(link.get("target"))
+            for link in links
+            if str(link.get("relation") or link.get("type") or "").lower() in {"import", "imports"}
+        }
+        repo_node_id = f"repo::{repo_id}"
+        merged_nodes.append({
+            "id": repo_node_id,
+            "label": repo_id,
+            "file_type": "repository",
+            "repo": repo_id,
+            "community": -1,
+            "source_file": "config/repositories.toml",
+            "source_location": "",
+        })
+        for node in data.get("nodes", []):
+            local_id = str(node["id"])
+            new_id = f"{repo_id}::{local_id}"
+            copied = dict(node)
+            copied.update(id=new_id, local_id=local_id, repo=repo_id)
+            merged_nodes.append(copied)
+            merged_links.append({"source": repo_node_id, "target": new_id, "relation": "contains", "confidence": "EXTRACTED"})
+            bridge_key = normalized_bridge_key(node, imported_ids)
+            if bridge_key:
+                bridge_members.setdefault(bridge_key, []).append((repo_id, new_id))
+        for link in links:
+            copied = dict(link)
+            copied["source"] = f"{repo_id}::{link['source']}"
+            copied["target"] = f"{repo_id}::{link['target']}"
+            copied["repo"] = repo_id
+            merged_links.append(copied)
+        input_meta.append({
+            "id": repo_id,
+            "branch": repo.get("branch", ""),
+            "commit": repo.get("commit", ""),
+            "dirty": bool(repo.get("dirty")),
+            "graph_sha256": repo["graph_sha256"],
+            "structural_sha256": repo.get("structural_sha256", repo["graph_sha256"]),
+        })
+    bridge_count = 0
+    for (kind, label), members in sorted(bridge_members.items()):
+        repos = {repo_id for repo_id, _ in members}
+        if len(repos) < 2:
+            continue
+        digest = hashlib.sha256(f"{kind}:{label}".encode("utf-8")).hexdigest()[:16]
+        bridge_id = f"shared::{kind}::{digest}"
+        merged_nodes.append({
+            "id": bridge_id,
+            "label": label,
+            "file_type": "shared_symbol",
+            "bridge_kind": kind,
+            "community": -1,
+            "source_file": "federated/shared-symbols",
+            "source_location": "",
+        })
+        for repo_id, node_id in members:
+            merged_links.append({
+                "source": node_id,
+                "target": bridge_id,
+                "relation": "shared_symbol",
+                "confidence": "INFERRED",
+                "context": "cross_repo",
+                "repo": repo_id,
+            })
+        bridge_count += 1
+    graph = {"directed": False, "multigraph": False, "graph": {"bridge_schema_version": BRIDGE_SCHEMA_VERSION}, "nodes": merged_nodes, "links": merged_links, "hyperedges": []}
+    write_json(output_path, graph)
+    provenance = {
+        "generated_at": utc_now(),
+        "graphify_version": version,
+        "bridge_schema_version": BRIDGE_SCHEMA_VERSION,
+        "inputs": input_meta,
+        "node_count": len(merged_nodes),
+        "edge_count": len(merged_links),
+        "bridge_count": bridge_count,
+    }
+    write_json(provenance_path, provenance)
+    return provenance
+
+
+def input_signature(results: list[dict[str, Any]]) -> list[dict[str, str]]:
+    return [
+        {"id": str(item["id"]), "structural_sha256": str(item.get("structural_sha256", item["graph_sha256"]))}
+        for item in sorted(results, key=lambda value: str(value["id"]))
+    ]
+
+
+def existing_signature(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return []
+    if data.get("bridge_schema_version") != BRIDGE_SCHEMA_VERSION:
+        return []
+    return [
+        {"id": str(item.get("id")), "structural_sha256": str(item.get("structural_sha256", item.get("graph_sha256")))}
+        for item in data.get("inputs", [])
+    ]
+
+
+def write_cycle_report(path: Path, result: dict[str, Any]) -> None:
+    lines = ["# Graphify Cycle Summary", "", f"Generated: {result['generated_at']}", f"Status: {result['status']}", "", "| Repository | Status | Dirty | Reason |", "| --- | --- | --- | --- |"]
+    for item in result["repositories"]:
+        lines.append(f"| {item['id']} | {item['status']} | {str(item.get('dirty', False)).lower()} | {item.get('reason', '')} |")
+    lines.extend(["", f"- Federated graph: `{result.get('federated_graph', '')}`", f"- Merge skipped unchanged: {str(result.get('merge_skipped', False)).lower()}"])
+    write_text(path, "\n".join(lines))
+
+
+def run_cycle(
+    *,
+    repository_ids: list[str],
+    force: bool,
+    max_parallel: int,
+    skip_merge: bool,
+    strict: bool,
+    reports_dir: Path,
+    merge_selected: bool = False,
+) -> int:
+    executable = find_graphify()
+    version = graphify_version(executable)
+    repositories = load_repository_registry(ROOT / "config" / "repositories.toml")
+    if repository_ids:
+        selected = set(repository_ids)
+        repositories = [repo for repo in repositories if str(repo.get("id")) in selected]
+        missing = sorted(selected - {str(repo.get("id")) for repo in repositories})
+        if missing:
+            raise RuntimeError("unknown repository id(s): " + ", ".join(missing))
+    if not repositories:
+        raise RuntimeError("no enabled repositories selected")
+    ast_workers = max(1, (os.cpu_count() or 2) // max(1, max_parallel))
+    results: list[dict[str, Any]] = []
+    with ThreadPoolExecutor(max_workers=max(1, max_parallel)) as executor:
+        futures = {executor.submit(build_repository_graph, repo, executable, force=force, ast_workers=ast_workers): repo for repo in repositories}
+        for future in as_completed(futures):
+            results.append(future.result())
+    current = [item for item in results if item["status"] in {"built", "empty"}]
+    failed = [item for item in results if item["status"] not in {"built", "empty"}]
+    federated = ROOT / "graphify-out" / "federated" / "graph.json"
+    provenance = federated.parent / "provenance.json"
+    merge_skipped = False
+    aggregate_ready = bool(current)
+    effective_skip_merge = skip_merge or (bool(repository_ids) and not merge_selected)
+    if effective_skip_merge and federated.exists():
+        merge_skipped = True
+    if not effective_skip_merge and current:
+        signature = input_signature(current)
+        if not force and federated.exists() and existing_signature(provenance) == signature:
+            merge_skipped = True
+        else:
+            staging = federated.parent / ".staging" / "graphify-out" / "graph.json"
+            staging_provenance = federated.parent / ".staging" / "provenance.json"
+            merge_graphs(current, staging, staging_provenance, version)
+            env = dict(os.environ)
+            env["GRAPHIFY_MAX_WORKERS"] = str(ast_workers)
+            code, output = run_command([str(executable), "cluster-only", str(ROOT), "--graph", str(staging), "--no-label"], cwd=ROOT, env=env)
+            if code != 0:
+                failed.append({"id": "federated", "status": "failed", "reason": "federated-cluster-failed", "output_tail": output.splitlines()[-8:]})
+                for stale in (federated, federated.parent / "GRAPH_REPORT.md", federated.parent / "graph.html", provenance):
+                    if stale.exists():
+                        stale.unlink()
+                aggregate_ready = False
+            else:
+                staged_html = staging.parent / "graph.html"
+                if not staged_html.exists():
+                    tree_command = [
+                        str(executable),
+                        "tree",
+                        "--graph",
+                        str(staging),
+                        "--output",
+                        str(staged_html),
+                        "--root",
+                        str(ROOT.parent),
+                        "--label",
+                        "Federated Repository Graph",
+                    ]
+                    tree_code, tree_output = run_command(tree_command, cwd=ROOT, env=env)
+                    if tree_code != 0 or not staged_html.exists():
+                        failed.append({
+                            "id": "federated",
+                            "status": "failed",
+                            "reason": "federated-visualization-failed",
+                            "output_tail": tree_output.splitlines()[-8:],
+                        })
+                        for stale in (federated, federated.parent / "GRAPH_REPORT.md", federated.parent / "graph.html", provenance):
+                            if stale.exists():
+                                stale.unlink()
+                        aggregate_ready = False
+                if not aggregate_ready:
+                    pass
+                else:
+                    federated.parent.mkdir(parents=True, exist_ok=True)
+                    for name in ("graph.json", "GRAPH_REPORT.md", "graph.html"):
+                        shutil.copy2(staging.parent / name, federated.parent / name)
+                    shutil.copy2(staging_provenance, provenance)
+    status = "completed"
+    if not current or (not effective_skip_merge and not aggregate_ready):
+        status = "failed"
+    elif failed:
+        status = "degraded"
+    result = {
+        "generated_at": utc_now(),
+        "status": status,
+        "graphify_version": version,
+        "repositories": sorted(results, key=lambda item: str(item["id"])),
+        "federated_graph": str(federated) if federated.exists() else "",
+        "merge_skipped": merge_skipped,
+    }
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    write_json(reports_dir / "graphify-cycle-summary.json", result)
+    write_cycle_report(reports_dir / "graphify-cycle-summary.md", result)
+    for item in result["repositories"]:
+        print(f"{item['id']}: {item['status']} dirty={str(item.get('dirty', False)).lower()} reason={item.get('reason', '')}")
+    print(f"Graphify cycle: {status}")
+    print(f"Federated graph: {result['federated_graph']}")
+    if status == "failed" or (strict and failed):
+        return 1
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Refresh per-repository Graphify graphs and build a governed federated graph.")
+    parser.add_argument("--repo", action="append", default=[], help="Registered repository id; repeat to select multiple repositories.")
+    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--max-parallel", type=int, default=2)
+    parser.add_argument("--skip-merge", action="store_true")
+    parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
+    args = parser.parse_args()
+    try:
+        return run_cycle(
+            repository_ids=args.repo,
+            force=args.force,
+            max_parallel=args.max_parallel,
+            skip_merge=args.skip_merge,
+            strict=args.strict,
+            reports_dir=args.reports_dir,
+        )
+    except (RuntimeError, ValueError) as exc:
+        print(f"ERROR: {exc}")
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

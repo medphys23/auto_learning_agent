@@ -628,3 +628,13 @@ When active:
 This layer is a retrieval and governance system, not opaque memory and not a prompt dump. Existing explicit user instructions and safety constraints remain higher priority.
 
 <!-- END ORCHESTRATOR-MANAGED: global-knowledge-layer -->
+
+<!-- BEGIN ORCHESTRATOR-MANAGED: graphify-policy -->
+
+## Graphify architectural index
+
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed. Verify against actual source and direct search for exact behavior, configuration, contracts, security, migrations, tests, assertions, error handling, and edits. Graphify is an index, not source of truth.
+
+Keep source and federated graphs local. Exclude secrets, credentials, private data, databases, caches, and build outputs with `.graphifyignore`; do not use remote/document/media/database extraction without repository-specific approval. Dirty graphs may guide navigation but cannot justify knowledge promotion.
+
+<!-- END ORCHESTRATOR-MANAGED: graphify-policy -->

@@ -44,6 +44,9 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile legacy
 .\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile optimized
 .\.venv\Scripts\python.exe scripts\propagate_orchestrator_retrieval_hints.py
+.\.venv\Scripts\python.exe scripts\propagate_graphify_integration.py
+.\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
+.\.venv\Scripts\python.exe scripts\query_graph.py query "How does repository knowledge propagation work?"
 .\.venv\Scripts\python.exe scripts\run_optimized_knowledge_cycle.py --strict
 .\.venv\Scripts\python.exe scripts\run_optimized_cutover.py --allow-dirty
 .\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile legacy
@@ -84,3 +87,12 @@ When introducing a new library, skill, or tool here, update `~/.codex/AGENTS.md`
 
 <!-- END ORCHESTRATOR-MANAGED: knowledge-retrieval -->
 
+<!-- BEGIN ORCHESTRATOR-MANAGED: graphify-policy -->
+
+## Graphify architectural index
+
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Query with `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\scripts\query_graph.py`; select `--repo <id>` for focused repository context.
+
+Graphify is an index, not source of truth. Use actual source and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, assertions, error handling, and edits. Keep graphs local, respect `.graphifyignore`, and regenerate code-only graphs after material structural changes. Do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+
+<!-- END ORCHESTRATOR-MANAGED: graphify-policy -->

@@ -147,6 +147,7 @@ def build_steps(
     retrieval_query: str,
     retrieval_status: str,
     profile: str,
+    skip_graphify: bool = False,
 ) -> list[PipelineStep]:
     if apply_global and not confirm_global_write:
         raise ValueError("--apply-global requires --confirm-global-write")
@@ -162,6 +163,10 @@ def build_steps(
         PipelineStep("audit global instructions", [py, "scripts/audit_global_instructions.py", "--reports-dir", str(reports_dir)]),
         PipelineStep("audit context budget", [py, "scripts/audit_context_budget.py", "--reports-dir", str(reports_dir), "--master-root", str(master_root)]),
         PipelineStep("discover local repositories", [py, "scripts/discover_repositories.py"]),
+    ]
+    if not skip_graphify:
+        steps.append(PipelineStep("refresh repository graphs", [py, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))
+    steps.extend([
         PipelineStep("harvest clean repositories", [py, "scripts/harvest_repositories.py"]),
         PipelineStep("audit dependency catalogs", [py, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]),
         PipelineStep(
@@ -189,7 +194,7 @@ def build_steps(
                 profile,
             ],
         ),
-    ]
+    ])
     publish_command = [
         py,
         "scripts/publish_global_rules.py",
@@ -413,6 +418,7 @@ def main() -> int:
     parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
     parser.add_argument("--log-file", type=Path, default=Path("reports") / "orchestrator-pipeline.log")
     parser.add_argument("--verbose", action="store_true", help="Echo subprocess output through tqdm.write while logging.")
+    parser.add_argument("--skip-graphify", action="store_true", help="Skip per-repository and federated graph refresh.")
     args = parser.parse_args()
     if args.preview and args.apply_global:
         print("ERROR: choose either --preview or --apply-global, not both")
@@ -430,6 +436,7 @@ def main() -> int:
             retrieval_query=args.retrieval_query,
             retrieval_status=args.retrieval_status,
             profile=args.profile,
+            skip_graphify=args.skip_graphify,
         )
     except ValueError as exc:
         print(f"ERROR: {exc}")

@@ -1,0 +1,14 @@
+---
+description: Governed Graphify architectural index and source-verification policy
+alwaysApply: true
+---
+
+Use the governed federated graph first for repository orientation, architecture, dependency/data/control-flow tracing, symbol discovery, and locating likely implementation files:
+
+- `scripts/query_graph.py query "<question>"` for federated architecture questions.
+- Add `--scope local` or `--repo <id>` for focused repository truth.
+- Use the wrapper's `path` or `explain` operations for relationships and symbols.
+
+Then inspect actual source. Use direct Read and `rg` for exact behavior, configuration, API contracts, security-sensitive code, migrations, tests, assertions, error handling, and line-specific modifications. Graphify output is an index, never the sole source of truth.
+
+Keep `graphify-out/` local. Refresh with `scripts/run_graphify_cycle.py` after material structural changes. Respect `.graphifyignore`; do not use Graphify URL, database, media, global-graph, cloud-backend, or semantic-document features without separate approval. Dirty graphs are advisory and cannot justify knowledge promotion.

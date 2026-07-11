@@ -93,6 +93,20 @@ def read_json_object(path: Path) -> dict[str, Any]:
 
 def source_map_summary(repo_path: Path) -> dict[str, Any]:
     files = harvestable_text_files(repo_path)
+    graph_path = repo_path / "graphify-out" / "graph.json"
+    graph_source_counts: dict[str, int] = {}
+    graph_node_count = 0
+    if graph_path.exists():
+        graph = read_json_object(graph_path)
+        nodes = graph.get("nodes", [])
+        if isinstance(nodes, list):
+            graph_node_count = len(nodes)
+            for node in nodes:
+                if not isinstance(node, dict):
+                    continue
+                source = str(node.get("source_file", "")).replace("\\", "/").lstrip("./")
+                if source and (repo_path / source).is_file():
+                    graph_source_counts[source] = graph_source_counts.get(source, 0) + 1
     by_area: dict[str, dict[str, Any]] = {}
     for path in files:
         rel = relative_source(repo_path, path)
@@ -104,11 +118,21 @@ def source_map_summary(repo_path: Path) -> dict[str, Any]:
         entry["suffixes"][suffix] = entry["suffixes"].get(suffix, 0) + 1
         if len(entry["examples"]) < 8:
             entry["examples"].append(rel)
+        entry["graph_node_count"] = entry.get("graph_node_count", 0) + graph_source_counts.get(rel, 0)
     areas = [
         {"area": area, **details}
-        for area, details in sorted(by_area.items(), key=lambda item: (-int(item[1]["file_count"]), item[0]))
+        for area, details in sorted(
+            by_area.items(),
+            key=lambda item: (-int(item[1].get("graph_node_count", 0)), -int(item[1]["file_count"]), item[0]),
+        )
     ]
-    return {"harvestable_text_file_count": len(files), "areas": areas[:20]}
+    return {
+        "harvestable_text_file_count": len(files),
+        "graph_index_used": bool(graph_source_counts),
+        "graph_node_count": graph_node_count,
+        "graph_source_file_count": len(graph_source_counts),
+        "areas": areas[:20],
+    }
 
 
 def manifest_signals(repo_path: Path) -> list[dict[str, Any]]:

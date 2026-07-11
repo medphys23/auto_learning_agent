@@ -31,11 +31,13 @@ def command_text(command: list[str]) -> str:
     return " ".join(f'"{item}"' if " " in item else item for item in command)
 
 
-def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_audit: bool) -> list[CycleStep]:
+def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_audit: bool, skip_graphify: bool = False) -> list[CycleStep]:
     steps = [
         CycleStep("discover repositories", [python_executable, "scripts/discover_repositories.py"]),
-        CycleStep("harvest repositories", [python_executable, "scripts/harvest_repositories.py"]),
     ]
+    if not skip_graphify:
+        steps.append(CycleStep("refresh repository graphs", [python_executable, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))
+    steps.append(CycleStep("harvest repositories", [python_executable, "scripts/harvest_repositories.py"]))
     if not skip_dependency_audit:
         steps.append(CycleStep("audit dependency catalog", [python_executable, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]))
     steps.extend(
@@ -136,6 +138,7 @@ def run_cycle(
     strict: bool,
     continue_on_dirty: bool,
     skip_dependency_audit: bool,
+    skip_graphify: bool,
     verbose: bool,
 ) -> int:
     try:
@@ -147,7 +150,12 @@ def run_cycle(
     colorama_init()
     reports_dir.mkdir(parents=True, exist_ok=True)
     started = utc_now()
-    steps = build_steps(python_executable=sys.executable, reports_dir=reports_dir, skip_dependency_audit=skip_dependency_audit)
+    steps = build_steps(
+        python_executable=sys.executable,
+        reports_dir=reports_dir,
+        skip_dependency_audit=skip_dependency_audit,
+        skip_graphify=skip_graphify,
+    )
     results: list[dict[str, Any]] = []
     failed_step = ""
     with log_file.open("w", encoding="utf-8") as log_handle:
@@ -181,6 +189,7 @@ def run_cycle(
         "strict": strict,
         "continue_on_dirty": continue_on_dirty,
         "skip_dependency_audit": skip_dependency_audit,
+        "skip_graphify": skip_graphify,
         "failed_step": failed_step,
         "strict_failures": failures,
         "readiness": readiness,
@@ -203,6 +212,7 @@ def main() -> int:
     parser.add_argument("--strict", action="store_true", help="Fail if readiness gates fail.")
     parser.add_argument("--continue-on-dirty", action="store_true", help="Allow dirty-repo readiness blockers in strict mode.")
     parser.add_argument("--skip-dependency-audit", action="store_true")
+    parser.add_argument("--skip-graphify", action="store_true")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
     return run_cycle(
@@ -211,6 +221,7 @@ def main() -> int:
         strict=args.strict,
         continue_on_dirty=args.continue_on_dirty,
         skip_dependency_audit=args.skip_dependency_audit,
+        skip_graphify=args.skip_graphify,
         verbose=args.verbose,
     )
 

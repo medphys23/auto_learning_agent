@@ -1,45 +1,48 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 121,
+    "catalog_entry_count": 125,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "campania-transplant"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "general-work"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "investment-binance"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "kidney-federico"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "orsi"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
+        "id": "practice-ops-dashboard"
+      },
+      {
+        "dirty_count": 4,
         "id": "ps-robot-adaptor"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "x-booking"
       },
       {
-        "dirty_count": 1,
+        "dirty_count": 4,
         "id": "xenios-finances"
       }
     ],
     "harvested_repositories": [
-      "auto_learning_agent",
-      "practice-ops-dashboard"
+      "auto_learning_agent"
     ],
     "missing_required_record_families": {}
   },
@@ -52,7 +55,7 @@
       "passed": true
     },
     {
-      "detail": "2903/8192 bytes",
+      "detail": "3861/8192 bytes",
       "name": "optimized_agents_within_byte_budget",
       "passed": true
     },
@@ -77,19 +80,19 @@
       "passed": true
     },
     {
-      "detail": "8 dirty blocker(s)",
+      "detail": "9 dirty blocker(s)",
       "name": "no_dirty_blockers",
       "passed": false
     }
   ],
-  "generated_at": "2026-07-10T16:25:04Z",
+  "generated_at": "2026-07-11T07:41:52Z",
   "optimized_agents_exists": true,
-  "optimized_agents_sha256": "c530fa0c6a44de573d4d8a848fc719b2fd1a3d567d88de08a7cd1314cd20f0a6",
+  "optimized_agents_sha256": "c08e5e8f5cbb65dbded1855cd169c8632cb1f33c40e3d98db40260a8be0835c3",
   "requires_explicit_user_approval": true,
   "token_delta": {
     "delta_tokens": 11288,
-    "legacy_master_agents_estimated_tokens": 12006,
+    "legacy_master_agents_estimated_tokens": 12243,
     "materially_below_legacy": true,
-    "optimized_master_agents_estimated_tokens": 718
+    "optimized_master_agents_estimated_tokens": 955
   }
 }
