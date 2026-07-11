@@ -80,7 +80,28 @@ graphify --version
 .\.venv\Scripts\python.exe scripts\propagate_graphify_integration.py
 .\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
 .\.venv\Scripts\python.exe scripts\query_graph.py query "How does repository knowledge propagation work?"
+.\scripts\run-startup.ps1
 ```
+
+### Federated orchestrator startup
+
+**Triggered by:** Routine refresh of graphs, harvested knowledge, optimized globals, or cross-repo architecture queries.
+
+**Steps:**
+1. From repo root, run `.\scripts\run-startup.ps1` for preview-only cycle.
+2. Review `reports\optimized-cutover-readiness.md` and `reports\graphify-cycle-summary.md`.
+3. Apply globals with `.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite` when reports look correct.
+4. Optionally add `-ApplyRepoHints -ConfirmRepoWrite` to refresh registered repo retrieval hints.
+5. Query architecture with `scripts\query_graph.py`; verify exact behavior in source.
+
+**Verification:**
+```powershell
+.\scripts\run-startup.ps1
+.\.venv\Scripts\python.exe scripts\query_graph.py query "How does harvesting use graphs?" --scope local
+```
+
+**Iteration notes:**
+- 2026-07-11: Added `run-startup.ps1` / `run_startup.py` as the one-command operator entrypoint; global publish now includes `07-graphify.mdc` and gates GPT-5.6 parent model on runtime smoke unless explicitly forced or skipped.
 
 ### Optimized knowledge cycle and cutover
 

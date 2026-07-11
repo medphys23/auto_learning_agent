@@ -47,7 +47,8 @@ Run from the repository root:
 .\.venv\Scripts\python.exe scripts\propagate_graphify_integration.py
 .\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
 .\.venv\Scripts\python.exe scripts\query_graph.py query "How does repository knowledge propagation work?"
-.\.venv\Scripts\python.exe scripts\run_optimized_knowledge_cycle.py --strict
+.\scripts\run-startup.ps1
+.\.venv\Scripts\python.exe scripts\run_startup.py --help
 .\.venv\Scripts\python.exe scripts\run_optimized_cutover.py --allow-dirty
 .\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile legacy
 .\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile optimized

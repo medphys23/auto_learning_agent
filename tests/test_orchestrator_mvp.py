@@ -717,6 +717,7 @@ class OrchestratorMvpTests(unittest.TestCase):
                 apply=True,
                 confirm_global_write=True,
                 profile="optimized",
+                force_parent_model=True,
             )
             self.assertEqual(applied["mode"], "optimized-applied")
             self.assertTrue((Path(applied["backup_root"]) / "codex" / "AGENTS.md").exists())
@@ -733,6 +734,7 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["max_threads"], 4)
             self.assertTrue(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["interrupt_message"])
             self.assertTrue((cursor / "rules" / "06-orchestrator-knowledge.mdc").exists())
+            self.assertTrue((cursor / "rules" / "07-graphify.mdc").exists())
             self.assertTrue((cursor / "skills" / "lead-scraper" / "SKILL.md").exists())
             self.assertTrue((codex / "skills" / "lead-scraper" / "SKILL.md").exists())
 

@@ -12,6 +12,17 @@ $graphify = Join-Path (uv tool dir --bin) 'graphify.exe'
 
 The graph remains local under `graphify-out/` and is ignored by Git. `.graphifyignore` and `.gitignore` exclude secrets, credentials, data stores, exports, caches, logs, dependency folders, and build output.
 
+## One-command startup
+
+The recommended operator entrypoint is [`scripts/run-startup.ps1`](../scripts/run-startup.ps1):
+
+```powershell
+cd C:\Users\ppyxe\Documents\GitHub\auto_learning_agent
+.\scripts\run-startup.ps1
+```
+
+That runs validation, Graphify refresh, harvest, optimized synthesis, readiness reporting, and global publication preview. Apply globals with `-ApplyGlobal -ConfirmGlobalWrite`. See the root [`README.md`](../README.md) for flags such as `-SkipGraphify` and `-SkipRuntimeSmoke`.
+
 ## Federated learning workflow
 
 Bootstrap registered repositories once, then refresh their code-only graphs and the federated graph:

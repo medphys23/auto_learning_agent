@@ -6,13 +6,53 @@ The repository is deliberately not a raw mirror of every project. It captures sa
 
 ## Current Phase
 
-The repo is in the master knowledge expansion phase.
+The repo is in the **optimized orchestrator + federated Graphify** phase.
 
-- Global Codex/Cursor activation is already wired through generated top-level instructions under `master/`.
+- Global Codex/Cursor rules publish from `master/optimized/` with guarded apply and backups.
 - The local registry tracks 10 GitHub checkouts under `C:\Users\ppyxe\Documents\GitHub`.
-- Clean repositories can be deep-harvested into `knowledge/pending/`.
-- Dirty repositories are registered and reported, but blocked from candidate extraction until their worktrees are clean.
-- Knowledge remains candidate-first unless validation and promotion rules explicitly allow a status change.
+- Each registered repository can maintain a local code-only Graphify graph under `<repo>/graphify-out/`.
+- This orchestrator builds a federated graph at `graphify-out/federated/` for cross-repo architecture queries.
+- Knowledge harvesting remains candidate-first; dirty graphs may guide discovery but cannot justify promotion.
+- `auto_learning_agent` has a configured dirty-harvest exception; other registered repos stay on the clean harvest gate unless explicitly approved.
+
+## One-Command Startup
+
+Run the full local cycle from PowerShell without invoking an agent:
+
+```powershell
+cd C:\Users\ppyxe\Documents\GitHub\auto_learning_agent
+.\scripts\run-startup.ps1
+```
+
+Preview only (default): discover → Graphify refresh → harvest → optimized synthesis → readiness report → global publication preview.
+
+Apply globals after reviewing reports:
+
+```powershell
+.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite
+```
+
+Also apply orchestrator retrieval hints to registered repos:
+
+```powershell
+.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite -ApplyRepoHints -ConfirmRepoWrite
+```
+
+Useful flags:
+
+- `-Strict` — fail when dirty repositories block readiness (default allows `--continue-on-dirty`).
+- `-SkipGraphify` — skip graph refresh for diagnostics.
+- `-SkipRuntimeSmoke` — do not switch the global parent model to GPT-5.6 Terra on apply.
+- `-ForceParentModel` — switch to GPT-5.6 Terra even when runtime smoke fails (use only after upgrading Codex).
+
+Startup reports:
+
+- `reports/optimized-knowledge-cycle-summary.md`
+- `reports/optimized-cutover-readiness.md`
+- `reports/graphify-cycle-summary.md`
+- `reports/publication-preview.md` or `reports/publication-applied.md`
+
+See also [`docs/GRAPHIFY.md`](docs/GRAPHIFY.md) for Graphify install, query, and safety rules.
 
 ## Repository Layout
 
@@ -24,7 +64,9 @@ The repo is in the master knowledge expansion phase.
 - `knowledge/catalog.jsonl` is the concise retrieval catalog.
 - `knowledge/pending/` stores full candidate records.
 - `knowledge/schemas/knowledge-record.schema.json` defines required knowledge-record fields.
-- `scripts/` contains stdlib-only tools for discovery, harvesting, retrieval, promotion, audit, synthesis, publication preview/apply, and TOML validation.
+- `scripts/` contains stdlib-only tools for discovery, Graphify cycles, harvesting, retrieval, promotion, audit, synthesis, publication preview/apply, and TOML validation.
+- `graphify-out/` stores local federated graph artifacts (ignored by git).
+- `docs/GRAPHIFY.md` documents the governed Graphify integration.
 - `reports/` receives ignored local Markdown reports.
 - `master/` contains generated Codex/Cursor top-level instruction previews.
 - `backups/global-sync/` stores global publication backups when publication is explicitly applied.
@@ -47,22 +89,48 @@ Global publication is guarded and explicit.
 3. `scripts/publish_global_rules.py --apply --confirm-global-write` writes to `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor` only after explicit user approval.
 4. Every apply creates backups under `backups/global-sync/<timestamp>/`, writes rollback notes, and verifies source/target hashes.
 
-This README/knowledge expansion work does not require another global publication. Publish again only when a new global instruction change is intentionally approved.
+This README/knowledge expansion work does not require another global publication. Publish again only when a new global instruction change is intentionally approved. After Graphify or routing changes, rerun `.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite`.
+
+## Federated Graphify Layer
+
+Graphify provides a local, code-only architectural index. It is not source of truth.
+
+1. One-time bootstrap for registered repos: `scripts\propagate_graphify_integration.py --apply --confirm-repo-write`
+2. Refresh all repository graphs and merge federated output: `scripts\run_graphify_cycle.py`
+3. Query federated scope by default: `scripts\query_graph.py query "<question>"`
+4. Query this repo only: `scripts\query_graph.py query "<question>" --scope local`
+5. Query one registered repo: `scripts\query_graph.py explain "<symbol>" --repo orsi`
+
+Graph outputs stay under ignored `graphify-out/` directories. Dirty repositories may still contribute graphs for navigation, but dirty state remains ineligible for knowledge promotion.
+
+The standard startup script runs Graphify refresh before harvesting so source maps can use fresh graph shortlists.
 
 ## Startup Pipeline
 
 The startup pipeline runs the local orchestrator workflow with `tqdm` progress, colorized clean/dirty repository status, and saved logs under `reports/`.
 
-Preview mode performs validation, audit, discovery, harvest, retrieval smoke, synthesis, and publication preview without writing global folders:
+**Recommended entrypoint:**
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
+.\scripts\run-startup.ps1
 ```
 
-Official global apply mode performs the same local checks and then writes the generated top-level instructions into `C:\Users\ppyxe\.codex` and `C:\Users\ppyxe\.cursor`:
+Legacy full pipeline (includes unit tests and broader audits):
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --apply-global --confirm-global-write
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview --profile optimized
+```
+
+Official global apply mode:
+
+```powershell
+.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite
+```
+
+Or via the legacy pipeline:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --apply-global --confirm-global-write --profile optimized
 ```
 
 Pipeline outputs:
@@ -85,21 +153,22 @@ Terminal colors:
 
 The registry is local-first. `scripts/discover_repositories.py` scans `C:\Users\ppyxe\Documents\GitHub`, reports branch/remote/dirty state/markers, and can update `config/repositories.toml`.
 
-Harvesting uses local clones as source of truth and keeps a strict clean gate:
+Harvesting uses local clones as source of truth:
 
 - Clean repo: fingerprint tracked safe files, generate candidate knowledge records, update catalog and reports.
 - Unchanged clean repo: skip extraction when the stored fingerprint and harvester schema version still match.
-- Dirty repo: update state and coverage reports, but write no candidate records.
+- Dirty repo: update state and coverage reports; skip candidate extraction unless the repo has an explicit dirty-harvest exception.
 - Missing or disabled repo: do not harvest.
 
-Dirty repos are not treated as reusable knowledge because uncommitted work can be experimental, partial, user-owned, or unsafe to generalize.
+Graphify graphs may be built for dirty or risk-tagged repositories to support architecture queries. That does not override the promotion gate: dirty graphs cannot justify knowledge promotion.
 
 ## Knowledge Lifecycle
 
 The intended lifecycle is:
 
 1. Discover repositories with `scripts/discover_repositories.py`.
-2. Harvest clean repositories with `scripts/harvest_repositories.py`.
+2. Refresh Graphify graphs with `scripts/run_graphify_cycle.py` (included in startup).
+3. Harvest clean repositories with `scripts/harvest_repositories.py`.
 3. Store full records under `knowledge/pending/`.
 4. Store concise retrieval metadata in `knowledge/catalog.jsonl`.
 5. Query the catalog first with `scripts/retrieve_knowledge.py`.
@@ -145,7 +214,8 @@ The main generated reports are:
 - `reports/repository-harvest.md`: harvest outcome and candidate counts.
 - `reports/knowledge-coverage.md`: enabled repo count, catalog coverage, missing catalog targets, and dirty blockers.
 - `reports/repository-knowledge-matrix.md`: per-repo matrix of profile/source-map/stack/verification/workflow/command/constraint coverage.
-- `reports/global-publication-diff.md`: global publication diff preview.
+- `reports/graphify-cycle-summary.md`: Graphify build/merge outcomes by repository.
+- `reports/optimized-runtime-smoke-gate.md`: parent model switch decision after global apply.
 - `reports/publication-preview.md` and `reports/publication-applied.md`: publication mode and targets.
 - `reports/global-publication-rollback.md`: backup-based rollback notes after apply.
 
@@ -170,13 +240,13 @@ If a repo is listed as `blocked_dirty_worktree`, the orchestrator knows the repo
 Run from the repository root:
 
 ```powershell
+.\scripts\run-startup.ps1
+.\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
+.\.venv\Scripts\python.exe scripts\query_graph.py query "Which repositories share authentication components?"
 .\.venv\Scripts\python.exe scripts\discover_repositories.py
 .\.venv\Scripts\python.exe scripts\harvest_repositories.py
 .\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
-.\.venv\Scripts\python.exe scripts\promote_knowledge.py
-.\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
-.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
-.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
+.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile optimized
 ```
 
 Use `--apply` on promotion or global publication only when the requested state change is intentional and allowed by policy.
@@ -187,14 +257,11 @@ Run from the repository root:
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests
+.\scripts\run-startup.ps1
 .\.venv\Scripts\python.exe scripts\validate_codex_config.py
-.\.venv\Scripts\python.exe scripts\audit_global_instructions.py
-.\.venv\Scripts\python.exe scripts\discover_repositories.py
-.\.venv\Scripts\python.exe scripts\harvest_repositories.py
-.\.venv\Scripts\python.exe scripts\retrieve_knowledge.py --query orsi --status candidate
-.\.venv\Scripts\python.exe scripts\synthesize_top_level_instructions.py --preview
-.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview
-.\.venv\Scripts\python.exe scripts\run_orchestrator_pipeline.py --preview
+.\.venv\Scripts\python.exe scripts\run_graphify_cycle.py
+.\.venv\Scripts\python.exe scripts\query_graph.py query "How does harvesting use graphs?" --scope local
+.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile optimized
 git status --short --ignored
 ```
 
@@ -203,6 +270,7 @@ git status --short --ignored
 - If a repo is blocked, inspect `git status --short` in that repo. Clean or intentionally preserve the work before harvesting.
 - If a catalog entry points to a missing file, rerun `scripts/harvest_repositories.py` after confirming the source repo is clean.
 - If TOML validation fails, run `scripts/validate_codex_config.py` and fix syntax or missing local agent config references before publication.
+- If GPT-5.6 Terra fails in terminal with “requires a newer version of Codex”, upgrade the Codex app/CLI or publish with `-SkipRuntimeSmoke` until smoke passes.
 - If global publication must be rolled back, use `reports/global-publication-rollback.md` and copy files from the listed `backups/global-sync/<timestamp>/` folder back to the matching global paths.
 - If a record looks too broad, leave it as `candidate` and narrow applicability before promotion.
 

@@ -65,8 +65,8 @@ def optimized_file_targets(master_root: Path, codex_home: Path, cursor_home: Pat
         name = source.parent.name
         targets.append((source, cursor_home / "skills" / name / "SKILL.md", f"cursor/skills/{name}/SKILL.md"))
         targets.append((source, codex_home / "skills" / name / "SKILL.md", f"codex/skills/{name}/SKILL.md"))
-    rule = optimized_root / "cursor" / "rules" / "06-orchestrator-knowledge.mdc"
-    targets.append((rule, cursor_home / "rules" / rule.name, f"cursor/rules/{rule.name}"))
+    for source in sorted((optimized_root / "cursor" / "rules").glob("*.mdc")):
+        targets.append((source, cursor_home / "rules" / source.name, f"cursor/rules/{source.name}"))
     return targets
 
 
@@ -176,20 +176,53 @@ def set_key_in_table(config_text: str, table_name: str, key_name: str, value_lin
     return config_text.rstrip() + f"\n\n{table_header}\n{value_line}\n", True
 
 
-def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str, list[str]]:
+def gpt56_runtime_smoke_ok(*, codex_home: Path, codex_cli: Path | None = None) -> tuple[bool, str]:
+    try:
+        from validate_codex_routing import EXPECTED_MODELS, model_smoke
+    except ImportError:
+        return False, "validate_codex_routing unavailable"
+    if codex_cli is None:
+        config_path = codex_home / "config.toml"
+        if config_path.exists():
+            data = read_toml_text(config_path.read_text(encoding="utf-8"))
+            env = data.get("mcp_servers", {}).get("node_repl", {}).get("env", {})
+            cli_value = env.get("CODEX_CLI_PATH")
+            if cli_value:
+                codex_cli = Path(str(cli_value))
+        if codex_cli is None:
+            codex_cli = Path("codex")
+    failures: list[str] = []
+    for model, _ in EXPECTED_MODELS.values():
+        ok, summary = model_smoke(codex_cli, model, REPO_ROOT)
+        if not ok:
+            failures.append(f"{model}: {summary[:200]}")
+    if failures:
+        return False, "; ".join(failures)
+    return True, "all GPT-5.6 runtime smoke tests passed"
+
+
+def merge_optimized_codex_config(
+    active_config: str,
+    fragment: str,
+    *,
+    apply_parent_model: bool = True,
+) -> tuple[str, list[str]]:
     read_toml_text(fragment)
     merged = active_config
     report: list[str] = []
     if not merged.startswith("#:schema "):
         merged = "#:schema https://developers.openai.com/codex/config-schema.json\n" + merged
         report.append("Added Codex config schema header.")
-    for key, line, label in (
-        ("model", f'model = "{TARGET_PARENT_MODEL}"', "model"),
-        ("model_reasoning_effort", f'model_reasoning_effort = "{TARGET_PARENT_REASONING_EFFORT}"', "model_reasoning_effort"),
-    ):
-        merged, changed = set_root_key(merged, key, line)
-        if changed:
-            report.append(f"Set {label}.")
+    if apply_parent_model:
+        for key, line, label in (
+            ("model", f'model = "{TARGET_PARENT_MODEL}"', "model"),
+            ("model_reasoning_effort", f'model_reasoning_effort = "{TARGET_PARENT_REASONING_EFFORT}"', "model_reasoning_effort"),
+        ):
+            merged, changed = set_root_key(merged, key, line)
+            if changed:
+                report.append(f"Set {label}.")
+    else:
+        report.append(f"Skipped parent model switch to {TARGET_PARENT_MODEL}; runtime smoke did not pass or was bypassed.")
     data = read_toml_text(merged)
     agents = data.get("agents", {})
     if agents and not isinstance(agents, dict):
@@ -225,10 +258,16 @@ def merge_optimized_codex_config(active_config: str, fragment: str) -> tuple[str
     return merged, report
 
 
-def apply_optimized_config(source: Path, target: Path, reports_dir: Path) -> dict[str, Any]:
+def apply_optimized_config(
+    source: Path,
+    target: Path,
+    reports_dir: Path,
+    *,
+    apply_parent_model: bool = True,
+) -> dict[str, Any]:
     active = target.read_text(encoding="utf-8") if target.exists() else ""
     fragment = source.read_text(encoding="utf-8")
-    merged, report = merge_optimized_codex_config(active, fragment)
+    merged, report = merge_optimized_codex_config(active, fragment, apply_parent_model=apply_parent_model)
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(merged.rstrip() + "\n", encoding="utf-8")
     diff = "\n".join(
@@ -332,6 +371,8 @@ def publish_global_rules(
     apply: bool = False,
     confirm_global_write: bool = False,
     profile: str = "legacy",
+    runtime_smoke: bool | None = None,
+    force_parent_model: bool = False,
 ) -> dict[str, Any]:
     if profile == "optimized" and apply:
         config = REPO_ROOT / "config" / "context-optimization.toml"
@@ -367,7 +408,32 @@ def publish_global_rules(
             )
             backed_up = optimized_backup_targets(targets, codex_home, backup_root)
             applied = apply_targets(targets)
-            applied.append(apply_optimized_config(optimized_config, codex_home / "config.toml", reports_dir))
+            apply_parent_model = True
+            smoke_summary = ""
+            if force_parent_model:
+                smoke_summary = "forced parent model apply"
+            elif runtime_smoke is False:
+                apply_parent_model = False
+                smoke_summary = "runtime smoke skipped by flag"
+            else:
+                smoke_ok, smoke_summary = gpt56_runtime_smoke_ok(codex_home=codex_home)
+                apply_parent_model = smoke_ok
+            applied.append(
+                apply_optimized_config(
+                    optimized_config,
+                    codex_home / "config.toml",
+                    reports_dir,
+                    apply_parent_model=apply_parent_model,
+                )
+            )
+            write_text(
+                reports_dir / "optimized-runtime-smoke-gate.md",
+                "# Optimized Runtime Smoke Gate\n\n"
+                f"Generated: {utc_now()}\n\n"
+                f"- apply_parent_model: {str(apply_parent_model).lower()}\n"
+                f"- force_parent_model: {str(force_parent_model).lower()}\n"
+                f"- summary: {smoke_summary}\n",
+            )
             pruned_backups = prune_backup_roots(backup_base, backup_keep)
             report = write_publication_reports(
                 reports_dir,
@@ -447,7 +513,27 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true", help="Apply generated files to global Codex/Cursor folders.")
     parser.add_argument("--confirm-global-write", action="store_true", help="Required with --apply.")
     parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
+    parser.add_argument(
+        "--runtime-smoke",
+        action="store_true",
+        help="Require GPT-5.6 runtime smoke before switching parent model on optimized apply.",
+    )
+    parser.add_argument(
+        "--skip-runtime-smoke",
+        action="store_true",
+        help="Skip parent model switch on optimized apply without running smoke tests.",
+    )
+    parser.add_argument(
+        "--force-parent-model",
+        action="store_true",
+        help="Apply GPT-5.6 Terra parent model even when runtime smoke fails.",
+    )
     args = parser.parse_args()
+    runtime_smoke_flag: bool | None = None
+    if args.runtime_smoke:
+        runtime_smoke_flag = True
+    elif args.skip_runtime_smoke:
+        runtime_smoke_flag = False
     try:
         result = publish_global_rules(
             reports_dir=args.reports_dir,
@@ -459,6 +545,8 @@ def main() -> int:
             apply=args.apply,
             confirm_global_write=args.confirm_global_write,
             profile=args.profile,
+            runtime_smoke=runtime_smoke_flag,
+            force_parent_model=args.force_parent_model,
         )
     except RuntimeError as exc:
         print(f"ERROR: {exc}")
