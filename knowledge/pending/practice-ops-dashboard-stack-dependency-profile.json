@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
       "package.json"
     ],
@@ -68,6 +68,7 @@
       ],
       "dev_dependencies": [
         "@eslint/eslintrc",
+        "@playwright/test",
         "@tailwindcss/postcss",
         "@types/node",
         "@types/nodemailer",
@@ -87,10 +88,15 @@
       "path": "package.json",
       "scripts": [
         "build",
+        "db:audit",
+        "db:backfill-bp-complement",
+        "db:backfill-gesy-kpi",
+        "db:migrate",
         "dev",
         "lint",
         "start",
         "test",
+        "test:e2e:prod",
         "typecheck",
         "verify"
       ]
@@ -102,13 +108,13 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:57Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:57Z"
   },
   "registry_stack_tags": [
     "nextjs",

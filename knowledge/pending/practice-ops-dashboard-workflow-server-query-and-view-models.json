@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
       "skills.md"
     ],
@@ -50,7 +50,7 @@
     "- Full `PatientRecord` (including raw `documentId`, `localName`, `internationalName`, `sex`) is for server-side certificate generation and `loadPatientById()` \u2014 not default page props.",
     "- Do not use `loadPatients()` or `loadPracticeSnapshot()` for page rendering.",
     "1. Decide the **smallest serializable shape** the client needs; add or extend a view-model type (`PatientDirectoryRow`, `CertificatePatientOption`, `KpiWorklistRow`, chart DTOs, etc.).",
-    "2. Add or extend a loader in `src/lib/db.ts` with an explicit `SELECT` column list \u2014 never `SELECT *` for UI routes.",
+    "2. Add or extend a loader in the matching `src/lib/db/repositories/*` module with an explicit `SELECT` column list \u2014 never `SELECT *` for UI routes. Keep `src/lib/db.ts` for import/dashboard facade operations only.",
     "3. Mask document IDs in SQL with `maskedDocumentSql` when the UI shows an identifier; keep full IDs server-side.",
     "4. Expose the loader through `src/lib/store.ts`; call it from `page.tsx`, not from client components directly.",
     "5. Pass the result as props to a `\"use client\"` component only for filters, sorting, charts, forms, or dictation.",
@@ -61,13 +61,13 @@
     "- 2026-07-09 - Documented RSC-first loaders, SQL column projection, masked IDs, per-page view models, load-once/filter-client pattern, and on-demand full patient load for certificate APIs. Added after patient/remittance loader refactors and"
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:57Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:57Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -30,11 +30,12 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "5c2e84e43bc35ca97e7f80275bfcefad06be6ab2",
+    "source_commit": "31ed44510efa686d9fa4019803b6580db4e685c2",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
       ".codex/agents/verifier.toml",
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -67,12 +68,13 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-11T07:41:13Z",
+    "created_at": "2026-08-03T21:23:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
       ".codex/agents/verifier.toml",
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -94,7 +96,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-11T07:41:13Z"
+    "updated_at": "2026-08-03T21:23:53Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -120,11 +122,11 @@
           "scripts/plan_optimized_cutover.py",
           "scripts/promote_knowledge.py"
         ],
-        "file_count": 22,
-        "graph_node_count": 237,
+        "file_count": 27,
+        "graph_node_count": 281,
         "suffixes": {
-          ".ps1": 4,
-          ".py": 18
+          ".ps1": 5,
+          ".py": 22
         }
       },
       {
@@ -146,7 +148,7 @@
           "tests/test_orchestrator_mvp.py"
         ],
         "file_count": 1,
-        "graph_node_count": 41,
+        "graph_node_count": 43,
         "suffixes": {
           ".py": 1
         }
@@ -160,7 +162,7 @@
           "skills.md"
         ],
         "file_count": 4,
-        "graph_node_count": 35,
+        "graph_node_count": 38,
         "suffixes": {
           ".md": 3,
           ".txt": 1
@@ -189,10 +191,10 @@
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
         ],
-        "file_count": 20,
+        "file_count": 24,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 20
+          ".md": 24
         }
       },
       {
@@ -202,11 +204,16 @@
           ".codex/agents/repository-harvester.toml",
           ".codex/agents/verifier.toml",
           ".codex/agents/workflow-router.toml",
-          ".codex/config.toml"
+          ".codex/config.toml",
+          ".codex/hooks.json",
+          ".codex/skills/graphify/references/add-watch.md",
+          ".codex/skills/graphify/references/exports.md"
         ],
-        "file_count": 5,
+        "file_count": 15,
         "graph_node_count": 0,
         "suffixes": {
+          ".json": 1,
+          ".md": 9,
           ".toml": 5
         }
       },
@@ -227,20 +234,21 @@
       {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc"
         ],
-        "file_count": 2,
+        "file_count": 3,
         "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 735,
-    "graph_source_file_count": 49,
-    "harvestable_text_file_count": 62
+    "graph_node_count": 750,
+    "graph_source_file_count": 51,
+    "harvestable_text_file_count": 82
   },
   "status": "candidate",
   "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, master, tests, ., knowledge, backups, .codex, config.",

@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
       "skills.md"
     ],
@@ -53,7 +53,7 @@
     "2. Match headers by normalized aliases first; use positional fallbacks only when no alias matches, preserving the README beneficiary schema order.",
     "3. In one transaction, compare incoming patient IDs with currently active `beneficiaries` rows for the same `PRACTICE_ID`.",
     "4. Insert new patients, update and reactivate returning patients, and mark omitted active patients `active=false` with inactive metadata.",
-    "5. Generate KPI candidate tasks from the incoming patients, but insert only missing task keys with `ON CONFLICT DO NOTHING`.",
+    "5. Generate KPI candidate tasks from the incoming patients. On conflict, refresh only patient display and versioned rule-derived timing fields; never overwrite manual care/GESY state.",
     "6. Never reset existing KPI task `status`, `completed_date`, `note`, or audit history during beneficiary reupload.",
     "7. Preserve `localName`, `internationalName`, and raw `sex`; certificate generation depends on them for language-specific names and gender-aware Greek grammar.",
     "8. In default UI views, pass masked document IDs to client components; keep full IDs server-side.",
@@ -62,13 +62,13 @@
     "- 2026-07-09 - Updated from unpushed README: beneficiary fields are now explicitly the canonical source for certificate names, patient sex, email send eligibility, patient search, and KPI eligibility."
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:57Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:57Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

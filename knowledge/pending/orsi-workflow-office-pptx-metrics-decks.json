@@ -32,7 +32,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "83c4b221523a71085664eedc589e1d259ad34a75",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
     "source_paths": [
       "skills.md"
     ],
@@ -44,7 +44,9 @@
   "incompatible_when": [],
   "procedure": [
     "- Use the reviewed stable PPTX as the content baseline unless the user explicitly approves expansion.",
-    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/deliverables/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master.pptx` as the latest accepted cholecystectomy master for export and any new iteration after ",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/deliverables/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v13_Delphi_Master.pptx` as the current meeting-revision draft. It contains 63 sequential steps and blank yell",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v12_Delphi_Master.pptx` as the exact user-edited v12 deck and immutable v13 source.",
+    "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master.pptx` as the exact accepted v11 lineage deck and immutable source used for the original v12 buil",
     "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master_Manual_Source_for_Regeneration.pptx` as the prior manual source for v11 regeneration; before reg",
     "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v11_Delphi_Master_Manual_Source_for_Polish.pptx` as the prior manual polish source.",
     "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v10_Delphi_Master.NR.pptx` as the manually edited NR source for the first v11 build.",
@@ -52,26 +54,24 @@
     "- Treat `Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/archive/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v8_Supervisor_Edited_Source_for_v9.pptx` as the archived supervisor-edited source for reproducing v9.",
     "- When reproducing v8 specifically, use the archived user-edited v7 deck as the source, validate that Step 19 is absent, and preserve all non-number metric cells.",
     "- Treat v4 as the historical stable source, v5 as exploratory expansion, and v6 as the previous Delphi master unless the user explicitly asks to go back.",
-    "- Use PowerPoint COM for PPTX writes on Windows; use `python-pptx` for read-only extraction and validation.",
+    "- Use PowerPoint COM for new PPTX authoring on Windows. For a source-preserving revision of an accepted deck, a versioned `python-pptx`/DrawingML builder may copy and edit inherited rows when COM or the presentation artifact runtime is unav",
     "1. Inspect actual PPTX files and builder scripts before deciding what changed.",
     "2. Extract baseline phases, step numbers, step descriptions, global errors, and critical global errors into structured rows.",
-    "3. When splitting or inserting steps, renumber all downstream metric rows sequentially as ordinary numeric steps; do not use lettered substeps.",
-    "4. When a reviewed PPTX already contains a manual deletion, validate the resulting numeric gap, renumber only downstream numeric rows, and compare non-number metric cells before/after.",
-    "5. Add or preserve a Delphi voting instruction slide before the first metric slide when the deck lacks one; use a target/options table for steps, errors, critical errors, missing items, and optional items.",
-    "6. Pack metric rows by measured content and phase logic. Normally use no more than 6 rows, but allow 7 when the text fits and doing so avoids a one-row continuation slide.",
-    "7. Format metric slide titles as `Phase <roman>: <phase title> | Steps X-Y` or `| Step X`, matching the exact visible rows. Preserve reviewed title typography; use Calibri 20 pt by default and widen long titles within the banner before redu",
-    "8. Preserve the v7-v11 table formatting for square checkbox bullets and numbered items in the error and critical-error columns.",
-    "9. Follow the version-specific table typography. For v11, keep the reviewed deck typography, retain the voting table at 13.5 pt, retain end-of-phase tables at Calibri 9.8 pt, and add Phase V reference notes only as unnumbered slide-level no",
-    "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`"
+    "3. When meeting transcripts inform a revision, read paired Markdown/SRT outputs, map every decision to the original slide/step and timestamp, and separate explicit decisions from unclear ASR. Use visible yellow manual-review placeholders fo",
+    "4. When splitting or inserting steps, renumber all downstream metric rows sequentially as ordinary numeric steps; do not use lettered substeps.",
+    "5. When a reviewed PPTX already contains a manual deletion, validate the resulting numeric gap, renumber only downstream numeric rows, and compare non-number metric cells before/after.",
+    "6. Add or preserve a Delphi voting instruction slide before the first metric slide when the deck lacks one; use a target/options table for steps, errors, critical errors, missing items, and optional items.",
+    "7. Pack metric rows by measured content and phase logic. Normally use no more than 6 rows, but allow 7 when the text fits and doing so avoids a one-row continuation slide.",
+    "8. Format metric slide titles as `Phase <roman>: <phase title> | Steps X-Y` or `| Step X`, matching the exact visible rows. Preserve reviewed title typography; use Calibri 20 pt by default and widen long titles within the banner before redu"
   ],
   "provenance": {
-    "created_at": "2026-07-09T11:40:21Z",
+    "created_at": "2026-07-16T17:12:58Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T11:40:21Z"
+    "updated_at": "2026-07-16T17:12:58Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -20,8 +20,9 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "abff6dc4c37ad9d329791f1f10dda7ef518f6844",
+    "source_commit": "bf611c9cd2c9b13a3b7cab7cb768b2ed823d9b39",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -40,9 +41,10 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:01Z",
+    "created_at": "2026-07-16T17:12:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -50,7 +52,7 @@
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:01Z"
+    "updated_at": "2026-07-16T17:12:53Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -72,6 +74,7 @@
           "skills.md"
         ],
         "file_count": 3,
+        "graph_node_count": 19,
         "suffixes": {
           ".md": 3
         }
@@ -79,16 +82,21 @@
       {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc"
         ],
-        "file_count": 2,
+        "file_count": 3,
+        "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 5
+    "graph_index_used": true,
+    "graph_node_count": 19,
+    "graph_source_file_count": 3,
+    "harvestable_text_file_count": 6
   },
   "status": "candidate",
   "summary": "Safe source map for general_work: 2 harvestable areas, led by ., .cursor.",

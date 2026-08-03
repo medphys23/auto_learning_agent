@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "5c2e84e43bc35ca97e7f80275bfcefad06be6ab2",
+    "source_commit": "31ed44510efa686d9fa4019803b6580db4e685c2",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -41,16 +41,16 @@
   "id": "auto-learning-agent-verification-command-22",
   "incompatible_when": [],
   "procedure": [
-    "git status --short --ignored"
+    ".\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview --profile optimized"
   ],
   "provenance": {
-    "created_at": "2026-07-11T07:41:13Z",
+    "created_at": "2026-08-03T21:23:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-11T07:41:13Z"
+    "updated_at": "2026-08-03T21:23:53Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -63,7 +63,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Canonical verification command from auto_learning_agent: git status --short --ignored",
+  "summary": "Canonical verification command from auto_learning_agent: .\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview --profile optimized",
   "tags": [
     "auto_learning_agent",
     "codex",
@@ -79,7 +79,7 @@
   "trigger_phrases": [
     "auto_learning_agent",
     "verification",
-    "git status --short --ignored"
+    ".\\.venv\\Scripts\\python.exe scripts\\run_orchestrator_pipeline.py --preview --profile optimized"
   ],
   "type": "command",
   "verification": [

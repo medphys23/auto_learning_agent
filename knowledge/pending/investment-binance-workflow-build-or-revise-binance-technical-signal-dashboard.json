@@ -36,7 +36,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_commit": "90cd59a85e7c6cd4eee6d48248c1d0b362d69375",
     "source_paths": [
       "skills.md"
     ],
@@ -69,13 +69,13 @@
     "6. Keep futures context optional and non-blocking because `/fapi` endpoints may be region-blocked."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:01Z",
+    "created_at": "2026-07-16T17:12:54Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:01Z"
+    "updated_at": "2026-07-16T17:12:54Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

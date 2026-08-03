@@ -34,8 +34,9 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b479bf59bd0d0004a7bc2dc0f9f723da34916372",
+    "source_commit": "8d85d157a9304a4324f8f30e2ef58dbfcfefc1bd",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -60,9 +61,10 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:00Z",
+    "created_at": "2026-07-16T17:12:52Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -76,7 +78,7 @@
       "scripts/map_docx_media.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:00Z"
+    "updated_at": "2026-07-16T17:12:52Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -91,6 +93,21 @@
   "source_map": {
     "areas": [
       {
+        "area": "scripts",
+        "examples": [
+          "scripts/compare_docx_versions.py",
+          "scripts/extract_docx.py",
+          "scripts/map_docx_media.py",
+          "scripts/repair_revised_docx.py",
+          "scripts/search_pdf_text.py"
+        ],
+        "file_count": 5,
+        "graph_node_count": 47,
+        "suffixes": {
+          ".py": 5
+        }
+      },
+      {
         "area": ".",
         "examples": [
           "AGENTS.md",
@@ -102,24 +119,11 @@
           "skills.md"
         ],
         "file_count": 7,
+        "graph_node_count": 45,
         "suffixes": {
           ".md": 4,
           ".py": 1,
           ".txt": 2
-        }
-      },
-      {
-        "area": "scripts",
-        "examples": [
-          "scripts/compare_docx_versions.py",
-          "scripts/extract_docx.py",
-          "scripts/map_docx_media.py",
-          "scripts/repair_revised_docx.py",
-          "scripts/search_pdf_text.py"
-        ],
-        "file_count": 5,
-        "suffixes": {
-          ".py": 5
         }
       },
       {
@@ -130,6 +134,7 @@
           "model/params.py"
         ],
         "file_count": 3,
+        "graph_node_count": 29,
         "suffixes": {
           ".py": 3
         }
@@ -137,19 +142,24 @@
       {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc"
         ],
-        "file_count": 2,
+        "file_count": 3,
+        "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 17
+    "graph_index_used": true,
+    "graph_node_count": 180,
+    "graph_source_file_count": 20,
+    "harvestable_text_file_count": 18
   },
   "status": "candidate",
-  "summary": "Safe source map for campania_transplant: 4 harvestable areas, led by ., scripts, model, .cursor.",
+  "summary": "Safe source map for campania_transplant: 4 harvestable areas, led by scripts, ., model, .cursor.",
   "tags": [
     "architecture-map",
     "campania-transplant",

@@ -1,0 +1,104 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-local-meeting-transcription",
+  "incompatible_when": [],
+  "procedure": [
+    "- Use the repo-root `.venv` and pinned `Orsi_Metrics_Research/scripts/robotic_cholecystectomy/videos/requirements-transcription.txt` through `uv --link-mode hardlink`.",
+    "- Keep recordings, extracted audio, transcripts, speaker frames, and speaker maps local. Public model downloads are allowed; no token, gated model, cloud transcription, or media upload is permitted.",
+    "- Treat diarization names as unverified until a human confirms at least two consistent active-speaker frames.",
+    "1. Run `transcribe_meeting.py --sample-seconds 180 --output-dir .cache/transcription/sample_output` and review the sample before the full recording.",
+    "2. Run the full default command or provide explicit `--input`, `--output-dir`, `--num-speakers`, `--asr-model`, and `--model-dir` overrides. The script extracts 16 kHz mono audio, runs sherpa-onnx diarization and Whisper `large-v3-turbo`, a",
+    "3. Leave unresolved identities as `Speaker N \u2014 identity unverified`; use `--render-json` with a human-reviewed `--speaker-map` to rename speakers without rerunning inference.",
+    "4. For transcript-to-deck review, use Markdown and SRT together, cite timestamps, map decisions to original slide/step numbers before renumbering, and separate explicit decisions from discussion or unclear ASR.",
+    "5. Convert unresolved wording into visible timestamped manual-review placeholders. Do not infer participant names or clinical content.",
+    "6. Remove temporary WAV files after successful inference unless `--keep-temporary` is explicit. Keep all final transcript artifacts ignored under `videos/meetings/transcripts/`.",
+    "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\videos\\requirements-transcription.txt`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\videos\\transcribe_meeting.py --help`",
+    "- Confirm source/extracted duration differs by at most one second, timestamps are monotonic, Markdown/SRT/JSON segment counts match, and final artifacts contain no credentials.",
+    "- Confirm `videos/**` transcript/media outputs and `.cache/transcription/**` are ignored while the script and pinned requirements remain source files.",
+    "- 2026-07-13: Completed the token-free 4,048.192-second RA-Chole meeting transcription with 363 ordered segments using public sherpa-onnx diarization models and Whisper `large-v3-turbo`; retained generic speaker labels and used the transcri"
+  ],
+  "provenance": {
+    "created_at": "2026-07-16T17:12:58Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-16T17:12:58Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** transcribing a private ORSI meeting recording locally or using its transcript to trace requested changes into a metrics deck.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: Local meeting transcription",
+  "trigger_phrases": [
+    "ORSI",
+    "Local meeting transcription"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

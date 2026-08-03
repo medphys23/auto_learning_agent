@@ -30,8 +30,9 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "e397fc573c0183cc8cf3ed825f2f847bf777f916",
+    "source_commit": "0462682236543d7a715a9cb85b77b468893c47b6",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -59,9 +60,10 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:02Z",
+    "created_at": "2026-07-16T17:12:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -78,7 +80,7 @@
       "src/analysis/regressions.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:02Z"
+    "updated_at": "2026-07-16T17:12:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -105,10 +107,32 @@
           "frontend/admin/smart_query_api.php"
         ],
         "file_count": 73,
+        "graph_node_count": 262,
         "suffixes": {
           ".json": 1,
           ".php": 45,
           ".py": 26,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "config.py",
+          "google_apps_script.js",
+          "init_db.py",
+          "main.py",
+          "migrate_data.py",
+          "migrate_schema.py",
+          "README.md"
+        ],
+        "file_count": 11,
+        "graph_node_count": 150,
+        "suffixes": {
+          ".js": 1,
+          ".md": 4,
+          ".py": 5,
           ".txt": 1
         }
       },
@@ -125,6 +149,7 @@
           "src/database/schema.py"
         ],
         "file_count": 24,
+        "graph_node_count": 95,
         "suffixes": {
           ".py": 24
         }
@@ -142,47 +167,33 @@
           "scripts/package_portal_hosting.ps1"
         ],
         "file_count": 15,
+        "graph_node_count": 66,
         "suffixes": {
           ".ps1": 11,
           ".py": 4
         }
       },
       {
-        "area": ".",
-        "examples": [
-          "AGENTS.md",
-          "config.py",
-          "google_apps_script.js",
-          "init_db.py",
-          "main.py",
-          "migrate_data.py",
-          "migrate_schema.py",
-          "README.md"
-        ],
-        "file_count": 11,
-        "suffixes": {
-          ".js": 1,
-          ".md": 4,
-          ".py": 5,
-          ".txt": 1
-        }
-      },
-      {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc"
         ],
-        "file_count": 2,
+        "file_count": 3,
+        "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 125
+    "graph_index_used": true,
+    "graph_node_count": 695,
+    "graph_source_file_count": 137,
+    "harvestable_text_file_count": 126
   },
   "status": "candidate",
-  "summary": "Safe source map for kidney_federico: 5 harvestable areas, led by frontend, src, scripts, ., .cursor.",
+  "summary": "Safe source map for kidney_federico: 5 harvestable areas, led by frontend, ., src, scripts, .cursor.",
   "tags": [
     "architecture-map",
     "clinical_data",

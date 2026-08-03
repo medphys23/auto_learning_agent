@@ -1,0 +1,108 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "languages": [
+      "nextjs",
+      "postgres",
+      "react",
+      "tailwind",
+      "typescript",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "practice-ops-dashboard-workflow-kpi-timing-and-approved-outreach",
+  "incompatible_when": [],
+  "procedure": [
+    "- Treat `src/lib/kpiTiming.ts` as the versioned rule source; do not enable a future period without approved regulations.",
+    "- Keep source GESY reports and patient workbooks untracked. Never seed patient results from repository files.",
+    "- Configure `PRACTICE_TIME_ZONE`, both booking base URLs, and the existing SMTP variables before runtime email checks.",
+    "1. Calculate calendar-month milestones with end-of-month clamping. KPI2 claims are valid only from the 18-month birthday through the day before the 21-month birthday, inclusive.",
+    "2. Preserve deterministic task keys and manual workflow state on beneficiary reupload; backfill only rule-derived dates and milestone definitions.",
+    "3. Keep care milestones, official GESY results, claim validity, and correction progress distinct. Record every structured change in `kpi_task_events`.",
+    "4. Reject appointments before the milestone/window opening and reject vaccination completions after the configured care-window deadline.",
+    "5. Never allow PDC KPI2 to become `Done` without a claim inside the valid window or an audited `Valid_Submission` official result.",
+    "6. Build outreach from due rule stages only: invitation 21 days before the applicable milestone/window opening and one follow-up seven days after when still unbooked.",
+    "7. Require staff selection and confirmation for every bilingual email batch. Reload the patient server-side, recheck timing/suppression/active state, reserve the unique stage before SMTP, and cap batches at 20.",
+    "8. For combined opportunities containing BMI, default to BMI only, require explicit opt-in for every overlapping service, reserve only included stages, and leave omitted stages eligible for later outreach.",
+    "9. Keep patient-facing copy Greek first and English second, name the visit, state the earliest appointment date, use the service-specific booking link, and omit KPI targets, claims, and incentives.",
+    "- 2026-07-17 - Added OAY 2026 KPI2 and vaccination timing, structured audit state, manual bilingual outreach approval, duplicate-stage suppression, and safe claim-window completion enforcement.",
+    "- 2026-07-22 - Made BMI the default standalone selection within combined outreach while preserving optional overlapping services for later contact.",
+    "- 2026-07-22 - Added per-capita payment rates and achieved, maximum-achievable, and expired/unattainable payment estimates, with the percentage threshold acting as the all-completions payment gate."
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:23:57Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:23:57Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Changes to KPI2 developmental checks, vaccination windows, KPI claim timing, structured care/GESY state, KPI email outreach, or 2026 OAY rule versions.",
+  "tags": [
+    "auth",
+    "database",
+    "medical_practice_data",
+    "nextjs",
+    "postgres",
+    "practice-ops-dashboard",
+    "react",
+    "repo-workflow",
+    "skills-md",
+    "tailwind",
+    "typescript",
+    "vercel"
+  ],
+  "title": "practice-ops-dashboard workflow: KPI timing and approved outreach",
+  "trigger_phrases": [
+    "practice-ops-dashboard",
+    "KPI timing and approved outreach"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

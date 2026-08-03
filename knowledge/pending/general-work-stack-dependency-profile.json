@@ -20,7 +20,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "abff6dc4c37ad9d329791f1f10dda7ef518f6844",
+    "source_commit": "bf611c9cd2c9b13a3b7cab7cb768b2ed823d9b39",
     "source_paths": [],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
     "task_or_issue": "local-github-repository-analysis",
@@ -35,11 +35,11 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:01Z",
+    "created_at": "2026-07-16T17:12:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:01Z"
+    "updated_at": "2026-07-16T17:12:53Z"
   },
   "registry_stack_tags": [],
   "reuse": {

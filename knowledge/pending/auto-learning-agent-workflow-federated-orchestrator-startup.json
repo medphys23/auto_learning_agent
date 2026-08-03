@@ -1,0 +1,92 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "python",
+      "stdlib"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "31ed44510efa686d9fa4019803b6580db4e685c2",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "auto-learning-agent-workflow-federated-orchestrator-startup",
+  "incompatible_when": [],
+  "procedure": [
+    "1. From repo root, run `.\\scripts\\run-startup.ps1` for preview-only cycle.",
+    "2. Review `reports\\optimized-cutover-readiness.md` and `reports\\graphify-cycle-summary.md`.",
+    "3. Apply globals with `.\\scripts\\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite` when reports look correct.",
+    "4. Optionally add `-ApplyRepoHints -ConfirmRepoWrite` to refresh registered repo retrieval hints.",
+    "5. Query architecture with `scripts\\query_graph.py`; verify exact behavior in source.",
+    "- 2026-07-11: Added `run-startup.ps1` / `run_startup.py` as the one-command operator entrypoint; global publish now includes `07-graphify.mdc` and gates GPT-5.6 parent model on runtime smoke unless explicitly forced or skipped."
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:23:53Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:23:53Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** Routine refresh of graphs, harvested knowledge, optimized globals, or cross-repo architecture queries.",
+  "tags": [
+    "auto_learning_agent",
+    "codex",
+    "cursor",
+    "global_config_preview",
+    "python",
+    "read_only_audit",
+    "repo-workflow",
+    "skills-md",
+    "stdlib"
+  ],
+  "title": "auto_learning_agent workflow: Federated orchestrator startup",
+  "trigger_phrases": [
+    "auto_learning_agent",
+    "Federated orchestrator startup"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

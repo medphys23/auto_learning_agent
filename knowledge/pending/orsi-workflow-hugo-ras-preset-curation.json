@@ -1,0 +1,102 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-hugo-ras-preset-curation",
+  "incompatible_when": [],
+  "procedure": [
+    "- Sources remain under ignored `HUGO_RAS/Port placement/` (and related local folders such as `console information/`); never commit or ship them.",
+    "- V3 projects still consume source-backed presets through `src/presets/`; provenance and evidence kinds stay explicit.",
+    "1. Confirm the source remains under ignored `HUGO_RAS/Port placement/`.",
+    "2. Convert the trusted document to `.cache/markitdown/` before reading text (repo MarkItDown read path).",
+    "3. Render every relevant PDF page or PowerPoint slide and visually verify diagrams, roles, units, inequalities, angle signs, and orientation.",
+    "4. Calculate and record the file SHA-256 without copying the source into tracked paths.",
+    "5. Add a `SourceDocument` registry entry and a per-field `SourceRef` containing page/slide, evidence kind, and a concise paraphrase.",
+    "6. Preserve ranges and inequalities as constraints. Treat coordinates inferred solely to render a diagram as `illustrative`, never manufacturer measurements.",
+    "7. Keep human, pig/training, and mannequin variants distinct. Keep conflicts as separate variants or unresolved fields.",
+    "8. Never embed source pages, screenshots, logos, or substantial verbatim text in code, tests, reports, or application assets.",
+    "9. Add or update golden fixture tests proving sourced values have references and illustrative values are labeled.",
+    "- 2026-07-15: Added root catalog entry; V3 keeps the same provenance rules with explicit post-edit docking/kinematics verification."
+  ],
+  "provenance": {
+    "created_at": "2026-07-16T17:12:58Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-16T17:12:58Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** adding, changing, checking, or extracting a HUGO_RAS setup preset from local PDF/PPTX guidance.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: HUGO RAS preset curation",
+  "trigger_phrases": [
+    "ORSI",
+    "HUGO RAS preset curation"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

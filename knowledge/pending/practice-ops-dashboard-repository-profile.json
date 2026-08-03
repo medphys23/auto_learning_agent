@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -51,18 +51,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:56Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:56Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 111,
-    "harvestable_text_file_count": 100,
+    "file_count": 187,
+    "harvestable_text_file_count": 171,
     "purpose_excerpt": "Vercel-ready practice operations dashboard. The app imports user-uploaded beneficiary CSV/XLSX files and Separate Remittance PDFs into Neon Postgres, then exposes:",
     "remote": "https://github.com/medphys23/practice-ops-dashboard.git",
     "stack_excerpt": "Next.js 16 App Router, TypeScript, React Server Components by default, Tailwind CSS, and Zod."

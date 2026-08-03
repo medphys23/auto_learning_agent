@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -48,13 +48,13 @@
     "npm run lint"
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:57Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:57Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

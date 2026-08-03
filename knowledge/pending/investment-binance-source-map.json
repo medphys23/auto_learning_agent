@@ -36,11 +36,11 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b78baa76b019eac1a7bf7eebc28946a2e5d2efc6",
+    "source_commit": "90cd59a85e7c6cd4eee6d48248c1d0b362d69375",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
-      ".cursor/skills/binance-dashboard/SKILL.md",
       "AGENTS.md",
       "README.md",
       "app.py",
@@ -66,12 +66,12 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:01Z",
+    "created_at": "2026-07-16T17:12:54Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
-      ".cursor/skills/binance-dashboard/SKILL.md",
       "AGENTS.md",
       "README.md",
       "app.py",
@@ -86,7 +86,7 @@
       "tests/test_indicators.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:01Z"
+    "updated_at": "2026-07-16T17:12:54Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -113,8 +113,26 @@
           "src/paper_worker.py"
         ],
         "file_count": 12,
+        "graph_node_count": 130,
         "suffixes": {
           ".py": 12
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "app.py",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 5,
+        "graph_node_count": 70,
+        "suffixes": {
+          ".md": 3,
+          ".py": 1,
+          ".txt": 1
         }
       },
       {
@@ -128,24 +146,9 @@
           "tests/test_storage_worker_ml.py"
         ],
         "file_count": 6,
+        "graph_node_count": 54,
         "suffixes": {
           ".py": 6
-        }
-      },
-      {
-        "area": ".",
-        "examples": [
-          "AGENTS.md",
-          "app.py",
-          "README.md",
-          "requirements.txt",
-          "skills.md"
-        ],
-        "file_count": 5,
-        "suffixes": {
-          ".md": 3,
-          ".py": 1,
-          ".txt": 1
         }
       },
       {
@@ -157,6 +160,7 @@
           "scripts/unregister_paper_worker_startup.ps1"
         ],
         "file_count": 4,
+        "graph_node_count": 4,
         "suffixes": {
           ".ps1": 4
         }
@@ -164,21 +168,26 @@
       {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc",
           ".cursor/skills/binance-dashboard/SKILL.md"
         ],
-        "file_count": 3,
+        "file_count": 4,
+        "graph_node_count": 0,
         "suffixes": {
           ".md": 1,
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 30
+    "graph_index_used": true,
+    "graph_node_count": 298,
+    "graph_source_file_count": 26,
+    "harvestable_text_file_count": 31
   },
   "status": "candidate",
-  "summary": "Safe source map for Investment_binance: 5 harvestable areas, led by src, tests, ., scripts, .cursor.",
+  "summary": "Safe source map for Investment_binance: 5 harvestable areas, led by src, ., tests, scripts, .cursor.",
   "tags": [
     "architecture-map",
     "binance_public_api",

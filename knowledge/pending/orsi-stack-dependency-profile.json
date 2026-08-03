@@ -32,8 +32,10 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "83c4b221523a71085664eedc589e1d259ad34a75",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
     "source_paths": [
+      "HUGO_RAS/package-lock.json",
+      "HUGO_RAS/package.json",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt"
     ],
@@ -44,6 +46,58 @@
   "id": "orsi-stack-dependency-profile",
   "incompatible_when": [],
   "manifest_signals": [
+    {
+      "name": "package-lock.json",
+      "path": "HUGO_RAS/package-lock.json",
+      "summary": "Tracked manifest file `HUGO_RAS/package-lock.json` is present."
+    },
+    {
+      "dependencies": [
+        "@react-three/drei",
+        "@react-three/fiber",
+        "react",
+        "react-dom",
+        "three",
+        "zod",
+        "zustand"
+      ],
+      "dev_dependencies": [
+        "@eslint/js",
+        "@playwright/test",
+        "@testing-library/jest-dom",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/react",
+        "@types/react-dom",
+        "@vitejs/plugin-react",
+        "@vitest/coverage-v8",
+        "eslint",
+        "eslint-plugin-jsx-a11y",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh",
+        "globals",
+        "jsdom",
+        "prettier",
+        "typescript",
+        "typescript-eslint",
+        "vite",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "HUGO_RAS/package.json",
+      "scripts": [
+        "build",
+        "dev",
+        "format",
+        "format:check",
+        "lint",
+        "preview",
+        "test",
+        "test:e2e",
+        "test:unit",
+        "typecheck"
+      ]
+    },
     {
       "name": "requirements.txt",
       "path": "Optimal_Trocar_Placement/trocar_model/requirements.txt",
@@ -76,14 +130,16 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-09T11:40:21Z",
+    "created_at": "2026-07-16T17:12:58Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      "HUGO_RAS/package-lock.json",
+      "HUGO_RAS/package.json",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T11:40:21Z"
+    "updated_at": "2026-07-16T17:12:58Z"
   },
   "registry_stack_tags": [
     "docx",
@@ -103,7 +159,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for ORSI: registry tags docx, office_com, pptx, python, streamlit; 2 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for ORSI: registry tags docx, office_com, pptx, python, streamlit; 4 tracked manifest file(s).",
   "tags": [
     "dependency-profile",
     "docx",

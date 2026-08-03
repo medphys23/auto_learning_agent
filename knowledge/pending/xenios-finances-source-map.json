@@ -30,8 +30,9 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "1f18c532e608eae147c250fab568d572e3f9a683",
+    "source_commit": "7db6cd341883664ed201a12e57d82d9a4e17923c",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -56,9 +57,10 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:05Z",
+    "created_at": "2026-07-16T17:13:02Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
@@ -72,7 +74,7 @@
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:05Z"
+    "updated_at": "2026-07-16T17:13:02Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -99,8 +101,24 @@
           "app/functions/transaction_functions.php"
         ],
         "file_count": 18,
+        "graph_node_count": 123,
         "suffixes": {
           ".php": 18
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 42,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
         }
       },
       {
@@ -116,6 +134,7 @@
           "public/transaction_delete.php"
         ],
         "file_count": 11,
+        "graph_node_count": 20,
         "suffixes": {
           ".css": 1,
           ".js": 1,
@@ -123,35 +142,26 @@
         }
       },
       {
-        "area": ".",
-        "examples": [
-          "AGENTS.md",
-          "README.md",
-          "requirements.txt",
-          "skills.md"
-        ],
-        "file_count": 4,
-        "suffixes": {
-          ".md": 3,
-          ".txt": 1
-        }
-      },
-      {
         "area": ".cursor",
         "examples": [
+          ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
           ".cursor/rules/repo-verification.mdc"
         ],
-        "file_count": 2,
+        "file_count": 3,
+        "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 2
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 35
+    "graph_index_used": true,
+    "graph_node_count": 195,
+    "graph_source_file_count": 31,
+    "harvestable_text_file_count": 36
   },
   "status": "candidate",
-  "summary": "Safe source map for Xenios_FInances: 4 harvestable areas, led by app, public, ., .cursor.",
+  "summary": "Safe source map for Xenios_FInances: 4 harvestable areas, led by app, ., public, .cursor.",
   "tags": [
     "architecture-map",
     "bootstrap",

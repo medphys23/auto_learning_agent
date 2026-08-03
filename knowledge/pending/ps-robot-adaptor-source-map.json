@@ -30,11 +30,11 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_commit": "5c4263c0cdc0366c84d03aef3c413d22a76885a4",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
       ".cursor/rules/repo-core.mdc",
-      ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
       "docs/schemas/README.md",
@@ -59,12 +59,12 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:03Z",
+    "created_at": "2026-07-16T17:13:01Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
       ".cursor/rules/repo-core.mdc",
-      ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "README.md",
       "docs/schemas/README.md",
@@ -78,7 +78,7 @@
       "tests/test_ds4_layout.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:03Z"
+    "updated_at": "2026-07-16T17:13:01Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -105,6 +105,7 @@
           "src/teleop_ui/app_sim_console.py"
         ],
         "file_count": 27,
+        "graph_node_count": 252,
         "suffixes": {
           ".json": 2,
           ".py": 25
@@ -123,6 +124,7 @@
           "tests/test_mapping_profile.py"
         ],
         "file_count": 11,
+        "graph_node_count": 62,
         "suffixes": {
           ".py": 11
         }
@@ -137,25 +139,11 @@
           "skills.md"
         ],
         "file_count": 5,
+        "graph_node_count": 42,
         "suffixes": {
           ".md": 3,
           ".toml": 1,
           ".txt": 1
-        }
-      },
-      {
-        "area": ".cursor",
-        "examples": [
-          ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
-          ".cursor/rules/repo-core.mdc",
-          ".cursor/rules/repo-verification.mdc",
-          ".cursor/skills/nonclinical-teleop-simulator-plan/reference.md",
-          ".cursor/skills/nonclinical-teleop-simulator-plan/SKILL.md"
-        ],
-        "file_count": 5,
-        "suffixes": {
-          ".md": 2,
-          ".mdc": 3
         }
       },
       {
@@ -164,6 +152,7 @@
           "docs/schemas/README.md"
         ],
         "file_count": 1,
+        "graph_node_count": 2,
         "suffixes": {
           ".md": 1
         }
@@ -174,15 +163,36 @@
           "scripts/dev/update_requirements.ps1"
         ],
         "file_count": 1,
+        "graph_node_count": 1,
         "suffixes": {
           ".ps1": 1
         }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/nonclinical-teleop-simulator-planning.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/nonclinical-teleop-simulator-plan/reference.md",
+          ".cursor/skills/nonclinical-teleop-simulator-plan/SKILL.md"
+        ],
+        "file_count": 6,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 2,
+          ".mdc": 4
+        }
       }
     ],
-    "harvestable_text_file_count": 50
+    "graph_index_used": true,
+    "graph_node_count": 689,
+    "graph_source_file_count": 49,
+    "harvestable_text_file_count": 51
   },
   "status": "candidate",
-  "summary": "Safe source map for PS_robot_adaptor: 6 harvestable areas, led by src, tests, ., .cursor, docs, scripts.",
+  "summary": "Safe source map for PS_robot_adaptor: 6 harvestable areas, led by src, tests, ., docs, scripts, .cursor.",
   "tags": [
     "architecture-map",
     "local-github-analysis",

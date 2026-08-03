@@ -1,0 +1,188 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+personality = "pragmatic"
+project_doc_max_bytes = 65536
+
+notify = [ "C:\\Users\\ppyxe\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\ecfc0d9aa02807e3\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended" ]
+[windows]
+sandbox = "elevated"
+
+[plugins."canva@openai-curated"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."binance@openai-curated"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."google-drive@openai-curated"]
+enabled = true
+
+[plugins."gmail@openai-curated"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[projects.'c:\users\ppyxe\documents\github\ps_robot_adaptor']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\ar_pipeline']
+trust_level = "trusted"
+
+[projects.'g:\my drive\general surgery\orsi\published papers by fellows']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\orsi']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\general_work']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\campania_transplant']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\kidney_federico']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\Xenios_FInances']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-03\files-mentioned-by-the-user-buona']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\investment']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\investment_binance']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\x_booking']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-29\thi']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-29\check-why-my-minor-fourth-pc']
+trust_level = "trusted"
+
+[projects.'g:\my drive\alexia_eleftheriadou_practise_documents']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\practice-ops-dashboard']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\auto_learning_agent']
+trust_level = "trusted"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-07-10T15:56:10Z"
+source_type = "local"
+source = '\\?\C:\Users\ppyxe\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-07-04T14:47:50Z"
+source_type = "local"
+source = '\\?\C:\Users\ppyxe\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = false
+keepRemoteControlAwakeWhilePluggedIn = true
+followUpQueueMode = "queue"
+
+[features]
+js_repl = false
+
+memories = false
+[mcp_servers.node_repl]
+args = []
+command = 'C:\Users\ppyxe\AppData\Local\OpenAI\Codex\runtimes\cua_node\ecfc0d9aa02807e3\bin\node_repl.exe'
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = 'C:\Users\ppyxe\AppData\Local\OpenAI\Codex\runtimes\cua_node\ecfc0d9aa02807e3\bin\node_modules'
+NODE_REPL_NODE_PATH = 'C:\Users\ppyxe\AppData\Local\OpenAI\Codex\runtimes\cua_node\ecfc0d9aa02807e3\bin\node.exe'
+NODE_REPL_TRUSTED_CODE_PATHS = 'C:\Users\ppyxe\.codex'
+CODEX_HOME = 'C:\Users\ppyxe\.codex'
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "7ed52dae165c3bc22b6d24f282e2c1fbc87f6949fbbe037767a7418d8f517f01,c8b7e809d7cf9e20a57123b2530d476ccec9a01a6230a7b2b924fea7d94d7f4a"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.707.31428"
+SKY_CUA_NATIVE_PIPE = "1"
+SKY_CUA_NATIVE_PIPE_DIRECTORY = '\\.\pipe\codex-computer-use-25b37b92-7f1b-43f6-a3fd-5040c8869297'
+CODEX_CLI_PATH = 'C:\Users\ppyxe\AppData\Local\OpenAI\Codex\bin\a7c12ebff69fb123\codex.exe'
+
+[hooks.state]
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:146eedfa10f48cfcb6d2cfb2c8fc36e8d8bb8751d2167ba205fa0b967c8a7f6e"
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:1"]
+trusted_hash = "sha256:1b7bf88920f9d93c5bd508088299ba969739865da51a3043b931819328abf7d5"
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:2"]
+trusted_hash = "sha256:7c0c78b3d111a81aed993357e32d997f3996cf32bbf4ab475efe9ce08772673a"
+
+[plugins."vercel-plugin@plugins-cli"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+interrupt_message = true
+[agents.workflow_router]
+description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
+config_file = "agents/workflow-router.toml"
+
+[agents.repository_harvester]
+description = "Inspects registered repositories read-only and creates evidence-backed knowledge candidates."
+config_file = "agents/repository-harvester.toml"
+
+[agents.knowledge_synthesizer]
+description = "Deduplicates candidates and proposes scoped promotions or deprecations."
+config_file = "agents/knowledge-synthesizer.toml"
+
+[agents.verifier]
+description = "Validates implementation, evidence, configuration, and publication readiness."
+config_file = "agents/verifier.toml"
+
+[agents.luna_worker]
+description = "Fast worker for explicit, repetitive, deterministic, low-risk, and easily validated tasks."
+config_file = "agents/luna_worker.toml"
+
+[agents.terra_worker]
+description = "General engineering worker for routine implementation, debugging, refactoring, testing, and repository analysis."
+config_file = "agents/terra_worker.toml"
+
+[agents.sol_specialist]
+description = "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work."
+config_file = "agents/sol_specialist.toml"

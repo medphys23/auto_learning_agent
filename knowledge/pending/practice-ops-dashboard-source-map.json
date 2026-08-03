@@ -34,20 +34,23 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "793ef12e51a7c980c39920480f0a7a99718307c3",
+    "source_commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
     "source_paths": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
-      ".cursor/skills/beneficiary-import-merge/SKILL.md",
       "AGENTS.md",
       "next-env.d.ts",
       "onboarding.md",
+      "scripts/backfill-bp-complement.ts",
+      "scripts/backfill-gesy-kpi-reports.ts",
+      "scripts/db-audit.ts",
       "src/app/(app)/certificates/page.tsx",
       "src/app/(app)/kpi/page.tsx",
       "src/app/(app)/layout.tsx",
-      "tests/certificates.test.ts",
-      "tests/dictationText.test.ts",
-      "tests/patientPresentation.test.ts"
+      "tests/auditSanitizer.test.ts",
+      "tests/bpComplementBackfill.test.ts",
+      "tests/bpIncompleteReportParser.test.ts"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
     "task_or_issue": "local-github-repository-analysis",
@@ -61,24 +64,27 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-10T16:24:14Z",
+    "created_at": "2026-08-03T21:23:56Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
-      ".cursor/skills/beneficiary-import-merge/SKILL.md",
       "AGENTS.md",
       "next-env.d.ts",
       "onboarding.md",
+      "scripts/backfill-bp-complement.ts",
+      "scripts/backfill-gesy-kpi-reports.ts",
+      "scripts/db-audit.ts",
       "src/app/(app)/certificates/page.tsx",
       "src/app/(app)/kpi/page.tsx",
       "src/app/(app)/layout.tsx",
-      "tests/certificates.test.ts",
-      "tests/dictationText.test.ts",
-      "tests/patientPresentation.test.ts"
+      "tests/auditSanitizer.test.ts",
+      "tests/bpComplementBackfill.test.ts",
+      "tests/bpIncompleteReportParser.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-10T16:24:14Z"
+    "updated_at": "2026-08-03T21:23:56Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -99,16 +105,17 @@
           "src/app/(app)/kpi/page.tsx",
           "src/app/(app)/layout.tsx",
           "src/app/(app)/page.tsx",
+          "src/app/(app)/patients/[patientRef]/page.tsx",
           "src/app/(app)/patients/page.tsx",
           "src/app/(app)/remittance/page.tsx",
-          "src/app/(app)/sources/page.tsx",
-          "src/app/(app)/uploads/page.tsx"
+          "src/app/(app)/sources/page.tsx"
         ],
-        "file_count": 79,
+        "file_count": 124,
+        "graph_node_count": 861,
         "suffixes": {
           ".css": 1,
-          ".ts": 49,
-          ".tsx": 29
+          ".ts": 80,
+          ".tsx": 43
         }
       },
       {
@@ -118,54 +125,80 @@
           "next-env.d.ts",
           "onboarding.md",
           "package.json",
+          "playwright.config.ts",
           "README.md",
           "skills.md",
-          "tailwind.config.ts",
-          "tsconfig.json"
+          "tailwind.config.ts"
         ],
-        "file_count": 9,
+        "file_count": 10,
+        "graph_node_count": 200,
         "suffixes": {
           ".json": 2,
           ".md": 4,
-          ".ts": 3
+          ".ts": 4
         }
       },
       {
-        "area": ".cursor",
+        "area": "scripts",
         "examples": [
-          ".cursor/rules/repo-core.mdc",
-          ".cursor/rules/repo-verification.mdc",
-          ".cursor/skills/beneficiary-import-merge/SKILL.md",
-          ".cursor/skills/certificate-generation-email/SKILL.md",
-          ".cursor/skills/new-practice-onboarding/SKILL.md",
-          ".cursor/skills/practice-ops-stack/SKILL.md",
-          ".cursor/skills/server-query-view-models/SKILL.md",
-          ".cursor/skills/upload-practice-data/SKILL.md"
+          "scripts/backfill-bp-complement.ts",
+          "scripts/backfill-gesy-kpi-reports.ts",
+          "scripts/db-audit.ts",
+          "scripts/db-migrate.ts",
+          "scripts/lib/bpIncompleteReportParser.ts",
+          "scripts/lib/gesyKpiReportParser.ts"
         ],
-        "file_count": 8,
+        "file_count": 6,
+        "graph_node_count": 85,
         "suffixes": {
-          ".md": 6,
-          ".mdc": 2
+          ".ts": 6
         }
       },
       {
         "area": "tests",
         "examples": [
+          "tests/auditSanitizer.test.ts",
+          "tests/bpComplementBackfill.test.ts",
+          "tests/bpIncompleteReportParser.test.ts",
           "tests/certificates.test.ts",
+          "tests/databaseArchitecture.test.ts",
           "tests/dictationText.test.ts",
-          "tests/patientPresentation.test.ts",
-          "tests/summary.test.ts"
+          "tests/gesyKpiBackfill.test.ts",
+          "tests/gesyKpiReportParser.test.ts"
         ],
-        "file_count": 4,
+        "file_count": 21,
+        "graph_node_count": 61,
         "suffixes": {
-          ".ts": 4
+          ".ts": 21
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/beneficiary-import-merge/SKILL.md",
+          ".cursor/skills/certificate-generation-email/SKILL.md",
+          ".cursor/skills/kpi-timing-outreach/SKILL.md",
+          ".cursor/skills/new-practice-onboarding/SKILL.md",
+          ".cursor/skills/practice-ops-stack/SKILL.md"
+        ],
+        "file_count": 10,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 7,
+          ".mdc": 3
         }
       }
     ],
-    "harvestable_text_file_count": 100
+    "graph_index_used": true,
+    "graph_node_count": 1254,
+    "graph_source_file_count": 165,
+    "harvestable_text_file_count": 171
   },
   "status": "candidate",
-  "summary": "Safe source map for practice-ops-dashboard: 4 harvestable areas, led by src, ., .cursor, tests.",
+  "summary": "Safe source map for practice-ops-dashboard: 5 harvestable areas, led by src, ., scripts, tests, .cursor.",
   "tags": [
     "architecture-map",
     "auth",

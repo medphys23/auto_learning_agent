@@ -20,7 +20,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "abff6dc4c37ad9d329791f1f10dda7ef518f6844",
+    "source_commit": "bf611c9cd2c9b13a3b7cab7cb768b2ed823d9b39",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -37,18 +37,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:01Z",
+    "created_at": "2026-07-16T17:12:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:01Z"
+    "updated_at": "2026-07-16T17:12:53Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 6,
-    "harvestable_text_file_count": 5,
+    "file_count": 8,
+    "harvestable_text_file_count": 6,
     "purpose_excerpt": "Catch-all scratch repository for general work that does not yet have a dedicated project. Currently effectively empty (README + one spreadsheet); the agent should fill out this `AGENTS.md` properly once real code lands.",
     "remote": "https://github.com/medphys23/general_work.git",
     "stack_excerpt": "To be defined. No `requirements.txt`, `pyproject.toml`, or `package.json` yet. Inherits the global stack catalog by default; pick from it (Office COM, Python numerics, R, etc.) once the actual work is scoped."

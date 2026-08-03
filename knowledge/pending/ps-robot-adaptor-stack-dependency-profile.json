@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_commit": "5c4263c0cdc0366c84d03aef3c413d22a76885a4",
     "source_paths": [
       "pyproject.toml",
       "requirements.txt"
@@ -80,14 +80,14 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:04Z",
+    "created_at": "2026-07-16T17:13:01Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "pyproject.toml",
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:04Z"
+    "updated_at": "2026-07-16T17:13:01Z"
   },
   "registry_stack_tags": [
     "pygame",

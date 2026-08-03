@@ -32,14 +32,17 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "83c4b221523a71085664eedc589e1d259ad34a75",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
     "source_paths": [
       ".cursor/rules/ad-astra-references.mdc",
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/orsi-core.mdc",
-      ".cursor/rules/orsi-metrics-content.mdc",
       "AD_Astra/README.md",
       "AD_Astra/references/README.md",
       "AGENTS.md",
+      "HUGO_RAS/AGENTS.md",
+      "HUGO_RAS/package-lock.json",
+      "HUGO_RAS/package.json",
       "Optimal_Trocar_Placement/trocar_model/README.md",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt",
@@ -58,15 +61,18 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-09T11:40:21Z",
+    "created_at": "2026-07-16T17:12:58Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/ad-astra-references.mdc",
+      ".cursor/rules/graphify.mdc",
       ".cursor/rules/orsi-core.mdc",
-      ".cursor/rules/orsi-metrics-content.mdc",
       "AD_Astra/README.md",
       "AD_Astra/references/README.md",
       "AGENTS.md",
+      "HUGO_RAS/AGENTS.md",
+      "HUGO_RAS/package-lock.json",
+      "HUGO_RAS/package.json",
       "Optimal_Trocar_Placement/trocar_model/README.md",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt",
@@ -74,7 +80,7 @@
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-09T11:40:21Z"
+    "updated_at": "2026-07-16T17:12:58Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -89,21 +95,19 @@
   "source_map": {
     "areas": [
       {
-        "area": ".cursor",
+        "area": "HUGO_RAS",
         "examples": [
-          ".cursor/rules/ad-astra-references.mdc",
-          ".cursor/rules/orsi-core.mdc",
-          ".cursor/rules/orsi-metrics-content.mdc",
-          ".cursor/rules/orsi-pdf-literature.mdc",
-          ".cursor/rules/orsi-verification.mdc",
-          ".cursor/skills/ad-astra-chapter/SKILL.md",
-          ".cursor/skills/cholecystectomy-protocol-literature/SKILL.md",
-          ".cursor/skills/delphi-expert-threshold-evidence/SKILL.md"
+          "HUGO_RAS/AGENTS.md",
+          "HUGO_RAS/package-lock.json",
+          "HUGO_RAS/package.json",
+          "HUGO_RAS/README.md",
+          "HUGO_RAS/skills.md"
         ],
-        "file_count": 15,
+        "file_count": 5,
+        "graph_node_count": 90,
         "suffixes": {
-          ".md": 10,
-          ".mdc": 5
+          ".json": 2,
+          ".md": 3
         }
       },
       {
@@ -114,6 +118,7 @@
           "skills.md"
         ],
         "file_count": 3,
+        "graph_node_count": 65,
         "suffixes": {
           ".md": 3
         }
@@ -125,6 +130,7 @@
           "AD_Astra/references/README.md"
         ],
         "file_count": 2,
+        "graph_node_count": 13,
         "suffixes": {
           ".md": 2
         }
@@ -136,9 +142,29 @@
           "Optimal_Trocar_Placement/trocar_model/requirements.txt"
         ],
         "file_count": 2,
+        "graph_node_count": 7,
         "suffixes": {
           ".md": 1,
           ".txt": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/ad-astra-references.mdc",
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/orsi-core.mdc",
+          ".cursor/rules/orsi-metrics-content.mdc",
+          ".cursor/rules/orsi-pdf-literature.mdc",
+          ".cursor/rules/orsi-verification.mdc",
+          ".cursor/skills/ad-astra-chapter/SKILL.md",
+          ".cursor/skills/cholecystectomy-protocol-literature/SKILL.md"
+        ],
+        "file_count": 19,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 13,
+          ".mdc": 6
         }
       },
       {
@@ -147,15 +173,19 @@
           "Orsi_Metrics_Research/requirements.txt"
         ],
         "file_count": 1,
+        "graph_node_count": 0,
         "suffixes": {
           ".txt": 1
         }
       }
     ],
-    "harvestable_text_file_count": 23
+    "graph_index_used": true,
+    "graph_node_count": 2527,
+    "graph_source_file_count": 210,
+    "harvestable_text_file_count": 32
   },
   "status": "candidate",
-  "summary": "Safe source map for ORSI: 5 harvestable areas, led by .cursor, ., AD_Astra, Optimal_Trocar_Placement, Orsi_Metrics_Research.",
+  "summary": "Safe source map for ORSI: 6 harvestable areas, led by HUGO_RAS, ., AD_Astra, Optimal_Trocar_Placement, .cursor, Orsi_Metrics_Research.",
   "tags": [
     "architecture-map",
     "docx",

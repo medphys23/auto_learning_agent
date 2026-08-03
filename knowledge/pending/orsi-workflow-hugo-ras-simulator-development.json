@@ -1,0 +1,104 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "languages": [
+      "docx",
+      "office_com",
+      "pptx",
+      "python",
+      "streamlit"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-hugo-ras-simulator-development",
+  "incompatible_when": [],
+  "procedure": [
+    "- Read `HUGO_RAS/AGENTS.md` before changing implementation files.",
+    "- Preserve the simulation-only, non-clinical, no-real-device boundary and the visible `SIMULATION ONLY \u2014 NOT FOR CLINICAL USE` banner.",
+    "- Current product schema is `PROJECT_SCHEMA_VERSION` `3.0.0` (`SimulationProjectV3`); keep V1/V2 migration paths working in persistence.",
+    "- Arm topology may be paper-informed; all cart dimensions, link geometry, joint axes/limits, IK parameters, and motion-sweep defaults remain configurable illustrative proxy data \u2014 never manufacturer measurements or proprietary CAD.",
+    "- Node.js 24 (`HUGO_RAS/.nvmrc`); use `npm ci` with the committed lockfile.",
+    "1. Work from `HUGO_RAS/`. Keep domain schemas in `src/domain/`, presets in `src/presets/`, pure analysis in `src/geometry/` (`analyze`, `docking`, `kinematics`, `physicalModel`, primitives/transforms), persistence/export in `src/persistence",
+    "2. Preserve metres/radians internally and centimetres/degrees at the UI boundary; keep +X patient-left, +Y head, +Z upward.",
+    "3. Treat launch (`StartScreen`), wizard (`SetupWizard`), and expert workspace as distinct app views; do not collapse custom-setup staging into silent defaults.",
+    "4. Keep docking collision-aware and deterministic: approach sectors, cart paths, Ready/blocker reporting, and sequential docking order belong in `geometry/docking` + `physicalModel`, not ad-hoc UI math.",
+    "5. Keep FK/IK, RCM constraints, capsule clearances, triangulation, and motion envelopes unit-tested; keep heavy solves out of React render paths and select the narrowest Zustand slices.",
+    "6. When changing persistence, library keys, exports, or project contracts, extend unit tests (`docking`, `kinematics`, `project`, `store`, `geometry`, `App`) and Playwright e2e coverage together.",
+    "7. Do not add CT/DICOM, cloud auth, real HID/robot protocols, proprietary geometry reverse-engineering, or clinical decision language.",
+    "8. When dependencies or workflows change, update `HUGO_RAS/README.md`, `HUGO_RAS/AGENTS.md`, `HUGO_RAS/skills.md`, this section, and both root and `HUGO_RAS/.cursor/skills/` mirrors together.",
+    "- 2026-07-15: Added root catalog entry after the V3 docking/collision rework. Required deltas: `SimulationProjectV3` + library migration, `StartScreen`/`SetupWizard`, articulated six-joint proxy with FK/IK/RCM, collision-aware docking, moti"
+  ],
+  "provenance": {
+    "created_at": "2026-07-16T17:12:58Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-07-16T17:12:58Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** building, editing, debugging, reviewing, or verifying the standalone Modular RAS Setup Simulator V3 under `HUGO_RAS/`.",
+  "tags": [
+    "docx",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "streamlit"
+  ],
+  "title": "ORSI workflow: HUGO RAS simulator development",
+  "trigger_phrases": [
+    "ORSI",
+    "HUGO RAS simulator development"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

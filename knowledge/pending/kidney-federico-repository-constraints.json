@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "e397fc573c0183cc8cf3ed825f2f847bf777f916",
+    "source_commit": "0462682236543d7a715a9cb85b77b468893c47b6",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -48,13 +48,13 @@
     "**Audit logging:** keep `clinical_api_audit` writes intact for any API actions; do not bypass them when adding endpoints."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:02Z",
+    "created_at": "2026-07-16T17:12:56Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:02Z"
+    "updated_at": "2026-07-16T17:12:56Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

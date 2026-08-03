@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8a60ff18c2d1215975ffe4c52cfa29e84ffce3c0",
+    "source_commit": "5c4263c0cdc0366c84d03aef3c413d22a76885a4",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -47,18 +47,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:03Z",
+    "created_at": "2026-07-16T17:13:00Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:03Z"
+    "updated_at": "2026-07-16T17:13:00Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 62,
-    "harvestable_text_file_count": 50,
+    "file_count": 64,
+    "harvestable_text_file_count": 51,
     "purpose_excerpt": "Desktop **simulation-only** tooling for surgical teleoperation research: DualShock 4 input, controller diagnostics GUI, a four-arm research console with 3D instrument visualization and a 7-DOF instrument model, deterministic replay tests, J",
     "remote": "https://github.com/medphys23/PS_robot_adaptor.git",
     "stack_excerpt": "Python **3.11+** (pinned in `pyproject.toml`)."

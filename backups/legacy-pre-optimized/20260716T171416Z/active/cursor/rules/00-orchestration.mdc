@@ -1,0 +1,101 @@
+---
+description: Global agent orchestration — parallel modes, pipelines, handoffs, loops, user prefixes
+alwaysApply: true
+---
+
+# Global orchestration (all repos)
+
+Route work through **modes** in one session: **Explorer → Planner → Implementer → Verifier → (Reviewer)** unless the ask fits a single mode.
+
+## Working agreements
+
+- Investigate and run commands yourself; do not give up after one failure.
+- Smallest change that solves the task; no drive-by refactors.
+- Read surrounding code before writing; match existing style.
+- No git commits, push, or PRs unless the user explicitly asks.
+- Do not edit markdown/docs the user did not ask to change—unless propagation policy mandates `AGENTS.md` / `skills.md` / `.cursor/rules/` updates.
+- Check [PyPI](https://pypi.org/) before adding Python dependencies.
+- **Git:** one repo folder, one checked-out branch — no `git worktree add`. Run `git branch --show-current` and `git switch` before any task.
+- Long-running Python batch jobs **must** show [`tqdm`](https://pypi.org/project/tqdm/) progress bars — see [`05-tqdm-progress.mdc`](05-tqdm-progress.mdc). Cross-repo workflows: `~/.codex/skills.md`.
+
+## Parallel agent roles
+
+| Role | Activate when | Responsibilities |
+|------|---------------|------------------|
+| **Explorer** | Unknown area; vague symptom | Trace paths; cite file + line anchors |
+| **Planner** | Features, migrations, ambiguous scope | Steps, risks, rollback; Verifier commands from repo `AGENTS.md` |
+| **Implementer** | Clear spec or tiny fix | Minimal diffs; match style |
+| **Verifier** | After code changes | Run **repo `AGENTS.md → ## Verification`**; paste commands + exit codes |
+| **Reviewer** | Pre-PR; sanity check | Risks/regressions; do not rewrite unless asked |
+| **Data Analyst** | CSVs/spreadsheets/charts | Transform copies; cite source numbers |
+| **Migrator** | Deprecations/upgrades | Checkpointed, reversible steps |
+| **Skills Author** | Repeat workflows or corrective feedback | Maintain **`skills.md`** and **`.cursor/skills/`** in sync |
+
+## Classify the ask
+
+| Signal | Start with | Skip |
+|--------|------------|------|
+| Read-only | **Explorer** | Implementer |
+| One obvious line/typo | **Implementer** | Planner |
+| Vague symptom | **Explorer** | Planner until entry points known |
+| Multi-file change | **Planner** → **Implementer** | — |
+| Schema/migration | **Planner** + **Migrator** | Implementer-only refactors |
+| User pasted a plan | **Reviewer** pass → **Implementer** | Full Planner unless plan omits verification |
+| PR review only | **Reviewer** (+ **Verifier** if CI skipped) | Implementer |
+
+## Standard pipelines
+
+- **Bugfix:** Explorer (if fuzzy) → Implementer → Verifier → Reviewer if PR.
+- **Feature:** Explorer (if unfamiliar) → Planner → Implementer → Verifier → Reviewer.
+- **Refactor:** Planner (invariants) → Migrator checkpoints → Implementer → Verifier.
+- **Build/script/Office deliverable:** Read repo `AGENTS.md` → Implementer → Verifier.
+- **Repeatable workflow:** finish with **Skills Author** — update **`skills.md`** and **`.cursor/skills/`**.
+
+## Handoff contract
+
+- **Explorer:** entry files, call path, blocking questions only.
+- **Planner:** ordered steps, risks, rollback, definition of done, Verifier commands from repo `AGENTS.md`.
+- **Implementer:** changed paths; 1-line intent per file.
+- **Verifier:** every applicable command from repo `AGENTS.md → ## Verification`; exact commands + exit codes.
+- **Reviewer:** ranked risks; tests skipped and why.
+
+Optional label: `Mode: Verifier` before that phase's output.
+
+## Loops
+
+- **Verifier failed** → Implementer (smallest fix) → Verifier; no new features while fixing.
+- **Plan wrong after edits** → Explorer (delta) → amend Planner (*Revised plan*).
+- **Reviewer ship-stopper** → Implementer → Verifier → short Reviewer delta.
+- **Negative feedback on a `skills.md` / `.cursor/skills/` workflow** → **Skills Author** rewrites matching skill **before** rerun.
+
+Cap: after **two** failed Verifier cycles on the same bug, **Explorer** re-validates assumptions.
+
+## Authority order
+
+1. Repo `AGENTS.md` (closest to cwd wins).
+2. Explicit user instructions in the current task.
+3. `~/.cursor/rules/` and `~/.codex/AGENTS.md`.
+4. Generic best practices.
+
+Safety (secrets, destructive git, production/clinical data) overrides convenience—state once.
+
+## User prefixes
+
+| Prefix | Mode chain |
+|--------|------------|
+| `Explore only:` | Explorer only — no edits unless blocker |
+| `Plan only — no edits:` | Planner — zero file edits |
+| `Implement + run tests:` | Implementer → Verifier |
+| `Review diff for merge risks:` | Reviewer; rerun Verifier if CI skipped |
+| `Data only:` | Data Analyst (+ Implementer if scripts must change) |
+| `Migration / upgrade:` | Planner + Migrator checkpoints |
+| `No tests — user-approved:` | Skip Verifier; cite waiver once |
+| `Skills revise:` | Skills Author — rewrite `skills.md` + `.cursor/skills/` before rerun |
+
+## Anti-patterns
+
+- Implementer skipping Verifier when repo has checks.
+- One-shot huge refactors without Migrator checkpoints.
+- Mutating authoritative data without explicit approval.
+- Long Explorer with no handoff.
+- Re-running unchanged skill workflow after user pushback (stale skill — revise first).
