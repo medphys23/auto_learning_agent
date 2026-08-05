@@ -1,0 +1,456 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "languages": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": [
+      ".github/actions/npm-ci-retry/action.yml",
+      ".github/copilot-instructions.md",
+      ".github/dependabot.yml",
+      ".gitleaks.toml",
+      ".markdownlint.json",
+      ".mergify.yml",
+      "@omniroute/opencode-plugin/README.md",
+      "@omniroute/opencode-plugin/package-lock.json",
+      "@omniroute/opencode-plugin/package.json",
+      "bin/cli/README.md",
+      "changelog.d/README.md",
+      "config/i18n-schema.json",
+      "config/i18n.json",
+      "config/payloadRules.json",
+      "contrib/podman/README.md",
+      "docker/vnc-browser/README.md",
+      "docker/vnc-browser/chromium/Dockerfile",
+      "docs/assets/flags/README.md",
+      "docs/diagrams/README.md",
+      "docs/frameworks/SKILLS.md",
+      "electron/README.md",
+      "electron/package-lock.json",
+      "electron/package.json",
+      "open-sse/mcp-server/README.md",
+      "open-sse/package.json",
+      "open-sse/services/AGENTS.md",
+      "public/openapi.yaml",
+      "public/sw.js",
+      "scripts/ad-hoc/dbsetup.js",
+      "scripts/ad-hoc/fetch_prs.js",
+      "scripts/ad-hoc/nvidia-startswith-diag.ts",
+      "skills/README.md",
+      "src/app/(dashboard)/dashboard/a2a/page.tsx",
+      "src/app/(dashboard)/dashboard/acp-agents/page.tsx",
+      "src/app/(dashboard)/dashboard/activity/ActivityFeedClient.tsx",
+      "tests/_helpers/readSrc.ts",
+      "tests/_setup/isolateDataDir.ts",
+      "tests/_setup/vitestUiPolyfills.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "omniroute-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-05T20:23:34Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".github/actions/npm-ci-retry/action.yml",
+      ".github/copilot-instructions.md",
+      ".github/dependabot.yml",
+      ".gitleaks.toml",
+      ".markdownlint.json",
+      ".mergify.yml",
+      "@omniroute/opencode-plugin/README.md",
+      "@omniroute/opencode-plugin/package-lock.json",
+      "@omniroute/opencode-plugin/package.json",
+      "bin/cli/README.md",
+      "changelog.d/README.md",
+      "config/i18n-schema.json",
+      "config/i18n.json",
+      "config/payloadRules.json",
+      "contrib/podman/README.md",
+      "docker/vnc-browser/README.md",
+      "docker/vnc-browser/chromium/Dockerfile",
+      "docs/assets/flags/README.md",
+      "docs/diagrams/README.md",
+      "docs/frameworks/SKILLS.md",
+      "electron/README.md",
+      "electron/package-lock.json",
+      "electron/package.json",
+      "open-sse/mcp-server/README.md",
+      "open-sse/package.json",
+      "open-sse/services/AGENTS.md",
+      "public/openapi.yaml",
+      "public/sw.js",
+      "scripts/ad-hoc/dbsetup.js",
+      "scripts/ad-hoc/fetch_prs.js",
+      "scripts/ad-hoc/nvidia-startswith-diag.ts",
+      "skills/README.md",
+      "src/app/(dashboard)/dashboard/a2a/page.tsx",
+      "src/app/(dashboard)/dashboard/acp-agents/page.tsx",
+      "src/app/(dashboard)/dashboard/activity/ActivityFeedClient.tsx",
+      "tests/_helpers/readSrc.ts",
+      "tests/_setup/isolateDataDir.ts",
+      "tests/_setup/vitestUiPolyfills.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:23:34Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/app/(dashboard)/dashboard/a2a/page.tsx",
+          "src/app/(dashboard)/dashboard/acp-agents/page.tsx",
+          "src/app/(dashboard)/dashboard/activity/ActivityFeedClient.tsx",
+          "src/app/(dashboard)/dashboard/activity/components/ActivityFeed.tsx",
+          "src/app/(dashboard)/dashboard/activity/components/ActivityItem.tsx",
+          "src/app/(dashboard)/dashboard/activity/components/DayHeader.tsx",
+          "src/app/(dashboard)/dashboard/activity/components/EventTypeFilter.tsx",
+          "src/app/(dashboard)/dashboard/activity/page.tsx"
+        ],
+        "file_count": 2652,
+        "graph_node_count": 17127,
+        "suffixes": {
+          ".css": 1,
+          ".md": 3,
+          ".sql": 119,
+          ".ts": 1780,
+          ".tsx": 749
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/_helpers/readSrc.ts",
+          "tests/_setup/isolateDataDir.ts",
+          "tests/_setup/vitestUiPolyfills.ts",
+          "tests/benchmarks/pipeline-accuracy.test.ts",
+          "tests/boundary/gemini-double-escaping.live.test.ts",
+          "tests/boundary/gemini-midstream-503-e2e.live.test.ts",
+          "tests/boundary/gemma4-multiturn.live.test.ts",
+          "tests/boundary/gemma4-newline-investigation.live.test.ts"
+        ],
+        "file_count": 3878,
+        "graph_node_count": 11561,
+        "suffixes": {
+          ".js": 1,
+          ".json": 21,
+          ".ts": 3588,
+          ".tsx": 225,
+          ".txt": 42,
+          ".yaml": 1
+        }
+      },
+      {
+        "area": "docs",
+        "examples": [
+          "docs/assets/flags/README.md",
+          "docs/diagrams/README.md",
+          "docs/frameworks/SKILLS.md",
+          "docs/i18n/ar/README.md",
+          "docs/i18n/az/README.md",
+          "docs/i18n/bg/README.md",
+          "docs/i18n/bn/README.md",
+          "docs/i18n/cs/README.md"
+        ],
+        "file_count": 49,
+        "graph_node_count": 4030,
+        "suffixes": {
+          ".md": 49
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          ".gitleaks.toml",
+          ".markdownlint.json",
+          ".mergify.yml",
+          ".size-limit.json",
+          ".zizmor.yml",
+          "AGENTS.md",
+          "CLAUDE.md",
+          "CODE_OF_CONDUCT.md"
+        ],
+        "file_count": 36,
+        "graph_node_count": 1390,
+        "suffixes": {
+          ".json": 12,
+          ".md": 8,
+          ".toml": 2,
+          ".ts": 4,
+          ".txt": 1,
+          ".yaml": 2,
+          ".yml": 6,
+          "dockerfile": 1
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/ad-hoc/dbsetup.js",
+          "scripts/ad-hoc/fetch_prs.js",
+          "scripts/ad-hoc/nvidia-startswith-diag.ts",
+          "scripts/ad-hoc/regen-opencode-config.ts",
+          "scripts/ad-hoc/resolve_all_conflicts.js",
+          "scripts/check/check-compression-budget.ts",
+          "scripts/check/check-known-symbols.ts",
+          "scripts/check/check-nvidia-catalog-drift.ts"
+        ],
+        "file_count": 31,
+        "graph_node_count": 296,
+        "suffixes": {
+          ".js": 3,
+          ".json": 5,
+          ".py": 4,
+          ".ts": 19
+        }
+      },
+      {
+        "area": "@omniroute",
+        "examples": [
+          "@omniroute/opencode-plugin/package-lock.json",
+          "@omniroute/opencode-plugin/package.json",
+          "@omniroute/opencode-plugin/README.md",
+          "@omniroute/opencode-provider/package-lock.json",
+          "@omniroute/opencode-provider/package.json",
+          "@omniroute/opencode-provider/README.md"
+        ],
+        "file_count": 6,
+        "graph_node_count": 149,
+        "suffixes": {
+          ".json": 4,
+          ".md": 2
+        }
+      },
+      {
+        "area": "electron",
+        "examples": [
+          "electron/package-lock.json",
+          "electron/package.json",
+          "electron/README.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 113,
+        "suffixes": {
+          ".json": 2,
+          ".md": 1
+        }
+      },
+      {
+        "area": "open-sse",
+        "examples": [
+          "open-sse/mcp-server/README.md",
+          "open-sse/package.json",
+          "open-sse/services/AGENTS.md",
+          "open-sse/services/compression/engines/rtk/filters/composer.json"
+        ],
+        "file_count": 4,
+        "graph_node_count": 101,
+        "suffixes": {
+          ".json": 2,
+          ".md": 2
+        }
+      },
+      {
+        "area": "config",
+        "examples": [
+          "config/i18n-schema.json",
+          "config/i18n.json",
+          "config/payloadRules.json",
+          "config/quality/.license-allowlist.json",
+          "config/quality/complexity-baseline.json",
+          "config/quality/dashboard-typecheck-baseline.json",
+          "config/quality/dependency-allowlist.json",
+          "config/quality/duplication-baseline.json"
+        ],
+        "file_count": 15,
+        "graph_node_count": 70,
+        "suffixes": {
+          ".json": 15
+        }
+      },
+      {
+        "area": "contrib",
+        "examples": [
+          "contrib/podman/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 18,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "bin",
+        "examples": [
+          "bin/cli/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 10,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "skills",
+        "examples": [
+          "skills/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 9,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "docker",
+        "examples": [
+          "docker/vnc-browser/chromium/Dockerfile",
+          "docker/vnc-browser/README.md"
+        ],
+        "file_count": 2,
+        "graph_node_count": 7,
+        "suffixes": {
+          ".md": 1,
+          "dockerfile": 1
+        }
+      },
+      {
+        "area": "public",
+        "examples": [
+          "public/openapi.yaml",
+          "public/sw.js"
+        ],
+        "file_count": 2,
+        "graph_node_count": 5,
+        "suffixes": {
+          ".js": 1,
+          ".yaml": 1
+        }
+      },
+      {
+        "area": "changelog.d",
+        "examples": [
+          "changelog.d/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 5,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/actions/npm-ci-retry/action.yml",
+          ".github/copilot-instructions.md",
+          ".github/dependabot.yml",
+          ".github/FUNDING.yml",
+          ".github/ISSUE_TEMPLATE/bug_report.yml",
+          ".github/ISSUE_TEMPLATE/config.yml",
+          ".github/ISSUE_TEMPLATE/feature_request.yml",
+          ".github/ISSUE_TEMPLATE/test_coverage_task.yml"
+        ],
+        "file_count": 32,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 2,
+          ".yml": 30
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 116004,
+    "graph_source_file_count": 9469,
+    "harvestable_text_file_count": 6714
+  },
+  "status": "candidate",
+  "summary": "Safe source map for OmniRoute: 16 harvestable areas, led by src, tests, docs, ., scripts, @omniroute, electron, open-sse.",
+  "tags": [
+    "a2a",
+    "architecture-map",
+    "auth",
+    "cost_bearing_providers",
+    "credentials",
+    "database",
+    "electron",
+    "local-github-analysis",
+    "mcp",
+    "network_proxy",
+    "nextjs",
+    "node",
+    "omniroute",
+    "source-map",
+    "sqlite",
+    "sse",
+    "subprocess",
+    "supply_chain",
+    "typescript",
+    "zod"
+  ],
+  "title": "OmniRoute source and architecture map",
+  "trigger_phrases": [
+    "OmniRoute",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

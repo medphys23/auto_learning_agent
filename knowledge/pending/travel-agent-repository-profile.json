@@ -1,0 +1,88 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "travel-agent-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:37:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:37:22Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 33,
+    "harvestable_text_file_count": 19,
+    "purpose_excerpt": "Local travel research orchestrator that drives a logged-in ChatGPT browser session (Skyscanner Analyst project) to find cheapest logical door-to-door itineraries with matching timetables and luggage options. Stores all runs locally and sync",
+    "remote": "https://github.com/medphys23/travel_agent.git",
+    "stack_excerpt": "Python 3.11+ with repo-root `.venv` via `uv`"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Local travel research orchestrator that drives a logged-in ChatGPT browser session (Skyscanner Analyst project) to find cheapest logical door-to-door itineraries with matching timetables and luggage options. Stores all runs locally and sync",
+  "tags": [
+    "local-github-analysis",
+    "python",
+    "repository-profile",
+    "travel-agent"
+  ],
+  "title": "travel_agent repository profile",
+  "trigger_phrases": [
+    "travel_agent",
+    "travel-agent",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

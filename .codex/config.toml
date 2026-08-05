@@ -40,5 +40,21 @@ config_file = "agents/knowledge-synthesizer.toml"
 description = "Validates implementation, evidence, configuration, and publication readiness."
 config_file = "agents/verifier.toml"
 
+[agents.systems_architect]
+description = "Maps system boundaries, flows, state ownership, non-functional requirements, ADR candidates, and cross-cutting impact read-only."
+config_file = "agents/systems_architect.toml"
+
+[agents.reliability_operations_reviewer]
+description = "Reviews reliability and operational failure handling, readiness, recovery, observability, and shutdown read-only."
+config_file = "agents/reliability_operations_reviewer.toml"
+
+[agents.security_boundary_reviewer]
+description = "Reviews trust boundaries, identity, validation, secrets, SSRF, subprocesses, logging, and retention read-only."
+config_file = "agents/security_boundary_reviewer.toml"
+
+[agents.quality_release_reviewer]
+description = "Reviews risk-based tests, gates, ratchets, artifacts, provenance, documentation contracts, and rollback read-only."
+config_file = "agents/quality_release_reviewer.toml"
+
 [sandbox_workspace_write]
 network_access = false

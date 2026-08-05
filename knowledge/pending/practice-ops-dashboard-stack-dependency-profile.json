@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -11,6 +12,7 @@
     ],
     "languages": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -108,16 +110,17 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:23:57Z",
+    "created_at": "2026-08-05T20:23:43Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:23:57Z"
+    "updated_at": "2026-08-05T20:23:43Z"
   },
   "registry_stack_tags": [
     "nextjs",
+    "node",
     "postgres",
     "react",
     "tailwind",
@@ -135,7 +138,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for practice-ops-dashboard: registry tags nextjs, postgres, react, tailwind, typescript, vercel; 1 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for practice-ops-dashboard: registry tags nextjs, node, postgres, react, tailwind, typescript, vercel; 1 tracked manifest file(s).",
   "tags": [
     "auth",
     "database",
@@ -143,6 +146,7 @@
     "manifest-profile",
     "medical_practice_data",
     "nextjs",
+    "node",
     "postgres",
     "practice-ops-dashboard",
     "react",

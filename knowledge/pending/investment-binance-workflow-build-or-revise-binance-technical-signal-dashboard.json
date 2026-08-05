@@ -69,13 +69,13 @@
     "6. Keep futures context optional and non-blocking because `/fapi` endpoints may be region-blocked."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:54Z",
+    "created_at": "2026-08-05T20:23:15Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:54Z"
+    "updated_at": "2026-08-05T20:23:15Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

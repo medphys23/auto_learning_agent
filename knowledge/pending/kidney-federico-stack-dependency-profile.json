@@ -81,7 +81,7 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:55Z",
+    "created_at": "2026-08-05T20:23:16Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "frontend/composer.json",
@@ -89,7 +89,7 @@
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:55Z"
+    "updated_at": "2026-08-05T20:23:16Z"
   },
   "registry_stack_tags": [
     "mamp",

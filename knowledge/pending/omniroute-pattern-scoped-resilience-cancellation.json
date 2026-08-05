@@ -1,0 +1,51 @@
+{
+  "id": "omniroute-pattern-scoped-resilience-cancellation",
+  "title": "Candidate pattern: scoped resilience and cancellation ownership",
+  "type": "pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Assign retries, deadlines, circuit breaking, queueing, cooldowns, and cancellation to explicit scopes so nested layers do not multiply work or outlive the caller.",
+  "trigger_phrases": ["retry ownership", "cancellation propagation", "gateway resilience", "backpressure review"],
+  "tags": ["backpressure", "cancellation", "circuit-breaker", "omniroute", "reliability", "retry"],
+  "applicability": {
+    "languages": ["typescript"],
+    "frameworks": ["node"],
+    "runtimes": ["node"],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["networked-service"],
+    "repository_markers": ["multiple upstream providers", "streaming requests", "fallback routing"]
+  },
+  "incompatible_when": ["The workload has no remote calls, concurrency, queueing, or cancellable operations."],
+  "procedure": [
+    "Create a failure matrix covering caller, request, provider, connection, and process scopes.",
+    "Give each retry and timeout budget one owner and prevent blanket retries at multiple layers.",
+    "Propagate cancellation through queues, fallbacks, streams, and subprocess boundaries.",
+    "Bound concurrency and queue depth, and make overload behavior explicit.",
+    "Define recovery probes and success-decay behavior instead of relying only on timer expiry."
+  ],
+  "verification": [
+    "Inject latency, cancellation, retryable failures, quota failures, and queue saturation and verify bounded work.",
+    "Confirm a disconnected caller cannot leave provider work, streams, or subprocesses running indefinitely."
+  ],
+  "rollback": ["Remove or specialize the lesson if a target runtime has incompatible cancellation or scheduling semantics."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["docs/architecture/RESILIENCE_GUIDE.md", "open-sse/services/combo.ts", "src/shared/utils/circuitBreaker.ts"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["docs/architecture/RESILIENCE_GUIDE.md", "open-sse/services/combo.ts", "src/shared/utils/circuitBreaker.ts"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.84, "rationale": "OmniRoute documents scoped resilience and implements circuit-breaker/combo behavior, but cross-repository reuse is not yet proven."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

@@ -1,0 +1,81 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "travel-agent-workflow-verified-chatgpt-ui-selectors-2026-08",
+  "incompatible_when": [],
+  "procedure": [
+    "- Composer send: `[data-testid=\"send-button\"]`; composer attach input is `upload-photos-input`\u2014never use it for project sources.",
+    "- Project page tabs: `role=tab` named `Chats` / `Sources`.",
+    "- Sources upload: button `Add sources` \u2192 modal tile `Upload` \u2192 native file chooser (`expect_file_chooser`).",
+    "- Source row: `div` with class `group/file-row`; hover reveals `button[aria-label=\"Source actions\"]` \u2192 menu with delete action.",
+    "- Responses render the `PROJECT_SOURCE_UPDATE` fence as a code block, so text extraction sees a bare `PROJECT_SOURCE_UPDATE` line\u2014`kb_manager` handles both shapes.",
+    "- Selector drift debugging: `scripts/inspect_project_page.py`, `scripts/inspect_sources_tab.py`, `scripts/dump_source_row_html.py`."
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:37:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:37:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Composer send: `[data-testid=\"send-button\"]`; composer attach input is `upload-photos-input`\u2014never use it for project sources.",
+  "tags": [
+    "python",
+    "repo-workflow",
+    "skills-md",
+    "travel-agent"
+  ],
+  "title": "travel_agent workflow: Verified ChatGPT UI selectors (2026-08)",
+  "trigger_phrases": [
+    "travel_agent",
+    "Verified ChatGPT UI selectors (2026-08)"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

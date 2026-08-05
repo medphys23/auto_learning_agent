@@ -52,6 +52,19 @@
     "reusable_pattern": {
       "type": "boolean"
     },
+    "specialist_roles": {
+      "type": "array",
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "systems_architect",
+          "reliability_operations_reviewer",
+          "security_boundary_reviewer",
+          "quality_release_reviewer"
+        ]
+      }
+    },
     "notes": {
       "type": "string",
       "maxLength": 500

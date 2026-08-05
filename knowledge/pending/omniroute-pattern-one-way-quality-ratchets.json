@@ -1,0 +1,51 @@
+{
+  "id": "omniroute-pattern-one-way-quality-ratchets",
+  "title": "Candidate pattern: one-way quality ratchets and documentation gates",
+  "type": "pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Baseline existing debt, reject regressions, automatically bank improvements, require explicit review for threshold increases, and verify documentation claims against executable repository facts.",
+  "trigger_phrases": ["quality ratchet", "baseline debt", "documentation drift", "CI quality gate"],
+  "tags": ["ci", "documentation", "omniroute", "quality", "ratchet"],
+  "applicability": {
+    "languages": ["cross-language"],
+    "frameworks": ["repository-ci"],
+    "runtimes": [],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["repository-ci"],
+    "repository_markers": ["quality baselines", "CI workflows", "documentation checks"]
+  },
+  "incompatible_when": ["The metric is unstable, easy to game, or disconnected from a meaningful engineering outcome."],
+  "procedure": [
+    "Choose a measurable signal and document whether it is blocking or advisory.",
+    "Freeze current debt as a reviewed baseline and fail only on regression.",
+    "Make baseline reductions automatic or routine, but require explicit review to raise a cap.",
+    "Keep exception lists visible and shrink-only.",
+    "Add documentation gates for counts, commands, routes, versions, and other machine-checkable claims."
+  ],
+  "verification": [
+    "Prove a regression fails, a neutral change passes, and an improvement shrinks or can safely update the baseline.",
+    "Verify the CI workflow runs the ratchet and documentation checks on the intended event paths."
+  ],
+  "rollback": ["Return a noisy metric to advisory status with a tracked repair plan; retain the previous baseline and evidence."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["docs/architecture/QUALITY_GATES.md", "scripts/quality", "scripts/check", ".github/workflows/ci.yml"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["docs/architecture/QUALITY_GATES.md", "scripts/quality", "scripts/check", ".github/workflows/ci.yml"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.87, "rationale": "The repository documents mature ratchet mechanics and CI ownership, but promotion requires successful reuse."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

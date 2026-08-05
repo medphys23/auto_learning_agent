@@ -1,0 +1,343 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "languages": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": [
+      "@omniroute/opencode-plugin/package-lock.json",
+      "@omniroute/opencode-plugin/package.json",
+      "@omniroute/opencode-provider/package-lock.json",
+      "@omniroute/opencode-provider/package.json",
+      "electron/package-lock.json",
+      "electron/package.json",
+      "open-sse/package.json",
+      "open-sse/services/compression/engines/rtk/filters/composer.json",
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "omniroute-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "package-lock.json",
+      "path": "@omniroute/opencode-plugin/package-lock.json",
+      "summary": "Tracked manifest file `@omniroute/opencode-plugin/package-lock.json` is present."
+    },
+    {
+      "dependencies": [
+        "zod"
+      ],
+      "dev_dependencies": [
+        "@opencode-ai/plugin",
+        "@types/node",
+        "tsup",
+        "tsx",
+        "typescript"
+      ],
+      "name": "package.json",
+      "path": "@omniroute/opencode-plugin/package.json",
+      "scripts": [
+        "build",
+        "clean",
+        "prepublishOnly",
+        "test"
+      ]
+    },
+    {
+      "name": "package-lock.json",
+      "path": "@omniroute/opencode-provider/package-lock.json",
+      "summary": "Tracked manifest file `@omniroute/opencode-provider/package-lock.json` is present."
+    },
+    {
+      "dependencies": [],
+      "dev_dependencies": [
+        "@types/node",
+        "tsup",
+        "tsx",
+        "typescript"
+      ],
+      "name": "package.json",
+      "path": "@omniroute/opencode-provider/package.json",
+      "scripts": [
+        "build",
+        "clean",
+        "prepublishOnly",
+        "test"
+      ]
+    },
+    {
+      "name": "package-lock.json",
+      "path": "electron/package-lock.json",
+      "summary": "Tracked manifest file `electron/package-lock.json` is present."
+    },
+    {
+      "dependencies": [
+        "electron-updater"
+      ],
+      "dev_dependencies": [
+        "electron",
+        "electron-builder"
+      ],
+      "name": "package.json",
+      "path": "electron/package.json",
+      "scripts": [
+        "build",
+        "build:linux",
+        "build:mac",
+        "build:mac-arm64",
+        "build:mac-x64",
+        "build:win",
+        "dev",
+        "pack",
+        "prepare:bundle",
+        "start"
+      ]
+    },
+    {
+      "dependencies": [
+        "@toon-format/toon",
+        "safe-regex",
+        "smol-toml"
+      ],
+      "dev_dependencies": [],
+      "name": "package.json",
+      "path": "open-sse/package.json",
+      "scripts": []
+    },
+    {
+      "name": "composer.json",
+      "path": "open-sse/services/compression/engines/rtk/filters/composer.json",
+      "summary": "Tracked manifest file `open-sse/services/compression/engines/rtk/filters/composer.json` is present."
+    },
+    {
+      "dependencies": [
+        "@aws-sdk/client-bedrock-runtime",
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@lobehub/icons",
+        "@modelcontextprotocol/sdk",
+        "@monaco-editor/react",
+        "@ngrok/ngrok",
+        "@swc/helpers",
+        "@toon-format/toon",
+        "@types/mdx",
+        "@xyflow/react",
+        "axios",
+        "bcryptjs",
+        "bottleneck",
+        "clsx",
+        "commander",
+        "csv-stringify",
+        "dompurify",
+        "express",
+        "fetch-socks",
+        "fflate",
+        "fumadocs-core",
+        "fumadocs-ui",
+        "http-proxy-middleware",
+        "https-proxy-agent",
+        "ink",
+        "ink-spinner",
+        "ink-text-input",
+        "ioredis",
+        "jose",
+        "js-yaml",
+        "jsonc-parser",
+        "lowdb",
+        "lucide-react",
+        "marked",
+        "marked-terminal",
+        "material-symbols",
+        "mermaid",
+        "monaco-editor"
+      ],
+      "dev_dependencies": [
+        "@axe-core/playwright",
+        "@cyclonedx/cyclonedx-npm",
+        "@playwright/test",
+        "@size-limit/file",
+        "@stryker-mutator/core",
+        "@stryker-mutator/tap-runner",
+        "@tailwindcss/postcss",
+        "@testing-library/jest-dom",
+        "@testing-library/react",
+        "@types/better-sqlite3",
+        "@types/bun",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "@types/safe-regex",
+        "@types/ws",
+        "@vitejs/plugin-react",
+        "bun",
+        "c8",
+        "concurrently",
+        "cross-env",
+        "ctrf",
+        "dpdm",
+        "eslint",
+        "eslint-config-next",
+        "eslint-plugin-sonarjs",
+        "fast-check",
+        "fumadocs-mdx",
+        "glob",
+        "httpyac",
+        "husky",
+        "jscpd",
+        "jsdom",
+        "junit-to-ctrf",
+        "knip",
+        "license-checker-rseidelsohn",
+        "lint-staged",
+        "lockfile-lint",
+        "node-loader",
+        "playwright-ctrf-json-reporter"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "audit:deps",
+        "audit:electron",
+        "backfill-aggregation",
+        "bench:compression",
+        "bench:heap-body",
+        "build",
+        "build:backend",
+        "build:cli",
+        "build:cli-api",
+        "build:native:tproxy",
+        "build:release",
+        "build:secure",
+        "changelog:aggregate",
+        "check",
+        "check:agent-skills-sync",
+        "check:any-budget:t11",
+        "check:api-docs-refs",
+        "check:build-scope",
+        "check:bundle-size",
+        "check:changelog-integrity"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-08-05T20:23:37Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "@omniroute/opencode-plugin/package-lock.json",
+      "@omniroute/opencode-plugin/package.json",
+      "@omniroute/opencode-provider/package-lock.json",
+      "@omniroute/opencode-provider/package.json",
+      "electron/package-lock.json",
+      "electron/package.json",
+      "open-sse/package.json",
+      "open-sse/services/compression/engines/rtk/filters/composer.json",
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:23:37Z"
+  },
+  "registry_stack_tags": [
+    "a2a",
+    "electron",
+    "mcp",
+    "nextjs",
+    "node",
+    "sqlite",
+    "sse",
+    "typescript",
+    "zod"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for OmniRoute: registry tags a2a, electron, mcp, nextjs, node, sqlite, sse, typescript, zod; 9 tracked manifest file(s).",
+  "tags": [
+    "a2a",
+    "auth",
+    "cost_bearing_providers",
+    "credentials",
+    "database",
+    "dependency-profile",
+    "electron",
+    "manifest-profile",
+    "mcp",
+    "network_proxy",
+    "nextjs",
+    "node",
+    "omniroute",
+    "sqlite",
+    "sse",
+    "stack-profile",
+    "subprocess",
+    "supply_chain",
+    "typescript",
+    "zod"
+  ],
+  "title": "OmniRoute stack and dependency profile",
+  "trigger_phrases": [
+    "OmniRoute",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

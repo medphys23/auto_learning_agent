@@ -1,0 +1,77 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "travel-agent-verification-command-4",
+  "incompatible_when": [],
+  "procedure": [
+    ".\\.venv\\Scripts\\python.exe -m compileall travel_agent app.py"
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:37:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:37:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Canonical verification command from travel_agent: .\\.venv\\Scripts\\python.exe -m compileall travel_agent app.py",
+  "tags": [
+    "python",
+    "repo-agents",
+    "travel-agent",
+    "verification-command"
+  ],
+  "title": "travel_agent verification command 4",
+  "trigger_phrases": [
+    "travel_agent",
+    "verification",
+    ".\\.venv\\Scripts\\python.exe -m compileall travel_agent app.py"
+  ],
+  "type": "command",
+  "verification": [
+    "Run only when the repository AGENTS.md says the command applies to touched files."
+  ]
+}

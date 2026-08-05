@@ -1,0 +1,169 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+    "source_paths": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "app.py",
+      "scripts/check_login.py",
+      "scripts/dump_source_row_html.py",
+      "scripts/inspect_project_page.py",
+      "tests/test_travel_agent.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "travel-agent-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-03T21:37:22Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "app.py",
+      "scripts/check_login.py",
+      "scripts/dump_source_row_html.py",
+      "scripts/inspect_project_page.py",
+      "tests/test_travel_agent.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-03T21:37:22Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/check_login.py",
+          "scripts/dump_source_row_html.py",
+          "scripts/inspect_project_page.py",
+          "scripts/inspect_source_row_menu.py",
+          "scripts/inspect_sources_tab.py",
+          "scripts/upload_kb_once.py"
+        ],
+        "file_count": 6,
+        "graph_node_count": 18,
+        "suffixes": {
+          ".py": 6
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "app.py",
+          "README.md",
+          "requirements-dev.txt",
+          "requirements.txt",
+          "skills.md",
+          "SKYSCANNER_ANALYST_PROJECT_INSTRUCTIONS.md",
+          "TRANSPORT_KNOWLEDGE_BASE.md"
+        ],
+        "file_count": 8,
+        "graph_node_count": 6,
+        "suffixes": {
+          ".md": 5,
+          ".py": 1,
+          ".txt": 2
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_travel_agent.py"
+        ],
+        "file_count": 1,
+        "graph_node_count": 6,
+        "suffixes": {
+          ".py": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/chatgpt-travel-research/SKILL.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1,
+          ".mdc": 3
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 152,
+    "graph_source_file_count": 19,
+    "harvestable_text_file_count": 19
+  },
+  "status": "candidate",
+  "summary": "Safe source map for travel_agent: 4 harvestable areas, led by scripts, ., tests, .cursor.",
+  "tags": [
+    "architecture-map",
+    "local-github-analysis",
+    "python",
+    "source-map",
+    "travel-agent"
+  ],
+  "title": "travel_agent source and architecture map",
+  "trigger_phrases": [
+    "travel_agent",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

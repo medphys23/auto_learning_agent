@@ -1,0 +1,50 @@
+{
+  "id": "omniroute-pattern-canonical-request-pipeline",
+  "title": "Candidate pattern: one canonical request pipeline",
+  "type": "pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Model a gateway request as one traceable pipeline with explicit ownership for ingress, authorization, translation, routing, execution, response translation, streaming, and usage recording.",
+  "trigger_phrases": ["AI gateway architecture", "canonical request pipeline", "provider routing pipeline"],
+  "tags": ["ai-gateway", "architecture", "canonical-pipeline", "omniroute", "typescript"],
+  "applicability": {
+    "languages": ["typescript"],
+    "frameworks": ["nextjs", "node"],
+    "runtimes": ["node"],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["networked-service"],
+    "repository_markers": ["provider adapters", "streaming handlers", "routing engine"]
+  },
+  "incompatible_when": ["The system is a small single-stage adapter where a formal pipeline adds no useful ownership boundary."],
+  "procedure": [
+    "Draw the end-to-end request path before changing a cross-cutting behavior.",
+    "Give each transformation, policy decision, retry scope, and persistence side effect one canonical owner.",
+    "Keep provider-specific behavior behind stable translation and executor boundaries.",
+    "Update the architecture diagram and executable checks when a stage or boundary changes."
+  ],
+  "verification": [
+    "Trace one request from ingress through response completion in source and confirm each documented stage has one implementation owner.",
+    "Exercise streaming and non-streaming paths and confirm usage recording and error translation remain consistent."
+  ],
+  "rollback": ["Keep the lesson candidate-only; remove it if reuse shows the staged pipeline adds duplication or obscures the real runtime path."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["docs/architecture/ARCHITECTURE.md", "src/sse/handlers/chat.ts", "open-sse/handlers/chatCore.ts", "open-sse/translator/index.ts"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["docs/architecture/ARCHITECTURE.md", "src/sse/handlers/chat.ts", "open-sse/handlers/chatCore.ts", "open-sse/translator/index.ts"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.84, "rationale": "Architecture documentation and the canonical handler/translator source agree, but the pattern has not yet been reused outside OmniRoute."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

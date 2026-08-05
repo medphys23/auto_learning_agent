@@ -33,7 +33,10 @@ def command_text(command: list[str]) -> str:
 
 def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_audit: bool, skip_graphify: bool = False) -> list[CycleStep]:
     steps = [
-        CycleStep("discover repositories", [python_executable, "scripts/discover_repositories.py"]),
+        CycleStep(
+            "discover repositories",
+            [python_executable, "scripts/discover_repositories.py", "--write-registry"],
+        ),
     ]
     if not skip_graphify:
         steps.append(CycleStep("refresh repository graphs", [python_executable, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))

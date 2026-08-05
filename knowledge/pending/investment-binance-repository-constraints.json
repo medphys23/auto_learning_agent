@@ -57,13 +57,13 @@
     "Spot market data must use the configured base URL fallback chain. Futures data is optional because `/fapi` endpoints may return regional `451` restrictions."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:54Z",
+    "created_at": "2026-08-05T20:23:15Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:54Z"
+    "updated_at": "2026-08-05T20:23:15Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -1,0 +1,51 @@
+{
+  "id": "omniroute-pattern-artifact-level-release-proof",
+  "title": "Candidate pattern: artifact-level release proof",
+  "type": "pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Prove the actual package or image that will ship: inspect its contents, boot or execute it, verify version and deployment identity, retain provenance, and document rollback before promotion.",
+  "trigger_phrases": ["release proof", "package artifact verification", "deployment identity", "release rollback"],
+  "tags": ["artifact", "omniroute", "provenance", "release", "rollback", "supply-chain"],
+  "applicability": {
+    "languages": ["cross-language"],
+    "frameworks": ["package-release", "container-release"],
+    "runtimes": [],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["package-registry", "container-registry"],
+    "repository_markers": ["release workflow", "package manifest", "release checklist"]
+  },
+  "incompatible_when": ["The deliverable has no independently built artifact and deployment is fully source-addressed with equivalent immutable identity proof."],
+  "procedure": [
+    "Build once and identify the exact candidate artifact by immutable version and digest.",
+    "Inspect package or image contents for required files and forbidden local residue.",
+    "Boot or execute the built artifact in a clean environment and run a minimal functional smoke test.",
+    "Verify runtime version and deployment identity match the release candidate.",
+    "Capture provenance, checksums, and rollback or deprecation instructions before promotion."
+  ],
+  "verification": [
+    "Run artifact-content checks and a clean-environment boot smoke against the exact candidate.",
+    "After deployment, compare reported version or digest with the promoted artifact and verify the rollback target."
+  ],
+  "rollback": ["Deprecate or unpromote the bad artifact, repoint to the last known-good immutable digest, and retain incident evidence."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["docs/ops/RELEASE_CHECKLIST.md", ".github/workflows/npm-publish.yml", "scripts/build"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["docs/ops/RELEASE_CHECKLIST.md", ".github/workflows/npm-publish.yml", "scripts/build"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.86, "rationale": "OmniRoute provides artifact checks and a detailed release checklist, but the generalized pattern remains unproven elsewhere."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

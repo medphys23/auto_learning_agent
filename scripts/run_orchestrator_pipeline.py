@@ -162,7 +162,10 @@ def build_steps(
         PipelineStep("validate local Codex TOML", [py, "scripts/validate_codex_config.py"]),
         PipelineStep("audit global instructions", [py, "scripts/audit_global_instructions.py", "--reports-dir", str(reports_dir)]),
         PipelineStep("audit context budget", [py, "scripts/audit_context_budget.py", "--reports-dir", str(reports_dir), "--master-root", str(master_root)]),
-        PipelineStep("discover local repositories", [py, "scripts/discover_repositories.py"]),
+        PipelineStep(
+            "discover local repositories",
+            [py, "scripts/discover_repositories.py", "--write-registry"],
+        ),
     ]
     if not skip_graphify:
         steps.append(PipelineStep("refresh repository graphs", [py, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))

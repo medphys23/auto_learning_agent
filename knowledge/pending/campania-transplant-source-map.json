@@ -61,7 +61,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:52Z",
+    "created_at": "2026-08-05T20:23:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
@@ -78,7 +78,7 @@
       "scripts/map_docx_media.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:52Z"
+    "updated_at": "2026-08-05T20:23:14Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -11,6 +12,7 @@
     ],
     "languages": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -59,13 +61,13 @@
     "- 2026-07-09 - Updated from unpushed `onboarding.md` and README: standard new-doctor deployment is same repo plus new Vercel project, new Neon DB/Auth, full env set, first uploads, signature setup, and certificate smoke tests."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:23:57Z",
+    "created_at": "2026-08-05T20:23:43Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:23:57Z"
+    "updated_at": "2026-08-05T20:23:43Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -84,6 +86,7 @@
     "database",
     "medical_practice_data",
     "nextjs",
+    "node",
     "postgres",
     "practice-ops-dashboard",
     "react",

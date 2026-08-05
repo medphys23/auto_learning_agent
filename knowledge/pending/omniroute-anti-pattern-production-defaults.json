@@ -1,0 +1,51 @@
+{
+  "id": "omniroute-anti-pattern-production-defaults",
+  "title": "Candidate anti-pattern: copying local gateway conveniences into production defaults",
+  "type": "anti_pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Do not copy a detailed public health payload, Docker-socket or privileged local container access, plaintext fail-open encryption, optimistic readiness, or mutable latest-version deployment into production without an explicit threat and operations review.",
+  "trigger_phrases": ["gateway production defaults", "health payload exposure", "fail-open encryption", "mutable latest deployment"],
+  "tags": ["anti-pattern", "encryption", "health", "omniroute", "production", "readiness", "supply-chain"],
+  "applicability": {
+    "languages": ["cross-language"],
+    "frameworks": ["networked-service"],
+    "runtimes": [],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["production"],
+    "repository_markers": ["health endpoint", "container profile", "encryption helper", "deployment workflow"]
+  },
+  "incompatible_when": ["A development-only environment has no sensitive data, no untrusted clients, and the convenience is explicitly prevented from reaching production."],
+  "procedure": [
+    "Expose only the minimum unauthenticated liveness signal; protect detailed diagnostics.",
+    "Remove Docker-socket, host, or privileged container access unless a reviewed production requirement proves it necessary.",
+    "Fail closed when required encryption is absent or fails; separate legacy migration behavior from production write behavior.",
+    "Base readiness on required dependency and initialization state, not only process startup.",
+    "Deploy immutable versions or digests and verify the installed identity instead of installing a mutable latest tag."
+  ],
+  "verification": [
+    "Threat-model health, container, storage, and deployment boundaries for the target environment.",
+    "Test missing encryption configuration, encryption failure, dependency failure during startup, unauthenticated health access, and rollback to an immutable artifact."
+  ],
+  "rollback": ["Restore the previous production configuration or immutable artifact and disable the convenience path until its boundary has been reviewed."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["src/app/api/monitoring/health/route.ts", "src/app/healthz/route.ts", "docker-compose.yml", "src/lib/db/encryption.ts", ".github/workflows/deploy-vps.yml"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["src/app/api/monitoring/health/route.ts", "src/app/healthz/route.ts", "docker-compose.yml", "src/lib/db/encryption.ts", ".github/workflows/deploy-vps.yml"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.9, "rationale": "The source directly shows these convenience behaviors; suitability depends on environment, so this remains a warning candidate rather than a claim of vulnerability."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

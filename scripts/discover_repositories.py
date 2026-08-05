@@ -145,6 +145,7 @@ def registry_text(repositories: list[dict[str, Any]]) -> str:
         "risk_tags",
         "stack_tags",
         "harvest_mode",
+        "allow_dirty_harvest",
         "notes",
     )
     lines: list[str] = []
@@ -157,36 +158,68 @@ def registry_text(repositories: list[dict[str, Any]]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def merge_registry(existing_path: Path, discovered: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def normalize_registry_path(path: str) -> str:
+    return str(Path(path).resolve()).casefold()
+
+
+def merge_registry(existing_path: Path, discovered: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[str]]:
     existing_by_id: dict[str, dict[str, Any]] = {}
+    existing_id_by_path: dict[str, str] = {}
     if existing_path.exists():
         existing = read_toml(existing_path).get("repositories", [])
         if isinstance(existing, list):
-            existing_by_id = {str(item.get("id")): dict(item) for item in existing}
+            for item in existing:
+                row = dict(item)
+                repo_id = str(row.get("id"))
+                existing_by_id[repo_id] = row
+                path = row.get("path")
+                if path:
+                    existing_id_by_path[normalize_registry_path(str(path))] = repo_id
+    newly_added: list[str] = []
     for repo in discovered:
-        merged = existing_by_id.get(str(repo["id"]), {})
-        merged.update(
-            {
-                "id": repo["id"],
-                "name": repo["name"],
-                "path": repo["path"],
-                "remote": repo["remote"],
-                "current_branch": repo["current_branch"],
-                "enabled": repo["enabled"],
-                "scope": repo["scope"],
-                "risk_tags": repo["risk_tags"],
-                "stack_tags": repo["stack_tags"],
-                "harvest_mode": repo["harvest_mode"],
-            }
-        )
-        existing_by_id[str(repo["id"])] = merged
-    return list(existing_by_id.values())
+        repo_id = str(repo["id"])
+        normalized_path = normalize_registry_path(str(repo["path"]))
+        existing_id = existing_id_by_path.get(normalized_path)
+        if existing_id:
+            repo_id = existing_id
+            merged = existing_by_id[repo_id]
+            merged.update(
+                {
+                    "id": repo_id,
+                    "name": repo["name"],
+                    "path": repo["path"],
+                    "remote": repo["remote"],
+                    "current_branch": repo["current_branch"],
+                }
+            )
+            merged["stack_tags"] = sorted(set(merged.get("stack_tags", [])) | set(repo.get("stack_tags", [])))
+        elif repo_id in existing_by_id:
+            merged = existing_by_id[repo_id]
+            merged.update(
+                {
+                    "id": repo["id"],
+                    "name": repo["name"],
+                    "path": repo["path"],
+                    "remote": repo["remote"],
+                    "current_branch": repo["current_branch"],
+                }
+            )
+            merged["stack_tags"] = sorted(set(merged.get("stack_tags", [])) | set(repo.get("stack_tags", [])))
+        else:
+            merged = dict(repo)
+            newly_added.append(repo_id)
+        existing_by_id[repo_id] = merged
+        existing_id_by_path[normalized_path] = repo_id
+    return list(existing_by_id.values()), newly_added
 
 
-def write_registry(path: Path, discovered: list[dict[str, Any]]) -> None:
-    merged = merge_registry(path, discovered)
+def write_registry(path: Path, discovered: list[dict[str, Any]]) -> list[str]:
+    merged, newly_added = merge_registry(path, discovered)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(registry_text(merged), encoding="utf-8")
+    for repo_id in newly_added:
+        print(f"registry: added {repo_id}")
+    return newly_added
 
 
 def write_inventory_report(path: Path, repositories: list[dict[str, Any]]) -> None:
@@ -225,7 +258,9 @@ def main() -> int:
 
     repositories = discover_repositories(args.root)
     if args.write_registry:
-        write_registry(args.registry, repositories)
+        newly_added = write_registry(args.registry, repositories)
+        if newly_added:
+            print(f"registry: {len(newly_added)} new repository id(s): {', '.join(newly_added)}")
     write_inventory_report(args.reports_dir / "repository-inventory.md", repositories)
     for repo in repositories:
         print(f"{repo['name']}: branch={repo['current_branch']} dirty={repo['dirty_count']} scope={repo['scope']}")

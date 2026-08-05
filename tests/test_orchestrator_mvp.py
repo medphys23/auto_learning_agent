@@ -15,19 +15,21 @@ sys.path.insert(0, str(SCRIPTS))
 
 from audit_context_budget import audit_context_budget  # noqa: E402
 from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line  # noqa: E402
-from discover_repositories import discover_repositories, write_registry  # noqa: E402
+from discover_repositories import discover_repositories, merge_registry, write_registry  # noqa: E402
 from harvest_repositories import harvest_repositories, manifest_signals, source_map_summary  # noqa: E402
 from orchestrator_common import (  # noqa: E402
     extract_code_block_commands,
     extract_markdown_section,
+    extract_markdown_sections,
     extract_skill_sections,
+    extract_verification_commands,
     retrieve_records,
     sample_candidate_record,
     should_audit_file,
     should_harvest_text_file,
     validate_knowledge_record,
 )
-from publish_global_rules import publish_global_rules  # noqa: E402
+from publish_global_rules import agent_only_targets, publish_global_rules, validate_agent_only_sources  # noqa: E402
 from propagate_orchestrator_retrieval_hints import propagate_hints  # noqa: E402
 from propagate_graphify_integration import policy_block, propagate_graphify, replace_or_append  # noqa: E402
 from query_graph import build_query_command, resolve_graph  # noqa: E402
@@ -44,7 +46,7 @@ from run_graphify_cycle import (  # noqa: E402
     write_empty_repository_graph,
 )
 from synthesize_top_level_instructions import merge_codex_config, synthesize  # noqa: E402
-from validate_codex_routing import validate_routing_event  # noqa: E402
+from validate_codex_routing import select_specialist_roles, validate_routing_event  # noqa: E402
 
 
 class OrchestratorMvpTests(unittest.TestCase):
@@ -131,6 +133,116 @@ class OrchestratorMvpTests(unittest.TestCase):
             data = tomllib.loads(registry.read_text(encoding="utf-8"))
             self.assertEqual(data["repositories"][0]["notes"], "keep this note")
             self.assertEqual(data["repositories"][0]["name"], "demo_repo")
+
+    def test_registry_merge_preserves_curated_fields(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            registry = Path(tmp) / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'demo-repo'\n"
+                "name = 'old'\n"
+                "path = 'old'\n"
+                "enabled = false\n"
+                "scope = 'curated-scope'\n"
+                "risk_tags = ['custom-risk']\n"
+                "stack_tags = ['python']\n"
+                "harvest_mode = 'deep_when_clean'\n"
+                "allow_dirty_harvest = true\n"
+                "notes = 'keep this note'\n",
+                encoding="utf-8",
+            )
+            write_registry(
+                registry,
+                [
+                    {
+                        "id": "demo-repo",
+                        "name": "demo_repo",
+                        "path": r"C:\demo_repo",
+                        "remote": "https://example.invalid/demo.git",
+                        "current_branch": "main",
+                        "enabled": True,
+                        "scope": "sandbox",
+                        "risk_tags": ["sandbox"],
+                        "stack_tags": ["python", "node"],
+                        "harvest_mode": "deep_when_clean",
+                    }
+                ],
+            )
+            data = tomllib.loads(registry.read_text(encoding="utf-8"))
+            row = data["repositories"][0]
+            self.assertFalse(row["enabled"])
+            self.assertEqual(row["scope"], "curated-scope")
+            self.assertEqual(row["risk_tags"], ["custom-risk"])
+            self.assertEqual(row["notes"], "keep this note")
+            self.assertTrue(row["allow_dirty_harvest"])
+            self.assertEqual(row["stack_tags"], ["node", "python"])
+
+    def test_registry_merge_adds_new_repo_enabled(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            registry = Path(tmp) / "repositories.toml"
+            registry.write_text("", encoding="utf-8")
+            discovered = [
+                {
+                    "id": "travel-agent",
+                    "name": "travel_agent",
+                    "path": r"C:\Users\ppyxe\Documents\GitHub\travel_agent",
+                    "remote": "https://example.invalid/travel_agent.git",
+                    "current_branch": "main",
+                    "enabled": True,
+                    "scope": "unclassified",
+                    "risk_tags": [],
+                    "stack_tags": ["python"],
+                    "harvest_mode": "deep_when_clean",
+                }
+            ]
+            merged, newly_added = merge_registry(registry, discovered)
+            self.assertEqual(newly_added, ["travel-agent"])
+            self.assertEqual(len(merged), 1)
+            self.assertTrue(merged[0]["enabled"])
+            write_registry(registry, discovered)
+            data = tomllib.loads(registry.read_text(encoding="utf-8"))
+            self.assertEqual(data["repositories"][0]["id"], "travel-agent")
+            self.assertTrue(data["repositories"][0]["enabled"])
+
+    def test_registry_merge_matches_existing_path_with_different_id(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            registry = Path(tmp) / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'auto_learning_agent'\n"
+                "name = 'auto_learning_agent'\n"
+                f"path = '{Path(tmp).as_posix()}/auto_learning_agent'\n"
+                "enabled = true\n"
+                "scope = 'orchestrator'\n"
+                "risk_tags = ['global_config_preview']\n"
+                "stack_tags = ['python']\n"
+                "harvest_mode = 'deep_when_clean'\n"
+                "notes = 'keep this note'\n",
+                encoding="utf-8",
+            )
+            repo_path = Path(tmp) / "auto_learning_agent"
+            merged, newly_added = merge_registry(
+                registry,
+                [
+                    {
+                        "id": "auto-learning-agent",
+                        "name": "auto_learning_agent",
+                        "path": str(repo_path),
+                        "remote": "https://example.invalid/auto.git",
+                        "current_branch": "main",
+                        "enabled": True,
+                        "scope": "unclassified",
+                        "risk_tags": [],
+                        "stack_tags": ["python", "node"],
+                        "harvest_mode": "deep_when_clean",
+                    }
+                ],
+            )
+            self.assertEqual(newly_added, [])
+            self.assertEqual(len(merged), 1)
+            self.assertEqual(merged[0]["id"], "auto_learning_agent")
+            self.assertEqual(merged[0]["notes"], "keep this note")
+            self.assertEqual(merged[0]["scope"], "orchestrator")
 
     def test_harvest_skips_unchanged_fingerprint(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -378,6 +490,28 @@ class OrchestratorMvpTests(unittest.TestCase):
         skills = "### First workflow\n1. A\n\n### Second workflow\n- B\n"
         self.assertEqual([section["title"] for section in extract_skill_sections(skills)], ["First workflow", "Second workflow"])
 
+    def test_harvest_heading_aliases_and_safe_inline_commands(self) -> None:
+        agents = (
+            "## Setup and focused checks\n"
+            "- Run `npm run test:unit` after core changes.\n"
+            "- Inspect with `git status --short`.\n"
+            "- Do not harvest `npm publish` as a verification command.\n"
+            "## Security requirements\n"
+            "- Never log provider credentials.\n"
+            "## Review focus\n"
+            "- Must preserve cancellation ownership.\n"
+            "## Upstream contributions\n"
+            "- Do not include local-only configuration.\n"
+        )
+        verification = extract_markdown_sections(agents, ("verification", "setup and focused checks"))
+        self.assertEqual(extract_verification_commands(verification), ["npm run test:unit", "git status --short"])
+        constraints = extract_markdown_sections(
+            agents,
+            ("repo-specific rules", "security requirements", "review focus", "upstream contributions"),
+        )
+        self.assertIn("Never log provider credentials.", constraints)
+        self.assertIn("Must preserve cancellation ownership.", constraints)
+
     def test_retrieval_respects_configured_budget(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
@@ -444,6 +578,8 @@ class OrchestratorMvpTests(unittest.TestCase):
         preview_names = [step.name for step in preview_steps]
         self.assertLess(preview_names.index("discover local repositories"), preview_names.index("refresh repository graphs"))
         self.assertLess(preview_names.index("refresh repository graphs"), preview_names.index("harvest clean repositories"))
+        discover_command = next(step.command for step in preview_steps if step.name == "discover local repositories")
+        self.assertIn("--write-registry", discover_command)
 
         apply_steps = build_steps(
             python_executable="python",
@@ -576,6 +712,12 @@ class OrchestratorMvpTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             codex, cursor = self.write_minimal_global_home(base)
+            with (codex / "AGENTS.md").open("a", encoding="utf-8") as handle:
+                handle.write(
+                    "\n<!-- BEGIN USER-MANAGED: test-rule -->\n"
+                    "## User rule\n- Preserve this managed block.\n"
+                    "<!-- END USER-MANAGED: test-rule -->\n"
+                )
             result = synthesize(
                 codex_home=codex,
                 cursor_home=cursor,
@@ -595,6 +737,8 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertLessEqual(optimized_agents.stat().st_size, 8192)
             self.assertLessEqual(optimized_skills.stat().st_size, 4096)
             self.assertIn("Global Codex instructions", optimized_agents.read_text(encoding="utf-8"))
+            self.assertIn("Preserve this managed block", optimized_agents.read_text(encoding="utf-8"))
+            self.assertIn("GPT-5.6 Sol", optimized_agents.read_text(encoding="utf-8"))
             self.assertIn("orchestrator-knowledge", optimized_skills.read_text(encoding="utf-8"))
             self.assertNotIn("plugins.", optimized_config.read_text(encoding="utf-8"))
             self.assertTrue((base / "reports" / "repository-compatibility-matrix.md").exists())
@@ -726,10 +870,10 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertIn("Global Codex skills index", (codex / "skills.md").read_text(encoding="utf-8"))
             self.assertIn("[plugins.\"github@openai-curated\"]", (codex / "config.toml").read_text(encoding="utf-8"))
             self.assertIn("workflow_router", tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"])
-            self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["model"], "gpt-5.6-terra")
+            self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["model"], "gpt-5.6-sol")
             self.assertEqual(
                 tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["model_reasoning_effort"],
-                "medium",
+                "high",
             )
             self.assertEqual(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["max_threads"], 4)
             self.assertTrue(tomllib.loads((codex / "config.toml").read_text(encoding="utf-8"))["agents"]["interrupt_message"])
@@ -737,6 +881,142 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertTrue((cursor / "rules" / "07-graphify.mdc").exists())
             self.assertTrue((cursor / "skills" / "lead-scraper" / "SKILL.md").exists())
             self.assertTrue((codex / "skills" / "lead-scraper" / "SKILL.md").exists())
+
+    def test_agents_only_publication_is_guarded_idempotent_and_preserving(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            (codex / "auth.json").write_text('{"auth_mode":"chatgpt"}\n', encoding="utf-8")
+            protected_before = {
+                "agents": (codex / "AGENTS.md").read_text(encoding="utf-8"),
+                "auth": (codex / "auth.json").read_text(encoding="utf-8"),
+                "cursor_rule": (cursor / "rules" / "00-orchestration.mdc").read_text(encoding="utf-8"),
+                "config": (codex / "config.toml").read_text(encoding="utf-8"),
+            }
+            preview = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                profile="optimized",
+                agents_only=True,
+            )
+            self.assertEqual(preview["mode"], "agents-only-preview")
+            self.assertEqual(protected_before["config"], (codex / "config.toml").read_text(encoding="utf-8"))
+            self.assertFalse((base / "backups").exists())
+
+            with self.assertRaises(RuntimeError):
+                publish_global_rules(
+                    reports_dir=base / "reports",
+                    master_root=base / "master",
+                    backup_base=base / "backups",
+                    codex_home=codex,
+                    cursor_home=cursor,
+                    profile="optimized",
+                    agents_only=True,
+                    apply=True,
+                )
+            with self.assertRaises(RuntimeError):
+                publish_global_rules(
+                    reports_dir=base / "reports",
+                    master_root=base / "master",
+                    backup_base=base / "backups",
+                    codex_home=codex,
+                    cursor_home=cursor,
+                    profile="optimized",
+                    agents_only=True,
+                    runtime_smoke=False,
+                )
+
+            applied = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                profile="optimized",
+                agents_only=True,
+                apply=True,
+                confirm_global_write=True,
+            )
+            self.assertEqual(applied["mode"], "agents-only-applied")
+            backup_root = Path(applied["backup_root"])
+            self.assertTrue((backup_root / "codex" / "config.toml").exists())
+            self.assertTrue((backup_root / "codex" / "agents" / "systems_architect.toml.missing").exists())
+            config_after = (codex / "config.toml").read_text(encoding="utf-8")
+            config_data = tomllib.loads(config_after)
+            self.assertEqual(config_data["model"], "gpt-5.5")
+            self.assertTrue(config_data["plugins"]["github@openai-curated"]["enabled"])
+            self.assertIn("systems_architect", config_data["agents"])
+            self.assertTrue((codex / "agents" / "security_boundary_reviewer.toml").exists())
+            self.assertEqual(protected_before["agents"], (codex / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertEqual(protected_before["auth"], (codex / "auth.json").read_text(encoding="utf-8"))
+            self.assertEqual(protected_before["cursor_rule"], (cursor / "rules" / "00-orchestration.mdc").read_text(encoding="utf-8"))
+
+            applied_again = publish_global_rules(
+                reports_dir=base / "reports",
+                master_root=base / "master",
+                backup_base=base / "backups",
+                codex_home=codex,
+                cursor_home=cursor,
+                profile="optimized",
+                agents_only=True,
+                apply=True,
+                confirm_global_write=True,
+            )
+            self.assertEqual(applied_again["mode"], "agents-only-applied")
+            self.assertEqual(config_after, (codex / "config.toml").read_text(encoding="utf-8"))
+
+    def test_agents_only_publication_rejects_collisions_before_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            collision = (
+                (codex / "config.toml").read_text(encoding="utf-8")
+                + "\n[agents.systems_architect]\nconfig_file = \"agents/other.toml\"\n"
+            )
+            (codex / "config.toml").write_text(collision, encoding="utf-8")
+            with self.assertRaises(RuntimeError):
+                publish_global_rules(
+                    reports_dir=base / "reports",
+                    master_root=base / "master",
+                    backup_base=base / "backups",
+                    codex_home=codex,
+                    cursor_home=cursor,
+                    profile="optimized",
+                    agents_only=True,
+                    apply=True,
+                    confirm_global_write=True,
+                )
+            self.assertEqual(collision, (codex / "config.toml").read_text(encoding="utf-8"))
+            self.assertFalse((base / "backups").exists())
+
+    def test_agent_only_source_validation_rejects_duplicates_and_missing_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            codex, cursor = self.write_minimal_global_home(base)
+            synthesize(
+                codex_home=codex,
+                cursor_home=cursor,
+                master_root=base / "master",
+                reports_dir=base / "reports",
+                profile="optimized",
+            )
+            targets = agent_only_targets(base / "master", codex)
+            with self.assertRaises(RuntimeError):
+                validate_agent_only_sources(targets[:-1])
+            duplicate = base / "master" / "optimized" / "codex" / "agents" / "systems_architect.toml"
+            duplicate.write_text(
+                duplicate.read_text(encoding="utf-8").replace(
+                    'name = "systems_architect"',
+                    'name = "security_boundary_reviewer"',
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaises(RuntimeError):
+                validate_agent_only_sources(targets)
 
     def test_optimized_synthesis_adds_adaptive_gpt56_agents(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -755,6 +1035,10 @@ class OrchestratorMvpTests(unittest.TestCase):
                 "luna_worker.toml": ("luna_worker", "gpt-5.6-luna", "low"),
                 "terra_worker.toml": ("terra_worker", "gpt-5.6-terra", "medium"),
                 "sol_specialist.toml": ("sol_specialist", "gpt-5.6-sol", "xhigh"),
+                "systems_architect.toml": ("systems_architect", "gpt-5.6-sol", "high"),
+                "reliability_operations_reviewer.toml": ("reliability_operations_reviewer", "gpt-5.6-terra", "high"),
+                "security_boundary_reviewer.toml": ("security_boundary_reviewer", "gpt-5.6-sol", "high"),
+                "quality_release_reviewer.toml": ("quality_release_reviewer", "gpt-5.6-terra", "high"),
             }
             for filename, (name, model, effort) in expected.items():
                 with self.subTest(filename=filename):
@@ -764,9 +1048,25 @@ class OrchestratorMvpTests(unittest.TestCase):
                     self.assertEqual(data["model_reasoning_effort"], effort)
                     self.assertTrue(data["description"])
                     self.assertTrue(data["developer_instructions"])
+                    if name.endswith("reviewer") or name == "systems_architect":
+                        self.assertEqual(data["sandbox_mode"], "read-only")
+                        self.assertIn("files inspected", data["developer_instructions"])
+                        self.assertIn("Do not claim readiness", data["developer_instructions"])
 
             config = tomllib.loads((base / "master" / "optimized" / "codex" / "config" / "orchestrator-managed.toml").read_text(encoding="utf-8"))
-            for name in ("workflow_router", "repository_harvester", "knowledge_synthesizer", "verifier", "luna_worker", "terra_worker", "sol_specialist"):
+            for name in (
+                "workflow_router",
+                "repository_harvester",
+                "knowledge_synthesizer",
+                "verifier",
+                "luna_worker",
+                "terra_worker",
+                "sol_specialist",
+                "systems_architect",
+                "reliability_operations_reviewer",
+                "security_boundary_reviewer",
+                "quality_release_reviewer",
+            ):
                 self.assertIn(name, config["agents"])
             self.assertIn("Adaptive GPT-5.6 Model Routing", (base / "master" / "optimized" / "codex" / "AGENTS.md").read_text(encoding="utf-8"))
 
@@ -794,6 +1094,27 @@ class OrchestratorMvpTests(unittest.TestCase):
         sensitive = dict(event)
         sensitive["notes"] = "token should not appear here"
         self.assertTrue(any("sensitive" in error for error in validate_routing_event(sensitive)))
+
+        with_specialists = dict(event)
+        with_specialists["specialist_roles"] = ["systems_architect", "security_boundary_reviewer"]
+        self.assertEqual(validate_routing_event(with_specialists), [])
+
+        duplicate_specialists = dict(event)
+        duplicate_specialists["specialist_roles"] = ["systems_architect", "systems_architect"]
+        self.assertTrue(any("unique" in error for error in validate_routing_event(duplicate_specialists)))
+
+    def test_specialist_routing_is_risk_triggered_and_bounded(self) -> None:
+        self.assertEqual(select_specialist_roles("localized_documentation", "low"), [])
+        architecture_security = select_specialist_roles(
+            "cross_boundary_auth_migration",
+            "high",
+            ["security", "database", "rollback"],
+        )
+        self.assertEqual(architecture_security, ["systems_architect", "security_boundary_reviewer"])
+        self.assertLessEqual(len(architecture_security), 2)
+        release = select_specialist_roles("release_artifact", "high", ["supply_chain", "test"])
+        self.assertIn("quality_release_reviewer", release)
+        self.assertLessEqual(len(release), 2)
 
     def test_publish_prunes_old_backup_roots(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -829,6 +1150,7 @@ class OrchestratorMvpTests(unittest.TestCase):
         self.assertLess(names.index("discover repositories"), names.index("refresh repository graphs"))
         self.assertLess(names.index("refresh repository graphs"), names.index("harvest repositories"))
         self.assertEqual(names[0], "discover repositories")
+        self.assertIn("--write-registry", steps[0].command)
         self.assertIn("audit dependency catalog", names)
         self.assertIn("synthesize optimized instructions", names)
 
@@ -986,8 +1308,9 @@ class OrchestratorMvpTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             repo = Path(tmp)
             self.assertEqual(set(preflight_repository(repo)), {"missing-.graphifyignore", "graphify-out-not-ignored"})
+            self.init_git_repo(repo)
             (repo / ".graphifyignore").write_text("\n".join(sorted({".env", ".env.*", "*.key", "*.pem", "data/", "graphify-out/", "*.sqlite"})) + "\n", encoding="utf-8")
-            (repo / ".gitignore").write_text("graphify-out/\n", encoding="utf-8")
+            (repo / ".git" / "info" / "exclude").write_text("graphify-out/\n", encoding="utf-8")
             self.assertEqual(preflight_repository(repo), [])
             graph = repo / "graph.json"
             graph.write_text(json.dumps({"nodes": [{"id": "x", "source_file": "src/app.py"}], "links": []}), encoding="utf-8")

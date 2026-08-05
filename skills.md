@@ -88,7 +88,7 @@ graphify --version
 **Triggered by:** Routine refresh of graphs, harvested knowledge, optimized globals, or cross-repo architecture queries.
 
 **Steps:**
-1. From repo root, run `.\scripts\run-startup.ps1` for preview-only cycle.
+1. From repo root, run `.\scripts\run-startup.ps1` for preview-only cycle. Discovery auto-registers new GitHub checkouts into `config\repositories.toml` before graphify and harvest.
 2. Review `reports\optimized-cutover-readiness.md` and `reports\graphify-cycle-summary.md`.
 3. Apply globals with `.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite` when reports look correct.
 4. Optionally add `-ApplyRepoHints -ConfirmRepoWrite` to refresh registered repo retrieval hints.
@@ -101,7 +101,31 @@ graphify --version
 ```
 
 **Iteration notes:**
+- 2026-08-03: Startup discovery now passes `--write-registry` so new folders under `Documents\GitHub` are registered automatically before graphify and harvest; existing registry scope, risk tags, enabled state, and notes are preserved.
 - 2026-07-11: Added `run-startup.ps1` / `run_startup.py` as the one-command operator entrypoint; global publish now includes `07-graphify.mdc` and gates GPT-5.6 parent model on runtime smoke unless explicitly forced or skipped.
+
+### Risk-triggered systems-engineering review
+
+**Triggered by:** High-risk or cross-boundary architecture, reliability, security, quality, release, migration, provider, database, deployment, or supply-chain work; or an explicit request for the full systems-engineering panel.
+
+**Steps:**
+1. The parent reads active instructions and queries the governed Graphify index first, then verifies relevant claims in source.
+2. `workflow_router` classifies the task and recommends no more than two relevant read-only specialists automatically.
+3. Select from `systems_architect`, `reliability_operations_reviewer`, `security_boundary_reviewer`, and `quality_release_reviewer`. Run all four only when the user explicitly requests the full panel.
+4. Keep specialist selection separate from Luna/Terra/Sol model-cost routing. Specialists inspect and report; they do not edit, publish, or spawn agents.
+5. The parent integrates evidence, owns decisions and edits, runs target-repository verification, and sends the integrated result to `verifier`.
+6. `verifier` returns the final `READY`, `CONDITIONALLY READY`, or `NOT READY` decision.
+7. Record optional `specialist_roles` in routing history only when specialist review materially affected the task. Never invoke model-backed agents from deterministic startup harvesting.
+
+**Verification:**
+```powershell
+.\.venv\Scripts\python.exe scripts\validate_codex_config.py
+.\.venv\Scripts\python.exe scripts\validate_codex_routing.py
+.\.venv\Scripts\python.exe scripts\publish_global_rules.py --preview --profile optimized --agents-only
+```
+
+**Iteration notes:**
+- 2026-08-05: Added a read-only systems-engineering panel with bounded, risk-triggered routing and verifier-owned final readiness.
 
 ### Optimized knowledge cycle and cutover
 

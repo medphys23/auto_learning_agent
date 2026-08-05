@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "31ed44510efa686d9fa4019803b6580db4e685c2",
+    "source_commit": "481b07fbd8c60c5e0eb0152fbdccdcf0608065d9",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/repository-harvester.toml",
@@ -68,7 +68,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:23:53Z",
+    "created_at": "2026-08-05T20:23:13Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -96,7 +96,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:23:53Z"
+    "updated_at": "2026-08-05T20:23:13Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -123,7 +123,7 @@
           "scripts/promote_knowledge.py"
         ],
         "file_count": 27,
-        "graph_node_count": 281,
+        "graph_node_count": 282,
         "suffixes": {
           ".ps1": 5,
           ".py": 22
@@ -148,7 +148,7 @@
           "tests/test_orchestrator_mvp.py"
         ],
         "file_count": 1,
-        "graph_node_count": 43,
+        "graph_node_count": 46,
         "suffixes": {
           ".py": 1
         }
@@ -191,10 +191,10 @@
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
         ],
-        "file_count": 24,
+        "file_count": 32,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 24
+          ".md": 32
         }
       },
       {
@@ -246,9 +246,9 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 750,
+    "graph_node_count": 754,
     "graph_source_file_count": 51,
-    "harvestable_text_file_count": 82
+    "harvestable_text_file_count": 90
   },
   "status": "candidate",
   "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, master, tests, ., knowledge, backups, .codex, config.",

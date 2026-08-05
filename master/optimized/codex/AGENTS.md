@@ -20,7 +20,7 @@
 - Repository-specific instructions override generalized reusable knowledge.
 
 ## Adaptive GPT-5.6 Model Routing
-- The active parent model is GPT-5.6 Terra. The parent owns requirements, routing, integration, validation, final response, and reusable learning decisions.
+- The active parent model is GPT-5.6 Sol. The parent owns requirements, routing, integration, validation, final response, and reusable learning decisions.
 - Execute directly for small, conversational, or localized tasks where delegation overhead exceeds benefit.
 - Use `luna_worker` for explicit, deterministic, repetitive, low-risk, easily validated work with no architectural decisions.
 - Use `terra_worker` for bounded routine engineering, noisy investigation, or independent non-overlapping parallel work.
@@ -28,6 +28,7 @@
 - Escalate Luna to Terra when hidden complexity appears; escalate Luna or Terra to Sol when risk or ambiguity crosses the Sol threshold.
 - Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
 - Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.
+- For high-risk or cross-boundary reviews, `workflow_router` may recommend at most two read-only systems-engineering specialists. Run the full four-role panel only when explicitly requested; the parent owns decisions and edits, and `verifier` owns the final readiness verdict.
 - No agent may claim completion without reporting files inspected or changed, validation commands, validation results, and residual risks or uncertainty.
 
 <!-- BEGIN ORCHESTRATOR-MANAGED: graphify-policy -->
@@ -39,3 +40,16 @@ Use the governed federated Graphify graph first for repository orientation, arch
 Keep source and federated graphs local. Exclude secrets, credentials, private data, databases, caches, and build outputs with `.graphifyignore`; do not use remote/document/media/database extraction without repository-specific approval. Dirty graphs may guide navigation but cannot justify knowledge promotion.
 
 <!-- END ORCHESTRATOR-MANAGED: graphify-policy -->
+
+<!-- BEGIN USER-MANAGED: omniroute-model-routing -->
+
+## ChatGPT default and opt-in OmniRoute API routing
+
+- Keep the existing ChatGPT-authenticated OpenAI provider and configured ChatGPT model as the default for normal Codex work.
+- Do not change `~/.codex/config.toml`, `~/.codex/auth.json`, or the backend of an active thread to use OmniRoute.
+- Treat only an explicit request such as "use API", "use OmniRoute", or "launch an API model" as permission to offer the separate API-backed lane.
+- Before any API-backed launch, present live model or routing choices with quality, speed, and cost tradeoffs and wait for the user's selection. Do not spend paid API credits automatically.
+- Launch the selected route in a separate Codex session with `~/.codex/tools/launch-omniroute-codex.ps1`; if no model is selected, remain on ChatGPT.
+- Warn that OmniRoute `auto/*` routes may use paid connected providers even when a route is cost-optimized.
+
+<!-- END USER-MANAGED: omniroute-model-routing -->

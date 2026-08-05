@@ -1,12 +1,16 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 133,
+    "catalog_entry_count": 153,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
-        "dirty_count": 4,
+        "dirty_count": 3,
         "id": "orsi"
+      },
+      {
+        "dirty_count": 1,
+        "id": "travel-agent"
       },
       {
         "dirty_count": 2,
@@ -19,6 +23,7 @@
       "general-work",
       "investment-binance",
       "kidney-federico",
+      "omniroute",
       "practice-ops-dashboard",
       "ps-robot-adaptor",
       "xenios-finances"
@@ -59,12 +64,12 @@
       "passed": true
     },
     {
-      "detail": "2 dirty blocker(s)",
+      "detail": "3 dirty blocker(s)",
       "name": "no_dirty_blockers",
       "passed": false
     }
   ],
-  "generated_at": "2026-08-03T21:24:42Z",
+  "generated_at": "2026-08-05T19:37:19Z",
   "optimized_agents_exists": true,
   "optimized_agents_sha256": "c08e5e8f5cbb65dbded1855cd169c8632cb1f33c40e3d98db40260a8be0835c3",
   "requires_explicit_user_approval": true,

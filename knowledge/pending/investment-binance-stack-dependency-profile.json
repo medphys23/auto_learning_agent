@@ -66,13 +66,13 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:54Z",
+    "created_at": "2026-08-05T20:23:15Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:54Z"
+    "updated_at": "2026-08-05T20:23:15Z"
   },
   "registry_stack_tags": [
     "binance_public_api",

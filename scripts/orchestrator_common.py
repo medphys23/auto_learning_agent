@@ -610,6 +610,11 @@ def extract_markdown_section(text: str, heading_prefix: str, level: int = 2) -> 
     return "\n".join(lines[start:end]).strip()
 
 
+def extract_markdown_sections(text: str, heading_prefixes: tuple[str, ...], level: int = 2) -> str:
+    sections = [extract_markdown_section(text, heading, level=level) for heading in heading_prefixes]
+    return "\n\n".join(section for section in sections if section)
+
+
 def extract_code_block_commands(section_text: str) -> list[str]:
     commands: list[str] = []
     in_block = False
@@ -626,16 +631,119 @@ def extract_code_block_commands(section_text: str) -> list[str]:
     return commands
 
 
+SAFE_INLINE_COMMAND_PREFIXES = (
+    ".\\",
+    "./",
+    "bun ",
+    "cargo ",
+    "composer ",
+    "docker ",
+    "dotnet ",
+    "go ",
+    "gradle ",
+    "make ",
+    "mvn ",
+    "node ",
+    "npm ",
+    "npx ",
+    "php ",
+    "pnpm ",
+    "poetry ",
+    "powershell ",
+    "pwsh ",
+    "py ",
+    "pytest ",
+    "python ",
+    "python3 ",
+    "ruff ",
+    "sh ",
+    "uv ",
+    "yarn ",
+)
+UNSAFE_INLINE_COMMAND_FRAGMENTS = (
+    " --force",
+    " deploy",
+    " destroy",
+    " publish",
+    " release",
+    " remove",
+    " reset",
+    " clean",
+    " delete",
+    " push",
+)
+SAFE_GIT_SUBCOMMANDS = ("check-ignore", "diff", "grep", "log", "ls-files", "show", "status")
+
+
+def is_safe_inline_command(value: str) -> bool:
+    command = value.strip()
+    lower = command.lower()
+    if not command or len(command) > 500 or "\n" in command:
+        return False
+    if any(fragment in lower for fragment in UNSAFE_INLINE_COMMAND_FRAGMENTS):
+        return False
+    if lower.startswith("git "):
+        parts = lower.split()
+        return len(parts) > 1 and parts[1] in SAFE_GIT_SUBCOMMANDS
+    return lower.startswith(SAFE_INLINE_COMMAND_PREFIXES)
+
+
+def extract_inline_code_commands(section_text: str) -> list[str]:
+    commands: list[str] = []
+    for match in re.finditer(r"(?<!\`)\`([^\`\r\n]+)\`(?!\`)", section_text):
+        candidate = match.group(1).strip()
+        if is_safe_inline_command(candidate):
+            commands.append(candidate)
+    return commands
+
+
+def extract_verification_commands(section_text: str) -> list[str]:
+    commands: list[str] = []
+    seen: set[str] = set()
+    for command in [*extract_code_block_commands(section_text), *extract_inline_code_commands(section_text)]:
+        if command not in seen:
+            commands.append(command)
+            seen.add(command)
+    return commands
+
+
 def extract_constraint_lines(section_text: str) -> list[str]:
-    constraints: list[str] = []
-    keywords = ("never", "do not", "must", "forbidden", "not clinical", "simulation", "phi", "read-only")
+    items: list[str] = []
+    current = ""
     for line in section_text.splitlines():
-        stripped = line.strip(" -")
+        stripped = line.strip()
         if not stripped:
+            if current:
+                items.append(current)
+                current = ""
             continue
-        lower = stripped.lower()
+        if re.match(r"^(?:[-*+] |\d+[.)] )", stripped):
+            if current:
+                items.append(current)
+            current = re.sub(r"^(?:[-*+] |\d+[.)] )", "", stripped).strip()
+        elif current:
+            current += " " + stripped
+        else:
+            current = stripped
+    if current:
+        items.append(current)
+
+    constraints: list[str] = []
+    keywords = (
+        "never",
+        "do not",
+        "must",
+        "forbidden",
+        "not clinical",
+        "simulation",
+        "phi",
+        "read-only",
+        "keep fork-only",
+    )
+    for item in items:
+        lower = item.lower()
         if any(keyword in lower for keyword in keywords):
-            constraints.append(stripped)
+            constraints.append(item)
     return constraints[:20]
 
 

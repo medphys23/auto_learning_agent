@@ -1,0 +1,51 @@
+{
+  "id": "omniroute-pattern-executable-architecture-invariants",
+  "title": "Candidate pattern: executable architecture invariants",
+  "type": "pattern",
+  "scope": "domain",
+  "status": "candidate",
+  "summary": "Turn important architectural boundaries and repository rules into focused checks that fail close to the violating change, while keeping human rationale in architecture and contributor documentation.",
+  "trigger_phrases": ["architecture invariant", "dependency boundary check", "repository quality gate"],
+  "tags": ["architecture", "ci", "invariants", "omniroute", "policy-as-code"],
+  "applicability": {
+    "languages": ["typescript", "javascript"],
+    "frameworks": ["node"],
+    "runtimes": ["node"],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["repository-ci"],
+    "repository_markers": ["architecture documentation", "scripts/check", "CI workflows"]
+  },
+  "incompatible_when": ["The invariant is subjective, unstable, or cannot be checked without unacceptable false positives."],
+  "procedure": [
+    "State the boundary and rationale in architecture or contributor documentation.",
+    "Implement the smallest deterministic check that detects a violation.",
+    "Add a focused test for the check itself, including a known failing fixture when practical.",
+    "Wire the check to the narrowest CI gate that owns the affected risk.",
+    "Keep exception lists explicit, reviewed, and shrink-only."
+  ],
+  "verification": [
+    "Demonstrate that a representative violation fails with an actionable message and that compliant code passes.",
+    "Confirm the CI workflow actually invokes the check on relevant changes."
+  ],
+  "rollback": ["Demote a noisy gate to advisory while fixing its signal; do not silently delete the documented invariant."],
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": ["AGENTS.md", "docs/architecture/QUALITY_GATES.md", "scripts/check", ".github/workflows/ci.yml"],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "systems-engineering-practice-harvest",
+    "tests_executed": []
+  },
+  "provenance": {
+    "created_at": "2026-08-05T20:15:48Z",
+    "created_by": "codex-systems-engineering-review",
+    "derived_from": ["AGENTS.md", "docs/architecture/QUALITY_GATES.md", "scripts/check", ".github/workflows/ci.yml"],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:15:48Z"
+  },
+  "confidence": {"score": 0.86, "rationale": "OmniRoute has extensive documented and executable checks, but this generalized pattern still requires external reuse evidence."},
+  "reuse": {"failed_reuse_count": 0, "last_retrieved_at": null, "retrieval_count": 0, "successful_reuse_count": 0}
+}

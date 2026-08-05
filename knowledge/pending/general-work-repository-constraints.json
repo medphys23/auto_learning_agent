@@ -34,13 +34,13 @@
     "Do not commit large binaries (datasets, PDFs, videos) without explicit user approval."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:53Z",
+    "created_at": "2026-08-05T20:23:15Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:53Z"
+    "updated_at": "2026-08-05T20:23:15Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -10,6 +10,16 @@ EXPECTED_AGENT_MODELS = {
     "luna_worker": ("gpt-5.6-luna", "low"),
     "terra_worker": ("gpt-5.6-terra", "medium"),
     "sol_specialist": ("gpt-5.6-sol", "xhigh"),
+    "systems_architect": ("gpt-5.6-sol", "high"),
+    "reliability_operations_reviewer": ("gpt-5.6-terra", "high"),
+    "security_boundary_reviewer": ("gpt-5.6-sol", "high"),
+    "quality_release_reviewer": ("gpt-5.6-terra", "high"),
+}
+READ_ONLY_SPECIALISTS = {
+    "systems_architect",
+    "reliability_operations_reviewer",
+    "security_boundary_reviewer",
+    "quality_release_reviewer",
 }
 REQUIRED_AGENT_FIELDS = ("name", "description", "developer_instructions")
 
@@ -85,6 +95,8 @@ def validate_agent_files(root: Path, *, global_mode: bool = False) -> list[str]:
                     errors.append(f"{path}: expected model {expected_model}")
                 if data.get("model_reasoning_effort") != expected_effort:
                     errors.append(f"{path}: expected model_reasoning_effort {expected_effort}")
+            if name in READ_ONLY_SPECIALISTS and data.get("sandbox_mode") != "read-only":
+                errors.append(f"{path}: expected sandbox_mode read-only")
     return errors
 
 

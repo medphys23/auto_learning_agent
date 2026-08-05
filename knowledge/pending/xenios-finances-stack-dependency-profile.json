@@ -5,13 +5,15 @@
       "bootstrap",
       "chartjs",
       "mysql",
-      "php"
+      "php",
+      "python"
     ],
     "languages": [
       "bootstrap",
       "chartjs",
       "mysql",
-      "php"
+      "php",
+      "python"
     ],
     "operating_systems": [
       "windows"
@@ -64,19 +66,20 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:13:02Z",
+    "created_at": "2026-08-05T20:23:45Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:13:02Z"
+    "updated_at": "2026-08-05T20:23:45Z"
   },
   "registry_stack_tags": [
     "bootstrap",
     "chartjs",
     "mysql",
-    "php"
+    "php",
+    "python"
   ],
   "reuse": {
     "failed_reuse_count": 0,
@@ -89,7 +92,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for Xenios_FInances: registry tags bootstrap, chartjs, mysql, php; 1 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for Xenios_FInances: registry tags bootstrap, chartjs, mysql, php, python; 1 tracked manifest file(s).",
   "tags": [
     "bootstrap",
     "chartjs",
@@ -99,6 +102,7 @@
     "manifest-profile",
     "mysql",
     "php",
+    "python",
     "stack-profile",
     "xenios-finances"
   ],

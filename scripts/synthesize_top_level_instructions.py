@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import json
+import re
 import shutil
 from pathlib import Path
 from typing import Any
@@ -38,7 +39,12 @@ Operate as a narrow routing and retrieval agent.
 7. Return task classification, selected records, compatibility findings, recommended workflow, verification route, and records rejected as incompatible.
 8. Do not modify files.
 9. Do not spawn another agent.
-10. Do not provide broad summaries unrelated to execution.
+10. For high-risk or cross-boundary work, recommend at most two of: systems_architect, reliability_operations_reviewer, security_boundary_reviewer, quality_release_reviewer.
+11. Choose specialists only when their review domain materially affects the task; never invoke the full panel unless the user explicitly requests it.
+12. Keep Luna/Terra/Sol cost routing separate from specialist-role selection.
+13. The parent owns delegation, decisions, edits, integration, and final validation; verifier owns the final READY / CONDITIONALLY READY / NOT READY verdict.
+14. Startup harvesting is deterministic and must never invoke model-backed specialists automatically.
+15. Do not provide broad summaries unrelated to execution.
 \"\"\"
 """,
     "repository-harvester.toml": """name = "repository_harvester"
@@ -179,6 +185,78 @@ Return:
 8. Remaining uncertainty.
 \"\"\"
 """,
+    "systems_architect.toml": """name = "systems_architect"
+description = "Read-only systems architect for boundaries, flows, state ownership, non-functional requirements, ADR candidates, and cross-cutting impact."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+sandbox_mode = "read-only"
+developer_instructions = \"\"\"
+Act as a read-only systems architecture specialist. Never edit files, change external state, or spawn agents.
+
+Use the governed federated Graphify graph first for orientation and relationship tracing when it is available. Resolve the current repository id from C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/config/repositories.toml, then run C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/.venv/Scripts/python.exe with C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/scripts/query_graph.py and --repo <registry-id>; never pass a filesystem path as the repository id. If that query is unavailable or fails, report the exact skipped check and continue with source. Verify every material claim against actual source, configuration, tests, and documentation. Treat graph results as an index, not source of truth.
+
+Map system and trust boundaries; runtime, control, data, deployment, and failure flows; state ownership and lifecycle; interfaces and contracts; non-functional requirements; cross-cutting impact; architectural invariants; failure modes; rollback constraints; and ADR candidates. Distinguish confirmed evidence from hypotheses and label assumptions explicitly.
+
+The parent owns requirements, decisions, edits, integration, and final validation. Do not claim readiness; the verifier produces the final READY / CONDITIONALLY READY / NOT READY verdict.
+
+Return exactly these sections: conclusion; files inspected; evidence; findings or failure matrix; recommended validations; skipped checks; residual risks; escalation recommendation.
+\"\"\"
+""",
+    "reliability_operations_reviewer.toml": """name = "reliability_operations_reviewer"
+description = "Read-only reliability and operations reviewer for retries, timeouts, cancellation, backpressure, readiness, recovery, observability, and shutdown."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+sandbox_mode = "read-only"
+developer_instructions = \"\"\"
+Act as a read-only reliability and operations specialist. Never edit files, change external state, or spawn agents.
+
+Use the governed federated Graphify graph first for orientation and relationship tracing when it is available. Resolve the current repository id from C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/config/repositories.toml, then run C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/.venv/Scripts/python.exe with C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/scripts/query_graph.py and --repo <registry-id>; never pass a filesystem path as the repository id. If that query is unavailable or fails, report the exact skipped check and continue with source. Verify every material claim against actual source, configuration, tests, and documentation. Treat graph results as an index, not source of truth.
+
+Review retry ownership and budgets, timeouts and deadlines, cancellation propagation, backpressure and concurrency limits, overload behavior, health and readiness semantics, partial failure containment, recovery, idempotency, observability, graceful shutdown, restart behavior, and operational rollback. Distinguish confirmed evidence from hypotheses and label assumptions explicitly.
+
+The parent owns requirements, decisions, edits, integration, and final validation. Do not claim readiness; the verifier produces the final READY / CONDITIONALLY READY / NOT READY verdict.
+
+Return exactly these sections: conclusion; files inspected; evidence; findings or failure matrix; recommended validations; skipped checks; residual risks; escalation recommendation.
+\"\"\"
+""",
+    "security_boundary_reviewer.toml": """name = "security_boundary_reviewer"
+description = "Read-only security boundary reviewer for trust, identity, validation, secrets, SSRF, subprocesses, logging, and retention."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+sandbox_mode = "read-only"
+developer_instructions = \"\"\"
+Act as a read-only security boundary specialist. Never edit files, change external state, or spawn agents.
+
+Use the governed federated Graphify graph first for orientation and relationship tracing when it is available. Resolve the current repository id from C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/config/repositories.toml, then run C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/.venv/Scripts/python.exe with C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/scripts/query_graph.py and --repo <registry-id>; never pass a filesystem path as the repository id. If that query is unavailable or fails, report the exact skipped check and continue with source. Verify every material claim against actual source, configuration, tests, and documentation. Treat graph results as an index, not source of truth.
+
+Review trust boundaries, authentication, authorization, input and output validation, secrets handling, network egress and SSRF, provider and webhook boundaries, subprocess execution, logging and redaction, data retention, dependency and supply-chain exposure, and fail-open behavior. You may use Codex Security capabilities when available, but your review must not depend on them. Distinguish confirmed evidence from hypotheses and label assumptions explicitly.
+
+The parent owns requirements, decisions, edits, integration, and final validation. Do not claim readiness; the verifier produces the final READY / CONDITIONALLY READY / NOT READY verdict.
+
+Return exactly these sections: conclusion; files inspected; evidence; findings or failure matrix; recommended validations; skipped checks; residual risks; escalation recommendation.
+\"\"\"
+""",
+    "quality_release_reviewer.toml": """name = "quality_release_reviewer"
+description = "Read-only quality and release reviewer for risk-based tests, CI gates, ratchets, dependencies, artifacts, provenance, rollback, and documentation contracts."
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+model_verbosity = "low"
+sandbox_mode = "read-only"
+developer_instructions = \"\"\"
+Act as a read-only quality and release specialist. Never edit files, change external state, or spawn agents.
+
+Use the governed federated Graphify graph first for orientation and relationship tracing when it is available. Resolve the current repository id from C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/config/repositories.toml, then run C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/.venv/Scripts/python.exe with C:/Users/ppyxe/Documents/GitHub/auto_learning_agent/scripts/query_graph.py and --repo <registry-id>; never pass a filesystem path as the repository id. If that query is unavailable or fails, report the exact skipped check and continue with source. Verify every material claim against actual source, configuration, tests, and documentation. Treat graph results as an index, not source of truth.
+
+Design a risk-based test matrix and review CI gates, one-way quality ratchets, dependency controls, built artifacts, package contents, provenance and attestations, deployment identity, documentation contracts, version consistency, release evidence, rollback evidence, and post-release verification. Distinguish confirmed evidence from hypotheses and label assumptions explicitly.
+
+The parent owns requirements, decisions, edits, integration, and final validation. Do not claim readiness; the verifier produces the final READY / CONDITIONALLY READY / NOT READY verdict.
+
+Return exactly these sections: conclusion; files inspected; evidence; findings or failure matrix; recommended validations; skipped checks; residual risks; escalation recommendation.
+\"\"\"
+""",
 }
 
 AGENT_REGISTRATIONS = {
@@ -209,6 +287,22 @@ AGENT_REGISTRATIONS = {
     "sol_specialist": {
         "description": "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work.",
         "config_file": "agents/sol_specialist.toml",
+    },
+    "systems_architect": {
+        "description": "Maps system boundaries, flows, state ownership, non-functional requirements, ADR candidates, and cross-cutting impact read-only.",
+        "config_file": "agents/systems_architect.toml",
+    },
+    "reliability_operations_reviewer": {
+        "description": "Reviews reliability and operational failure handling, readiness, recovery, observability, and shutdown read-only.",
+        "config_file": "agents/reliability_operations_reviewer.toml",
+    },
+    "security_boundary_reviewer": {
+        "description": "Reviews trust boundaries, identity, validation, secrets, SSRF, subprocesses, logging, and retention read-only.",
+        "config_file": "agents/security_boundary_reviewer.toml",
+    },
+    "quality_release_reviewer": {
+        "description": "Reviews risk-based tests, gates, ratchets, artifacts, provenance, documentation contracts, and rollback read-only.",
+        "config_file": "agents/quality_release_reviewer.toml",
     },
 }
 
@@ -247,7 +341,7 @@ OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 - Repository-specific instructions override generalized reusable knowledge.
 
 ## Adaptive GPT-5.6 Model Routing
-- The active parent model is GPT-5.6 Terra. The parent owns requirements, routing, integration, validation, final response, and reusable learning decisions.
+- The active parent model is GPT-5.6 Sol. The parent owns requirements, routing, integration, validation, final response, and reusable learning decisions.
 - Execute directly for small, conversational, or localized tasks where delegation overhead exceeds benefit.
 - Use `luna_worker` for explicit, deterministic, repetitive, low-risk, easily validated work with no architectural decisions.
 - Use `terra_worker` for bounded routine engineering, noisy investigation, or independent non-overlapping parallel work.
@@ -255,6 +349,7 @@ OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 - Escalate Luna to Terra when hidden complexity appears; escalate Luna or Terra to Sol when risk or ambiguity crosses the Sol threshold.
 - Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
 - Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.
+- For high-risk or cross-boundary reviews, `workflow_router` may recommend at most two read-only systems-engineering specialists. Run the full four-role panel only when explicitly requested; the parent owns decisions and edits, and `verifier` owns the final readiness verdict.
 - No agent may claim completion without reporting files inspected or changed, validation commands, validation results, and residual risks or uncertainty.
 """
 
@@ -518,6 +613,31 @@ def replace_or_append_graphify_block(content: str) -> str:
         end = content.index(GRAPHIFY_END, start) + len(GRAPHIFY_END)
         return content[:start].rstrip() + "\n\n" + block + "\n\n" + content[end:].lstrip()
     return content.rstrip() + "\n\n" + block + "\n"
+
+
+def extract_user_managed_blocks(content: str) -> list[str]:
+    blocks: list[str] = []
+    begin_pattern = re.compile(r"<!-- BEGIN USER-MANAGED: ([A-Za-z0-9_.-]+) -->")
+    position = 0
+    while match := begin_pattern.search(content, position):
+        block_id = match.group(1)
+        end_marker = f"<!-- END USER-MANAGED: {block_id} -->"
+        end = content.find(end_marker, match.end())
+        if end == -1:
+            raise ValueError(f"unterminated USER-MANAGED block: {block_id}")
+        end += len(end_marker)
+        blocks.append(content[match.start() : end].strip())
+        position = end
+    return blocks
+
+
+def append_preserved_user_blocks(generated: str, active: str) -> str:
+    result = generated.rstrip()
+    for block in extract_user_managed_blocks(active):
+        first_line = block.splitlines()[0]
+        if first_line not in result:
+            result += "\n\n" + block
+    return result + "\n"
 
 
 def insert_table_row_after(content: str, anchor: str, row: str) -> str:
@@ -816,13 +936,17 @@ def synthesize_optimized(
     master_root: Path,
     reports_dir: Path,
 ) -> dict[str, Any]:
+    codex_agents = read_text(codex_home / "AGENTS.md")
     codex_config = read_text(codex_home / "config.toml")
     optimized_root = master_root / "optimized"
     optimized_codex = optimized_root / "codex"
     optimized_cursor = optimized_root / "cursor"
     optimized_skills = optimized_root / "agents" / "skills"
 
-    agents = replace_or_append_graphify_block(OPTIMIZED_GLOBAL_AGENTS)
+    agents = append_preserved_user_blocks(
+        replace_or_append_graphify_block(OPTIMIZED_GLOBAL_AGENTS),
+        codex_agents,
+    )
     agents_bytes = len(agents.encode("utf-8"))
     if agents_bytes > OPTIMIZED_AGENTS_MAX_BYTES:
         raise ValueError(f"optimized AGENTS.md exceeds {OPTIMIZED_AGENTS_MAX_BYTES} bytes: {agents_bytes}")

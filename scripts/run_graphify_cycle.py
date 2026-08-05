@@ -20,12 +20,15 @@ ROOT = Path(__file__).resolve().parents[1]
 MIN_GRAPHIFY_VERSION = (0, 9, 12)
 BRIDGE_SCHEMA_VERSION = "federated-graph-v1"
 SECRET_PATTERNS = (
-    re.compile(r"sk-[A-Za-z0-9_-]{16,}"),
+    # Match OpenAI-style keys; ignore hyphenated skill/feature ids like sk-notice-acknowledged.
+    re.compile(r"sk-(?:proj-[A-Za-z0-9_-]{16,}|[A-Za-z0-9]{32,})"),
     re.compile(r"(?i)password\s*[:=]\s*[\"'][^\"']+"),
     re.compile(r"(?i)(?:postgres|mysql|mongodb(?:\+srv)?)://[^\s\"']+"),
     re.compile(r"(?i)api[_-]?key\s*[:=]\s*[\"'][^\"']+"),
 )
-PROHIBITED_SOURCE_PARTS = {".env", ".venv", "backups", "cache", "data", "logs", "node_modules", "reports", "sessions", "vendor"}
+# Directory-name denylist for harvested graph sources. Prefer dotted cache dirs (`.cache`), not
+# application routes/modules named `cache` (e.g. dashboard/cache pages).
+PROHIBITED_SOURCE_PARTS = {".env", ".venv", ".cache", "backups", "data", "logs", "node_modules", "reports", "sessions", "vendor"}
 PROHIBITED_SOURCE_SUFFIXES = {".csv", ".db", ".key", ".parquet", ".pem", ".pfx", ".sqlite", ".tsv", ".xls", ".xlsx"}
 BRIDGE_NODE_TYPES = {"class", "enum", "interface", "module", "namespace", "package"}
 GENERIC_BRIDGE_LABELS = {"app", "config", "data", "index", "main", "model", "service", "test", "tests", "type", "utils"}
@@ -92,10 +95,19 @@ def graphify_version(executable: Path) -> str:
     return version
 
 
-def has_ignore_line(path: Path, expected: str) -> bool:
-    if not path.exists():
+def git_ignores_path(repo_path: Path, candidate: str) -> bool:
+    try:
+        result = subprocess.run(
+            ["git", "check-ignore", "--quiet", "--", candidate],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except OSError:
         return False
-    return expected in {line.strip() for line in path.read_text(encoding="utf-8", errors="replace").splitlines()}
+    return result.returncode == 0
 
 
 def preflight_repository(repo_path: Path) -> list[str]:
@@ -108,7 +120,7 @@ def preflight_repository(repo_path: Path) -> list[str]:
         missing = sorted(REQUIRED_GRAPHIFYIGNORE - lines)
         if missing:
             problems.append("missing-exclusions=" + ",".join(missing))
-    if not has_ignore_line(repo_path / ".gitignore", "graphify-out/"):
+    if not git_ignores_path(repo_path, "graphify-out/graph.json"):
         problems.append("graphify-out-not-ignored")
     return problems
 
@@ -192,6 +204,8 @@ def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: boo
     graph = repo_path / "graphify-out" / "graph.json"
     env = dict(os.environ)
     env["GRAPHIFY_MAX_WORKERS"] = str(max(1, ast_workers))
+    # Large codebases exceed Graphify's default 5k HTML viz cap; keep graphs browsable unless overridden.
+    env.setdefault("GRAPHIFY_VIZ_NODE_LIMIT", "250000")
     if graph.exists() and not force:
         command = [str(executable), "update", ".", "--force"]
     else:

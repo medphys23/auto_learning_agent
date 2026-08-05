@@ -1,17 +1,21 @@
 {
   "continue_on_dirty": true,
   "failed_step": "",
-  "finished_at": "2026-08-03T21:24:42Z",
+  "finished_at": "2026-08-05T19:37:19Z",
   "log_file": "reports\\optimized-knowledge-cycle.log",
   "readiness": {
     "applied": false,
     "catalog_integrity": {
-      "catalog_entry_count": 133,
+      "catalog_entry_count": 153,
       "catalog_missing_record_paths": [],
       "dirty_blockers": [
         {
-          "dirty_count": 4,
+          "dirty_count": 3,
           "id": "orsi"
+        },
+        {
+          "dirty_count": 1,
+          "id": "travel-agent"
         },
         {
           "dirty_count": 2,
@@ -24,6 +28,7 @@
         "general-work",
         "investment-binance",
         "kidney-federico",
+        "omniroute",
         "practice-ops-dashboard",
         "ps-robot-adaptor",
         "xenios-finances"
@@ -64,12 +69,12 @@
         "passed": true
       },
       {
-        "detail": "2 dirty blocker(s)",
+        "detail": "3 dirty blocker(s)",
         "name": "no_dirty_blockers",
         "passed": false
       }
     ],
-    "generated_at": "2026-08-03T21:24:42Z",
+    "generated_at": "2026-08-05T19:37:19Z",
     "optimized_agents_exists": true,
     "optimized_agents_sha256": "c08e5e8f5cbb65dbded1855cd169c8632cb1f33c40e3d98db40260a8be0835c3",
     "requires_explicit_user_approval": true,
@@ -82,17 +87,17 @@
   },
   "skip_dependency_audit": false,
   "skip_graphify": false,
-  "started_at": "2026-08-03T21:22:22Z",
+  "started_at": "2026-08-05T19:35:26Z",
   "state_dirty_blockers": {
     "auto_learning_agent": {
       "branch": "main",
       "candidate_count": 32,
-      "commit": "31ed44510efa686d9fa4019803b6580db4e685c2",
-      "digest": "063f7f400ed5ca9a4c44d03f5e5fb4471f1da9d5d81e2b3be39f4171409d67dc",
-      "dirty": "M knowledge/INDEX.md\n M knowledge/catalog.jsonl\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-11.json\n M knowledge/pending/auto-learning-agent-verification-command-12.json\n M knowledge/pending/auto-learning-agent-verification-command-13.json\n M knowledge/pending/auto-learning-agent-verification-command-14.json\n M knowledge/pending/auto-learning-agent-verification-command-15.json\n M knowledge/pending/auto-learning-agent-verification-command-16.json\n M knowledge/pending/auto-learning-agent-verification-command-17.json\n M knowledge/pending/auto-learning-agent-verification-command-18.json\n M knowledge/pending/auto-learning-agent-verification-command-19.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-20.json\n M knowledge/pending/auto-learning-agent-verification-command-21.json\n M knowledge/pending/auto-learning-agent-verification-command-22.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-governed-graphify-integration.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M knowledge/pending/auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover.json\n M knowledge/pending/campania-transplant-repository-constraints.json\n M knowledge/pending/campania-transplant-repository-profile.json\n M knowledge/pending/campania-transplant-source-map.json\n M knowledge/pending/campania-transplant-stack-dependency-profile.json\n M knowledge/pending/campania-transplant-verification-command-1.json\n M knowledge/pending/campania-transplant-verification-command-2.json\n M knowledge/pending/campania-transplant-verification-profile.json\n M knowledge/pending/general-work-repository-constraints.json\n M knowledge/pending/general-work-repository-profile.json\n M knowledge/pending/general-work-source-map.json\n M knowledge/pending/general-work-stack-dependency-profile.json\n M knowledge/pending/general-work-verification-profile.json\n M knowledge/pending/investment-binance-repository-constraints.json\n M knowledge/pending/investment-binance-repository-profile.json\n M knowledge/pending/investment-binance-source-map.json\n M knowledge/pending/investment-binance-stack-dependency-profile.json\n M knowledge/pending/investment-binance-verification-command-1.json\n M knowledge/pending/investment-binance-verification-command-2.json\n M knowledge/pending/investment-binance-verification-command-3.json\n M knowledge/pending/investment-binance-verification-profile.json\n M knowledge/pending/investment-binance-workflow-build-or-revise-binance-technical-signal-dashboard.json\n M knowledge/pending/kidney-federico-repository-constraints.json\n M knowledge/pending/kidney-federico-repository-profile.json\n M knowledge/pending/kidney-federico-source-map.json\n M knowledge/pending/kidney-federico-stack-dependency-profile.json\n M knowledge/pending/kidney-federico-verification-command-1.json\n M knowledge/pending/kidney-federico-verification-command-2.json\n M knowledge/pending/kidney-federico-verification-profile.json\n M knowledge/pending/orsi-repository-constraints.json\n M knowledge/pending/orsi-repository-profile.json\n M knowledge/pending/orsi-source-map.json\n M knowledge/pending/orsi-stack-dependency-profile.json\n M knowledge/pending/orsi-verification-command-1.json\n M knowledge/pending/orsi-verification-command-2.json\n M knowledge/pending/orsi-verification-command-3.json\n M knowledge/pending/orsi-verification-command-4.json\n M knowledge/pending/orsi-verification-command-5.json\n M knowledge/pending/orsi-verification-command-6.json\n M knowledge/pending/orsi-verification-command-7.json\n M knowledge/pending/orsi-verification-profile.json\n M knowledge/pending/orsi-workflow-ad-astra-chapter.json\n M knowledge/pending/orsi-workflow-cholecystectomy-protocol-literature-updates.json\n M knowledge/pending/orsi-workflow-delphi-expert-threshold-evidence-deck.json\n M knowledge/pending/orsi-workflow-low-anterior-resection-metrics-deck.json\n M knowledge/pending/orsi-workflow-markitdown-read-path.json\n M knowledge/pending/orsi-workflow-office-pptx-metrics-decks.json\n M knowledge/pending/orsi-workflow-optimal-trocar-placement-app.json\n M knowledge/pending/orsi-workflow-repository-structure-hygiene.json\n M knowledge/pending/orsi-workflow-right-hemicolectomy-metrics-package.json\n M knowledge/pending/orsi-workflow-robotic-cholecystectomy-systematic-review.json\n M knowledge/pending/practice-ops-dashboard-repository-constraints.json\n M knowledge/pending/practice-ops-dashboard-repository-profile.json\n M knowledge/pending/practice-ops-dashboard-source-map.json\n M knowledge/pending/practice-ops-dashboard-stack-dependency-profile.json\n M knowledge/pending/practice-ops-dashboard-verification-command-1.json\n M knowledge/pending/practice-ops-dashboard-verification-command-2.json\n M knowledge/pending/practice-ops-dashboard-verification-command-3.json\n M knowledge/pending/practice-ops-dashboard-verification-command-4.json\n M knowledge/pending/practice-ops-dashboard-verification-profile.json\n M knowledge/pending/practice-ops-dashboard-workflow-beneficiary-import-merge.json\n M knowledge/pending/practice-ops-dashboard-workflow-certificate-generation-and-email.json\n M knowledge/pending/practice-ops-dashboard-workflow-new-practice-onboarding.json\n M knowledge/pending/practice-ops-dashboard-workflow-next-js-neon-vercel-practice-app.json\n M knowledge/pending/practice-ops-dashboard-workflow-server-query-and-view-models.json\n M knowledge/pending/practice-ops-dashboard-workflow-upload-practice-data.json\n M knowledge/pending/ps-robot-adaptor-repository-constraints.json\n M knowledge/pending/ps-robot-adaptor-repository-profile.json\n M knowledge/pending/ps-robot-adaptor-source-map.json\n M knowledge/pending/ps-robot-adaptor-stack-dependency-profile.json\n M knowledge/pending/ps-robot-adaptor-verification-command-1.json\n M knowledge/pending/ps-robot-adaptor-verification-profile.json\n M knowledge/pending/xenios-finances-repository-constraints.json\n M knowledge/pending/xenios-finances-repository-profile.json\n M knowledge/pending/xenios-finances-source-map.json\n M knowledge/pending/xenios-finances-stack-dependency-profile.json\n M knowledge/pending/xenios-finances-verification-command-1.json\n M knowledge/pending/xenios-finances-verification-command-2.json\n M knowledge/pending/xenios-finances-verification-profile.json\n M reports/optimized-cutover-readiness.json\n M reports/optimized-knowledge-cycle-summary.json\n M state/repository-snapshots.json\n?? backups/legacy-pre-optimized/20260716T171416Z/\n?? knowledge/pending/auto-learning-agent-verification-command-23.json\n?? knowledge/pending/auto-learning-agent-workflow-federated-orchestrator-startup.json\n?? knowledge/pending/orsi-verification-command-8.json\n?? knowledge/pending/orsi-verification-command-9.json\n?? knowledge/pending/orsi-workflow-hugo-ras-preset-curation.json\n?? knowledge/pending/orsi-workflow-hugo-ras-simulator-development.json\n?? knowledge/pending/orsi-workflow-local-meeting-transcription.json",
-      "dirty_count": 121,
-      "file_count": 343,
-      "fingerprinted_at": "2026-08-03T21:23:52Z",
+      "commit": "481b07fbd8c60c5e0eb0152fbdccdcf0608065d9",
+      "digest": "17ffbf3e60ba1e72a3f99b0d29c1d931c30f90eabee50c436778731f2c6300ba",
+      "dirty": "M config/repositories.toml\n M knowledge/INDEX.md\n M knowledge/catalog.jsonl\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-11.json\n M knowledge/pending/auto-learning-agent-verification-command-12.json\n M knowledge/pending/auto-learning-agent-verification-command-13.json\n M knowledge/pending/auto-learning-agent-verification-command-14.json\n M knowledge/pending/auto-learning-agent-verification-command-15.json\n M knowledge/pending/auto-learning-agent-verification-command-16.json\n M knowledge/pending/auto-learning-agent-verification-command-17.json\n M knowledge/pending/auto-learning-agent-verification-command-18.json\n M knowledge/pending/auto-learning-agent-verification-command-19.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-20.json\n M knowledge/pending/auto-learning-agent-verification-command-21.json\n M knowledge/pending/auto-learning-agent-verification-command-22.json\n M knowledge/pending/auto-learning-agent-verification-command-23.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-federated-orchestrator-startup.json\n M knowledge/pending/auto-learning-agent-workflow-governed-graphify-integration.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M knowledge/pending/auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover.json\n M reports/optimized-cutover-readiness.json\n M reports/optimized-knowledge-cycle-summary.json\n M scripts/discover_repositories.py\n M scripts/run_optimized_knowledge_cycle.py\n M scripts/run_orchestrator_pipeline.py\n M skills.md\n M state/repository-snapshots.json\n M tests/test_orchestrator_mvp.py\n?? backups/legacy-pre-optimized/20260803T213024Z/\n?? backups/legacy-pre-optimized/20260803T213231Z/\n?? backups/legacy-pre-optimized/20260803T214053Z/\n?? knowledge/pending/omniroute-repository-profile.json\n?? knowledge/pending/omniroute-source-map.json\n?? knowledge/pending/omniroute-stack-dependency-profile.json\n?? knowledge/pending/omniroute-verification-profile.json\n?? knowledge/pending/travel-agent-repository-constraints.json\n?? knowledge/pending/travel-agent-repository-profile.json\n?? knowledge/pending/travel-agent-source-map.json\n?? knowledge/pending/travel-agent-stack-dependency-profile.json\n?? knowledge/pending/travel-agent-verification-command-1.json\n?? knowledge/pending/travel-agent-verification-command-2.json\n?? knowledge/pending/travel-agent-verification-command-3.json\n?? knowledge/pending/travel-agent-verification-command-4.json\n?? knowledge/pending/travel-agent-verification-command-5.json\n?? knowledge/pending/travel-agent-verification-command-6.json\n?? knowledge/pending/travel-agent-verification-command-7.json\n?? knowledge/pending/travel-agent-verification-profile.json\n?? knowledge/pending/travel-agent-workflow-chrome-debug-profile.json\n?? knowledge/pending/travel-agent-workflow-fallback.json\n?? knowledge/pending/travel-agent-workflow-iteration-notes.json\n?? knowledge/pending/travel-agent-workflow-verified-chatgpt-ui-selectors-2026-08.json",
+      "dirty_count": 66,
+      "file_count": 387,
+      "fingerprinted_at": "2026-08-05T19:36:12Z",
       "harvest_schema_version": "safe-repo-knowledge-v3",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -154,14 +159,28 @@
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
       "remote": "https://github.com/medphys23/kidney_federico.git"
     },
+    "omniroute": {
+      "branch": "release/v3.8.50",
+      "candidate_count": 4,
+      "commit": "9e3126828e8a3bac113e8a375e592ef940ab551b",
+      "digest": "90044586c379703c3e0d45460b4e0e89a7c7f6939247bf37175e8f4fa46df71a",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 10280,
+      "fingerprinted_at": "2026-08-05T19:22:23Z",
+      "harvest_schema_version": "safe-repo-knowledge-v3",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+      "remote": "https://github.com/medphys23/OmniRoute.git"
+    },
     "orsi": {
       "branch": "main",
-      "commit": "b4e03f68bc1eb69976b48205169c42cb79ecb036",
-      "digest": "7a7a31393d945f00c6e3ab3fa33c2967f685d3b45531ff50d0559075364d1bb8",
-      "dirty": "D Orsi_Metrics_Research/projects/.tmp.driveupload/612566\n D Orsi_Metrics_Research/projects/.tmp.driveupload/612602\n D Orsi_Metrics_Research/projects/.tmp.driveupload/612614\n D Orsi_Metrics_Research/projects/.tmp.driveupload/612676",
-      "dirty_count": 4,
+      "commit": "4b89b53f85d221fc25aba527e3ddf61dccc9dbba",
+      "digest": "e66fbaf77015a3a21da4e95218efae8bdca72f2042fe6a9c4370ecc11682764a",
+      "dirty": "D Orsi_Metrics_Research/projects/.tmp.driveupload/612733\n D Orsi_Metrics_Research/projects/.tmp.driveupload/612735\n M Orsi_Metrics_Research/projects/robotic_cholecystectomy/metrics/deliverables/ORSI_Robotic_Cholecystectomy_PBP_Metrics_Deck_v15_Delphi_Master.pptx",
+      "dirty_count": 3,
       "file_count": 309,
-      "fingerprinted_at": "2026-08-03T21:23:56Z",
+      "fingerprinted_at": "2026-08-05T19:36:18Z",
       "harvest_schema_version": "safe-repo-knowledge-v3",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
@@ -195,6 +214,19 @@
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
       "remote": "https://github.com/medphys23/PS_robot_adaptor.git"
     },
+    "travel-agent": {
+      "branch": "main",
+      "commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+      "digest": "ac04e52d3dfc023ca0cb02b2a2d5d2523186248914743a8fedf2c0fd78185909",
+      "dirty": "M TRANSPORT_KNOWLEDGE_BASE.md",
+      "dirty_count": 1,
+      "file_count": 33,
+      "fingerprinted_at": "2026-08-05T19:36:20Z",
+      "harvest_schema_version": "safe-repo-knowledge-v3",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
+      "remote": "https://github.com/medphys23/travel_agent.git"
+    },
     "x-booking": {
       "branch": "dev01",
       "commit": "ca9487da02657e80d9f6b379d468a5abaf11f045",
@@ -202,7 +234,7 @@
       "dirty": "?? data/\n?? scraper_outputs/",
       "dirty_count": 2,
       "file_count": 75,
-      "fingerprinted_at": "2026-08-03T21:23:57Z",
+      "fingerprinted_at": "2026-08-05T19:36:20Z",
       "harvest_schema_version": "safe-repo-knowledge-v3",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
@@ -228,14 +260,15 @@
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
-        "scripts/discover_repositories.py"
+        "scripts/discover_repositories.py",
+        "--write-registry"
       ],
-      "elapsed_seconds": 4.094,
+      "elapsed_seconds": 1.875,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:22:26Z",
+      "finished_at": "2026-08-05T19:35:28Z",
       "name": "discover repositories",
-      "output_lines": 11,
-      "started_at": "2026-08-03T21:22:22Z"
+      "output_lines": 12,
+      "started_at": "2026-08-05T19:35:26Z"
     },
     {
       "command": [
@@ -244,24 +277,24 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 85.797,
+      "elapsed_seconds": 43.078,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:23:52Z",
+      "finished_at": "2026-08-05T19:36:11Z",
       "name": "refresh repository graphs",
-      "output_lines": 12,
-      "started_at": "2026-08-03T21:22:26Z"
+      "output_lines": 14,
+      "started_at": "2026-08-05T19:35:28Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 6.266,
+      "elapsed_seconds": 9.468,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:23:58Z",
+      "finished_at": "2026-08-05T19:36:21Z",
       "name": "harvest repositories",
-      "output_lines": 10,
-      "started_at": "2026-08-03T21:23:52Z"
+      "output_lines": 12,
+      "started_at": "2026-08-05T19:36:11Z"
     },
     {
       "command": [
@@ -270,12 +303,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 42.532,
+      "elapsed_seconds": 56.891,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:24:41Z",
+      "finished_at": "2026-08-05T19:37:18Z",
       "name": "audit dependency catalog",
       "output_lines": 2,
-      "started_at": "2026-08-03T21:23:58Z"
+      "started_at": "2026-08-05T19:36:21Z"
     },
     {
       "command": [
@@ -287,12 +320,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 0.734,
+      "elapsed_seconds": 1.047,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:24:41Z",
+      "finished_at": "2026-08-05T19:37:19Z",
       "name": "synthesize optimized instructions",
       "output_lines": 2,
-      "started_at": "2026-08-03T21:24:41Z"
+      "started_at": "2026-08-05T19:37:18Z"
     },
     {
       "command": [
@@ -301,12 +334,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 0.203,
+      "elapsed_seconds": 0.188,
       "exit_code": 0,
-      "finished_at": "2026-08-03T21:24:41Z",
+      "finished_at": "2026-08-05T19:37:19Z",
       "name": "audit context budget",
       "output_lines": 2,
-      "started_at": "2026-08-03T21:24:41Z"
+      "started_at": "2026-08-05T19:37:19Z"
     }
   ],
   "strict": false,

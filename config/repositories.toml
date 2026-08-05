@@ -61,6 +61,18 @@ stack_tags = ['mamp', 'mysql', 'php', 'python']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
+id = 'omniroute'
+name = 'OmniRoute'
+path = 'C:\Users\ppyxe\Documents\GitHub\OmniRoute'
+remote = 'https://github.com/medphys23/OmniRoute.git'
+current_branch = 'release/v3.8.50'
+enabled = true
+scope = 'typescript_nextjs_ai_routing_gateway'
+risk_tags = ['auth', 'cost_bearing_providers', 'credentials', 'database', 'network_proxy', 'subprocess', 'supply_chain']
+stack_tags = ['a2a', 'electron', 'mcp', 'nextjs', 'node', 'sqlite', 'sse', 'typescript', 'zod']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
 id = 'orsi'
 name = 'ORSI'
 path = 'C:\Users\ppyxe\Documents\GitHub\ORSI'
@@ -81,7 +93,7 @@ current_branch = 'main'
 enabled = true
 scope = 'medical_practice_operations'
 risk_tags = ['auth', 'database', 'medical_practice_data']
-stack_tags = ['nextjs', 'postgres', 'react', 'tailwind', 'typescript', 'vercel']
+stack_tags = ['nextjs', 'node', 'postgres', 'react', 'tailwind', 'typescript', 'vercel']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
@@ -97,15 +109,27 @@ stack_tags = ['pygame', 'pyside6', 'pytest', 'python']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
+id = 'travel-agent'
+name = 'travel_agent'
+path = 'C:\Users\ppyxe\Documents\GitHub\travel_agent'
+remote = 'https://github.com/medphys23/travel_agent.git'
+current_branch = 'main'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['python']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
 id = 'x-booking'
 name = 'X_booking'
 path = 'C:\Users\ppyxe\Documents\GitHub\X_booking'
 remote = 'https://github.com/medphys23/X_booking.git'
-current_branch = 'scraping'
+current_branch = 'dev01'
 enabled = true
 scope = 'lead_scraper'
 risk_tags = ['branch_sensitive', 'contact_data', 'no_patient_data', 'scraper']
-stack_tags = ['beautifulsoup4', 'openpyxl', 'playwright', 'python', 'tqdm']
+stack_tags = ['beautifulsoup4', 'node', 'openpyxl', 'playwright', 'python', 'tqdm']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
@@ -117,5 +141,5 @@ current_branch = 'main'
 enabled = true
 scope = 'personal_finance'
 risk_tags = ['finance', 'local_only', 'mysql']
-stack_tags = ['bootstrap', 'chartjs', 'mysql', 'php']
+stack_tags = ['bootstrap', 'chartjs', 'mysql', 'php', 'python']
 harvest_mode = 'deep_when_clean'

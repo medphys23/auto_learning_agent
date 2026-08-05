@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -11,6 +12,7 @@
     ],
     "languages": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -70,7 +72,7 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:23:57Z",
+    "created_at": "2026-08-05T20:23:43Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md",
@@ -96,7 +98,7 @@
       "tests/tableSorting.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:23:57Z"
+    "updated_at": "2026-08-05T20:23:43Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -109,7 +111,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for practice-ops-dashboard: 4 AGENTS command(s), 21 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for practice-ops-dashboard: 5 AGENTS command(s), 21 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
     "auth",
     "ci",
@@ -117,6 +119,7 @@
     "deployment-signals",
     "medical_practice_data",
     "nextjs",
+    "node",
     "postgres",
     "practice-ops-dashboard",
     "react",
@@ -169,6 +172,7 @@
     "npm run lint",
     "npm run typecheck",
     "npm run test",
-    "npm run build"
+    "npm run build",
+    "npm run dev"
   ]
 }

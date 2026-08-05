@@ -48,13 +48,13 @@
     "**Audit logging:** keep `clinical_api_audit` writes intact for any API actions; do not bypass them when adding endpoints."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:56Z",
+    "created_at": "2026-08-05T20:23:16Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:56Z"
+    "updated_at": "2026-08-05T20:23:16Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

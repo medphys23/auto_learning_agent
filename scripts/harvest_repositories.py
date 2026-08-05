@@ -7,10 +7,11 @@ from typing import Any
 
 from orchestrator_common import (
     catalog_entry,
-    extract_code_block_commands,
     extract_constraint_lines,
     extract_markdown_section,
+    extract_markdown_sections,
     extract_skill_sections,
+    extract_verification_commands,
     fingerprint_repository,
     git_dirty_lines,
     harvestable_text_files,
@@ -28,7 +29,9 @@ from orchestrator_common import (
     write_json,
 )
 
-HARVEST_SCHEMA_VERSION = "safe-repo-knowledge-v3"
+HARVEST_SCHEMA_VERSION = "safe-repo-knowledge-v5"
+VERIFICATION_HEADINGS = ("verification", "setup and focused checks")
+CONSTRAINT_HEADINGS = ("repo-specific rules", "security requirements", "review focus", "upstream contributions")
 EXPECTED_RECORD_SUFFIXES = (
     "repository-profile",
     "source-map",
@@ -297,8 +300,8 @@ def verification_profile_record(repo: dict[str, Any], fingerprint: dict[str, Any
     display_name = repo_name(repo)
     agents_path = repo_path / "AGENTS.md"
     agents_text = read_text_if_exists(agents_path)
-    verification = extract_markdown_section(agents_text, "verification")
-    commands = extract_code_block_commands(verification)
+    verification = extract_markdown_sections(agents_text, VERIFICATION_HEADINGS)
+    commands = extract_verification_commands(verification)
     signals = test_ci_deployment_signals(repo_path)
     source_paths = []
     if agents_path.exists():
@@ -335,8 +338,8 @@ def verification_command_records(repo: dict[str, Any], fingerprint: dict[str, An
     display_name = repo_name(repo)
     agents_path = repo_path / "AGENTS.md"
     agents_text = read_text_if_exists(agents_path)
-    verification = extract_markdown_section(agents_text, "verification")
-    commands = extract_code_block_commands(verification)
+    verification = extract_markdown_sections(agents_text, VERIFICATION_HEADINGS)
+    commands = extract_verification_commands(verification)
     records: list[dict[str, Any]] = []
     repo_id = slugify(str(repo["id"]))
     for index, command in enumerate(commands, 1):
@@ -364,7 +367,7 @@ def constraint_record(repo: dict[str, Any], fingerprint: dict[str, Any], repo_pa
     display_name = repo_name(repo)
     agents_path = repo_path / "AGENTS.md"
     agents_text = read_text_if_exists(agents_path)
-    rules = extract_markdown_section(agents_text, "repo-specific rules")
+    rules = extract_markdown_sections(agents_text, CONSTRAINT_HEADINGS)
     constraints = extract_constraint_lines(rules)
     if not constraints and not repo.get("risk_tags"):
         return None

@@ -18,8 +18,8 @@ from synthesize_top_level_instructions import (
 )
 
 
-TARGET_PARENT_MODEL = "gpt-5.6-terra"
-TARGET_PARENT_REASONING_EFFORT = "medium"
+TARGET_PARENT_MODEL = "gpt-5.6-sol"
+TARGET_PARENT_REASONING_EFFORT = "high"
 
 
 def write_text(path: Path, content: str) -> None:
@@ -68,6 +68,112 @@ def optimized_file_targets(master_root: Path, codex_home: Path, cursor_home: Pat
     for source in sorted((optimized_root / "cursor" / "rules").glob("*.mdc")):
         targets.append((source, cursor_home / "rules" / source.name, f"cursor/rules/{source.name}"))
     return targets
+
+
+def agent_only_targets(master_root: Path, codex_home: Path) -> list[tuple[Path, Path, str]]:
+    source_dir = master_root / "optimized" / "codex" / "agents"
+    return [
+        (source, codex_home / "agents" / source.name, f"codex/agents/{source.name}")
+        for source in sorted(source_dir.glob("*.toml"))
+    ]
+
+
+def validate_agent_only_sources(targets: list[tuple[Path, Path, str]]) -> None:
+    validate_master_targets(targets)
+    names: dict[str, Path] = {}
+    config_files = {values["config_file"]: name for name, values in AGENT_REGISTRATIONS.items()}
+    for source, target, _ in targets:
+        data = read_toml_text(source.read_text(encoding="utf-8"))
+        name = data.get("name")
+        if not isinstance(name, str) or not name:
+            raise RuntimeError(f"{source}: missing agent name")
+        if name in names:
+            raise RuntimeError(f"duplicate agent name {name}: {names[name]} and {source}")
+        names[name] = source
+        expected_name = config_files.get(f"agents/{source.name}")
+        if expected_name != name:
+            raise RuntimeError(f"{source}: registration collision or missing registration for agent {name}")
+        for field in ("description", "developer_instructions"):
+            if not data.get(field):
+                raise RuntimeError(f"{source}: missing required agent field {field}")
+        if target.exists():
+            target_data = read_toml_text(target.read_text(encoding="utf-8"))
+            target_name = target_data.get("name")
+            if target_name != name:
+                raise RuntimeError(f"Refusing agent target collision at {target}: expected {name}, found {target_name}")
+    missing = sorted(set(AGENT_REGISTRATIONS) - set(names))
+    if missing:
+        raise RuntimeError("generated agent files missing registrations: " + ", ".join(missing))
+
+
+def config_without_managed_agent_registrations(data: dict[str, Any]) -> dict[str, Any]:
+    result = dict(data)
+    agents = result.get("agents")
+    if isinstance(agents, dict):
+        preserved_agents = dict(agents)
+        for name in AGENT_REGISTRATIONS:
+            preserved_agents.pop(name, None)
+        if preserved_agents:
+            result["agents"] = preserved_agents
+        else:
+            result.pop("agents", None)
+    return result
+
+
+def merge_agent_registrations(active_config: str) -> tuple[str, list[str]]:
+    merged = active_config
+    report: list[str] = []
+    before = read_toml_text(active_config) if active_config.strip() else {}
+    agents = before.get("agents", {})
+    if agents and not isinstance(agents, dict):
+        raise RuntimeError("[agents] exists but is not a TOML table")
+    if not isinstance(agents, dict):
+        agents = {}
+    for name, values in AGENT_REGISTRATIONS.items():
+        existing = agents.get(name)
+        if existing is not None:
+            if not isinstance(existing, dict) or existing.get("config_file") != values["config_file"]:
+                raise RuntimeError(f"Refusing to overwrite existing custom agent registration: {name}")
+            continue
+        merged = merged.rstrip() + (
+            f"\n\n[agents.{name}]\n"
+            f"description = \"{values['description']}\"\n"
+            f"config_file = \"{values['config_file']}\"\n"
+        )
+        report.append(f"Inserted agents.{name}.")
+    after = read_toml_text(merged)
+    if config_without_managed_agent_registrations(before) != config_without_managed_agent_registrations(after):
+        raise RuntimeError("agents-only merge changed non-agent configuration")
+    return merged.rstrip() + "\n", report
+
+
+def protected_hashes(codex_home: Path) -> dict[str, str | None]:
+    paths = {
+        "codex/AGENTS.md": codex_home / "AGENTS.md",
+        "codex/auth.json": codex_home / "auth.json",
+    }
+    return {label: sha256_file(path) if path.exists() else None for label, path in paths.items()}
+
+
+def write_config_merge_preview(path: Path, before: str, after: str, report: list[str]) -> None:
+    diff = "\n".join(
+        difflib.unified_diff(
+            before.splitlines(),
+            after.splitlines(),
+            fromfile="active/codex/config.toml",
+            tofile="agents-only/codex/config.toml",
+            lineterm="",
+        )
+    )
+    write_text(
+        path,
+        "# Agents-Only Config Merge\n\n"
+        f"Generated: {utc_now()}\n\n"
+        + "\n".join(f"- {item}" for item in report)
+        + "\n\n```diff\n"
+        f"{diff if diff else '# No changes'}\n"
+        "```\n",
+    )
 
 
 def optimized_backup_targets(
@@ -192,7 +298,7 @@ def gpt56_runtime_smoke_ok(*, codex_home: Path, codex_cli: Path | None = None) -
         if codex_cli is None:
             codex_cli = Path("codex")
     failures: list[str] = []
-    for model, _ in EXPECTED_MODELS.values():
+    for model in dict.fromkeys(model for model, _ in EXPECTED_MODELS.values()):
         ok, summary = model_smoke(codex_cli, model, REPO_ROOT)
         if not ok:
             failures.append(f"{model}: {summary[:200]}")
@@ -321,7 +427,11 @@ def write_publication_reports(
         "",
         f"- Mode: {mode}",
         f"- Global writes performed: {'true' if applied else 'false'}",
-        "- Target folders: `C:\\Users\\ppyxe\\.codex`, `C:\\Users\\ppyxe\\.cursor`",
+        (
+            "- Target folders: `C:\\Users\\ppyxe\\.codex` only"
+            if mode.startswith("agents-only")
+            else "- Target folders: `C:\\Users\\ppyxe\\.codex`, `C:\\Users\\ppyxe\\.cursor`"
+        ),
     ]
     if backup_root:
         lines.append(f"- Backup root: `{backup_root}`")
@@ -373,7 +483,89 @@ def publish_global_rules(
     profile: str = "legacy",
     runtime_smoke: bool | None = None,
     force_parent_model: bool = False,
+    agents_only: bool = False,
 ) -> dict[str, Any]:
+    if agents_only:
+        if profile != "optimized":
+            raise RuntimeError("--agents-only requires --profile optimized")
+        if runtime_smoke is not None or force_parent_model:
+            raise RuntimeError("--agents-only cannot be combined with parent-model or runtime-smoke flags")
+        synthesize(
+            codex_home=codex_home,
+            cursor_home=cursor_home,
+            master_root=master_root,
+            reports_dir=reports_dir,
+            profile="optimized",
+        )
+        targets = agent_only_targets(master_root, codex_home)
+        validate_agent_only_sources(targets)
+        active_config_path = codex_home / "config.toml"
+        active_config = active_config_path.read_text(encoding="utf-8") if active_config_path.exists() else ""
+        merged_config, merge_report = merge_agent_registrations(active_config)
+        protected_before = protected_hashes(codex_home)
+        write_config_merge_preview(
+            reports_dir / "agents-only-config-merge-preview.md",
+            active_config,
+            merged_config,
+            merge_report,
+        )
+        if not apply:
+            report = write_publication_reports(
+                reports_dir,
+                mode="agents-only-preview",
+                backup_root=None,
+                backed_up=[],
+                pruned_backups=[],
+                applied=[],
+            )
+            return {"mode": "agents-only-preview", "report": str(report), "applied": []}
+        if not confirm_global_write:
+            raise RuntimeError("global publication requires --confirm-global-write")
+
+        timestamp = utc_now().replace(":", "").replace("-", "")
+        backup_root = backup_base / timestamp
+        suffix = 1
+        while backup_root.exists():
+            backup_root = backup_base / f"{timestamp}-{suffix}"
+            suffix += 1
+        backup_plan = [
+            *targets,
+            (active_config_path, active_config_path, "codex/config.toml"),
+        ]
+        backed_up = backup_targets(backup_plan, backup_root)
+        applied = apply_targets(targets)
+        write_text(active_config_path, merged_config)
+        after_data = read_toml_text(active_config_path.read_text(encoding="utf-8"))
+        before_data = read_toml_text(active_config) if active_config.strip() else {}
+        if config_without_managed_agent_registrations(before_data) != config_without_managed_agent_registrations(after_data):
+            raise RuntimeError("post-write validation found a non-agent config change")
+        applied.append(
+            {
+                "label": "codex/config.toml",
+                "target": str(active_config_path),
+                "sha256": sha256_file(active_config_path),
+                "merge_report": merge_report,
+            }
+        )
+        protected_after = protected_hashes(codex_home)
+        if protected_before != protected_after:
+            raise RuntimeError("agents-only publication changed protected AGENTS.md or auth.json")
+        pruned_backups: list[str] = []
+        report = write_publication_reports(
+            reports_dir,
+            mode="agents-only-applied",
+            backup_root=backup_root,
+            backed_up=backed_up,
+            pruned_backups=pruned_backups,
+            applied=applied,
+        )
+        return {
+            "mode": "agents-only-applied",
+            "report": str(report),
+            "backup_root": str(backup_root),
+            "pruned_backups": pruned_backups,
+            "applied": applied,
+        }
     if profile == "optimized" and apply:
         config = REPO_ROOT / "config" / "context-optimization.toml"
         if config.exists():
@@ -514,6 +706,11 @@ def main() -> int:
     parser.add_argument("--confirm-global-write", action="store_true", help="Required with --apply.")
     parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
     parser.add_argument(
+        "--agents-only",
+        action="store_true",
+        help="Publish only generated agent TOMLs and [agents.<role>] registrations; requires the optimized profile.",
+    )
+    parser.add_argument(
         "--runtime-smoke",
         action="store_true",
         help="Require GPT-5.6 runtime smoke before switching parent model on optimized apply.",
@@ -526,7 +723,7 @@ def main() -> int:
     parser.add_argument(
         "--force-parent-model",
         action="store_true",
-        help="Apply GPT-5.6 Terra parent model even when runtime smoke fails.",
+        help="Apply GPT-5.6 Sol parent model even when runtime smoke fails.",
     )
     args = parser.parse_args()
     runtime_smoke_flag: bool | None = None
@@ -547,6 +744,7 @@ def main() -> int:
             profile=args.profile,
             runtime_smoke=runtime_smoke_flag,
             force_parent_model=args.force_parent_model,
+            agents_only=args.agents_only,
         )
     except RuntimeError as exc:
         print(f"ERROR: {exc}")

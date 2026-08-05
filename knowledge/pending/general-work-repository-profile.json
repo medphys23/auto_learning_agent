@@ -37,13 +37,13 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:53Z",
+    "created_at": "2026-08-05T20:23:15Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:53Z"
+    "updated_at": "2026-08-05T20:23:15Z"
   },
   "repository_metadata": {
     "branch": "main",

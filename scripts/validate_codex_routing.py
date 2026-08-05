@@ -14,6 +14,66 @@ EXPECTED_MODELS = {
     "luna_worker": ("gpt-5.6-luna", "low"),
     "terra_worker": ("gpt-5.6-terra", "medium"),
     "sol_specialist": ("gpt-5.6-sol", "xhigh"),
+    "systems_architect": ("gpt-5.6-sol", "high"),
+    "reliability_operations_reviewer": ("gpt-5.6-terra", "high"),
+    "security_boundary_reviewer": ("gpt-5.6-sol", "high"),
+    "quality_release_reviewer": ("gpt-5.6-terra", "high"),
+}
+SPECIALIST_ROLES = (
+    "systems_architect",
+    "reliability_operations_reviewer",
+    "security_boundary_reviewer",
+    "quality_release_reviewer",
+)
+SPECIALIST_KEYWORDS = {
+    "security_boundary_reviewer": {
+        "auth",
+        "authorization",
+        "credential",
+        "identity",
+        "secret",
+        "security",
+        "ssrf",
+        "subprocess",
+        "trust",
+    },
+    "systems_architect": {
+        "architecture",
+        "boundary",
+        "cross-boundary",
+        "database",
+        "deployment",
+        "interface",
+        "migration",
+        "provider",
+        "state",
+    },
+    "reliability_operations_reviewer": {
+        "backpressure",
+        "cancellation",
+        "distributed",
+        "health",
+        "network",
+        "operations",
+        "readiness",
+        "recovery",
+        "reliability",
+        "retry",
+        "shutdown",
+        "timeout",
+    },
+    "quality_release_reviewer": {
+        "artifact",
+        "ci",
+        "dependency",
+        "documentation",
+        "provenance",
+        "quality",
+        "release",
+        "rollback",
+        "supply-chain",
+        "test",
+    },
 }
 ROUTES = {"direct", "luna_worker", "terra_worker", "sol_specialist"}
 RISK_LEVELS = {"low", "medium", "high", "critical"}
@@ -39,6 +99,8 @@ def validate_agent_file(path: Path) -> list[str]:
             errors.append(f"{path}: expected model {expected_model}")
         if data.get("model_reasoning_effort") != expected_effort:
             errors.append(f"{path}: expected model_reasoning_effort {expected_effort}")
+    if name in SPECIALIST_ROLES and data.get("sandbox_mode") != "read-only":
+        errors.append(f"{path}: expected sandbox_mode read-only")
     return errors
 
 
@@ -85,6 +147,39 @@ def validate_config(config_path: Path) -> list[str]:
     return errors
 
 
+def select_specialist_roles(
+    task_category: str,
+    risk_level: str,
+    risk_tags: list[str] | tuple[str, ...] = (),
+) -> list[str]:
+    terms = {
+        token
+        for value in (task_category, *risk_tags)
+        for token in str(value).lower().replace("_", "-").split("-")
+        if token
+    }
+    normalized_values = {
+        str(task_category).lower().replace("_", "-"),
+        *(str(tag).lower().replace("_", "-") for tag in risk_tags),
+    }
+    cross_boundary = bool(
+        {"architecture", "boundary", "cross-boundary", "migration", "provider", "deployment", "database"}
+        & (terms | normalized_values)
+    )
+    if risk_level not in {"high", "critical"} and not cross_boundary:
+        return []
+    selected: list[str] = []
+    search_terms = terms | normalized_values
+    for role in SPECIALIST_ROLES:
+        if SPECIALIST_KEYWORDS[role] & search_terms:
+            selected.append(role)
+        if len(selected) == 2:
+            break
+    if not selected:
+        selected.append("systems_architect")
+    return selected
+
+
 def validate_routing_event(event: dict[str, Any]) -> list[str]:
     required = {
         "timestamp_utc",
@@ -117,6 +212,18 @@ def validate_routing_event(event: dict[str, Any]) -> list[str]:
         errors.append("escalated must be boolean")
     if not isinstance(event["reusable_pattern"], bool):
         errors.append("reusable_pattern must be boolean")
+    specialist_roles = event.get("specialist_roles")
+    if specialist_roles is not None:
+        if not isinstance(specialist_roles, list):
+            errors.append("specialist_roles must be an array")
+        else:
+            if len(specialist_roles) > 4:
+                errors.append("specialist_roles may contain at most 4 roles")
+            if len(specialist_roles) != len(set(str(role) for role in specialist_roles)):
+                errors.append("specialist_roles must be unique")
+            invalid_roles = [role for role in specialist_roles if not isinstance(role, str) or role not in SPECIALIST_ROLES]
+            if invalid_roles:
+                errors.append("specialist_roles contains an unknown role")
     notes = str(event.get("notes", "")).lower()
     if any(fragment in notes for fragment in SENSITIVE_NOTE_FRAGMENTS):
         errors.append("notes contain sensitive-looking text")
@@ -202,7 +309,7 @@ def main() -> int:
             env = config.get("mcp_servers", {}).get("node_repl", {}).get("env", {})
             codex_cli_value = env.get("CODEX_CLI_PATH")
             codex_cli = Path(str(codex_cli_value)) if codex_cli_value else Path("codex")
-        for model, _ in EXPECTED_MODELS.values():
+        for model in dict.fromkeys(model for model, _ in EXPECTED_MODELS.values()):
             ok, summary = model_smoke(codex_cli, model, repo_root)
             print(f"{model}: {'MODEL_OK' if ok else 'FAILED'}")
             if not ok:

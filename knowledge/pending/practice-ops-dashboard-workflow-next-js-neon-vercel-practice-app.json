@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -11,6 +12,7 @@
     ],
     "languages": [
       "nextjs",
+      "node",
       "postgres",
       "react",
       "tailwind",
@@ -67,13 +69,13 @@
     "- 2026-07-04 - User clarified the menu should remain a collapsible left sidebar on desktop and mobile; do not convert it to a horizontal top strip at phone/tablet breakpoints."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:23:57Z",
+    "created_at": "2026-08-05T20:23:43Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:23:57Z"
+    "updated_at": "2026-08-05T20:23:43Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -92,6 +94,7 @@
     "database",
     "medical_practice_data",
     "nextjs",
+    "node",
     "postgres",
     "practice-ops-dashboard",
     "react",

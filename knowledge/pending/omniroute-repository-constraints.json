@@ -1,0 +1,114 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "languages": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "omniroute-repository-constraints",
+  "incompatible_when": [],
+  "procedure": [
+    "Never commit credentials or log SQLite encryption keys.",
+    "Use `resolvePublicCred()` for public upstream OAuth identifiers; never add them as string literals. See [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md).",
+    "Use `buildErrorBody()` or `sanitizeErrorMessage()` for HTTP, SSE, executor, and MCP errors; do not return raw `err.stack` or `err.message`. See [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md).",
+    "Keep database operations in `src/lib/db/`; do not issue raw SQL from routes.",
+    "Do not close a contributor pull request after using its code; merge it through GitHub so the contributor receives credit.",
+    "This checkout is a fork of `diegosouzapw/OmniRoute`. Keep fork-only deployment and personal automation changes out of upstream PRs."
+  ],
+  "provenance": {
+    "created_at": "2026-08-05T20:23:41Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:23:41Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Safety and applicability constraints for OmniRoute.",
+  "tags": [
+    "a2a",
+    "auth",
+    "cost_bearing_providers",
+    "credentials",
+    "database",
+    "electron",
+    "mcp",
+    "network_proxy",
+    "nextjs",
+    "node",
+    "omniroute",
+    "repo-agents",
+    "repository-constraints",
+    "sqlite",
+    "sse",
+    "subprocess",
+    "supply_chain",
+    "typescript",
+    "zod"
+  ],
+  "title": "OmniRoute repository constraints",
+  "trigger_phrases": [
+    "OmniRoute",
+    "constraints",
+    "safety",
+    "risk"
+  ],
+  "type": "constraint",
+  "verification": [
+    "Check AGENTS.md constraints before reusing this repository pattern elsewhere."
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "languages": [
+      "a2a",
+      "electron",
+      "mcp",
+      "nextjs",
+      "node",
+      "sqlite",
+      "sse",
+      "typescript",
+      "zod"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "omniroute-verification-command-1",
+  "incompatible_when": [],
+  "procedure": [
+    "npm install"
+  ],
+  "provenance": {
+    "created_at": "2026-08-05T20:23:41Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-05T20:23:41Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Canonical verification command from OmniRoute: npm install",
+  "tags": [
+    "a2a",
+    "auth",
+    "cost_bearing_providers",
+    "credentials",
+    "database",
+    "electron",
+    "mcp",
+    "network_proxy",
+    "nextjs",
+    "node",
+    "omniroute",
+    "repo-agents",
+    "sqlite",
+    "sse",
+    "subprocess",
+    "supply_chain",
+    "typescript",
+    "verification-command",
+    "zod"
+  ],
+  "title": "OmniRoute verification command 1",
+  "trigger_phrases": [
+    "OmniRoute",
+    "verification",
+    "npm install"
+  ],
+  "type": "command",
+  "verification": [
+    "Run only when the repository AGENTS.md says the command applies to touched files."
+  ]
+}

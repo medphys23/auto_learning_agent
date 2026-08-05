@@ -46,13 +46,13 @@
     "Do not introduce dependencies that touch real HID output, USB descriptors, or robot protocols."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:13:01Z",
+    "created_at": "2026-08-05T20:23:44Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:13:01Z"
+    "updated_at": "2026-08-05T20:23:44Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
