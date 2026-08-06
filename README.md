@@ -9,9 +9,9 @@ The repository is deliberately not a raw mirror of every project. It captures sa
 The repo is in the **optimized orchestrator + federated Graphify** phase.
 
 - Global Codex/Cursor rules publish from `master/optimized/` with guarded apply and backups.
-- The local registry tracks 10 GitHub checkouts under `C:\Users\ppyxe\Documents\GitHub`.
-- Each registered repository can maintain a local code-only Graphify graph under `<repo>/graphify-out/`.
-- This orchestrator builds a federated graph at `graphify-out/federated/` for cross-repo architecture queries.
+- The local registry tracks GitHub checkouts under `C:\Users\ppyxe\Documents\GitHub`, including a read-only upstream Graphify clone (`graphify_cycle = false`).
+- Each registered repository can maintain a local Graphify graph under `<repo>/graphify-out/` (AST code graphs by default; semantic docs only when opted in).
+- This orchestrator builds a federated graph at `graphify-out/federated/` for cross-repo architecture queries, with optional wiki export and MCP stdio serving.
 - Knowledge harvesting remains candidate-first; dirty graphs may guide discovery but cannot justify promotion.
 - `auto_learning_agent` has a configured dirty-harvest exception; other registered repos stay on the clean harvest gate unless explicitly approved.
 
@@ -93,11 +93,11 @@ This README/knowledge expansion work does not require another global publication
 
 ## Federated Graphify Layer
 
-Graphify provides a local, code-only architectural index. It is not source of truth.
+Graphify provides a local architectural index (code by default; opted-in semantic docs). It is not source of truth. See [`docs/GRAPHIFY.md`](docs/GRAPHIFY.md).
 
 1. One-time bootstrap for registered repos: `scripts\propagate_graphify_integration.py --apply --confirm-repo-write`
-2. Refresh all repository graphs and merge federated output: `scripts\run_graphify_cycle.py`
-3. Query federated scope by default: `scripts\query_graph.py query "<question>"`
+2. Refresh all repository graphs and merge federated output: `scripts\run_graphify_cycle.py` (add `--semantic`, `--wiki`, or `--force` as needed)
+3. Query federated scope by default: `scripts\query_graph.py query "<question>"` (use `path ... --directed` for call direction; `scripts\run_graphify_mcp.py` for MCP stdio)
 4. Query this repo only: `scripts\query_graph.py query "<question>" --scope local`
 5. Query one registered repo: `scripts\query_graph.py explain "<symbol>" --repo orsi`
 

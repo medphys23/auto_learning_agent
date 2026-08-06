@@ -53,9 +53,9 @@ description: Governed Graphify architectural index and source-verification polic
 alwaysApply: true
 ---
 
-Use the governed federated Graphify graph first for orientation, architecture, relationships, symbols, and likely implementation files. Query with `{REPO_ROOT}\scripts\query_graph.py`; select `--repo <id>` for this repository when focused context is required.
+Use the governed federated Graphify graph first for orientation, architecture, relationships, symbols, and likely implementation files. Query with `{REPO_ROOT}\scripts\query_graph.py`; select `--repo <id>` for this repository when focused context is required, and `--directed` on path traces when call direction matters.
 
-Graphify is an index, not source of truth: use direct reads and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, and edits. Keep graph artifacts local, respect `.graphifyignore`, and do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+Graphify is an index, not source of truth: use direct reads and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, and edits. Keep graph artifacts local and respect `.graphifyignore`. Approved governed surface: code graphs, direction-aware path/explain, wiki exports under `graphify-out/`, MCP stdio serving of local graphs, and semantic-document extraction only for repositories opted in via the orchestrator registry. Do not use remote/URL ingestion, live-database, media, cloud, or global-graph features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
 """
 
 
@@ -69,9 +69,9 @@ def policy_block() -> str:
 
 ## Graphify architectural index
 
-Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Query with `{REPO_ROOT}\scripts\query_graph.py`; select `--repo <id>` for focused repository context.
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Query with `{REPO_ROOT}\scripts\query_graph.py`; select `--repo <id>` for focused repository context, and `--directed` on path traces when call direction matters.
 
-Graphify is an index, not source of truth. Use actual source and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, assertions, error handling, and edits. Keep graphs local, respect `.graphifyignore`, and regenerate code-only graphs after material structural changes. Do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+Graphify is an index, not source of truth. Use actual source and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, assertions, error handling, and edits. Keep graphs local, respect `.graphifyignore`, and regenerate graphs after material structural changes. Approved governed surface: code graphs, direction-aware path/explain, wiki exports under `graphify-out/`, MCP stdio serving of local graphs, and semantic-document extraction only for repositories opted in via the orchestrator registry. Do not use remote/URL ingestion, live-database, media, cloud, or global-graph features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
 
 {END}"""
 
@@ -108,7 +108,11 @@ def compatible_cursor_rule(content: str) -> bool:
 
 
 def review_reasons(repo: dict[str, Any], repo_path: Path) -> list[str]:
-    del repo, repo_path
+    del repo_path
+    # Reference-only clones (graphify_cycle = false) are read-only learning
+    # material; never write policy files into a third-party working tree.
+    if not bool(repo.get("graphify_cycle", True)):
+        return ["graphify-cycle-disabled-reference-repo"]
     return []
 
 

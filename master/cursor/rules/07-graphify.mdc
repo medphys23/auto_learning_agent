@@ -3,6 +3,6 @@ description: Governed Graphify architectural index and source-verification polic
 alwaysApply: true
 ---
 
-Use the governed federated Graphify graph first for repository orientation, architecture, relationships, symbols, and likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed.
+Use the governed federated Graphify graph first for repository orientation, architecture, relationships, symbols, and likely implementation files. Use `scripts/query_graph.py` with federated scope by default and select local or repository scope when needed; add `--directed` on path traces when call direction matters.
 
-Graphify is an index, not source of truth: use direct reads and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, and edits. Keep graph artifacts local, respect `.graphifyignore`, and do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+Graphify is an index, not source of truth: use direct reads and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, and edits. Keep graph artifacts local and respect `.graphifyignore`. Approved governed surface: code graphs, direction-aware path/explain, wiki exports under `graphify-out/`, MCP stdio serving of local graphs, and semantic-document extraction only for repositories opted in via the orchestrator registry. Do not use remote/URL, media, cloud, global-graph, or live-database features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.

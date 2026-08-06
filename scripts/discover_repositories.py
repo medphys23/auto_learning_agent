@@ -146,6 +146,8 @@ def registry_text(repositories: list[dict[str, Any]]) -> str:
         "stack_tags",
         "harvest_mode",
         "allow_dirty_harvest",
+        "graphify_cycle",
+        "graphify_semantic",
         "notes",
     )
     lines: list[str] = []

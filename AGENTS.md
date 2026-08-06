@@ -92,8 +92,8 @@ When introducing a new library, skill, or tool here, update `~/.codex/AGENTS.md`
 
 ## Graphify architectural index
 
-Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Query with `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\scripts\query_graph.py`; select `--repo <id>` for focused repository context.
+Use the governed federated Graphify graph first for repository orientation, architecture discovery, relationship tracing, symbol discovery, and locating likely implementation files. Query with `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\scripts\query_graph.py`; select `--repo <id>` for focused repository context, and `--directed` on path traces when call direction matters.
 
-Graphify is an index, not source of truth. Use actual source and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, assertions, error handling, and edits. Keep graphs local, respect `.graphifyignore`, and regenerate code-only graphs after material structural changes. Do not use remote, database, media, cloud, global-graph, or semantic-document features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
+Graphify is an index, not source of truth. Use actual source and `rg` for exact behavior, configuration, contracts, security-sensitive code, migrations, tests, assertions, error handling, and edits. Keep graphs local, respect `.graphifyignore`, and regenerate graphs after material structural changes. Approved governed surface: code graphs, direction-aware path/explain, wiki exports under `graphify-out/`, MCP stdio serving of local graphs, and semantic-document extraction only for repositories opted in via the orchestrator registry. Do not use remote/URL ingestion, live-database, media, cloud, or global-graph features without repository-specific approval. Dirty graphs cannot justify knowledge promotion.
 
 <!-- END ORCHESTRATOR-MANAGED: graphify-policy -->

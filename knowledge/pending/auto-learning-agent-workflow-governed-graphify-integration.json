@@ -22,39 +22,47 @@
     "runtimes": []
   },
   "confidence": {
-    "rationale": "Deterministic extraction from repository policy files.",
-    "score": 0.75
+    "rationale": "Deterministic extraction from repository policy files and governed Graphify wrappers.",
+    "score": 0.8
   },
   "evidence": {
-    "accepted_by_user": false,
+    "accepted_by_user": true,
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "481b07fbd8c60c5e0eb0152fbdccdcf0608065d9",
+    "source_commit": "",
     "source_paths": [
-      "skills.md"
+      "skills.md",
+      "docs/GRAPHIFY.md",
+      "scripts/run_graphify_cycle.py",
+      "scripts/run_graphify_mcp.py",
+      "config/repositories.toml"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
-    "task_or_issue": "local-github-repository-analysis",
-    "tests_executed": []
+    "task_or_issue": "expand-governed-graphify-surface",
+    "tests_executed": [
+      "python -m unittest discover -s tests"
+    ]
   },
   "id": "auto-learning-agent-workflow-governed-graphify-integration",
   "incompatible_when": [],
   "procedure": [
-    "1. Install the user-local CLI with `uv tool install graphifyy`; do not add it as a repository dependency.",
-    "2. Bootstrap registered repositories with the guarded Graphify propagation command; keep all `graphify-out/` artifacts ignored and local.",
-    "3. Run `scripts\\run_graphify_cycle.py` to update per-repository code graphs and the federated graph with two concurrent repositories.",
-    "4. Query federated scope by default with `scripts\\query_graph.py`; use local or repository scope when exact context is needed, then verify conclusions in source and tests.",
-    "5. Dirty and risk-tagged repositories may contribute code-only graphs, but dirty state remains ineligible for knowledge promotion."
+    "1. Install or upgrade the user-local CLI with `uv tool install graphifyy` / `uv tool upgrade graphifyy` (require >= 0.9.34); do not add it as a repository dependency.",
+    "2. Keep a sibling clone at `C:\\Users\\ppyxe\\Documents\\GitHub\\graphify` registered with `graphify_cycle = false` so it is never federated by default.",
+    "3. Bootstrap registered repositories with `scripts\\propagate_graphify_integration.py --apply --confirm-repo-write`; keep all `graphify-out/` artifacts ignored and local.",
+    "4. Run `scripts\\run_graphify_cycle.py` for incremental guarded extracts (shrink-guard active). Use `--force` only for intentional full rebuilds, `--semantic` only for repos with `graphify_semantic = true` and non-sensitive risk tags plus an LLM backend key, and `--wiki` for agent-crawlable wiki exports.",
+    "5. Query federated scope by default with `scripts\\query_graph.py`; use `--directed` on `path` when call direction matters; use `scripts\\run_graphify_mcp.py` for MCP stdio against local graphs.",
+    "6. Verify conclusions in source and tests. Dirty graphs and semantic edges from dirty repos remain ineligible for knowledge promotion. URL/media/Neo4j/global/cloud stay gated."
   ],
   "provenance": {
     "created_at": "2026-08-05T20:23:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
-      "skills.md"
+      "skills.md",
+      "docs/GRAPHIFY.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:14Z"
+    "updated_at": "2026-08-06T20:50:00Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -67,7 +75,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Triggered by:** Requests to install Graphify, generate a repository architecture graph, or add Graphify guidance to registered repositories.",
+  "summary": "**Triggered by:** Requests to install Graphify, refresh federated graphs, enable opted-in semantic docs/wiki/MCP, or add Graphify guidance to registered repositories.",
   "tags": [
     "auto_learning_agent",
     "codex",
@@ -77,12 +85,16 @@
     "read_only_audit",
     "repo-workflow",
     "skills-md",
-    "stdlib"
+    "stdlib",
+    "graphify"
   ],
   "title": "auto_learning_agent workflow: Governed Graphify integration",
   "trigger_phrases": [
     "auto_learning_agent",
-    "Governed Graphify integration"
+    "Governed Graphify integration",
+    "graphify wiki",
+    "graphify mcp",
+    "graphify semantic"
   ],
   "type": "workflow",
   "verification": [

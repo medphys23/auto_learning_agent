@@ -38,10 +38,14 @@ from run_optimized_cutover import build_cycle_command  # noqa: E402
 from run_optimized_knowledge_cycle import build_steps as build_optimized_cycle_steps  # noqa: E402
 from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
 from run_graphify_cycle import (  # noqa: E402
+    build_extract_command,
+    cycle_enabled,
+    diagnose_graph,
     merge_graphs,
     parse_version,
     preflight_repository,
     scan_graph,
+    select_extract_profile,
     structural_graph_sha256,
     write_empty_repository_graph,
 )
@@ -1379,6 +1383,122 @@ class OrchestratorMvpTests(unittest.TestCase):
         )
         self.assertIn("--graph", command)
         self.assertEqual(command[-2:], ["--budget", "750"])
+
+    def test_query_graph_path_supports_direction_flags(self) -> None:
+        directed = build_query_command(
+            executable=Path("graphify"),
+            operation="path",
+            values=["run_cycle", "merge_graphs"],
+            graph=Path("federated.json"),
+            budget=750,
+            direction="directed",
+        )
+        self.assertEqual(directed[-1], "--directed")
+        self.assertNotIn("--budget", directed)
+        undirected_query = build_query_command(
+            executable=Path("graphify"),
+            operation="query",
+            values=["architecture"],
+            graph=Path("federated.json"),
+            budget=750,
+            direction="directed",
+        )
+        self.assertNotIn("--directed", undirected_query)
+
+    def test_cycle_skips_reference_repositories_by_default(self) -> None:
+        self.assertTrue(cycle_enabled({"id": "orsi"}))
+        self.assertTrue(cycle_enabled({"id": "orsi", "graphify_cycle": True}))
+        self.assertFalse(cycle_enabled({"id": "graphify", "graphify_cycle": False}))
+
+    def test_extract_profile_selection_is_risk_and_backend_gated(self) -> None:
+        clean_env: dict[str, str] = {}
+        backend_env = {"GEMINI_API_KEY": "set"}
+        opted_in = {"id": "auto_learning_agent", "graphify_semantic": True, "risk_tags": ["read_only_audit"]}
+        sensitive = {"id": "kidney-federico", "graphify_semantic": True, "risk_tags": ["phi", "mysql"]}
+        not_opted = {"id": "orsi", "risk_tags": []}
+
+        self.assertEqual(select_extract_profile(opted_in, semantic=False, env=backend_env), ("code", "semantic-not-requested"))
+        self.assertEqual(select_extract_profile(not_opted, semantic=True, env=backend_env), ("code", "semantic-not-allowed"))
+        self.assertEqual(select_extract_profile(sensitive, semantic=True, env=backend_env), ("code", "semantic-not-allowed"))
+        self.assertEqual(select_extract_profile(opted_in, semantic=True, env=clean_env), ("code", "semantic-skipped-no-backend"))
+        self.assertEqual(select_extract_profile(opted_in, semantic=True, env=backend_env), ("code+docs", "semantic-enabled"))
+
+    def test_extract_command_preserves_shrink_guard_unless_forced(self) -> None:
+        incremental = build_extract_command(Path("graphify"), profile="code", force=False)
+        self.assertEqual(incremental[1:], ["extract", ".", "--code-only"])
+        self.assertNotIn("--force", incremental)
+        forced_semantic = build_extract_command(Path("graphify"), profile="code+docs", force=True)
+        self.assertNotIn("--code-only", forced_semantic)
+        self.assertEqual(forced_semantic[-1], "--force")
+
+    def test_diagnose_graph_is_advisory_on_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "missing-graph.json"
+            result = diagnose_graph(Path("graphify-does-not-exist"), missing, cwd=Path(tmp), env={})
+            self.assertFalse(result.get("available"))
+            self.assertIn("error", result)
+
+    def test_federated_merge_namespaces_stored_direction_slots(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            graph = base / "repo-a" / "graphify-out" / "graph.json"
+            graph.parent.mkdir(parents=True)
+            graph.write_text(
+                json.dumps(
+                    {
+                        "directed": False,
+                        "nodes": [
+                            {"id": "caller", "label": "caller", "file_type": "code"},
+                            {"id": "callee", "label": "callee", "file_type": "code"},
+                        ],
+                        "links": [{"source": "callee", "target": "caller", "relation": "calls", "_src": "caller", "_tgt": "callee"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            output = base / "federated" / "graph.json"
+            merge_graphs(
+                [{"id": "repo-a", "graph_path": str(graph), "graph_sha256": "x", "branch": "main", "commit": "x", "dirty": False}],
+                output,
+                base / "federated" / "provenance.json",
+                "graphify 0.9.34",
+            )
+            merged = json.loads(output.read_text(encoding="utf-8"))
+            call_links = [link for link in merged["links"] if link.get("relation") == "calls"]
+            self.assertEqual(call_links[0]["_src"], "repo-a::caller")
+            self.assertEqual(call_links[0]["_tgt"], "repo-a::callee")
+
+    def test_graphify_propagation_never_writes_reference_repositories(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            reference = base / "graphify"
+            reference.mkdir()
+            (reference / "AGENTS.md").write_text("# Upstream\n", encoding="utf-8")
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'graphify'\n"
+                f"path = '{reference.as_posix()}'\n"
+                "enabled = true\n"
+                "risk_tags = ['third_party']\n"
+                "graphify_cycle = false\n",
+                encoding="utf-8",
+            )
+            config = base / "context.toml"
+            config.write_text("allow_other_repository_writes = true\n", encoding="utf-8")
+
+            result = propagate_graphify(
+                repositories_path=registry,
+                reports_dir=base / "reports",
+                config_path=config,
+                apply=True,
+                confirm_repo_write=True,
+            )
+
+            self.assertEqual(result["results"][0]["status"], "review-required")
+            self.assertIn("graphify-cycle-disabled-reference-repo", result["results"][0]["reasons"])
+            self.assertEqual((reference / "AGENTS.md").read_text(encoding="utf-8"), "# Upstream\n")
+            self.assertFalse((reference / ".graphifyignore").exists())
 
 
 if __name__ == "__main__":

@@ -10,7 +10,8 @@ risk_tags = ['global_config_preview', 'read_only_audit']
 stack_tags = ['codex', 'cursor', 'python', 'stdlib']
 harvest_mode = 'deep_when_clean'
 allow_dirty_harvest = true
-notes = 'Local MVP orchestrator repository.'
+graphify_semantic = true
+notes = 'Local MVP orchestrator repository. Semantic Graphify extraction is opted in for local docs when --semantic is used.'
 
 [[repositories]]
 id = 'campania-transplant'
@@ -35,6 +36,21 @@ scope = 'sandbox'
 risk_tags = ['sandbox']
 stack_tags = []
 harvest_mode = 'deep_when_clean'
+
+[[repositories]]
+id = 'graphify'
+name = 'graphify'
+path = 'C:\Users\ppyxe\Documents\GitHub\graphify'
+remote = 'https://github.com/Graphify-Labs/graphify.git'
+current_branch = 'v8'
+enabled = true
+scope = 'third_party_reference'
+risk_tags = ['not_owned', 'read_only_reference', 'third_party']
+stack_tags = ['knowledge_graph', 'networkx', 'python', 'tree_sitter']
+harvest_mode = 'deep_when_clean'
+graphify_cycle = false
+graphify_semantic = false
+notes = 'Upstream Graphify-Labs/graphify clone kept as a read-only learning reference; excluded from the federated graph cycle by default.'
 
 [[repositories]]
 id = 'investment-binance'

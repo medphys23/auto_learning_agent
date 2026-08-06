@@ -68,11 +68,12 @@ git status --short --ignored
 **Triggered by:** Requests to install Graphify, generate a repository architecture graph, or add Graphify guidance to registered repositories.
 
 **Steps:**
-1. Install the user-local CLI with `uv tool install graphifyy`; do not add it as a repository dependency.
-2. Bootstrap registered repositories with the guarded Graphify propagation command; keep all `graphify-out/` artifacts ignored and local.
-3. Run `scripts\run_graphify_cycle.py` to update per-repository code graphs and the federated graph with two concurrent repositories.
-4. Query federated scope by default with `scripts\query_graph.py`; use local or repository scope when exact context is needed, then verify conclusions in source and tests.
-5. Dirty and risk-tagged repositories may contribute code-only graphs, but dirty state remains ineligible for knowledge promotion.
+1. Install the user-local CLI with `uv tool install graphifyy` (>= 0.9.34); do not add it as a repository dependency. The sibling clone `C:\Users\ppyxe\Documents\GitHub\graphify` is a read-only upstream reference registered with `graphify_cycle = false`.
+2. Bootstrap registered repositories with the guarded Graphify propagation command; keep all `graphify-out/` artifacts ignored and local. Reference-only repositories are never written.
+3. Run `scripts\run_graphify_cycle.py` to update per-repository graphs and the federated graph with two concurrent repositories. Incremental refresh preserves the upstream shrink-guard; `--force` is the intentional full-rebuild escape hatch. Each built graph gets an advisory `diagnose multigraph` health check recorded in the cycle summary.
+4. Opt-in surfaces: `--semantic` adds document extraction only for repositories with `graphify_semantic = true`, non-sensitive risk tags, and an LLM backend key in the environment; `--wiki` exports agent-crawlable wikis under `graphify-out/`.
+5. Query federated scope by default with `scripts\query_graph.py`; use local or repository scope when exact context is needed, add `--directed` to `path` traces when call direction matters, then verify conclusions in source and tests. `scripts\run_graphify_mcp.py` serves a local graph over MCP stdio for interactive sessions.
+6. Dirty and risk-tagged repositories may contribute code-only graphs, but dirty state remains ineligible for knowledge promotion. Remote/URL ingestion, live-database, media, cloud, and global-graph features remain gated behind separate approval.
 
 **Verification:**
 ```powershell
@@ -82,6 +83,9 @@ graphify --version
 .\.venv\Scripts\python.exe scripts\query_graph.py query "How does repository knowledge propagation work?"
 .\scripts\run-startup.ps1
 ```
+
+**Iteration notes:**
+- 2026-08-06: Cloned upstream `Graphify-Labs/graphify` as a sibling reference repo; upgraded `graphifyy` to 0.9.34; replaced the shrink-guard-bypassing `update --force` refresh with guarded incremental `extract`; added diagnose health checks, `--semantic`/`--wiki` opt-in surfaces, directed path traces, and an MCP stdio launcher.
 
 ### Federated orchestrator startup
 

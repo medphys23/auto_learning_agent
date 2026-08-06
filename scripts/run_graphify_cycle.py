@@ -17,8 +17,31 @@ from orchestrator_common import git_dirty_lines, load_repository_registry, run_g
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MIN_GRAPHIFY_VERSION = (0, 9, 12)
+MIN_GRAPHIFY_VERSION = (0, 9, 34)
 BRIDGE_SCHEMA_VERSION = "federated-graph-v1"
+# Risk tags that keep a repository on the code-only (AST) profile even when the
+# registry opts it into semantic-document extraction.
+SEMANTIC_BLOCKED_RISK_TAGS = {
+    "auth",
+    "clinical_data",
+    "contact_data",
+    "credentials",
+    "finance",
+    "medical_practice_data",
+    "phi",
+    "scraper",
+}
+# Env vars Graphify's headless extract accepts as a semantic LLM backend; when
+# none is set, semantic extraction is skipped and the run stays code-only.
+SEMANTIC_BACKEND_ENV_VARS = ("GEMINI_API_KEY", "GOOGLE_API_KEY", "MOONSHOT_API_KEY", "DEEPSEEK_API_KEY")
+# Advisory graph-health counters surfaced by `graphify diagnose multigraph --json`.
+HEALTH_WARNING_KEYS = (
+    "dangling_endpoint_edges",
+    "missing_endpoint_edges",
+    "self_loop_edges",
+    "directed_same_endpoint_collapsed_edges",
+    "undirected_same_endpoint_collapsed_edges",
+)
 SECRET_PATTERNS = (
     # Match OpenAI-style keys; ignore hyphenated skill/feature ids like sk-notice-acknowledged.
     re.compile(r"sk-(?:proj-[A-Za-z0-9_-]{16,}|[A-Za-z0-9]{32,})"),
@@ -183,7 +206,82 @@ def write_empty_repository_graph(repo_path: Path, repo_id: str) -> Path:
     return graph
 
 
-def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: bool, ast_workers: int) -> dict[str, Any]:
+def cycle_enabled(repo: dict[str, Any]) -> bool:
+    return bool(repo.get("graphify_cycle", True))
+
+
+def semantic_allowed(repo: dict[str, Any]) -> bool:
+    if not bool(repo.get("graphify_semantic", False)):
+        return False
+    risk_tags = {str(tag).lower() for tag in repo.get("risk_tags", [])}
+    return not (risk_tags & SEMANTIC_BLOCKED_RISK_TAGS)
+
+
+def semantic_backend_available(env: dict[str, str]) -> bool:
+    return any(env.get(name) for name in SEMANTIC_BACKEND_ENV_VARS)
+
+
+def select_extract_profile(repo: dict[str, Any], *, semantic: bool, env: dict[str, str]) -> tuple[str, str]:
+    """Return (profile, reason). Profile is 'code' or 'code+docs'."""
+    if not semantic:
+        return "code", "semantic-not-requested"
+    if not semantic_allowed(repo):
+        return "code", "semantic-not-allowed"
+    if not semantic_backend_available(env):
+        return "code", "semantic-skipped-no-backend"
+    return "code+docs", "semantic-enabled"
+
+
+def build_extract_command(executable: Path, *, profile: str, force: bool) -> list[str]:
+    # `graphify extract` is incremental by default and enforces the upstream
+    # shrink-guard (#479) itself: a partial rebuild that would shrink graph.json
+    # is refused with a non-zero exit instead of silently overwriting a good
+    # graph. `--force` is the intentional full-rebuild escape hatch.
+    command = [str(executable), "extract", "."]
+    if profile != "code+docs":
+        command.append("--code-only")
+    if force:
+        command.append("--force")
+    return command
+
+
+def diagnose_graph(executable: Path, graph: Path, *, cwd: Path, env: dict[str, str]) -> dict[str, Any]:
+    """Run the read-only graph health check; advisory only, never fails a build."""
+    command = [str(executable), "diagnose", "multigraph", "--graph", str(graph), "--json"]
+    try:
+        code, output = run_command(command, cwd=cwd, env=env)
+    except OSError as exc:
+        return {"available": False, "error": str(exc)}
+    if code != 0:
+        return {"available": False, "error": output.splitlines()[-1] if output else f"exit-code-{code}"}
+    try:
+        payload = json.loads(output[output.index("{"):]) if "{" in output else {}
+    except (json.JSONDecodeError, ValueError):
+        return {"available": False, "error": "diagnose-output-not-json"}
+    warnings = {key: int(payload.get(key, 0) or 0) for key in HEALTH_WARNING_KEYS if int(payload.get(key, 0) or 0)}
+    return {"available": True, "warnings": warnings, "healthy": not warnings}
+
+
+def export_wiki(executable: Path, graph: Path, *, cwd: Path, env: dict[str, str]) -> dict[str, Any]:
+    command = [str(executable), "export", "wiki", "--graph", str(graph)]
+    code, output = run_command(command, cwd=cwd, env=env)
+    return {
+        "command": command,
+        "exit_code": code,
+        "output_tail": output.splitlines()[-4:],
+        "wiki_path": str(graph.parent / "wiki") if code == 0 else "",
+    }
+
+
+def build_repository_graph(
+    repo: dict[str, Any],
+    executable: Path,
+    *,
+    force: bool,
+    ast_workers: int,
+    semantic: bool = False,
+    wiki: bool = False,
+) -> dict[str, Any]:
     repo_id = str(repo["id"])
     repo_path = Path(str(repo["path"]))
     started = time.monotonic()
@@ -206,10 +304,10 @@ def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: boo
     env["GRAPHIFY_MAX_WORKERS"] = str(max(1, ast_workers))
     # Large codebases exceed Graphify's default 5k HTML viz cap; keep graphs browsable unless overridden.
     env.setdefault("GRAPHIFY_VIZ_NODE_LIMIT", "250000")
-    if graph.exists() and not force:
-        command = [str(executable), "update", ".", "--force"]
-    else:
-        command = [str(executable), "extract", ".", "--code-only"]
+    profile, profile_reason = select_extract_profile(repo, semantic=semantic, env=env)
+    result["extract_profile"] = profile
+    result["extract_profile_reason"] = profile_reason
+    command = build_extract_command(executable, profile=profile, force=force)
     code, output = run_command(command, cwd=repo_path, env=env)
     result["commands"].append({"command": command, "exit_code": code, "output_tail": output.splitlines()[-8:]})
     if code != 0 or not graph.exists():
@@ -225,7 +323,15 @@ def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: boo
                 elapsed_seconds=round(time.monotonic() - started, 3),
             )
             return result
-        result.update(reason="graph-build-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        reason = "graph-build-failed"
+        lowered = output.lower()
+        if "refusing to overwrite" in lowered or ("refused" in lowered and "shrink" in lowered):
+            reason = "shrink-guard-refused"
+        elif "cross-project dedup is disabled" in lowered or "nodes span multiple repos" in lowered:
+            # Stale/polluted graphify-out can leave multi-repo tags in the
+            # incremental merge; a full --force rebuild clears it.
+            reason = "cross-project-graph-pollution"
+        result.update(reason=reason, elapsed_seconds=round(time.monotonic() - started, 3))
         return result
     cluster = [str(executable), "cluster-only", ".", "--no-label"]
     code, output = run_command(cluster, cwd=repo_path, env=env)
@@ -238,6 +344,9 @@ def build_repository_graph(repo: dict[str, Any], executable: Path, *, force: boo
     if not scan["passed"]:
         result.update(status="excluded", reason="security-scan-failed", elapsed_seconds=round(time.monotonic() - started, 3))
         return result
+    result["health"] = diagnose_graph(executable, graph, cwd=repo_path, env=env)
+    if wiki:
+        result["wiki"] = export_wiki(executable, graph, cwd=repo_path, env=env)
     result.update(
         status="built",
         graph_path=str(graph),
@@ -303,6 +412,13 @@ def merge_graphs(repositories: list[dict[str, Any]], output_path: Path, provenan
             copied = dict(link)
             copied["source"] = f"{repo_id}::{link['source']}"
             copied["target"] = f"{repo_id}::{link['target']}"
+            # Graphify stores the canonical caller->callee direction in _src/_tgt
+            # slots so directed traversal (path/explain) can recover it from an
+            # undirected on-disk graph. Namespace them too or federation would
+            # orphan the direction metadata.
+            for slot in ("_src", "_tgt"):
+                if slot in copied and copied[slot] is not None:
+                    copied[slot] = f"{repo_id}::{copied[slot]}"
             copied["repo"] = repo_id
             merged_links.append(copied)
         input_meta.append({
@@ -376,11 +492,31 @@ def existing_signature(path: Path) -> list[dict[str, str]]:
     ]
 
 
+def health_summary(item: dict[str, Any]) -> str:
+    health = item.get("health")
+    if not isinstance(health, dict):
+        return ""
+    if not health.get("available"):
+        return "unavailable"
+    if health.get("healthy"):
+        return "ok"
+    warnings = health.get("warnings", {})
+    return "; ".join(f"{count} {key}" for key, count in sorted(warnings.items()))
+
+
 def write_cycle_report(path: Path, result: dict[str, Any]) -> None:
-    lines = ["# Graphify Cycle Summary", "", f"Generated: {result['generated_at']}", f"Status: {result['status']}", "", "| Repository | Status | Dirty | Reason |", "| --- | --- | --- | --- |"]
+    lines = ["# Graphify Cycle Summary", "", f"Generated: {result['generated_at']}", f"Status: {result['status']}", "", "| Repository | Status | Dirty | Profile | Health | Reason |", "| --- | --- | --- | --- | --- | --- |"]
     for item in result["repositories"]:
-        lines.append(f"| {item['id']} | {item['status']} | {str(item.get('dirty', False)).lower()} | {item.get('reason', '')} |")
+        lines.append(
+            f"| {item['id']} | {item['status']} | {str(item.get('dirty', False)).lower()} | "
+            f"{item.get('extract_profile', '')} | {health_summary(item)} | {item.get('reason', '')} |"
+        )
     lines.extend(["", f"- Federated graph: `{result.get('federated_graph', '')}`", f"- Merge skipped unchanged: {str(result.get('merge_skipped', False)).lower()}"])
+    federated_health = result.get("federated_health")
+    if isinstance(federated_health, dict):
+        lines.append(f"- Federated graph health: {health_summary({'health': federated_health}) or 'ok'}")
+    if result.get("federated_wiki"):
+        lines.append(f"- Federated wiki: `{result['federated_wiki']}`")
     write_text(path, "\n".join(lines))
 
 
@@ -393,6 +529,8 @@ def run_cycle(
     strict: bool,
     reports_dir: Path,
     merge_selected: bool = False,
+    semantic: bool = False,
+    wiki: bool = False,
 ) -> int:
     executable = find_graphify()
     version = graphify_version(executable)
@@ -403,12 +541,27 @@ def run_cycle(
         missing = sorted(selected - {str(repo.get("id")) for repo in repositories})
         if missing:
             raise RuntimeError("unknown repository id(s): " + ", ".join(missing))
+    else:
+        # Reference-only registrations (graphify_cycle = false) stay out of the
+        # default cycle and federation; they remain reachable via explicit --repo.
+        repositories = [repo for repo in repositories if cycle_enabled(repo)]
     if not repositories:
         raise RuntimeError("no enabled repositories selected")
     ast_workers = max(1, (os.cpu_count() or 2) // max(1, max_parallel))
     results: list[dict[str, Any]] = []
     with ThreadPoolExecutor(max_workers=max(1, max_parallel)) as executor:
-        futures = {executor.submit(build_repository_graph, repo, executable, force=force, ast_workers=ast_workers): repo for repo in repositories}
+        futures = {
+            executor.submit(
+                build_repository_graph,
+                repo,
+                executable,
+                force=force,
+                ast_workers=ast_workers,
+                semantic=semantic,
+                wiki=wiki,
+            ): repo
+            for repo in repositories
+        }
         for future in as_completed(futures):
             results.append(future.result())
     current = [item for item in results if item["status"] in {"built", "empty"}]
@@ -471,6 +624,15 @@ def run_cycle(
                     for name in ("graph.json", "GRAPH_REPORT.md", "graph.html"):
                         shutil.copy2(staging.parent / name, federated.parent / name)
                     shutil.copy2(staging_provenance, provenance)
+    federated_health: dict[str, Any] | None = None
+    federated_wiki = ""
+    if federated.exists() and not merge_skipped and not effective_skip_merge and aggregate_ready and current:
+        env = dict(os.environ)
+        env["GRAPHIFY_MAX_WORKERS"] = str(ast_workers)
+        federated_health = diagnose_graph(executable, federated, cwd=ROOT, env=env)
+        if wiki:
+            wiki_result = export_wiki(executable, federated, cwd=ROOT, env=env)
+            federated_wiki = wiki_result.get("wiki_path", "")
     status = "completed"
     if not current or (not effective_skip_merge and not aggregate_ready):
         status = "failed"
@@ -483,6 +645,8 @@ def run_cycle(
         "repositories": sorted(results, key=lambda item: str(item["id"])),
         "federated_graph": str(federated) if federated.exists() else "",
         "merge_skipped": merge_skipped,
+        "federated_health": federated_health,
+        "federated_wiki": federated_wiki,
     }
     reports_dir.mkdir(parents=True, exist_ok=True)
     write_json(reports_dir / "graphify-cycle-summary.json", result)
@@ -499,11 +663,22 @@ def run_cycle(
 def main() -> int:
     parser = argparse.ArgumentParser(description="Refresh per-repository Graphify graphs and build a governed federated graph.")
     parser.add_argument("--repo", action="append", default=[], help="Registered repository id; repeat to select multiple repositories.")
-    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--force", action="store_true", help="Full rebuild (skips the incremental gate; permits an intentional shrink).")
     parser.add_argument("--max-parallel", type=int, default=2)
     parser.add_argument("--skip-merge", action="store_true")
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--reports-dir", type=Path, default=Path("reports"))
+    parser.add_argument(
+        "--semantic",
+        action="store_true",
+        help="Include semantic-document extraction for repositories opted in with graphify_semantic = true (requires an LLM backend key).",
+    )
+    parser.add_argument(
+        "--code-only",
+        action="store_true",
+        help="Force AST-only extraction for this run even when --semantic is present.",
+    )
+    parser.add_argument("--wiki", action="store_true", help="Export agent-crawlable wikis for built graphs and the federated graph.")
     args = parser.parse_args()
     try:
         return run_cycle(
@@ -513,6 +688,8 @@ def main() -> int:
             skip_merge=args.skip_merge,
             strict=args.strict,
             reports_dir=args.reports_dir,
+            semantic=args.semantic and not args.code_only,
+            wiki=args.wiki,
         )
     except (RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}")
