@@ -38,6 +38,8 @@ Also apply orchestrator retrieval hints to registered repos:
 .\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite -ApplyRepoHints -ConfirmRepoWrite
 ```
 
+**Drag-and-drop apply-all:** use [`APPLY-EVERYTHING.cmd`](APPLY-EVERYTHING.cmd) (CMD) or [`APPLY-EVERYTHING.ps1`](APPLY-EVERYTHING.ps1) (PowerShell: type `&` then drop the file). Press Enter, then type `APPLY`. That runs the full cycle, publishes optimized globals, applies repo retrieval hints, and applies Graphify policy files to registered repos. Pass `-Yes` to skip the typed confirmation.
+
 Useful flags:
 
 - `-Strict` — fail when dirty repositories block readiness (default allows `--continue-on-dirty`).

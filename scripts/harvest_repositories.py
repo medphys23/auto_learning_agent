@@ -725,11 +725,20 @@ def main() -> int:
     parser.add_argument("--index", type=Path, default=Path("knowledge/INDEX.md"))
     args = parser.parse_args()
     repositories = load_repository_registry(args.repositories)
+    from console_style import cprint
+
     results = harvest_repositories(repositories, args.state, args.pending_dir, args.catalog, args.reports_dir, args.index)
     for result in results:
-        print(
-            f"{result['id']}: {result['status']} "
-            f"({result.get('reason', result['digest'][:12])}, candidates={result.get('candidate_count', 0)})"
+        status = str(result["status"])
+        level = "ok"
+        if "blocked" in status or status in {"failed", "error"}:
+            level = "fail"
+        elif status in {"skipped", "dirty", "advisory"} or "dirty" in status:
+            level = "warn"
+        cprint(
+            f"{result['id']}: {status} "
+            f"({result.get('reason', result['digest'][:12])}, candidates={result.get('candidate_count', 0)})",
+            level,
         )
     return 0
 

@@ -393,13 +393,16 @@ def main() -> int:
         cursor_home=args.cursor_home,
         max_missing=args.max_missing,
     )
+    from console_style import cprint
+
     package_count = sum(repo["package_count"] for repo in result["repositories"])
     manifest_count = sum(len(repo["manifest_paths"]) for repo in result["repositories"])
-    print(
+    cprint(
         f"Dependency catalog audit: repos={len(result['repositories'])} "
-        f"manifests={manifest_count} packages={package_count}"
+        f"manifests={manifest_count} packages={package_count}",
+        "ok",
     )
-    print(f"Report: {args.reports_dir / 'dependency-catalog-audit.md'}")
+    cprint(f"Report: {args.reports_dir / 'dependency-catalog-audit.md'}", "muted")
     return 0
 
 

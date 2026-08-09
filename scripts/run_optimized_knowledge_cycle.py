@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -9,6 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from console_style import cprint, ensure_colors, paint, phase_banner, phase_done, style_child_line
 from orchestrator_common import read_json, utc_now
 from plan_optimized_cutover import plan_optimized_cutover
 
@@ -20,6 +22,8 @@ ROOT = Path(__file__).resolve().parents[1]
 class CycleStep:
     name: str
     command: list[str]
+    index: int = 0
+    total: int = 0
 
 
 def write_text(path: Path, content: str) -> None:
@@ -32,18 +36,18 @@ def command_text(command: list[str]) -> str:
 
 
 def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_audit: bool, skip_graphify: bool = False) -> list[CycleStep]:
-    steps = [
+    raw = [
         CycleStep(
             "discover repositories",
             [python_executable, "scripts/discover_repositories.py", "--write-registry"],
         ),
     ]
     if not skip_graphify:
-        steps.append(CycleStep("refresh repository graphs", [python_executable, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))
-    steps.append(CycleStep("harvest repositories", [python_executable, "scripts/harvest_repositories.py"]))
+        raw.append(CycleStep("refresh repository graphs", [python_executable, "scripts/run_graphify_cycle.py", "--reports-dir", str(reports_dir)]))
+    raw.append(CycleStep("harvest repositories", [python_executable, "scripts/harvest_repositories.py"]))
     if not skip_dependency_audit:
-        steps.append(CycleStep("audit dependency catalog", [python_executable, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]))
-    steps.extend(
+        raw.append(CycleStep("audit dependency catalog", [python_executable, "scripts/audit_dependency_catalog.py", "--reports-dir", str(reports_dir)]))
+    raw.extend(
         [
             CycleStep(
                 "synthesize optimized instructions",
@@ -60,16 +64,23 @@ def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_au
             CycleStep("audit context budget", [python_executable, "scripts/audit_context_budget.py", "--reports-dir", str(reports_dir)]),
         ]
     )
-    return steps
+    total = len(raw)
+    return [
+        CycleStep(name=step.name, command=step.command, index=index, total=total)
+        for index, step in enumerate(raw, start=1)
+    ]
 
 
-def run_step(step: CycleStep, *, log_handle: Any, progress: Any, verbose: bool) -> dict[str, Any]:
+def run_step(step: CycleStep, *, log_handle: Any, progress: Any, stream_output: bool) -> dict[str, Any]:
     started = utc_now()
     start = time.monotonic()
     log_handle.write(f"\n## {step.name}\n")
     log_handle.write(f"Started: {started}\n")
     log_handle.write(f"Command: {command_text(step.command)}\n\n")
     log_handle.flush()
+    env = dict(os.environ)
+    # Unbuffered child Python so per-repo Graphify/harvest lines appear live.
+    env["PYTHONUNBUFFERED"] = "1"
     process = subprocess.Popen(
         step.command,
         cwd=ROOT,
@@ -78,14 +89,18 @@ def run_step(step: CycleStep, *, log_handle: Any, progress: Any, verbose: bool) 
         text=True,
         encoding="utf-8",
         errors="replace",
+        env=env,
+        bufsize=1,
     )
     assert process.stdout is not None
     output_lines = 0
     for line in process.stdout:
         output_lines += 1
         log_handle.write(line)
-        if verbose:
-            progress.write(line.rstrip())
+        if stream_output:
+            text = line.rstrip()
+            if text:
+                progress.write(style_child_line(step.name, text))
     exit_code = process.wait()
     elapsed = round(time.monotonic() - start, 3)
     finished = utc_now()
@@ -143,14 +158,16 @@ def run_cycle(
     skip_dependency_audit: bool,
     skip_graphify: bool,
     verbose: bool,
+    quiet: bool,
 ) -> int:
     try:
-        from colorama import Fore, Style, init as colorama_init
         from tqdm import tqdm
     except ModuleNotFoundError:
         print("ERROR: tqdm and colorama are required. Install repo requirements into .venv first.")
         return 3
-    colorama_init()
+    ensure_colors()
+    # Live child logs are on by default; --quiet restores the old top-level-only view.
+    stream_output = not quiet or verbose
     reports_dir.mkdir(parents=True, exist_ok=True)
     started = utc_now()
     steps = build_steps(
@@ -164,23 +181,58 @@ def run_cycle(
     with log_file.open("w", encoding="utf-8") as log_handle:
         log_handle.write("# Optimized Knowledge Cycle Log\n")
         log_handle.write(f"Started: {started}\n")
-        with tqdm(total=len(steps) + 1, desc="optimized knowledge", unit="step", dynamic_ncols=True) as progress:
+        log_handle.write(f"Stream child output: {str(stream_output).lower()}\n")
+        phase_total = len(steps) + 1
+        cprint(f"optimized knowledge cycle: {len(steps)} work steps + readiness", "info")
+        with tqdm(total=phase_total, desc="optimized knowledge", unit="step", dynamic_ncols=True) as progress:
             for step in steps:
-                progress.set_postfix_str(step.name[:40])
-                progress.write(f"{Fore.CYAN}[start]{Style.RESET_ALL} {step.name}")
-                result = run_step(step, log_handle=log_handle, progress=progress, verbose=verbose)
+                progress.set_postfix_str(f"{step.index}/{step.total} {step.name[:32]}")
+                for banner_line in phase_banner(
+                    step.index,
+                    step.total,
+                    step.name,
+                    done_so_far=progress.n,
+                    phase_total=phase_total,
+                ).splitlines():
+                    progress.write(banner_line)
+                result = run_step(step, log_handle=log_handle, progress=progress, stream_output=stream_output)
                 results.append(result)
-                color = Fore.GREEN if result["exit_code"] == 0 else Fore.RED
-                progress.write(f"{color}[done]{Style.RESET_ALL} {step.name} exit={result['exit_code']}")
+                progress.write(
+                    phase_done(
+                        step.index,
+                        step.total,
+                        step.name,
+                        exit_code=int(result["exit_code"]),
+                        elapsed=float(result["elapsed_seconds"]),
+                        lines=int(result["output_lines"]),
+                    )
+                )
                 progress.update(1)
                 if result["exit_code"] != 0:
                     failed_step = step.name
                     break
             readiness: dict[str, Any] = {}
             if not failed_step:
-                progress.set_postfix_str("readiness gates")
+                progress.set_postfix_str(f"{phase_total}/{phase_total} readiness gates")
+                for banner_line in phase_banner(
+                    phase_total,
+                    phase_total,
+                    "readiness gates",
+                    done_so_far=progress.n,
+                    phase_total=phase_total,
+                ).splitlines():
+                    progress.write(banner_line)
                 readiness = plan_optimized_cutover(reports_dir=reports_dir)
-                progress.write(f"{Fore.YELLOW if readiness['decision'] == 'NO-GO' else Fore.GREEN}[readiness]{Style.RESET_ALL} {readiness['decision']}")
+                decision = str(readiness.get("decision", "unknown"))
+                progress.write(paint(f"[readiness] {decision}", "fail" if decision == "NO-GO" else "ok"))
+                for gate in readiness.get("gates", []):
+                    passed = bool(gate.get("passed"))
+                    progress.write(
+                        paint(
+                            f"  gate {gate.get('name')}: {'pass' if passed else 'fail'} — {gate.get('detail', '')}",
+                            "ok" if passed else "warn",
+                        )
+                    )
                 progress.update(1)
     finished = utc_now()
     failures = strict_failures(readiness, continue_on_dirty) if readiness else []
@@ -201,10 +253,10 @@ def run_cycle(
         "steps": results,
     }
     write_summary(reports_dir, result)
-    print(f"Optimized knowledge cycle: {status}")
-    print(f"Summary: {reports_dir / 'optimized-knowledge-cycle-summary.md'}")
-    print(f"Readiness: {reports_dir / 'optimized-cutover-readiness.md'}")
-    print(f"Log: {log_file}")
+    cprint(f"Optimized knowledge cycle: {status}", "ok" if status == "completed" else "fail")
+    cprint(f"Summary: {reports_dir / 'optimized-knowledge-cycle-summary.md'}", "muted")
+    cprint(f"Readiness: {reports_dir / 'optimized-cutover-readiness.md'}", "muted")
+    cprint(f"Log: {log_file}", "muted")
     return 1 if status == "failed" else 0
 
 
@@ -216,7 +268,16 @@ def main() -> int:
     parser.add_argument("--continue-on-dirty", action="store_true", help="Allow dirty-repo readiness blockers in strict mode.")
     parser.add_argument("--skip-dependency-audit", action="store_true")
     parser.add_argument("--skip-graphify", action="store_true")
-    parser.add_argument("--verbose", action="store_true")
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Stream child-step stdout (default behavior; kept for compatibility).",
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Hide child-step stdout; show only the top-level phase bar.",
+    )
     args = parser.parse_args()
     return run_cycle(
         reports_dir=args.reports_dir,
@@ -226,6 +287,7 @@ def main() -> int:
         skip_dependency_audit=args.skip_dependency_audit,
         skip_graphify=args.skip_graphify,
         verbose=args.verbose,
+        quiet=args.quiet,
     )
 
 

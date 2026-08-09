@@ -258,14 +258,20 @@ def main() -> int:
     parser.add_argument("--write-registry", action="store_true")
     args = parser.parse_args()
 
+    from console_style import cprint
+
     repositories = discover_repositories(args.root)
     if args.write_registry:
         newly_added = write_registry(args.registry, repositories)
         if newly_added:
-            print(f"registry: {len(newly_added)} new repository id(s): {', '.join(newly_added)}")
+            cprint(f"registry: {len(newly_added)} new repository id(s): {', '.join(newly_added)}", "start")
     write_inventory_report(args.reports_dir / "repository-inventory.md", repositories)
     for repo in repositories:
-        print(f"{repo['name']}: branch={repo['current_branch']} dirty={repo['dirty_count']} scope={repo['scope']}")
+        dirty = int(repo["dirty_count"])
+        cprint(
+            f"{repo['name']}: branch={repo['current_branch']} dirty={dirty} scope={repo['scope']}",
+            "ok" if dirty == 0 else "warn",
+        )
     return 0
 
 

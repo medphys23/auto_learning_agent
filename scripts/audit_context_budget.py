@@ -141,8 +141,14 @@ def main() -> int:
         codex_home=args.codex_home,
         cursor_home=args.cursor_home,
     )
-    print(f"Context budget audit: files={len(result['files'])} persistent_estimated_tokens={result['persistent_estimated_tokens']}")
-    print(f"Report: {args.reports_dir / 'context-budget-baseline.md'}")
+    from console_style import cprint
+
+    cprint(
+        f"Context budget audit: files={len(result['files'])} "
+        f"persistent_estimated_tokens={result['persistent_estimated_tokens']}",
+        "ok",
+    )
+    cprint(f"Report: {args.reports_dir / 'context-budget-baseline.md'}", "muted")
     return 0
 
 

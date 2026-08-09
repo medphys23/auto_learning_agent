@@ -96,7 +96,8 @@ graphify --version
 2. Review `reports\optimized-cutover-readiness.md` and `reports\graphify-cycle-summary.md`.
 3. Apply globals with `.\scripts\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite` when reports look correct.
 4. Optionally add `-ApplyRepoHints -ConfirmRepoWrite` to refresh registered repo retrieval hints.
-5. Query architecture with `scripts\query_graph.py`; verify exact behavior in source.
+5. For a single drag-and-drop apply of cycle + globals + repo hints + Graphify policy files, drop `APPLY-EVERYTHING.cmd` into the terminal, press Enter, and type `APPLY` (or pass `-Yes`).
+6. Query architecture with `scripts\query_graph.py`; verify exact behavior in source.
 
 **Verification:**
 ```powershell
@@ -105,6 +106,7 @@ graphify --version
 ```
 
 **Iteration notes:**
+- 2026-08-09: Added root `APPLY-EVERYTHING.cmd` / `scripts\apply-everything.ps1` as the drag-and-drop full-apply launcher (typed `APPLY` confirmation; includes Graphify propagation).
 - 2026-08-03: Startup discovery now passes `--write-registry` so new folders under `Documents\GitHub` are registered automatically before graphify and harvest; existing registry scope, risk tags, enabled state, and notes are preserved.
 - 2026-07-11: Added `run-startup.ps1` / `run_startup.py` as the one-command operator entrypoint; global publish now includes `07-graphify.mdc` and gates GPT-5.6 parent model on runtime smoke unless explicitly forced or skipped.
 

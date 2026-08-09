@@ -273,6 +273,46 @@ def export_wiki(executable: Path, graph: Path, *, cwd: Path, env: dict[str, str]
     }
 
 
+_COLORAMA_READY = False
+_FORE: Any = None
+_STYLE: Any = None
+
+
+def ensure_colorama() -> None:
+    global _COLORAMA_READY, _FORE, _STYLE
+    if _COLORAMA_READY:
+        return
+    try:
+        from colorama import Fore, Style, init as colorama_init
+
+        colorama_init()
+        _FORE = Fore
+        _STYLE = Style
+    except ModuleNotFoundError:
+        _FORE = None
+        _STYLE = None
+    _COLORAMA_READY = True
+
+
+def log_graphify(message: str, *, level: str = "info") -> None:
+    """Print a Graphify progress line with colorama when available."""
+    ensure_colorama()
+    tag = "[graphify]"
+    if _FORE is not None and _STYLE is not None:
+        palette = {
+            "info": _FORE.CYAN,
+            "start": _FORE.BLUE,
+            "ok": _FORE.GREEN,
+            "warn": _FORE.YELLOW,
+            "fail": _FORE.RED,
+            "skip": _FORE.MAGENTA,
+        }
+        color = palette.get(level, _FORE.CYAN)
+        print(f"{color}{tag}{_STYLE.RESET_ALL} {message}", flush=True)
+    else:
+        print(f"{tag} {message}", flush=True)
+
+
 def build_repository_graph(
     repo: dict[str, Any],
     executable: Path,
@@ -298,6 +338,7 @@ def build_repository_graph(
     result["preflight"] = problems
     if problems:
         result.update(status="skipped", reason=",".join(problems), elapsed_seconds=round(time.monotonic() - started, 3))
+        log_graphify(f"{repo_id}: skipped ({result['reason']})", level="skip")
         return result
     graph = repo_path / "graphify-out" / "graph.json"
     env = dict(os.environ)
@@ -307,6 +348,8 @@ def build_repository_graph(
     profile, profile_reason = select_extract_profile(repo, semantic=semantic, env=env)
     result["extract_profile"] = profile
     result["extract_profile_reason"] = profile_reason
+    mode = "force-full" if force else "incremental"
+    log_graphify(f"{repo_id}: extract start profile={profile} mode={mode}", level="start")
     command = build_extract_command(executable, profile=profile, force=force)
     code, output = run_command(command, cwd=repo_path, env=env)
     result["commands"].append({"command": command, "exit_code": code, "output_tail": output.splitlines()[-8:]})
@@ -322,6 +365,7 @@ def build_repository_graph(
                 security_scan={"passed": True, "secret_pattern_count": 0, "prohibited_source_count": 0},
                 elapsed_seconds=round(time.monotonic() - started, 3),
             )
+            log_graphify(f"{repo_id}: empty (no supported code) in {result['elapsed_seconds']}s", level="warn")
             return result
         reason = "graph-build-failed"
         lowered = output.lower()
@@ -332,20 +376,26 @@ def build_repository_graph(
             # incremental merge; a full --force rebuild clears it.
             reason = "cross-project-graph-pollution"
         result.update(reason=reason, elapsed_seconds=round(time.monotonic() - started, 3))
+        log_graphify(f"{repo_id}: failed extract ({reason}) in {result['elapsed_seconds']}s", level="fail")
         return result
+    log_graphify(f"{repo_id}: cluster start", level="start")
     cluster = [str(executable), "cluster-only", ".", "--no-label"]
     code, output = run_command(cluster, cwd=repo_path, env=env)
     result["commands"].append({"command": cluster, "exit_code": code, "output_tail": output.splitlines()[-8:]})
     if code != 0:
         result.update(reason="graph-cluster-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        log_graphify(f"{repo_id}: failed cluster in {result['elapsed_seconds']}s", level="fail")
         return result
     scan = scan_graph(graph)
     result["security_scan"] = scan
     if not scan["passed"]:
         result.update(status="excluded", reason="security-scan-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+        log_graphify(f"{repo_id}: excluded by security scan", level="fail")
         return result
+    log_graphify(f"{repo_id}: diagnose", level="info")
     result["health"] = diagnose_graph(executable, graph, cwd=repo_path, env=env)
     if wiki:
+        log_graphify(f"{repo_id}: wiki export", level="info")
         result["wiki"] = export_wiki(executable, graph, cwd=repo_path, env=env)
     result.update(
         status="built",
@@ -354,6 +404,9 @@ def build_repository_graph(
         structural_sha256=structural_graph_sha256(graph),
         elapsed_seconds=round(time.monotonic() - started, 3),
     )
+    health = health_summary(result)
+    health_level = "ok" if (not health or health == "ok") else "warn"
+    log_graphify(f"{repo_id}: built in {result['elapsed_seconds']}s health={health or 'ok'}", level=health_level)
     return result
 
 
@@ -548,7 +601,17 @@ def run_cycle(
     if not repositories:
         raise RuntimeError("no enabled repositories selected")
     ast_workers = max(1, (os.cpu_count() or 2) // max(1, max_parallel))
+    try:
+        from tqdm.auto import tqdm
+    except ModuleNotFoundError:
+        tqdm = None  # type: ignore[assignment]
+    ensure_colorama()
     results: list[dict[str, Any]] = []
+    log_graphify(
+        f"building {len(repositories)} repo graph(s) with max_parallel={max_parallel} "
+        f"graphify={version.strip()}",
+        level="info",
+    )
     with ThreadPoolExecutor(max_workers=max(1, max_parallel)) as executor:
         futures = {
             executor.submit(
@@ -562,8 +625,16 @@ def run_cycle(
             ): repo
             for repo in repositories
         }
-        for future in as_completed(futures):
-            results.append(future.result())
+        if tqdm is None:
+            for future in as_completed(futures):
+                results.append(future.result())
+        else:
+            with tqdm(total=len(futures), desc="graphify repos", unit="repo", dynamic_ncols=True, leave=True) as bar:
+                for future in as_completed(futures):
+                    item = future.result()
+                    results.append(item)
+                    bar.set_postfix_str(f"{item['id']}:{item['status']}"[:40])
+                    bar.update(1)
     current = [item for item in results if item["status"] in {"built", "empty"}]
     failed = [item for item in results if item["status"] not in {"built", "empty"}]
     federated = ROOT / "graphify-out" / "federated" / "graph.json"
@@ -573,18 +644,23 @@ def run_cycle(
     effective_skip_merge = skip_merge or (bool(repository_ids) and not merge_selected)
     if effective_skip_merge and federated.exists():
         merge_skipped = True
+        log_graphify("federated merge skipped (unchanged selection or --skip-merge)", level="warn")
     if not effective_skip_merge and current:
         signature = input_signature(current)
         if not force and federated.exists() and existing_signature(provenance) == signature:
             merge_skipped = True
+            log_graphify("federated merge skipped (input signature unchanged)", level="warn")
         else:
+            log_graphify(f"federated merge starting ({len(current)} graphs)", level="start")
             staging = federated.parent / ".staging" / "graphify-out" / "graph.json"
             staging_provenance = federated.parent / ".staging" / "provenance.json"
             merge_graphs(current, staging, staging_provenance, version)
             env = dict(os.environ)
             env["GRAPHIFY_MAX_WORKERS"] = str(ast_workers)
+            log_graphify("federated cluster-only start", level="start")
             code, output = run_command([str(executable), "cluster-only", str(ROOT), "--graph", str(staging), "--no-label"], cwd=ROOT, env=env)
             if code != 0:
+                log_graphify("federated cluster-only failed", level="fail")
                 failed.append({"id": "federated", "status": "failed", "reason": "federated-cluster-failed", "output_tail": output.splitlines()[-8:]})
                 for stale in (federated, federated.parent / "GRAPH_REPORT.md", federated.parent / "graph.html", provenance):
                     if stale.exists():
@@ -593,6 +669,7 @@ def run_cycle(
             else:
                 staged_html = staging.parent / "graph.html"
                 if not staged_html.exists():
+                    log_graphify("federated tree visualization start", level="start")
                     tree_command = [
                         str(executable),
                         "tree",
@@ -629,10 +706,13 @@ def run_cycle(
     if federated.exists() and not merge_skipped and not effective_skip_merge and aggregate_ready and current:
         env = dict(os.environ)
         env["GRAPHIFY_MAX_WORKERS"] = str(ast_workers)
+        log_graphify("federated diagnose", level="info")
         federated_health = diagnose_graph(executable, federated, cwd=ROOT, env=env)
         if wiki:
+            log_graphify("federated wiki export", level="info")
             wiki_result = export_wiki(executable, federated, cwd=ROOT, env=env)
             federated_wiki = wiki_result.get("wiki_path", "")
+        log_graphify("federated graph ready", level="ok")
     status = "completed"
     if not current or (not effective_skip_merge and not aggregate_ready):
         status = "failed"
@@ -651,10 +731,28 @@ def run_cycle(
     reports_dir.mkdir(parents=True, exist_ok=True)
     write_json(reports_dir / "graphify-cycle-summary.json", result)
     write_cycle_report(reports_dir / "graphify-cycle-summary.md", result)
+    ensure_colorama()
+    status_level = {"completed": "ok", "degraded": "warn", "failed": "fail"}.get(status, "info")
     for item in result["repositories"]:
-        print(f"{item['id']}: {item['status']} dirty={str(item.get('dirty', False)).lower()} reason={item.get('reason', '')}")
-    print(f"Graphify cycle: {status}")
-    print(f"Federated graph: {result['federated_graph']}")
+        reason = item.get("reason", "")
+        suffix = f" reason={reason}" if reason else ""
+        item_level = {
+            "built": "ok",
+            "empty": "warn",
+            "skipped": "skip",
+            "excluded": "fail",
+            "failed": "fail",
+        }.get(str(item["status"]), "info")
+        log_graphify(
+            f"{item['id']}: {item['status']} dirty={str(item.get('dirty', False)).lower()}"
+            f" profile={item.get('extract_profile', '')}{suffix}",
+            level=item_level,
+        )
+    log_graphify(f"cycle status: {status}", level=status_level)
+    log_graphify(f"federated graph: {result['federated_graph']}", level="info")
+    if result.get("federated_health"):
+        fed_health = health_summary({"health": result["federated_health"]}) or "ok"
+        log_graphify(f"federated health: {fed_health}", level="ok" if fed_health == "ok" else "warn")
     if status == "failed" or (strict and failed):
         return 1
     return 0
@@ -680,6 +778,7 @@ def main() -> int:
     )
     parser.add_argument("--wiki", action="store_true", help="Export agent-crawlable wikis for built graphs and the federated graph.")
     args = parser.parse_args()
+    ensure_colorama()
     try:
         return run_cycle(
             repository_ids=args.repo,
@@ -692,7 +791,7 @@ def main() -> int:
             wiki=args.wiki,
         )
     except (RuntimeError, ValueError) as exc:
-        print(f"ERROR: {exc}")
+        log_graphify(f"ERROR: {exc}", level="fail")
         return 2
 
 

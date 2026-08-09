@@ -119,13 +119,15 @@ def main() -> int:
     if validate_exit != 0:
         return validate_exit
 
+    # Always stream child-step logs during startup so Graphify/harvest activity is visible.
+    # Pass --quiet through the knowledge cycle only when the operator opts out later.
     cycle_exit = run(
         build_cycle_command(
             python_executable=python_executable,
             strict=args.strict,
             skip_graphify=args.skip_graphify,
             skip_dependency_audit=args.skip_dependency_audit,
-            verbose=args.verbose,
+            verbose=True,
         )
     )
     if cycle_exit != 0:

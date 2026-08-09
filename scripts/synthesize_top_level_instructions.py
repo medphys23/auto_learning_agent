@@ -1091,8 +1091,10 @@ def main() -> int:
         reports_dir=args.reports_dir,
         profile=args.profile,
     )
-    print(f"Synthesized top-level instructions under {result['master_root']}")
-    print(f"Reports written to {result['reports_dir']}")
+    from console_style import cprint
+
+    cprint(f"Synthesized top-level instructions under {result['master_root']}", "ok")
+    cprint(f"Reports written to {result['reports_dir']}", "muted")
     return 0
 
 

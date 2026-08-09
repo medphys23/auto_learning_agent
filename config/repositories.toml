@@ -14,6 +14,20 @@ graphify_semantic = true
 notes = 'Local MVP orchestrator repository. Semantic Graphify extraction is opted in for local docs when --semantic is used.'
 
 [[repositories]]
+id = 'blender-voice-3d-print-designer'
+name = '3d-printing'
+path = 'C:\Users\ppyxe\Documents\GitHub\3d-printing'
+remote = 'https://github.com/medphys23/3d-printing.git'
+current_branch = 'main'
+enabled = true
+scope = 'local_manufacturing'
+risk_tags = ['optional_network_providers', 'physical_manufacturing', 'subprocess', 'untrusted_input']
+stack_tags = ['blender', 'fastapi', 'prusa_slicer', 'pydantic', 'python', 'sqlite', 'typer']
+harvest_mode = 'deep_when_clean'
+graphify_semantic = false
+notes = 'Local-only controlled voice/text modelling, verified mesh export, and profile-specific slicing; no printer transmission.'
+
+[[repositories]]
 id = 'campania-transplant'
 name = 'campania_transplant'
 path = 'C:\Users\ppyxe\Documents\GitHub\campania_transplant'
@@ -23,6 +37,18 @@ enabled = true
 scope = 'health_economics_research'
 risk_tags = ['health_economics', 'not_clinical_decision_support', 'research']
 stack_tags = ['docx', 'graphviz', 'matplotlib', 'numpy', 'python', 'streamlit']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
+id = 'general-surgery-notes'
+name = 'General_surgery_notes'
+path = 'C:\Users\ppyxe\Documents\GitHub\General_surgery_notes'
+remote = 'https://github.com/medphys23/General_surgery_notes.git'
+current_branch = 'main'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['python']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
