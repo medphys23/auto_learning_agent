@@ -56,6 +56,7 @@ PROHIBITED_SOURCE_SUFFIXES = {".csv", ".db", ".key", ".parquet", ".pem", ".pfx",
 BRIDGE_NODE_TYPES = {"class", "enum", "interface", "module", "namespace", "package"}
 GENERIC_BRIDGE_LABELS = {"app", "config", "data", "index", "main", "model", "service", "test", "tests", "type", "utils"}
 REQUIRED_GRAPHIFYIGNORE = {".env", ".env.*", "*.key", "*.pem", "data/", "graphify-out/", "*.sqlite"}
+FINGERPRINT_NAME = ".orchestrator-fingerprint.json"
 
 
 def write_text(path: Path, content: str) -> None:
@@ -173,6 +174,84 @@ def run_command(command: list[str], *, cwd: Path, env: dict[str, str]) -> tuple[
     result = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True, encoding="utf-8", errors="replace")
     output = "\n".join(part.strip() for part in (result.stdout, result.stderr) if part.strip())
     return int(result.returncode), output
+
+
+def fingerprint_path(repo_path: Path) -> Path:
+    return repo_path / "graphify-out" / FINGERPRINT_NAME
+
+
+def source_fingerprint(repo_path: Path) -> dict[str, str]:
+    """Cheap git-level fingerprint for skip-unchanged decisions."""
+    commit = run_git(repo_path, "rev-parse", "HEAD") or ""
+    dirty_lines = git_dirty_lines(repo_path)
+    dirty_blob = "\n".join(dirty_lines).encode("utf-8")
+    return {
+        "commit": commit,
+        "dirty_sha256": hashlib.sha256(dirty_blob).hexdigest(),
+        "dirty": "true" if dirty_lines else "false",
+    }
+
+
+def build_fingerprint(*, source: dict[str, str], profile: str, graphify_version: str, graph_sha256: str) -> dict[str, str]:
+    return {
+        **source,
+        "extract_profile": profile,
+        "graphify_version": graphify_version.strip(),
+        "graph_sha256": graph_sha256,
+    }
+
+
+def load_fingerprint(repo_path: Path) -> dict[str, str] | None:
+    path = fingerprint_path(repo_path)
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    return {str(key): str(value) for key, value in data.items()}
+
+
+def save_fingerprint(repo_path: Path, fingerprint: dict[str, str]) -> None:
+    write_json(fingerprint_path(repo_path), fingerprint)
+
+
+def should_skip_unchanged(
+    repo_path: Path,
+    *,
+    force: bool,
+    profile: str,
+    graphify_version: str,
+) -> tuple[bool, str, dict[str, str]]:
+    """Return (skip, reason, current_source_fingerprint)."""
+    source = source_fingerprint(repo_path)
+    if force:
+        return False, "force-rebuild", source
+    graph = repo_path / "graphify-out" / "graph.json"
+    if not graph.exists():
+        return False, "missing-graph", source
+    previous = load_fingerprint(repo_path)
+    if previous is None:
+        return False, "missing-fingerprint", source
+    expected = build_fingerprint(
+        source=source,
+        profile=profile,
+        graphify_version=graphify_version,
+        graph_sha256=previous.get("graph_sha256", ""),
+    )
+    # Compare the skip-relevant fields; graph hash is validated separately against the file.
+    for key in ("commit", "dirty_sha256", "extract_profile", "graphify_version"):
+        if previous.get(key) != expected.get(key):
+            return False, f"changed:{key}", source
+    try:
+        current_graph_hash = sha256_file(graph)
+    except OSError:
+        return False, "unreadable-graph", source
+    if previous.get("graph_sha256") != current_graph_hash:
+        return False, "graph-hash-mismatch", source
+    return True, "fingerprint-unchanged", source
 
 
 def write_empty_repository_graph(repo_path: Path, repo_id: str) -> Path:
@@ -295,22 +374,22 @@ def ensure_colorama() -> None:
 
 
 def log_graphify(message: str, *, level: str = "info") -> None:
-    """Print a Graphify progress line with colorama when available."""
+    """Print a Graphify progress line; color only the tag / terminal status."""
     ensure_colorama()
     tag = "[graphify]"
-    if _FORE is not None and _STYLE is not None:
-        palette = {
-            "info": _FORE.CYAN,
-            "start": _FORE.BLUE,
-            "ok": _FORE.GREEN,
-            "warn": _FORE.YELLOW,
-            "fail": _FORE.RED,
-            "skip": _FORE.MAGENTA,
-        }
-        color = palette.get(level, _FORE.CYAN)
-        print(f"{color}{tag}{_STYLE.RESET_ALL} {message}", flush=True)
-    else:
+    if _FORE is None or _STYLE is None:
         print(f"{tag} {message}", flush=True)
+        return
+    dim = getattr(_FORE, "LIGHTBLACK_EX", _FORE.WHITE)
+    # Routine progress: dim tag, plain message. Outcomes: color the whole line.
+    if level == "ok":
+        print(f"{_FORE.GREEN}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
+    elif level in {"warn", "skip"}:
+        print(f"{_FORE.YELLOW}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
+    elif level == "fail":
+        print(f"{_FORE.RED}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
+    else:
+        print(f"{dim}{tag}{_STYLE.RESET_ALL} {message}", flush=True)
 
 
 def build_repository_graph(
@@ -319,6 +398,7 @@ def build_repository_graph(
     *,
     force: bool,
     ast_workers: int,
+    graphify_version: str,
     semantic: bool = False,
     wiki: bool = False,
 ) -> dict[str, Any]:
@@ -348,19 +428,59 @@ def build_repository_graph(
     profile, profile_reason = select_extract_profile(repo, semantic=semantic, env=env)
     result["extract_profile"] = profile
     result["extract_profile_reason"] = profile_reason
+    skip, skip_reason, source_fp = should_skip_unchanged(
+        repo_path,
+        force=force,
+        profile=profile,
+        graphify_version=graphify_version,
+    )
+    if skip:
+        scan = scan_graph(graph)
+        result["security_scan"] = scan
+        if not scan["passed"]:
+            result.update(status="excluded", reason="security-scan-failed", elapsed_seconds=round(time.monotonic() - started, 3))
+            log_graphify(f"{repo_id}: excluded by security scan", level="fail")
+            return result
+        graph_hash = sha256_file(graph)
+        result.update(
+            status="unchanged",
+            reason=skip_reason,
+            graph_path=str(graph),
+            graph_sha256=graph_hash,
+            structural_sha256=structural_graph_sha256(graph),
+            elapsed_seconds=round(time.monotonic() - started, 3),
+        )
+        if wiki:
+            wiki_dir = graph.parent / "wiki"
+            if not wiki_dir.exists():
+                log_graphify(f"{repo_id}: wiki export (unchanged graph)", level="info")
+                result["wiki"] = export_wiki(executable, graph, cwd=repo_path, env=env)
+        log_graphify(f"{repo_id}: unchanged — skipped extract ({skip_reason})", level="ok")
+        return result
+
     mode = "force-full" if force else "incremental"
-    log_graphify(f"{repo_id}: extract start profile={profile} mode={mode}", level="start")
+    log_graphify(f"{repo_id}: extract start profile={profile} mode={mode} reason={skip_reason}", level="start")
     command = build_extract_command(executable, profile=profile, force=force)
     code, output = run_command(command, cwd=repo_path, env=env)
     result["commands"].append({"command": command, "exit_code": code, "output_tail": output.splitlines()[-8:]})
     if code != 0 or not graph.exists():
         if "found 0 code" in output or "graph is empty" in output:
             graph = write_empty_repository_graph(repo_path, repo_id)
+            graph_hash = sha256_file(graph)
+            save_fingerprint(
+                repo_path,
+                build_fingerprint(
+                    source=source_fp,
+                    profile=profile,
+                    graphify_version=graphify_version,
+                    graph_sha256=graph_hash,
+                ),
+            )
             result.update(
                 status="empty",
                 reason="no-supported-code",
                 graph_path=str(graph),
-                graph_sha256=sha256_file(graph),
+                graph_sha256=graph_hash,
                 structural_sha256=structural_graph_sha256(graph),
                 security_scan={"passed": True, "secret_pattern_count": 0, "prohibited_source_count": 0},
                 elapsed_seconds=round(time.monotonic() - started, 3),
@@ -397,10 +517,22 @@ def build_repository_graph(
     if wiki:
         log_graphify(f"{repo_id}: wiki export", level="info")
         result["wiki"] = export_wiki(executable, graph, cwd=repo_path, env=env)
+    graph_hash = sha256_file(graph)
+    # Refresh source fingerprint after build so dirty-state matches post-build reality.
+    source_fp = source_fingerprint(repo_path)
+    save_fingerprint(
+        repo_path,
+        build_fingerprint(
+            source=source_fp,
+            profile=profile,
+            graphify_version=graphify_version,
+            graph_sha256=graph_hash,
+        ),
+    )
     result.update(
         status="built",
         graph_path=str(graph),
-        graph_sha256=sha256_file(graph),
+        graph_sha256=graph_hash,
         structural_sha256=structural_graph_sha256(graph),
         elapsed_seconds=round(time.monotonic() - started, 3),
     )
@@ -620,6 +752,7 @@ def run_cycle(
                 executable,
                 force=force,
                 ast_workers=ast_workers,
+                graphify_version=version,
                 semantic=semantic,
                 wiki=wiki,
             ): repo
@@ -635,8 +768,8 @@ def run_cycle(
                     results.append(item)
                     bar.set_postfix_str(f"{item['id']}:{item['status']}"[:40])
                     bar.update(1)
-    current = [item for item in results if item["status"] in {"built", "empty"}]
-    failed = [item for item in results if item["status"] not in {"built", "empty"}]
+    current = [item for item in results if item["status"] in {"built", "empty", "unchanged"}]
+    failed = [item for item in results if item["status"] not in {"built", "empty", "unchanged"}]
     federated = ROOT / "graphify-out" / "federated" / "graph.json"
     provenance = federated.parent / "provenance.json"
     merge_skipped = False
@@ -738,11 +871,12 @@ def run_cycle(
         suffix = f" reason={reason}" if reason else ""
         item_level = {
             "built": "ok",
+            "unchanged": "ok",
             "empty": "warn",
             "skipped": "skip",
             "excluded": "fail",
             "failed": "fail",
-        }.get(str(item["status"]), "info")
+        }.get(str(item["status"]), "plain")
         log_graphify(
             f"{item['id']}: {item['status']} dirty={str(item.get('dirty', False)).lower()}"
             f" profile={item.get('extract_profile', '')}{suffix}",

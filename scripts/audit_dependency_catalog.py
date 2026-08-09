@@ -402,7 +402,7 @@ def main() -> int:
         f"manifests={manifest_count} packages={package_count}",
         "ok",
     )
-    cprint(f"Report: {args.reports_dir / 'dependency-catalog-audit.md'}", "muted")
+    cprint(f"Report: {args.reports_dir / 'dependency-catalog-audit.md'}", "dim")
     return 0
 
 

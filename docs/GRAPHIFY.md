@@ -38,9 +38,11 @@ Bootstrap registered repositories once, then refresh their graphs and the federa
 
 Refresh behavior:
 
-- **Incremental by default.** The cycle runs `graphify extract` with the upstream incremental gate and shrink-guard (#479) active: a partial rebuild that would shrink an existing `graph.json` is refused (`shrink-guard-refused` in the cycle summary) instead of silently overwriting a good graph.
-- **`--force` is the intentional full rebuild.** It skips the incremental gate and permits a legitimate shrink (deleted code, refactors). Also use `--force` when a cycle reports `cross-project-graph-pollution` (stale multi-repo tags in an incremental merge).
-- **Health checks.** Every built graph and the federated graph get an advisory `graphify diagnose multigraph --json` pass; dangling/missing/collapsed-edge counts appear in `reports/graphify-cycle-summary.md`. Warnings never fail a build, but must not be ignored when promoting knowledge.
+- **Repo-level skip-unchanged.** After a successful build, the cycle writes `graphify-out/.orchestrator-fingerprint.json` (git commit + dirty-status hash + extract profile + Graphify version + `graph.json` hash). On the next run, matching fingerprints skip extract/cluster entirely (`status=unchanged`). This is what keeps large repos like OmniRoute from being rebuilt every startup.
+- **File-level incremental inside Graphify.** When a rebuild *is* needed, `graphify extract` still only re-reads changed files (upstream cache/manifest) and enforces shrink-guard (#479).
+- **`--force` is the intentional full rebuild.** Ignores fingerprints, skips the incremental gate, and permits a legitimate shrink. Also use `--force` when a cycle reports `cross-project-graph-pollution`.
+- **Federated merge skip.** If every input graph's structural hash matches the last federation provenance, the federated merge is skipped too.
+- **Health checks.** Built graphs (not unchanged skips) get an advisory `graphify diagnose` pass; warnings appear in `reports/graphify-cycle-summary.md`.
 - **Reference repositories are skipped.** Registry entries with `graphify_cycle = false` (the upstream Graphify clone) are excluded from the default cycle and federation; an explicit `--repo graphify` can still build one for local study.
 
 ### Semantic documents (opt-in, risk-gated)

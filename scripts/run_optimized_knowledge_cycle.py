@@ -183,7 +183,7 @@ def run_cycle(
         log_handle.write(f"Started: {started}\n")
         log_handle.write(f"Stream child output: {str(stream_output).lower()}\n")
         phase_total = len(steps) + 1
-        cprint(f"optimized knowledge cycle: {len(steps)} work steps + readiness", "info")
+        cprint(f"optimized knowledge cycle: {len(steps)} work steps + readiness", "phase")
         with tqdm(total=phase_total, desc="optimized knowledge", unit="step", dynamic_ncols=True) as progress:
             for step in steps:
                 progress.set_postfix_str(f"{step.index}/{step.total} {step.name[:32]}")
@@ -254,9 +254,9 @@ def run_cycle(
     }
     write_summary(reports_dir, result)
     cprint(f"Optimized knowledge cycle: {status}", "ok" if status == "completed" else "fail")
-    cprint(f"Summary: {reports_dir / 'optimized-knowledge-cycle-summary.md'}", "muted")
-    cprint(f"Readiness: {reports_dir / 'optimized-cutover-readiness.md'}", "muted")
-    cprint(f"Log: {log_file}", "muted")
+    cprint(f"Summary: {reports_dir / 'optimized-knowledge-cycle-summary.md'}", "dim")
+    cprint(f"Readiness: {reports_dir / 'optimized-cutover-readiness.md'}", "dim")
+    cprint(f"Log: {log_file}", "dim")
     return 1 if status == "failed" else 0
 
 

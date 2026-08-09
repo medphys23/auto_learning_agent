@@ -1094,7 +1094,7 @@ def main() -> int:
     from console_style import cprint
 
     cprint(f"Synthesized top-level instructions under {result['master_root']}", "ok")
-    cprint(f"Reports written to {result['reports_dir']}", "muted")
+    cprint(f"Reports written to {result['reports_dir']}", "dim")
     return 0
 
 

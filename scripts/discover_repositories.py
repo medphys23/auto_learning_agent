@@ -264,14 +264,21 @@ def main() -> int:
     if args.write_registry:
         newly_added = write_registry(args.registry, repositories)
         if newly_added:
-            cprint(f"registry: {len(newly_added)} new repository id(s): {', '.join(newly_added)}", "start")
+            cprint(f"registry: {len(newly_added)} new repository id(s): {', '.join(newly_added)}", "phase")
     write_inventory_report(args.reports_dir / "repository-inventory.md", repositories)
     for repo in repositories:
         dirty = int(repo["dirty_count"])
-        cprint(
-            f"{repo['name']}: branch={repo['current_branch']} dirty={dirty} scope={repo['scope']}",
-            "ok" if dirty == 0 else "warn",
-        )
+        # Clean repos stay plain; only dirty rows get yellow so the list isn't a green wall.
+        if dirty == 0:
+            print(
+                f"{repo['name']}: branch={repo['current_branch']} dirty={dirty} scope={repo['scope']}",
+                flush=True,
+            )
+        else:
+            cprint(
+                f"{repo['name']}: branch={repo['current_branch']} dirty={dirty} scope={repo['scope']}",
+                "warn",
+            )
     return 0
 
 

@@ -148,7 +148,7 @@ def main() -> int:
         f"persistent_estimated_tokens={result['persistent_estimated_tokens']}",
         "ok",
     )
-    cprint(f"Report: {args.reports_dir / 'context-budget-baseline.md'}", "muted")
+    cprint(f"Report: {args.reports_dir / 'context-budget-baseline.md'}", "dim")
     return 0
 
 

@@ -39,13 +39,18 @@ from run_optimized_knowledge_cycle import build_steps as build_optimized_cycle_s
 from run_orchestrator_pipeline import build_steps, parse_discovery_lines, parse_harvest_lines  # noqa: E402
 from run_graphify_cycle import (  # noqa: E402
     build_extract_command,
+    build_fingerprint,
     cycle_enabled,
     diagnose_graph,
+    load_fingerprint,
     merge_graphs,
     parse_version,
     preflight_repository,
+    save_fingerprint,
     scan_graph,
     select_extract_profile,
+    should_skip_unchanged,
+    source_fingerprint,
     structural_graph_sha256,
     write_empty_repository_graph,
 )
@@ -1430,6 +1435,44 @@ class OrchestratorMvpTests(unittest.TestCase):
         forced_semantic = build_extract_command(Path("graphify"), profile="code+docs", force=True)
         self.assertNotIn("--code-only", forced_semantic)
         self.assertEqual(forced_semantic[-1], "--force")
+
+    def test_fingerprint_skips_unchanged_repo_graph(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self.init_git_repo(repo)
+            (repo / "main.py").write_text("print('ok')\n", encoding="utf-8")
+            subprocess.run(["git", "add", "main.py"], cwd=repo, check=True, capture_output=True)
+            subprocess.run(["git", "-c", "user.email=t@e", "-c", "user.name=t", "commit", "-m", "init"], cwd=repo, check=True, capture_output=True)
+            graph = repo / "graphify-out" / "graph.json"
+            graph.parent.mkdir(parents=True)
+            graph.write_text(json.dumps({"directed": False, "nodes": [{"id": "a"}], "links": []}), encoding="utf-8")
+            graph_hash = __import__("hashlib").sha256(graph.read_bytes()).hexdigest()
+            save_fingerprint(
+                repo,
+                build_fingerprint(
+                    source=source_fingerprint(repo),
+                    profile="code",
+                    graphify_version="graphify 0.9.34",
+                    graph_sha256=graph_hash,
+                ),
+            )
+            skip, reason, _ = should_skip_unchanged(
+                repo, force=False, profile="code", graphify_version="graphify 0.9.34"
+            )
+            self.assertTrue(skip, msg=f"expected skip, got reason={reason}")
+            self.assertEqual(reason, "fingerprint-unchanged")
+            self.assertIsNotNone(load_fingerprint(repo))
+            skip_force, force_reason, _ = should_skip_unchanged(
+                repo, force=True, profile="code", graphify_version="graphify 0.9.34"
+            )
+            self.assertFalse(skip_force)
+            self.assertEqual(force_reason, "force-rebuild")
+            (repo / "main.py").write_text("print('changed')\n", encoding="utf-8")
+            skip_dirty, dirty_reason, _ = should_skip_unchanged(
+                repo, force=False, profile="code", graphify_version="graphify 0.9.34"
+            )
+            self.assertFalse(skip_dirty)
+            self.assertTrue(dirty_reason.startswith("changed:"), msg=dirty_reason)
 
     def test_diagnose_graph_is_advisory_on_failure(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
