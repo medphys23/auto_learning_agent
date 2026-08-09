@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_commit": "7f36b192f00a533306722f86d4af3b1ff317110c",
     "source_paths": [
       ".github/actions/npm-ci-retry/action.yml",
       ".github/copilot-instructions.md",
@@ -57,6 +57,7 @@
       "config/i18n.json",
       "config/payloadRules.json",
       "contrib/podman/README.md",
+      "docker/devin-bridge/Dockerfile",
       "docker/vnc-browser/README.md",
       "docker/vnc-browser/chromium/Dockerfile",
       "docs/assets/flags/README.md",
@@ -93,7 +94,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:34Z",
+    "created_at": "2026-08-09T21:38:52Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".github/actions/npm-ci-retry/action.yml",
@@ -111,6 +112,7 @@
       "config/i18n.json",
       "config/payloadRules.json",
       "contrib/podman/README.md",
+      "docker/devin-bridge/Dockerfile",
       "docker/vnc-browser/README.md",
       "docker/vnc-browser/chromium/Dockerfile",
       "docs/assets/flags/README.md",
@@ -136,7 +138,7 @@
       "tests/_setup/vitestUiPolyfills.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:34Z"
+    "updated_at": "2026-08-09T21:38:52Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -162,14 +164,14 @@
           "src/app/(dashboard)/dashboard/activity/components/EventTypeFilter.tsx",
           "src/app/(dashboard)/dashboard/activity/page.tsx"
         ],
-        "file_count": 2652,
-        "graph_node_count": 17127,
+        "file_count": 2720,
+        "graph_node_count": 17660,
         "suffixes": {
           ".css": 1,
           ".md": 3,
-          ".sql": 119,
-          ".ts": 1780,
-          ".tsx": 749
+          ".sql": 122,
+          ".ts": 1836,
+          ".tsx": 758
         }
       },
       {
@@ -184,12 +186,13 @@
           "tests/boundary/gemma4-multiturn.live.test.ts",
           "tests/boundary/gemma4-newline-investigation.live.test.ts"
         ],
-        "file_count": 3878,
-        "graph_node_count": 11561,
+        "file_count": 3982,
+        "graph_node_count": 11902,
         "suffixes": {
-          ".js": 1,
-          ".json": 21,
-          ".ts": 3588,
+          ".js": 3,
+          ".json": 24,
+          ".md": 3,
+          ".ts": 3684,
           ".tsx": 225,
           ".txt": 42,
           ".yaml": 1
@@ -208,7 +211,7 @@
           "docs/i18n/cs/README.md"
         ],
         "file_count": 49,
-        "graph_node_count": 4030,
+        "graph_node_count": 3987,
         "suffixes": {
           ".md": 49
         }
@@ -226,7 +229,7 @@
           "CODE_OF_CONDUCT.md"
         ],
         "file_count": 36,
-        "graph_node_count": 1390,
+        "graph_node_count": 1348,
         "suffixes": {
           ".json": 12,
           ".md": 8,
@@ -250,10 +253,10 @@
           "scripts/check/check-known-symbols.ts",
           "scripts/check/check-nvidia-catalog-drift.ts"
         ],
-        "file_count": 31,
-        "graph_node_count": 296,
+        "file_count": 32,
+        "graph_node_count": 300,
         "suffixes": {
-          ".js": 3,
+          ".js": 4,
           ".json": 5,
           ".py": 4,
           ".ts": 19
@@ -270,7 +273,7 @@
           "@omniroute/opencode-provider/README.md"
         ],
         "file_count": 6,
-        "graph_node_count": 149,
+        "graph_node_count": 134,
         "suffixes": {
           ".json": 4,
           ".md": 2
@@ -284,7 +287,7 @@
           "electron/README.md"
         ],
         "file_count": 3,
-        "graph_node_count": 113,
+        "graph_node_count": 118,
         "suffixes": {
           ".json": 2,
           ".md": 1
@@ -299,7 +302,7 @@
           "open-sse/services/compression/engines/rtk/filters/composer.json"
         ],
         "file_count": 4,
-        "graph_node_count": 101,
+        "graph_node_count": 97,
         "suffixes": {
           ".json": 2,
           ".md": 2
@@ -317,10 +320,10 @@
           "config/quality/dependency-allowlist.json",
           "config/quality/duplication-baseline.json"
         ],
-        "file_count": 15,
+        "file_count": 14,
         "graph_node_count": 70,
         "suffixes": {
-          ".json": 15
+          ".json": 14
         }
       },
       {
@@ -359,14 +362,15 @@
       {
         "area": "docker",
         "examples": [
+          "docker/devin-bridge/Dockerfile",
           "docker/vnc-browser/chromium/Dockerfile",
           "docker/vnc-browser/README.md"
         ],
-        "file_count": 2,
+        "file_count": 3,
         "graph_node_count": 7,
         "suffixes": {
           ".md": 1,
-          "dockerfile": 1
+          "dockerfile": 2
         }
       },
       {
@@ -405,18 +409,18 @@
           ".github/ISSUE_TEMPLATE/feature_request.yml",
           ".github/ISSUE_TEMPLATE/test_coverage_task.yml"
         ],
-        "file_count": 32,
+        "file_count": 33,
         "graph_node_count": 0,
         "suffixes": {
           ".md": 2,
-          ".yml": 30
+          ".yml": 31
         }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 116004,
-    "graph_source_file_count": 9469,
-    "harvestable_text_file_count": 6714
+    "graph_node_count": 99013,
+    "graph_source_file_count": 9740,
+    "harvestable_text_file_count": 6888
   },
   "status": "candidate",
   "summary": "Safe source map for OmniRoute: 16 harvestable areas, led by src, tests, docs, ., scripts, @omniroute, electron, open-sse.",

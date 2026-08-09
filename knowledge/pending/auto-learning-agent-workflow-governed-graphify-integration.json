@@ -22,47 +22,41 @@
     "runtimes": []
   },
   "confidence": {
-    "rationale": "Deterministic extraction from repository policy files and governed Graphify wrappers.",
-    "score": 0.8
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
   },
   "evidence": {
-    "accepted_by_user": true,
+    "accepted_by_user": false,
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "",
+    "source_commit": "723a5a2a2afaf6c05e31f013c8ce32b646a02dc3",
     "source_paths": [
-      "skills.md",
-      "docs/GRAPHIFY.md",
-      "scripts/run_graphify_cycle.py",
-      "scripts/run_graphify_mcp.py",
-      "config/repositories.toml"
+      "skills.md"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
-    "task_or_issue": "expand-governed-graphify-surface",
-    "tests_executed": [
-      "python -m unittest discover -s tests"
-    ]
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
   },
   "id": "auto-learning-agent-workflow-governed-graphify-integration",
   "incompatible_when": [],
   "procedure": [
-    "1. Install or upgrade the user-local CLI with `uv tool install graphifyy` / `uv tool upgrade graphifyy` (require >= 0.9.34); do not add it as a repository dependency.",
-    "2. Keep a sibling clone at `C:\\Users\\ppyxe\\Documents\\GitHub\\graphify` registered with `graphify_cycle = false` so it is never federated by default.",
-    "3. Bootstrap registered repositories with `scripts\\propagate_graphify_integration.py --apply --confirm-repo-write`; keep all `graphify-out/` artifacts ignored and local.",
-    "4. Run `scripts\\run_graphify_cycle.py` for incremental guarded extracts (shrink-guard active). Use `--force` only for intentional full rebuilds, `--semantic` only for repos with `graphify_semantic = true` and non-sensitive risk tags plus an LLM backend key, and `--wiki` for agent-crawlable wiki exports.",
-    "5. Query federated scope by default with `scripts\\query_graph.py`; use `--directed` on `path` when call direction matters; use `scripts\\run_graphify_mcp.py` for MCP stdio against local graphs.",
-    "6. Verify conclusions in source and tests. Dirty graphs and semantic edges from dirty repos remain ineligible for knowledge promotion. URL/media/Neo4j/global/cloud stay gated."
+    "1. Install the user-local CLI with `uv tool install graphifyy` (>= 0.9.34); do not add it as a repository dependency. The sibling clone `C:\\Users\\ppyxe\\Documents\\GitHub\\graphify` is a read-only upstream reference registered with `graphify_c",
+    "2. Bootstrap registered repositories with the guarded Graphify propagation command; keep all `graphify-out/` artifacts ignored and local. Reference-only repositories are never written.",
+    "3. Run `scripts\\run_graphify_cycle.py` to update per-repository graphs and the federated graph with two concurrent repositories. Incremental refresh preserves the upstream shrink-guard; `--force` is the intentional full-rebuild escape hatch",
+    "4. Opt-in surfaces: `--semantic` adds document extraction only for repositories with `graphify_semantic = true`, non-sensitive risk tags, and an LLM backend key in the environment; `--wiki` exports agent-crawlable wikis under `graphify-out/",
+    "5. Query federated scope by default with `scripts\\query_graph.py`; use local or repository scope when exact context is needed, add `--directed` to `path` traces when call direction matters, then verify conclusions in source and tests. `scri",
+    "6. Dirty and risk-tagged repositories may contribute code-only graphs, but dirty state remains ineligible for knowledge promotion. Remote/URL ingestion, live-database, media, cloud, and global-graph features remain gated behind separate app",
+    "- 2026-08-06: Cloned upstream `Graphify-Labs/graphify` as a sibling reference repo; upgraded `graphifyy` to 0.9.34; replaced the shrink-guard-bypassing `update --force` refresh with guarded incremental `extract`; added diagnose health check"
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:14Z",
+    "created_at": "2026-08-09T21:37:52Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
-      "skills.md",
-      "docs/GRAPHIFY.md"
+      "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-06T20:50:00Z"
+    "updated_at": "2026-08-09T21:37:52Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -75,7 +69,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Triggered by:** Requests to install Graphify, refresh federated graphs, enable opted-in semantic docs/wiki/MCP, or add Graphify guidance to registered repositories.",
+  "summary": "**Triggered by:** Requests to install Graphify, generate a repository architecture graph, or add Graphify guidance to registered repositories.",
   "tags": [
     "auto_learning_agent",
     "codex",
@@ -85,16 +79,12 @@
     "read_only_audit",
     "repo-workflow",
     "skills-md",
-    "stdlib",
-    "graphify"
+    "stdlib"
   ],
   "title": "auto_learning_agent workflow: Governed Graphify integration",
   "trigger_phrases": [
     "auto_learning_agent",
-    "Governed Graphify integration",
-    "graphify wiki",
-    "graphify mcp",
-    "graphify semantic"
+    "Governed Graphify integration"
   ],
   "type": "workflow",
   "verification": [

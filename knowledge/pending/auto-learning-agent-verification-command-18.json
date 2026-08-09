@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "481b07fbd8c60c5e0eb0152fbdccdcf0608065d9",
+    "source_commit": "723a5a2a2afaf6c05e31f013c8ce32b646a02dc3",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -44,13 +44,13 @@
     ".\\scripts\\run-startup.ps1"
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:14Z",
+    "created_at": "2026-08-09T21:37:52Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:14Z"
+    "updated_at": "2026-08-09T21:37:52Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

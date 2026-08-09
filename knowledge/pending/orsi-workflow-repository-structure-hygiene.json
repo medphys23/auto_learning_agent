@@ -32,7 +32,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
+    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
     "source_paths": [
       "skills.md"
     ],
@@ -59,19 +59,19 @@
     "- `uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Orsi_Metrics_Research\\requirements.txt`",
     "- `.\\.venv\\Scripts\\python.exe -m compileall Orsi_Metrics_Research\\scripts -q`",
     "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\build_cholecystectomy_study_protocol.py`",
-    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\build_cholecystectomy_metrics_deck_v13.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\build_cholecystectomy_metrics_deck_v15.py`",
+    "- `.\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\build_cholecystectomy_video_supervisor_questionnaire.py`",
     "- **`metrics/deliverables/`** contains only current-version metrics artifacts (no older `..._v*` files).",
-    "- **`study_protocol/deliverables/`** contains only the current protocol DOCX (no older `..._v*` files).",
-    "- **`study_protocol/source/`** holds preserved templates; no duplicate template copies in `deliverables/`."
+    "- **`study_protocol/deliverables/`** contains only the current protocol DOCX (no older `..._v*` files)."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:58Z",
+    "created_at": "2026-08-09T21:39:11Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:58Z"
+    "updated_at": "2026-08-09T21:39:11Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_commit": "7f36b192f00a533306722f86d4af3b1ff317110c",
     "source_paths": [
       "@omniroute/opencode-plugin/package-lock.json",
       "@omniroute/opencode-plugin/package.json",
@@ -50,7 +50,8 @@
       "electron/package.json",
       "open-sse/package.json",
       "open-sse/services/compression/engines/rtk/filters/composer.json",
-      "package.json"
+      "package.json",
+      "tests/fixtures/devin-bridge/e2e-workspace/package.json"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
     "task_or_issue": "local-github-repository-analysis",
@@ -259,6 +260,15 @@
         "check:bundle-size",
         "check:changelog-integrity"
       ]
+    },
+    {
+      "dependencies": [],
+      "dev_dependencies": [],
+      "name": "package.json",
+      "path": "tests/fixtures/devin-bridge/e2e-workspace/package.json",
+      "scripts": [
+        "test"
+      ]
     }
   ],
   "procedure": [
@@ -267,7 +277,7 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:37Z",
+    "created_at": "2026-08-09T21:39:00Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "@omniroute/opencode-plugin/package-lock.json",
@@ -278,10 +288,11 @@
       "electron/package.json",
       "open-sse/package.json",
       "open-sse/services/compression/engines/rtk/filters/composer.json",
-      "package.json"
+      "package.json",
+      "tests/fixtures/devin-bridge/e2e-workspace/package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:37Z"
+    "updated_at": "2026-08-09T21:39:00Z"
   },
   "registry_stack_tags": [
     "a2a",
@@ -305,7 +316,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for OmniRoute: registry tags a2a, electron, mcp, nextjs, node, sqlite, sse, typescript, zod; 9 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for OmniRoute: registry tags a2a, electron, mcp, nextjs, node, sqlite, sse, typescript, zod; 10 tracked manifest file(s).",
   "tags": [
     "a2a",
     "auth",

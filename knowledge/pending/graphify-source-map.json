@@ -1,0 +1,213 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "knowledge_graph",
+      "networkx",
+      "python",
+      "tree_sitter"
+    ],
+    "languages": [
+      "knowledge_graph",
+      "networkx",
+      "python",
+      "tree_sitter"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "9f25a3aaa1050913c2d8a1b9f0b0f0ed18296abd",
+    "source_paths": [
+      ".github/FUNDING.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      ".pre-commit-config.yaml",
+      "AGENTS.md",
+      "ARCHITECTURE.md",
+      "scripts/gen_demo_path.py",
+      "tests/__init__.py",
+      "tests/bench_extract.py",
+      "tests/bench_query_scoring.py",
+      "worked/example/README.md",
+      "worked/httpx/README.md",
+      "worked/karpathy-repos/README.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\graphify",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "graphify-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-09T21:38:09Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".github/FUNDING.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/publish.yml",
+      ".pre-commit-config.yaml",
+      "AGENTS.md",
+      "ARCHITECTURE.md",
+      "scripts/gen_demo_path.py",
+      "tests/__init__.py",
+      "tests/bench_extract.py",
+      "tests/bench_query_scoring.py",
+      "worked/example/README.md",
+      "worked/httpx/README.md",
+      "worked/karpathy-repos/README.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-09T21:38:09Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "tests",
+        "examples": [
+          "tests/__init__.py",
+          "tests/bench_extract.py",
+          "tests/bench_query_scoring.py",
+          "tests/conftest.py",
+          "tests/fixtures/barrel_reexport.ts",
+          "tests/fixtures/cjs_require.js",
+          "tests/fixtures/cookieHelpers.ts",
+          "tests/fixtures/crate_a/Cargo.toml"
+        ],
+        "file_count": 209,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".js": 1,
+          ".json": 4,
+          ".md": 2,
+          ".php": 5,
+          ".ps1": 2,
+          ".py": 180,
+          ".sql": 5,
+          ".toml": 2,
+          ".ts": 7,
+          ".tsx": 1
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          ".pre-commit-config.yaml",
+          "AGENTS.md",
+          "ARCHITECTURE.md",
+          "BENCHMARKS.md",
+          "Dockerfile",
+          "pyproject.toml",
+          "README.md",
+          "SECURITY.md"
+        ],
+        "file_count": 8,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 5,
+          ".toml": 1,
+          ".yaml": 1,
+          "dockerfile": 1
+        }
+      },
+      {
+        "area": "worked",
+        "examples": [
+          "worked/example/README.md",
+          "worked/httpx/README.md",
+          "worked/karpathy-repos/README.md",
+          "worked/mixed-corpus/README.md",
+          "worked/rsl-siege-manager/README.md"
+        ],
+        "file_count": 5,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 5
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/FUNDING.yml",
+          ".github/workflows/ci.yml",
+          ".github/workflows/publish.yml",
+          ".github/workflows/release-graph.yml"
+        ],
+        "file_count": 4,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".yml": 4
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/gen_demo_path.py"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".py": 1
+        }
+      }
+    ],
+    "graph_index_used": false,
+    "graph_node_count": 0,
+    "graph_source_file_count": 0,
+    "harvestable_text_file_count": 227
+  },
+  "status": "candidate",
+  "summary": "Safe source map for graphify: 5 harvestable areas, led by tests, ., worked, .github, scripts.",
+  "tags": [
+    "architecture-map",
+    "graphify",
+    "knowledge_graph",
+    "local-github-analysis",
+    "networkx",
+    "not_owned",
+    "python",
+    "read_only_reference",
+    "source-map",
+    "third_party",
+    "tree_sitter"
+  ],
+  "title": "graphify source and architecture map",
+  "trigger_phrases": [
+    "graphify",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

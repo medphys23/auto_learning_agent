@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "beautifulsoup4",
+      "node",
       "openpyxl",
       "playwright",
       "python",
@@ -10,6 +11,7 @@
     ],
     "languages": [
       "beautifulsoup4",
+      "node",
       "openpyxl",
       "playwright",
       "python",
@@ -32,11 +34,14 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "3a8b967fe6f0bdf319ab7ee9ef86ab0678d55166",
+    "source_commit": "0808d6eefb6b67ac3949a53bce90a240297c8372",
     "source_paths": [
+      ".github/workflows/doctor-site-ci.yml",
       "AGENTS.md",
       "tests/config.test.ts",
-      "tests/e2e/smoke.e2e.ts"
+      "tests/e2e/smoke.e2e.ts",
+      "tests/security-boundaries.test.ts",
+      "vercel.json"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
     "task_or_issue": "local-github-repository-analysis",
@@ -50,15 +55,18 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:04Z",
+    "created_at": "2026-08-09T21:39:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      ".github/workflows/doctor-site-ci.yml",
       "AGENTS.md",
       "tests/config.test.ts",
-      "tests/e2e/smoke.e2e.ts"
+      "tests/e2e/smoke.e2e.ts",
+      "tests/security-boundaries.test.ts",
+      "vercel.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:04Z"
+    "updated_at": "2026-08-09T21:39:14Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -71,7 +79,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for X_booking: 9 AGENTS command(s), 2 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for X_booking: 9 AGENTS command(s), 3 test signal(s), 1 CI signal(s), 1 deployment signal(s).",
   "tags": [
     "beautifulsoup4",
     "branch_sensitive",
@@ -79,6 +87,7 @@
     "contact_data",
     "deployment-signals",
     "no_patient_data",
+    "node",
     "openpyxl",
     "playwright",
     "python",
@@ -89,11 +98,16 @@
     "x-booking"
   ],
   "test_ci_deployment_signals": {
-    "ci": [],
-    "deployment": [],
+    "ci": [
+      ".github/workflows/doctor-site-ci.yml"
+    ],
+    "deployment": [
+      "vercel.json"
+    ],
     "tests": [
       "tests/config.test.ts",
-      "tests/e2e/smoke.e2e.ts"
+      "tests/e2e/smoke.e2e.ts",
+      "tests/security-boundaries.test.ts"
     ]
   },
   "title": "X_booking verification, tests, CI, and deployment signals",

@@ -1,0 +1,99 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "languages": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.8
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\3d-printing",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "blender-voice-3d-print-designer-verification-command-5",
+  "incompatible_when": [],
+  "procedure": [
+    ".\\.venv\\Scripts\\python.exe -m build"
+  ],
+  "provenance": {
+    "created_at": "2026-08-09T21:37:53Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-09T21:37:53Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Canonical verification command from 3d-printing: .\\.venv\\Scripts\\python.exe -m build",
+  "tags": [
+    "blender",
+    "blender-voice-3d-print-designer",
+    "fastapi",
+    "optional_network_providers",
+    "physical_manufacturing",
+    "prusa_slicer",
+    "pydantic",
+    "python",
+    "repo-agents",
+    "sqlite",
+    "subprocess",
+    "typer",
+    "untrusted_input",
+    "verification-command"
+  ],
+  "title": "3d-printing verification command 5",
+  "trigger_phrases": [
+    "3d-printing",
+    "verification",
+    ".\\.venv\\Scripts\\python.exe -m build"
+  ],
+  "type": "command",
+  "verification": [
+    "Run only when the repository AGENTS.md says the command applies to touched files."
+  ]
+}

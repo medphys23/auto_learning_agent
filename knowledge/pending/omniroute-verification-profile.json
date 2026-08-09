@@ -40,9 +40,10 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "c2bf8d54920c8b2e7cf889f677dcd9ed693c172a",
+    "source_commit": "7f36b192f00a533306722f86d4af3b1ff317110c",
     "source_paths": [
       ".github/ISSUE_TEMPLATE/test_coverage_task.yml",
+      ".github/workflows/build.yml",
       ".github/workflows/ci.yml",
       ".github/workflows/claude.yml",
       ".github/workflows/codeql.yml",
@@ -62,10 +63,10 @@
       ".github/workflows/npm-publish.yml",
       ".github/workflows/opencode-plugin-ci.yml",
       ".github/workflows/opencode-provider-ci.yml",
-      ".github/workflows/quality.yml",
       "AGENTS.md",
       "Dockerfile",
       "docker-compose.yml",
+      "docker/devin-bridge/Dockerfile",
       "docker/vnc-browser/chromium/Dockerfile",
       "src/app/(dashboard)/dashboard/discovery/__tests__/DiscoveryPageClient.test.tsx",
       "src/app/(dashboard)/dashboard/endpoint/__tests__/ApiEndpointsTab.test.tsx",
@@ -73,6 +74,7 @@
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/ProviderDetailPageClient.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/connectionRowAutoSyncToggle.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/modelVisibilityToolbarActiveCount.test.tsx",
+      "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughModelRowDisplayName.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughTestHelpers.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1e.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1f.test.tsx",
@@ -84,8 +86,7 @@
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/authImportModals.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/connModals.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/editCompatibleNodeModal.test.tsx",
-      "src/app/(dashboard)/dashboard/providers/components/__tests__/providerCardAudioBadge.test.tsx",
-      "src/app/(dashboard)/dashboard/webhooks/__tests__/webhook-wizard.test.tsx"
+      "src/app/(dashboard)/dashboard/providers/components/__tests__/providerCardAudioBadge.test.tsx"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
     "task_or_issue": "local-github-repository-analysis",
@@ -99,10 +100,11 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:41Z",
+    "created_at": "2026-08-09T21:39:08Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".github/ISSUE_TEMPLATE/test_coverage_task.yml",
+      ".github/workflows/build.yml",
       ".github/workflows/ci.yml",
       ".github/workflows/claude.yml",
       ".github/workflows/codeql.yml",
@@ -122,10 +124,10 @@
       ".github/workflows/npm-publish.yml",
       ".github/workflows/opencode-plugin-ci.yml",
       ".github/workflows/opencode-provider-ci.yml",
-      ".github/workflows/quality.yml",
       "AGENTS.md",
       "Dockerfile",
       "docker-compose.yml",
+      "docker/devin-bridge/Dockerfile",
       "docker/vnc-browser/chromium/Dockerfile",
       "src/app/(dashboard)/dashboard/discovery/__tests__/DiscoveryPageClient.test.tsx",
       "src/app/(dashboard)/dashboard/endpoint/__tests__/ApiEndpointsTab.test.tsx",
@@ -133,6 +135,7 @@
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/ProviderDetailPageClient.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/connectionRowAutoSyncToggle.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/modelVisibilityToolbarActiveCount.test.tsx",
+      "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughModelRowDisplayName.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughTestHelpers.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1e.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1f.test.tsx",
@@ -144,11 +147,10 @@
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/authImportModals.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/connModals.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/components/modals/__tests__/editCompatibleNodeModal.test.tsx",
-      "src/app/(dashboard)/dashboard/providers/components/__tests__/providerCardAudioBadge.test.tsx",
-      "src/app/(dashboard)/dashboard/webhooks/__tests__/webhook-wizard.test.tsx"
+      "src/app/(dashboard)/dashboard/providers/components/__tests__/providerCardAudioBadge.test.tsx"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:41Z"
+    "updated_at": "2026-08-09T21:39:08Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -161,7 +163,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for OmniRoute: 12 AGENTS command(s), 80 test signal(s), 23 CI signal(s), 4 deployment signal(s).",
+  "summary": "Verification profile for OmniRoute: 0 AGENTS command(s), 80 test signal(s), 24 CI signal(s), 5 deployment signal(s).",
   "tags": [
     "a2a",
     "auth",
@@ -187,6 +189,7 @@
   ],
   "test_ci_deployment_signals": {
     "ci": [
+      ".github/workflows/build.yml",
       ".github/workflows/ci.yml",
       ".github/workflows/claude.yml",
       ".github/workflows/codeql.yml",
@@ -215,6 +218,7 @@
       ".github/workflows/deploy-vps.yml",
       "Dockerfile",
       "docker-compose.yml",
+      "docker/devin-bridge/Dockerfile",
       "docker/vnc-browser/chromium/Dockerfile"
     ],
     "tests": [
@@ -225,6 +229,7 @@
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/ProviderDetailPageClient.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/connectionRowAutoSyncToggle.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/modelVisibilityToolbarActiveCount.test.tsx",
+      "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughModelRowDisplayName.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/passthroughTestHelpers.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1e.test.tsx",
       "src/app/(dashboard)/dashboard/providers/[id]/__tests__/phase1f.test.tsx",
@@ -241,6 +246,7 @@
       "src/app/api/settings/__tests__/memory.test.ts",
       "src/app/api/settings/__tests__/settings.test.ts",
       "src/lib/db/__tests__/quotaSnapshots.test.ts",
+      "src/lib/memory/__tests__/generic-backend.test.ts",
       "src/lib/memory/__tests__/injection.test.ts",
       "src/lib/memory/__tests__/qdrant-wiring.test.ts",
       "src/lib/memory/__tests__/retrieval.test.ts",
@@ -295,9 +301,7 @@
       "tests/e2e/responsive.spec.ts",
       "tests/e2e/responsiveSpecs.ts",
       "tests/e2e/search-tools-studio.spec.ts",
-      "tests/e2e/settings-toggles.spec.ts",
-      "tests/e2e/skills-marketplace.spec.ts",
-      "tests/e2e/smoke.spec.ts"
+      "tests/e2e/settings-toggles.spec.ts"
     ]
   },
   "title": "OmniRoute verification, tests, CI, and deployment signals",
@@ -312,18 +316,5 @@
   "verification": [
     "Run applicable AGENTS.md verification commands before reporting readiness."
   ],
-  "verification_commands": [
-    "npm install",
-    "npm run dev",
-    "npm run build",
-    "npm run build:release",
-    "npm run lint",
-    "npm run typecheck:core",
-    "node --import tsx/esm --test tests/unit/<file>.test.ts",
-    "npm run test:vitest",
-    "npm run test:e2e",
-    "npm run test:protocols:e2e",
-    "npm run test:ecosystem",
-    "npm run check:docs-all"
-  ]
+  "verification_commands": []
 }

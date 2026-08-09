@@ -32,7 +32,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "7d674b73e27021a9ee59190a408356cb3894f77b",
+    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
     "source_paths": [
       ".cursor/rules/ad-astra-references.mdc",
       ".cursor/rules/graphify.mdc",
@@ -40,6 +40,9 @@
       "AD_Astra/README.md",
       "AD_Astra/references/README.md",
       "AGENTS.md",
+      "DART/AGENTS.md",
+      "DART/README.md",
+      "DART/images/README.md",
       "HUGO_RAS/AGENTS.md",
       "HUGO_RAS/package-lock.json",
       "HUGO_RAS/package.json",
@@ -61,7 +64,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-07-16T17:12:58Z",
+    "created_at": "2026-08-09T21:39:11Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/ad-astra-references.mdc",
@@ -70,6 +73,9 @@
       "AD_Astra/README.md",
       "AD_Astra/references/README.md",
       "AGENTS.md",
+      "DART/AGENTS.md",
+      "DART/README.md",
+      "DART/images/README.md",
       "HUGO_RAS/AGENTS.md",
       "HUGO_RAS/package-lock.json",
       "HUGO_RAS/package.json",
@@ -80,7 +86,7 @@
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-16T17:12:58Z"
+    "updated_at": "2026-08-09T21:39:11Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -118,9 +124,24 @@
           "skills.md"
         ],
         "file_count": 3,
-        "graph_node_count": 65,
+        "graph_node_count": 66,
         "suffixes": {
           ".md": 3
+        }
+      },
+      {
+        "area": "DART",
+        "examples": [
+          "DART/AGENTS.md",
+          "DART/images/README.md",
+          "DART/README.md",
+          "DART/requirements.txt"
+        ],
+        "file_count": 4,
+        "graph_node_count": 17,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
         }
       },
       {
@@ -180,12 +201,12 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 2527,
-    "graph_source_file_count": 210,
-    "harvestable_text_file_count": 32
+    "graph_node_count": 2610,
+    "graph_source_file_count": 215,
+    "harvestable_text_file_count": 36
   },
   "status": "candidate",
-  "summary": "Safe source map for ORSI: 6 harvestable areas, led by HUGO_RAS, ., AD_Astra, Optimal_Trocar_Placement, .cursor, Orsi_Metrics_Research.",
+  "summary": "Safe source map for ORSI: 7 harvestable areas, led by HUGO_RAS, ., DART, AD_Astra, Optimal_Trocar_Placement, .cursor, Orsi_Metrics_Research.",
   "tags": [
     "architecture-map",
     "docx",

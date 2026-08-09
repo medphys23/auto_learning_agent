@@ -3,6 +3,7 @@
     "deployment_targets": [],
     "frameworks": [
       "beautifulsoup4",
+      "node",
       "openpyxl",
       "playwright",
       "python",
@@ -10,6 +11,7 @@
     ],
     "languages": [
       "beautifulsoup4",
+      "node",
       "openpyxl",
       "playwright",
       "python",
@@ -32,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "3a8b967fe6f0bdf319ab7ee9ef86ab0678d55166",
+    "source_commit": "0808d6eefb6b67ac3949a53bce90a240297c8372",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -46,13 +48,13 @@
     "npm run validate:production"
   ],
   "provenance": {
-    "created_at": "2026-07-05T09:19:04Z",
+    "created_at": "2026-08-09T21:39:14Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-07-05T09:19:04Z"
+    "updated_at": "2026-08-09T21:39:14Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -71,6 +73,7 @@
     "branch_sensitive",
     "contact_data",
     "no_patient_data",
+    "node",
     "openpyxl",
     "playwright",
     "python",

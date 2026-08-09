@@ -30,15 +30,16 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "481b07fbd8c60c5e0eb0152fbdccdcf0608065d9",
+    "source_commit": "723a5a2a2afaf6c05e31f013c8ce32b646a02dc3",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
-      ".codex/agents/repository-harvester.toml",
-      ".codex/agents/verifier.toml",
+      ".codex/agents/quality_release_reviewer.toml",
+      ".codex/agents/reliability_operations_reviewer.toml",
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
+      "APPLY-EVERYTHING.ps1",
       "README.md",
       "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
       "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
@@ -50,10 +51,9 @@
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
-      "requirements.txt",
+      "scripts/apply-everything.ps1",
       "scripts/audit_context_budget.py",
       "scripts/audit_dependency_catalog.py",
-      "scripts/audit_global_instructions.py",
       "tests/test_orchestrator_mvp.py"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -68,16 +68,17 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:13Z",
+    "created_at": "2026-08-09T21:37:51Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
-      ".codex/agents/repository-harvester.toml",
-      ".codex/agents/verifier.toml",
+      ".codex/agents/quality_release_reviewer.toml",
+      ".codex/agents/reliability_operations_reviewer.toml",
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
+      "APPLY-EVERYTHING.ps1",
       "README.md",
       "backups/legacy-pre-optimized/20260709T115514Z/active/codex/AGENTS.md",
       "backups/legacy-pre-optimized/20260709T115514Z/active/codex/skills.md",
@@ -89,14 +90,13 @@
       "master/codex/AGENTS.md",
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
-      "requirements.txt",
+      "scripts/apply-everything.ps1",
       "scripts/audit_context_budget.py",
       "scripts/audit_dependency_catalog.py",
-      "scripts/audit_global_instructions.py",
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:13Z"
+    "updated_at": "2026-08-09T21:37:51Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -113,33 +113,20 @@
       {
         "area": "scripts",
         "examples": [
+          "scripts/apply-everything.ps1",
           "scripts/audit_context_budget.py",
           "scripts/audit_dependency_catalog.py",
           "scripts/audit_global_instructions.py",
+          "scripts/console_style.py",
           "scripts/discover_repositories.py",
           "scripts/harvest_repositories.py",
-          "scripts/orchestrator_common.py",
-          "scripts/plan_optimized_cutover.py",
-          "scripts/promote_knowledge.py"
+          "scripts/orchestrator_common.py"
         ],
-        "file_count": 27,
-        "graph_node_count": 282,
+        "file_count": 30,
+        "graph_node_count": 332,
         "suffixes": {
-          ".ps1": 5,
-          ".py": 22
-        }
-      },
-      {
-        "area": "master",
-        "examples": [
-          "master/codex/AGENTS.md",
-          "master/codex/skills.md",
-          "master/optimized/codex/AGENTS.md"
-        ],
-        "file_count": 3,
-        "graph_node_count": 72,
-        "suffixes": {
-          ".md": 3
+          ".ps1": 6,
+          ".py": 24
         }
       },
       {
@@ -148,7 +135,7 @@
           "tests/test_orchestrator_mvp.py"
         ],
         "file_count": 1,
-        "graph_node_count": 46,
+        "graph_node_count": 59,
         "suffixes": {
           ".py": 1
         }
@@ -157,26 +144,17 @@
         "area": ".",
         "examples": [
           "AGENTS.md",
+          "APPLY-EVERYTHING.ps1",
           "README.md",
           "requirements.txt",
           "skills.md"
         ],
-        "file_count": 4,
-        "graph_node_count": 38,
+        "file_count": 5,
+        "graph_node_count": 1,
         "suffixes": {
           ".md": 3,
+          ".ps1": 1,
           ".txt": 1
-        }
-      },
-      {
-        "area": "knowledge",
-        "examples": [
-          "knowledge/model-routing/README.md"
-        ],
-        "file_count": 1,
-        "graph_node_count": 2,
-        "suffixes": {
-          ".md": 1
         }
       },
       {
@@ -191,30 +169,30 @@
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
         ],
-        "file_count": 32,
+        "file_count": 48,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 32
+          ".md": 48
         }
       },
       {
         "area": ".codex",
         "examples": [
           ".codex/agents/knowledge-synthesizer.toml",
+          ".codex/agents/quality_release_reviewer.toml",
+          ".codex/agents/reliability_operations_reviewer.toml",
           ".codex/agents/repository-harvester.toml",
+          ".codex/agents/security_boundary_reviewer.toml",
+          ".codex/agents/systems_architect.toml",
           ".codex/agents/verifier.toml",
-          ".codex/agents/workflow-router.toml",
-          ".codex/config.toml",
-          ".codex/hooks.json",
-          ".codex/skills/graphify/references/add-watch.md",
-          ".codex/skills/graphify/references/exports.md"
+          ".codex/agents/workflow-router.toml"
         ],
-        "file_count": 15,
+        "file_count": 19,
         "graph_node_count": 0,
         "suffixes": {
           ".json": 1,
           ".md": 9,
-          ".toml": 5
+          ".toml": 9
         }
       },
       {
@@ -243,15 +221,39 @@
         "suffixes": {
           ".mdc": 3
         }
+      },
+      {
+        "area": "master",
+        "examples": [
+          "master/codex/AGENTS.md",
+          "master/codex/skills.md",
+          "master/optimized/codex/AGENTS.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 3
+        }
+      },
+      {
+        "area": "knowledge",
+        "examples": [
+          "knowledge/model-routing/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
+        }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 754,
-    "graph_source_file_count": 51,
-    "harvestable_text_file_count": 90
+    "graph_node_count": 589,
+    "graph_source_file_count": 34,
+    "harvestable_text_file_count": 114
   },
   "status": "candidate",
-  "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, master, tests, ., knowledge, backups, .codex, config.",
+  "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, tests, ., backups, .codex, config, .cursor, master.",
   "tags": [
     "architecture-map",
     "auto_learning_agent",

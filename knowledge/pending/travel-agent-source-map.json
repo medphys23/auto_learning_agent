@@ -24,7 +24,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "c1c4ce018a5bd42f6f23419697d393422951d1d7",
+    "source_commit": "be2a3c870ebe3498fb78bc872aec79527a1b8a00",
     "source_paths": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
@@ -49,7 +49,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-03T21:37:22Z",
+    "created_at": "2026-08-09T21:39:13Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
@@ -64,7 +64,7 @@
       "tests/test_travel_agent.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-03T21:37:22Z"
+    "updated_at": "2026-08-09T21:39:13Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -79,6 +79,26 @@
   "source_map": {
     "areas": [
       {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "app.py",
+          "README.md",
+          "requirements-dev.txt",
+          "requirements.txt",
+          "skills.md",
+          "SKYSCANNER_ANALYST_PROJECT_INSTRUCTIONS.md",
+          "TRANSPORT_KNOWLEDGE_BASE.md"
+        ],
+        "file_count": 8,
+        "graph_node_count": 55,
+        "suffixes": {
+          ".md": 5,
+          ".py": 1,
+          ".txt": 2
+        }
+      },
+      {
         "area": "scripts",
         "examples": [
           "scripts/check_login.py",
@@ -92,26 +112,6 @@
         "graph_node_count": 18,
         "suffixes": {
           ".py": 6
-        }
-      },
-      {
-        "area": ".",
-        "examples": [
-          "AGENTS.md",
-          "app.py",
-          "README.md",
-          "requirements-dev.txt",
-          "requirements.txt",
-          "skills.md",
-          "SKYSCANNER_ANALYST_PROJECT_INSTRUCTIONS.md",
-          "TRANSPORT_KNOWLEDGE_BASE.md"
-        ],
-        "file_count": 8,
-        "graph_node_count": 6,
-        "suffixes": {
-          ".md": 5,
-          ".py": 1,
-          ".txt": 2
         }
       },
       {
@@ -142,12 +142,12 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 152,
-    "graph_source_file_count": 19,
+    "graph_node_count": 207,
+    "graph_source_file_count": 24,
     "harvestable_text_file_count": 19
   },
   "status": "candidate",
-  "summary": "Safe source map for travel_agent: 4 harvestable areas, led by scripts, ., tests, .cursor.",
+  "summary": "Safe source map for travel_agent: 4 harvestable areas, led by ., scripts, tests, .cursor.",
   "tags": [
     "architecture-map",
     "local-github-analysis",

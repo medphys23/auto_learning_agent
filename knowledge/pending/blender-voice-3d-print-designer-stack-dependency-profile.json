@@ -1,0 +1,131 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "languages": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
+    "source_paths": [
+      "pyproject.toml"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\3d-printing",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "blender-voice-3d-print-designer-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "pyproject.toml",
+      "path": "pyproject.toml",
+      "sections": [
+        "build-system",
+        "project",
+        "project.optional-dependencies",
+        "project.scripts",
+        "tool.hatch.build.targets.wheel",
+        "tool.pytest.ini_options",
+        "tool.ruff",
+        "tool.ruff.lint",
+        "tool.ruff.lint.per-file-ignores",
+        "tool.mypy"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-08-09T21:37:53Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "pyproject.toml"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-09T21:37:53Z"
+  },
+  "registry_stack_tags": [
+    "blender",
+    "fastapi",
+    "prusa_slicer",
+    "pydantic",
+    "python",
+    "sqlite",
+    "typer"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for 3d-printing: registry tags blender, fastapi, prusa_slicer, pydantic, python, sqlite, typer; 1 tracked manifest file(s).",
+  "tags": [
+    "blender",
+    "blender-voice-3d-print-designer",
+    "dependency-profile",
+    "fastapi",
+    "manifest-profile",
+    "optional_network_providers",
+    "physical_manufacturing",
+    "prusa_slicer",
+    "pydantic",
+    "python",
+    "sqlite",
+    "stack-profile",
+    "subprocess",
+    "typer",
+    "untrusted_input"
+  ],
+  "title": "3d-printing stack and dependency profile",
+  "trigger_phrases": [
+    "3d-printing",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

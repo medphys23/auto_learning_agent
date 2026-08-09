@@ -1,0 +1,225 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "languages": [
+      "blender",
+      "fastapi",
+      "prusa_slicer",
+      "pydantic",
+      "python",
+      "sqlite",
+      "typer"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
+    "source_paths": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".pre-commit-config.yaml",
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "scripts/dev.ps1",
+      "scripts/diagnose_graph.py",
+      "scripts/generate_schemas.py",
+      "src/blender_voice_3d_print_designer/__init__.py",
+      "src/blender_voice_3d_print_designer/__main__.py",
+      "src/blender_voice_3d_print_designer/api.py",
+      "tests/blender/background_smoke.py",
+      "tests/conftest.py",
+      "tests/contract/test_protocol.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\3d-printing",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "blender-voice-3d-print-designer-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-09T21:37:53Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".pre-commit-config.yaml",
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "scripts/dev.ps1",
+      "scripts/diagnose_graph.py",
+      "scripts/generate_schemas.py",
+      "src/blender_voice_3d_print_designer/__init__.py",
+      "src/blender_voice_3d_print_designer/__main__.py",
+      "src/blender_voice_3d_print_designer/api.py",
+      "tests/blender/background_smoke.py",
+      "tests/conftest.py",
+      "tests/contract/test_protocol.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-09T21:37:53Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/blender_voice_3d_print_designer/__init__.py",
+          "src/blender_voice_3d_print_designer/__main__.py",
+          "src/blender_voice_3d_print_designer/api.py",
+          "src/blender_voice_3d_print_designer/cli.py",
+          "src/blender_voice_3d_print_designer/config.py",
+          "src/blender_voice_3d_print_designer/doctor.py",
+          "src/blender_voice_3d_print_designer/exporters/__init__.py",
+          "src/blender_voice_3d_print_designer/exporters/mesh.py"
+        ],
+        "file_count": 30,
+        "graph_node_count": 198,
+        "suffixes": {
+          ".py": 30
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/blender/background_smoke.py",
+          "tests/conftest.py",
+          "tests/contract/test_protocol.py",
+          "tests/fixtures/acceptance_prompts.json",
+          "tests/integration/test_api_flow.py",
+          "tests/unit/test_exports.py",
+          "tests/unit/test_paths.py",
+          "tests/unit/test_planner.py"
+        ],
+        "file_count": 11,
+        "graph_node_count": 41,
+        "suffixes": {
+          ".json": 1,
+          ".py": 10
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/dev.ps1",
+          "scripts/diagnose_graph.py",
+          "scripts/generate_schemas.py",
+          "scripts/run_blender_tests.py",
+          "scripts/validate_architecture.py"
+        ],
+        "file_count": 5,
+        "graph_node_count": 9,
+        "suffixes": {
+          ".ps1": 1,
+          ".py": 4
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          ".pre-commit-config.yaml",
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md",
+          "pyproject.toml",
+          "README.md",
+          "SECURITY.md",
+          "skills.md"
+        ],
+        "file_count": 8,
+        "graph_node_count": 1,
+        "suffixes": {
+          ".md": 6,
+          ".toml": 1,
+          ".yaml": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 3,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 3
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 364,
+    "graph_source_file_count": 53,
+    "harvestable_text_file_count": 57
+  },
+  "status": "candidate",
+  "summary": "Safe source map for 3d-printing: 5 harvestable areas, led by src, tests, scripts, ., .cursor.",
+  "tags": [
+    "architecture-map",
+    "blender",
+    "blender-voice-3d-print-designer",
+    "fastapi",
+    "local-github-analysis",
+    "optional_network_providers",
+    "physical_manufacturing",
+    "prusa_slicer",
+    "pydantic",
+    "python",
+    "source-map",
+    "sqlite",
+    "subprocess",
+    "typer",
+    "untrusted_input"
+  ],
+  "title": "3d-printing source and architecture map",
+  "trigger_phrases": [
+    "3d-printing",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}
