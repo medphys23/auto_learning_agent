@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -48,13 +56,13 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:11Z",
+    "created_at": "2026-09-01T19:01:37Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:11Z"
+    "updated_at": "2026-09-01T19:01:37Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -67,11 +75,16 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for ORSI: 20 AGENTS command(s), 0 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for ORSI: 23 AGENTS command(s), 0 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
+    "auth",
     "ci",
+    "credentials",
     "deployment-signals",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -79,8 +92,10 @@
     "pptx",
     "python",
     "research",
+    "slack",
     "streamlit",
     "tests",
+    "vercel",
     "verification-profile"
   ],
   "test_ci_deployment_signals": {
@@ -110,6 +125,9 @@
     "uv pip install --python .\\.venv\\Scripts\\python.exe --link-mode hardlink -r Optimal_Trocar_Placement\\trocar_model\\requirements.txt",
     ".\\.venv\\Scripts\\python.exe -m compileall Optimal_Trocar_Placement\\trocar_model -q",
     ".\\.venv\\Scripts\\python.exe -m streamlit run Optimal_Trocar_Placement\\trocar_model\\main.py",
+    "Set-Location integrations\\davinci-slack-calendar",
+    "npm install",
+    "npm run check",
     ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\build_cholecystectomy_metrics_deck_v15.py",
     ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\build_cholecystectomy_study_protocol.py",
     ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\systematic_review\\build_formal_evidence_pipeline.py all --offline",

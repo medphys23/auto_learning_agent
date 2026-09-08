@@ -1,0 +1,109 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python",
+      "microsoft-word-com"
+    ],
+    "languages": [
+      "python",
+      "powershell"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git",
+      "skills.md"
+    ],
+    "runtimes": [
+      "python-3.11",
+      "microsoft-word"
+    ]
+  },
+  "confidence": {
+    "rationale": "Observed during a successful 66-page, 70-media Word processing run, then encoded in repository workflow guidance and regression-tested helpers.",
+    "score": 0.9
+  },
+  "evidence": {
+    "accepted_by_user": true,
+    "deployment_environment": "Local Windows workstation with Microsoft Word",
+    "deployment_evidence": "Word-native verification completed with 13,729/13,729 protected words and all 66 rendered pages inspected.",
+    "production_observation_window": "2026-08-20",
+    "source_commit": "0ef5be34e6b602094ad3d3797ce0c1cef716f137",
+    "source_paths": [
+      "skills.md",
+      "src/general_surgery_notes/processing.py",
+      "tests/test_processing.py",
+      "config/overrides/endoscopy_english_translation.toml"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
+    "task_or_issue": "Process an image-heavy endoscopy DOCX without losing semantic text or failing Word COM time limits.",
+    "tests_executed": [
+      "uv run python -m pytest -p no:recording (28 passed)",
+      "uv run surgery-notes verify Endoscopy_English_Translation.docx Endoscopy_English_Translation - standardized.docx --overrides config/overrides/endoscopy_english_translation.toml (passed)",
+      "Word-native PDF/PNG render and manual inspection of all 66 pages (passed)"
+    ]
+  },
+  "id": "general-surgery-notes-workflow-image-heavy-word-documents",
+  "incompatible_when": [
+    "Microsoft Word is unavailable",
+    "The workflow cannot run a dedicated hidden Word COM instance",
+    "The user requires pixel-perfect source reconstruction instead of usability-first standardization"
+  ],
+  "procedure": [
+    "Treat roughly 50 or more media objects, many sections, grouped/floating drawings, or text-bearing shapes as an image-heavy Word workload.",
+    "Inventory pictures, floating/grouped drawings, text-bearing shapes, zero-display hyperlinks, and private-use glyph fonts before processing.",
+    "Run process and verify as separate persistent background jobs with an explicit execution limit; monitor only the owned Word process and always close documents and quit Word in finally.",
+    "Fit pictures to the text width, preserve aspect ratio, center them, retain approved unsupported drawings, and never discard text-bearing shapes.",
+    "Do not trust text-box AutoSize or floating coordinates without a Word-native render; make source-specific coordinate corrections only in the generated output and keep shape text unchanged.",
+    "Remove only hyperlinks with empty display text because Word can materialize invisible URL destinations during copy or field refresh.",
+    "Restore known private-use Symbol or Wingdings run fonts after canonical body-font formatting so preserved glyph characters do not render as replacement boxes.",
+    "Require exact protected-word verification, render every page with Word, inspect every page, and rerender/reinspect changed pages after any output-only layout correction."
+  ],
+  "provenance": {
+    "created_at": "2026-08-20T14:12:29Z",
+    "created_by": "Codex",
+    "derived_from": [
+      "skills.md",
+      "Endoscopy_English_Translation.docx processing run"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-20T14:12:29Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep this record as a candidate until another image-heavy DOCX confirms the workflow.",
+    "Remove the candidate and revert the image-heavy section in skills.md if later evidence contradicts it."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Image-heavy General Surgery DOCX files need persistent Word jobs, preflight checks for floating semantic objects and invisible links, exact semantic verification, and complete Word-native page inspection with usability-first layout corrections.",
+  "tags": [
+    "general-surgery-notes",
+    "microsoft-word",
+    "word-com",
+    "image-heavy-docx",
+    "document-verification"
+  ],
+  "title": "General Surgery Notes workflow for image-heavy Word documents",
+  "trigger_phrases": [
+    "image-heavy Word document",
+    "many images in DOCX",
+    "Word COM timeout",
+    "floating text box overlap",
+    "General Surgery Notes image workflow"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Run the repository test suite and require all tests to pass.",
+    "Run source-hash-bound audit, process, and verify commands.",
+    "Confirm exact protected body-word counts and unchanged source/template hashes.",
+    "Render the final DOCX with Word and inspect every PNG page for clipping, overlap, missing glyphs, blank anomalies, and unusable image placement."
+  ]
+}

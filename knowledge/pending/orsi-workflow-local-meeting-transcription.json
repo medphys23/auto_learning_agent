@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       "skills.md"
     ],
@@ -59,13 +67,13 @@
     "- 2026-07-13: Completed the token-free 4,048.192-second RA-Chole meeting transcription with 363 ordered segments using public sherpa-onnx diarization models and Whisper `large-v3-turbo`; retained generic speaker labels and used the transcri"
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:11Z",
+    "created_at": "2026-09-01T19:01:37Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:11Z"
+    "updated_at": "2026-09-01T19:01:37Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -80,7 +88,12 @@
   "status": "candidate",
   "summary": "**Triggered by:** transcribing a private ORSI meeting recording locally or using its transcript to trace requested changes into a metrics deck.",
   "tags": [
+    "auth",
+    "credentials",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -90,7 +103,9 @@
     "repo-workflow",
     "research",
     "skills-md",
-    "streamlit"
+    "slack",
+    "streamlit",
+    "vercel"
   ],
   "title": "ORSI workflow: Local meeting transcription",
   "trigger_phrases": [

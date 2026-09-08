@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       "skills.md"
     ],
@@ -56,13 +64,13 @@
     "- 2026-05-21: Initial ORSI mirror of global MarkItDown read-path skill. Global pip install (no venv). Cache under `.cache/markitdown/`."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:11Z",
+    "created_at": "2026-09-01T19:01:37Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:11Z"
+    "updated_at": "2026-09-01T19:01:37Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -77,7 +85,12 @@
   "status": "candidate",
   "summary": "**Triggered by:** agent needs to read/analyze PDF, DOCX, PPTX, XLSX, or similar for literature extraction, protocol review, citation work, or diffing.",
   "tags": [
+    "auth",
+    "credentials",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -87,7 +100,9 @@
     "repo-workflow",
     "research",
     "skills-md",
-    "streamlit"
+    "slack",
+    "streamlit",
+    "vercel"
   ],
   "title": "ORSI workflow: MarkItDown read path",
   "trigger_phrases": [

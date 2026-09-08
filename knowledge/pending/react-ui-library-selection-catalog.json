@@ -1,0 +1,255 @@
+{
+  "id": "react-ui-library-selection-catalog",
+  "title": "React UI library selection catalog",
+  "type": "reference",
+  "scope": "stack",
+  "status": "candidate",
+  "summary": "Selection reference for React Flow, dnd-kit, TanStack Table, Embla Carousel, and Tiptap. Use it to discover an established React UI library for node editors, drag-and-drop, data tables, carousels, or rich-text editing; it is not a blanket instruction to install any package.",
+  "trigger_phrases": [
+    "build a workflow builder",
+    "build a node editor",
+    "add drag and drop",
+    "add sortable cards",
+    "build an interactive table",
+    "add a carousel",
+    "build a notion style editor",
+    "choose a React UI library"
+  ],
+  "tags": [
+    "accessibility",
+    "carousel",
+    "data-table",
+    "dependency-selection",
+    "dnd-kit",
+    "drag-and-drop",
+    "embla-carousel",
+    "headless-ui",
+    "nextjs",
+    "node-editor",
+    "react",
+    "react-flow",
+    "rich-text-editor",
+    "tanstack-table",
+    "tiptap",
+    "typescript",
+    "ui-library"
+  ],
+  "applicability": {
+    "languages": ["typescript", "javascript"],
+    "frameworks": ["react", "nextjs"],
+    "runtimes": ["browser", "node"],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["web"],
+    "repository_markers": ["package.json", "react"]
+  },
+  "incompatible_when": [
+    "There is no concrete product requirement for the interaction the library owns.",
+    "A static or semantic HTML implementation meets the requirement with materially less client-side code.",
+    "The project cannot provide keyboard, screen-reader, reduced-motion, and responsive behavior appropriate to the selected interaction.",
+    "The proposed editor would handle regulated, untrusted, or user-authored content without an approved persistence, sanitization, authorization, and review design."
+  ],
+  "procedure": [
+    "Define the required interaction and acceptance criteria before selecting a library.",
+    "Choose only the library whose responsibility matches the requirement; do not install this catalog as a bundle.",
+    "Recheck the current stable package version, peer dependencies, license, framework guidance, and security advisories at adoption time.",
+    "For Next.js, keep interactive widgets in the smallest practical client component and preserve server rendering for surrounding content.",
+    "Design keyboard, screen-reader, focus, reduced-motion, touch, and responsive behavior before implementation.",
+    "Measure the resulting client bundle and verify the real interaction with automated and manual tests before retaining the dependency."
+  ],
+  "verification": [
+    "Confirm the selected package and any companion packages belong to compatible stable release lines using the live npm registry.",
+    "Verify the implementation against the selected library's current official documentation and accessibility guidance.",
+    "Run the target repository's dependency, type, unit, accessibility, browser, build, and bundle checks required by its local instructions.",
+    "Remove the dependency if the product requirement can be met more safely or simply without it."
+  ],
+  "rollback": [
+    "Remove an unused or rejected dependency and its imports, styles, generated UI, and lockfile entries using the target repository's package manager.",
+    "Restore the prior semantic/static UI and rerun the target repository's canonical verification.",
+    "Keep this record at candidate status, or delete it before promotion if its evidence becomes stale or incorrect."
+  ],
+  "libraries": [
+    {
+      "name": "React Flow",
+      "packages": [
+        {
+          "name": "@xyflow/react",
+          "observed_version": "12.11.3",
+          "license": "MIT",
+          "observed_peer_dependencies": {
+            "react": ">=17",
+            "react-dom": ">=17",
+            "@types/react": ">=17",
+            "@types/react-dom": ">=17"
+          }
+        }
+      ],
+      "suited_for": ["node-based editors", "interactive diagrams", "visual workflow builders", "graph editing"],
+      "avoid_when": ["the UI is a simple static flowchart", "there is no node or edge editing requirement"],
+      "integration_notes": [
+        "Import @xyflow/react/dist/style.css.",
+        "With Tailwind CSS 4, import the React Flow stylesheet after the Tailwind stylesheet in the global CSS entry.",
+        "Give the React Flow parent explicit width and height.",
+        "Server rendering is supported in React Flow 12, but server-rendered edges require known node dimensions and handle positions."
+      ],
+      "accessibility_notes": ["Preserve keyboard selection, movement, deletion, focus, and clear labels for nodes, handles, controls, and edges."],
+      "official_docs": ["https://reactflow.dev/", "https://reactflow.dev/learn", "https://reactflow.dev/learn/advanced-use/ssr-ssg-configuration"]
+    },
+    {
+      "name": "dnd-kit",
+      "packages": [
+        {
+          "name": "@dnd-kit/react",
+          "observed_version": "0.5.0",
+          "license": "MIT",
+          "observed_peer_dependencies": {
+            "react": "^18.0.0 || ^19.0.0",
+            "react-dom": "^18.0.0 || ^19.0.0"
+          }
+        },
+        {
+          "name": "@dnd-kit/helpers",
+          "observed_version": "0.5.0",
+          "license": "MIT",
+          "purpose": "Optional helpers such as move for sortable state."
+        }
+      ],
+      "suited_for": ["sortable lists", "Kanban-style boards", "reorderable cards", "custom drag-and-drop interactions"],
+      "avoid_when": ["native form controls or simple move up/down buttons are sufficient", "the interaction lacks a keyboard-equivalent design"],
+      "integration_notes": [
+        "Use the current @dnd-kit/react DragDropProvider API for new work.",
+        "Treat tutorials based on legacy @dnd-kit/core, DndContext, SortableContext, or arrayMove as migration references rather than the new default API.",
+        "Do not disable default keyboard behavior accidentally when customizing sensors."
+      ],
+      "accessibility_notes": ["Provide focusable drag activators, keyboard operation, contextual instructions, and live announcements tailored to the application."],
+      "official_docs": ["https://dndkit.com/react/quickstart/", "https://dndkit.com/react/guides/migration/", "https://dndkit.com/extend/plugins/accessibility/"]
+    },
+    {
+      "name": "TanStack Table",
+      "packages": [
+        {
+          "name": "@tanstack/react-table",
+          "observed_version": "9.1.2",
+          "license": "MIT",
+          "observed_peer_dependencies": {"react": ">=18"}
+        }
+      ],
+      "suited_for": ["interactive data tables", "sorting", "filtering", "grouping", "row selection", "pagination", "controlled table state"],
+      "avoid_when": ["the data is small and static", "a semantic HTML table needs no interactive state", "a fully styled enterprise grid is required out of the box"],
+      "integration_notes": [
+        "TanStack Table is headless: the application owns semantic markup, responsive behavior, styles, empty states, loading states, and controls.",
+        "Prefer stable row identifiers and lift only the state that must be shared with URLs, servers, or other components.",
+        "Use server-side sorting, filtering, or pagination when the data volume or authorization boundary requires it."
+      ],
+      "accessibility_notes": ["Render semantic table structure where appropriate and provide announced sort state, labelled controls, focus behavior, and an alternative responsive presentation when needed."],
+      "official_docs": ["https://tanstack.com/table/latest", "https://tanstack.com/table/latest/docs/overview", "https://tanstack.com/table/latest/docs/installation"]
+    },
+    {
+      "name": "Embla Carousel",
+      "packages": [
+        {
+          "name": "embla-carousel-react",
+          "observed_version": "8.6.0",
+          "license": "MIT",
+          "observed_peer_dependencies": {"react": "^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc"}
+        },
+        {
+          "name": "embla-carousel-accessibility",
+          "observed_version": "9.0.0-rc01",
+          "license": "MIT",
+          "observed_peer_dependencies": {"embla-carousel": "9.0.0-rc01"},
+          "adoption_warning": "The observed accessibility plugin is a v9 release candidate and must not be mixed with the stable v8 React wrapper. Recheck for a matched stable release or implement the required semantics and controls locally."
+        }
+      ],
+      "suited_for": ["touch-friendly media galleries", "compact horizontal collections", "client-approved image or testimonial sequences"],
+      "avoid_when": ["fewer than three meaningful items exist", "a grid exposes content more clearly", "the carousel would hide essential information", "autoplay is the only justification"],
+      "integration_notes": [
+        "Keep navigation controls outside the draggable viewport to avoid interaction conflicts.",
+        "Use stable dimensions to prevent layout shift and preserve native links or buttons inside slides.",
+        "Install optional plugins only from a release line compatible with the selected Embla core/wrapper."
+      ],
+      "accessibility_notes": ["Provide explicit previous/next controls, slide position or status, labelled regions, focus management, touch and keyboard access, and zero-duration behavior for prefers-reduced-motion. Avoid autoplay by default."],
+      "official_docs": ["https://www.embla-carousel.com/docs/v8/get-started/react", "https://www.embla-carousel.com/docs/plugins/accessibility"]
+    },
+    {
+      "name": "Tiptap",
+      "packages": [
+        {
+          "name": "@tiptap/react",
+          "observed_version": "3.30.1",
+          "license": "MIT",
+          "observed_peer_dependencies": {
+            "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+            "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0",
+            "@tiptap/pm": "3.30.1",
+            "@tiptap/core": "3.30.1"
+          }
+        },
+        {"name": "@tiptap/pm", "observed_version": "3.30.1", "license": "MIT"},
+        {"name": "@tiptap/starter-kit", "observed_version": "3.30.1", "license": "MIT", "purpose": "Optional baseline open-source extension bundle."}
+      ],
+      "suited_for": ["structured rich-text editing", "custom content editors", "extension-based authoring interfaces", "Notion-style editing experiences"],
+      "avoid_when": ["content is static and version-controlled", "there is no authenticated authoring or persistence workflow", "plain text or Markdown meets the requirement"],
+      "integration_notes": [
+        "In Next.js, place the editor in a client component and use immediatelyRender: false to avoid hydration mismatches.",
+        "Choose a canonical storage format and define schema migrations before persisting production content.",
+        "Treat pasted input and rendered HTML as untrusted; sanitize at the appropriate trust boundary and restrict risky links, media, and extensions.",
+        "The open-source editor is MIT licensed, while optional Tiptap Cloud or paid capabilities require separate commercial and data-processing review."
+      ],
+      "accessibility_notes": ["The application owns toolbar, menu, textbox, shortcut, focus, contrast, and keyboard accessibility because Tiptap is headless."],
+      "official_docs": ["https://tiptap.dev/docs/editor/getting-started/install/nextjs", "https://tiptap.dev/docs/guides/accessibility", "https://github.com/ueberdosis/tiptap/blob/main/LICENSE.md"]
+    }
+  ],
+  "evidence": {
+    "source_repository": "Official project documentation and npm registry",
+    "source_commit": "",
+    "source_paths": [
+      "https://reactflow.dev/learn",
+      "https://dndkit.com/react/guides/migration/",
+      "https://dndkit.com/extend/plugins/accessibility/",
+      "https://tanstack.com/table/latest/docs/overview",
+      "https://www.embla-carousel.com/docs/v8/get-started/react",
+      "https://www.embla-carousel.com/docs/plugins/accessibility",
+      "https://tiptap.dev/docs/editor/getting-started/install/nextjs",
+      "https://tiptap.dev/docs/guides/accessibility",
+      "https://registry.npmjs.org/"
+    ],
+    "task_or_issue": "user-requested-library-catalog-2026-08-14",
+    "tests_executed": [
+      "npm view @xyflow/react version license peerDependencies --json",
+      "npm view @dnd-kit/react version license peerDependencies --json",
+      "npm view @dnd-kit/helpers version license peerDependencies --json",
+      "npm view @tanstack/react-table version license peerDependencies --json",
+      "npm view embla-carousel-react version license peerDependencies --json",
+      "npm view embla-carousel-accessibility version license peerDependencies --json",
+      "npm view @tiptap/react version license peerDependencies --json",
+      "npm view @tiptap/pm version license peerDependencies --json",
+      "npm view @tiptap/starter-kit version license peerDependencies --json"
+    ],
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "accepted_by_user": true,
+    "production_observation_window": "",
+    "npm_metadata_observed_at": "2026-08-14"
+  },
+  "provenance": {
+    "created_at": "2026-08-14T00:00:00Z",
+    "updated_at": "2026-08-14T00:00:00Z",
+    "created_by": "codex",
+    "supersedes": [],
+    "derived_from": [
+      "official project documentation",
+      "live npm registry metadata",
+      "X_booking dev01 architecture and dependency assessment"
+    ]
+  },
+  "confidence": {
+    "score": 0.9,
+    "rationale": "Package names, licenses, peer ranges, and integration guidance were checked against official documentation and live npm metadata on 2026-08-14. The record remains a candidate because versions and project requirements change and dependency selection must be revalidated per repository."
+  },
+  "reuse": {
+    "retrieval_count": 0,
+    "successful_reuse_count": 0,
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null
+  }
+}

@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "0808d6eefb6b67ac3949a53bce90a240297c8372",
+    "source_commit": "919e7823c70cc068c90fbece13f2d57cd9eb9602",
     "source_paths": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
@@ -42,11 +42,12 @@
       ".github/workflows/doctor-site-ci.yml",
       "AGENTS.md",
       "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
-      "package.json",
+      "components.json",
+      "public/clients/README.md",
       "scripts/clean-worktree.ps1",
       "scripts/import-client.ts",
       "scripts/validate-config.ts",
-      "src/app/[locale]/about/page.tsx",
+      "src/app/[locale]/[...notFound]/page.tsx",
       "src/app/[locale]/book/page.tsx",
       "src/app/[locale]/contact/page.tsx",
       "tests/config.test.ts",
@@ -65,7 +66,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:14Z",
+    "created_at": "2026-09-01T19:01:44Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
@@ -74,11 +75,12 @@
       ".github/workflows/doctor-site-ci.yml",
       "AGENTS.md",
       "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
-      "package.json",
+      "components.json",
+      "public/clients/README.md",
       "scripts/clean-worktree.ps1",
       "scripts/import-client.ts",
       "scripts/validate-config.ts",
-      "src/app/[locale]/about/page.tsx",
+      "src/app/[locale]/[...notFound]/page.tsx",
       "src/app/[locale]/book/page.tsx",
       "src/app/[locale]/contact/page.tsx",
       "tests/config.test.ts",
@@ -86,7 +88,7 @@
       "tests/security-boundaries.test.ts"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:14Z"
+    "updated_at": "2026-09-01T19:01:44Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -103,7 +105,7 @@
       {
         "area": "src",
         "examples": [
-          "src/app/[locale]/about/page.tsx",
+          "src/app/[locale]/[...notFound]/page.tsx",
           "src/app/[locale]/book/page.tsx",
           "src/app/[locale]/contact/page.tsx",
           "src/app/[locale]/emergency/page.tsx",
@@ -112,30 +114,30 @@
           "src/app/[locale]/legal/[doc]/page.tsx",
           "src/app/[locale]/not-found.tsx"
         ],
-        "file_count": 46,
-        "graph_node_count": 204,
+        "file_count": 74,
+        "graph_node_count": 305,
         "suffixes": {
           ".css": 1,
-          ".ts": 23,
-          ".tsx": 22
+          ".ts": 26,
+          ".tsx": 47
         }
       },
       {
         "area": ".",
         "examples": [
           "AGENTS.md",
+          "components.json",
           "MEDICAL_BOOKING_PLATFORM_IMPLEMENTATION_PLAN.md",
           "package.json",
           "playwright.config.ts",
           "README.md",
           "SECURITY.md",
-          "skills.md",
-          "tailwind.config.ts"
+          "skills.md"
         ],
-        "file_count": 11,
-        "graph_node_count": 76,
+        "file_count": 12,
+        "graph_node_count": 93,
         "suffixes": {
-          ".json": 3,
+          ".json": 4,
           ".md": 5,
           ".ts": 3
         }
@@ -163,7 +165,7 @@
           "tests/security-boundaries.test.ts"
         ],
         "file_count": 3,
-        "graph_node_count": 4,
+        "graph_node_count": 6,
         "suffixes": {
           ".ts": 3
         }
@@ -176,12 +178,13 @@
           ".cursor/rules/repo-verification.mdc",
           ".cursor/skills/client-onboarding/SKILL.md",
           ".cursor/skills/development-on-dev01/SKILL.md",
-          ".cursor/skills/production-promotion/SKILL.md"
+          ".cursor/skills/production-promotion/SKILL.md",
+          ".cursor/skills/visual-system-development/SKILL.md"
         ],
-        "file_count": 6,
+        "file_count": 7,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 3,
+          ".md": 4,
           ".mdc": 3
         }
       },
@@ -195,15 +198,26 @@
         "suffixes": {
           ".yml": 1
         }
+      },
+      {
+        "area": "public",
+        "examples": [
+          "public/clients/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
+        }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 344,
-    "graph_source_file_count": 66,
-    "harvestable_text_file_count": 71
+    "graph_node_count": 464,
+    "graph_source_file_count": 95,
+    "harvestable_text_file_count": 102
   },
   "status": "candidate",
-  "summary": "Safe source map for X_booking: 6 harvestable areas, led by src, ., scripts, tests, .cursor, .github.",
+  "summary": "Safe source map for X_booking: 7 harvestable areas, led by src, ., scripts, tests, .cursor, .github, public.",
   "tags": [
     "architecture-map",
     "beautifulsoup4",

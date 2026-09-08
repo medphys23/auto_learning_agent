@@ -1,0 +1,80 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c6f413f477e07f73decb7e34b679bf43f6f8c026",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "cv-workflow-master-cv-synchronization",
+  "incompatible_when": [],
+  "procedure": [
+    "1. Run `npm run cv:check` before content work.",
+    "2. On drift, run `npm run cv:extract` and inspect `.cache/cv-sync/extracted.md` plus `extracted.json`.",
+    "3. Update English structured content faithfully, then update Italian and Greek without altering stable IDs, dates, official names, links, or DOI values.",
+    "4. Set changed translations to unreviewed and run `npm run test`.",
+    "5. After factual review, run `npm run cv:accept`, then `npm run verify`."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T18:57:31Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T18:57:31Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "1. Run `npm run cv:check` before content work.",
+  "tags": [
+    "cv",
+    "node",
+    "repo-workflow",
+    "skills-md"
+  ],
+  "title": "CV workflow: Master CV synchronization",
+  "trigger_phrases": [
+    "CV",
+    "Master CV synchronization"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

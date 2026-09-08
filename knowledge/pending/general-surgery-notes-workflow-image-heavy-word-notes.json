@@ -1,0 +1,82 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-surgery-notes-workflow-image-heavy-word-notes",
+  "incompatible_when": [],
+  "procedure": [
+    "1. Inventory inline pictures, floating/grouped drawings, text-bearing shapes,",
+    "2. Run `process` and `verify` as separate persistent background jobs with an",
+    "3. Prefer a usable, stable layout over pixel-perfect reconstruction: fit media",
+    "4. Do not trust text-box `AutoSize` or floating coordinates without a render.",
+    "5. Remove only hyperlinks whose display text is empty. Word can otherwise",
+    "6. Restore known private-use glyph fonts after applying the canonical body",
+    "7. Require exact protected-word verification, Word-native PDF/PNG rendering,"
+  ],
+  "provenance": {
+    "created_at": "2026-08-22T10:21:34Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-22T10:21:34Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Use this branch when audit reports roughly 50 or more media objects, many",
+  "tags": [
+    "general-surgery-notes",
+    "python",
+    "repo-workflow",
+    "skills-md"
+  ],
+  "title": "General_surgery_notes workflow: Image-heavy Word notes",
+  "trigger_phrases": [
+    "General_surgery_notes",
+    "Image-heavy Word notes"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

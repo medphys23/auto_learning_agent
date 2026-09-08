@@ -1,0 +1,87 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-surgery-notes-workflow-learned-paragraph-and-list-standard-from-the-edited-atls-output",
+  "incompatible_when": [],
+  "procedure": [
+    "- Body text: Calibri 12 pt, justified, single spacing, 0 pt before, 6 pt after.",
+    "- Heading 1/2/3: Calibri bold at 18/14/12 pt, single spacing, 0 pt before and",
+    "- Level-1 bullet: Word's solid round Symbol bullet (`U+F0B7`, visually `\u2022`) in",
+    "- Level-2 bullet: open circle (`o`) in Courier New, with a 2.54 cm text",
+    "- Level-3 bullet: square (`U+F0A7`) in Wingdings, with a 3.81 cm text",
+    "- Level-1 number: Arabic `%1.` (`1.`) starting at 1, with a 0.64 cm marker",
+    "- List rhythm: 0 pt before; 0 pt after between consecutive nonblank list",
+    "- Front matter and pagination: use a dedicated cover/TOC section with blank",
+    "- Do not generalize ATLS-specific heading-role changes, image removal, or other",
+    "1. Run `surgery-notes inspect-template`.",
+    "2. Review the new text-free measurements and SHA-256.",
+    "3. Update the tracked profile intentionally; do not accept hash drift during normal processing."
+  ],
+  "provenance": {
+    "created_at": "2026-08-22T10:21:34Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-22T10:21:34Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "The user-edited `ATLS AND TRAUMA - standardized.docx` is the authority for",
+  "tags": [
+    "general-surgery-notes",
+    "python",
+    "repo-workflow",
+    "skills-md"
+  ],
+  "title": "General_surgery_notes workflow: Learned paragraph and list standard from the edited ATLS output",
+  "trigger_phrases": [
+    "General_surgery_notes",
+    "Learned paragraph and list standard from the edited ATLS output"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

@@ -2,32 +2,36 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-08-09T21:39:15Z
+Generated: 2026-09-08T18:56:21Z
 
 ## Coverage
 
 | Repository | Status | Candidates | Profile | Source map | Stack/deps | Verification | Workflows | Commands | Constraints |
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
 | auto_learning_agent | harvested | 33 | yes | yes | yes | yes | 5 | 23 | yes |
-| blender-voice-3d-print-designer | harvested | 15 | yes | yes | yes | yes | 0 | 10 | yes |
-| campania-transplant | skipped | 7 | yes | yes | yes | yes | 0 | 2 | yes |
-| general-surgery-notes | blocked_dirty_worktree | 0 | no | no | no | no | 0 | 0 | no |
-| general-work | skipped | 5 | yes | yes | yes | yes | 0 | 0 | yes |
-| graphify | harvested | 5 | yes | yes | yes | yes | 0 | 0 | yes |
-| investment-binance | skipped | 9 | yes | yes | yes | yes | 1 | 3 | yes |
-| kidney-federico | skipped | 8 | yes | yes | yes | yes | 0 | 3 | yes |
-| omniroute | harvested | 5 | yes | yes | yes | yes | 0 | 12 | yes |
-| orsi | harvested | 38 | yes | yes | yes | yes | 13 | 20 | yes |
-| practice-ops-dashboard | skipped | 17 | yes | yes | yes | yes | 7 | 5 | yes |
-| ps-robot-adaptor | skipped | 6 | yes | yes | yes | yes | 0 | 1 | yes |
-| travel-agent | harvested | 16 | yes | yes | yes | yes | 4 | 7 | yes |
-| x-booking | harvested | 17 | yes | yes | yes | yes | 4 | 9 | yes |
-| xenios-finances | skipped | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| blender-voice-3d-print-designer | skipped | 15 | yes | yes | yes | yes | 0 | 10 | yes |
+| campania-transplant | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
+| cv | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 2 | no |
+| general-surgery-notes | skipped | 12 | yes | yes | yes | yes | 3 | 5 | no |
+| general-work | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
+| google-sheet-appscript-connector | skipped | 4 | yes | yes | yes | yes | 0 | 0 | no |
+| graphify | skipped | 5 | yes | yes | yes | yes | 0 | 0 | yes |
+| investment-binance | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 3 | yes |
+| kidney-federico | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 3 | yes |
+| omniroute | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 12 | yes |
+| orsi | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 16 | 23 | yes |
+| practice-ops-dashboard | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 7 | 5 | yes |
+| ponytail | harvested | 5 | yes | yes | yes | yes | 0 | 0 | yes |
+| ps-robot-adaptor | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 1 | yes |
+| skills | harvested | 5 | yes | yes | yes | yes | 0 | 0 | yes |
+| travel-agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 7 | yes |
+| x-booking | skipped | 19 | yes | yes | yes | yes | 5 | 9 | yes |
+| xenios-finances | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
 
 ## Catalog Summary
 
-Status counts: candidate=207.
-Type counts: anti_pattern=1, command=97, constraint=14, pattern=5, reference=56, workflow=34.
+Status counts: candidate=251.
+Type counts: anti_pattern=1, command=107, constraint=16, pattern=5, reference=78, workflow=44.
 
 No promoted knowledge records exist yet; current reusable knowledge remains candidate-first.
 

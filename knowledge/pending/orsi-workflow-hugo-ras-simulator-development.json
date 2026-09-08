@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       "skills.md"
     ],
@@ -59,13 +67,13 @@
     "- 2026-07-15: Added root catalog entry after the V3 docking/collision rework. Required deltas: `SimulationProjectV3` + library migration, `StartScreen`/`SetupWizard`, articulated six-joint proxy with FK/IK/RCM, collision-aware docking, moti"
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:11Z",
+    "created_at": "2026-09-01T19:01:37Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:11Z"
+    "updated_at": "2026-09-01T19:01:37Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -80,7 +88,12 @@
   "status": "candidate",
   "summary": "**Triggered by:** building, editing, debugging, reviewing, or verifying the standalone Modular RAS Setup Simulator V3 under `HUGO_RAS/`.",
   "tags": [
+    "auth",
+    "credentials",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -90,7 +103,9 @@
     "repo-workflow",
     "research",
     "skills-md",
-    "streamlit"
+    "slack",
+    "streamlit",
+    "vercel"
   ],
   "title": "ORSI workflow: HUGO RAS simulator development",
   "trigger_phrases": [

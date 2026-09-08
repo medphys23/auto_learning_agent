@@ -40,6 +40,18 @@ stack_tags = ['docx', 'graphviz', 'matplotlib', 'numpy', 'python', 'streamlit']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
+id = 'cv'
+name = 'CV'
+path = 'C:\Users\ppyxe\Documents\GitHub\CV'
+remote = 'https://github.com/medphys23/CV.git'
+current_branch = 'main'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['node']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
 id = 'general-surgery-notes'
 name = 'General_surgery_notes'
 path = 'C:\Users\ppyxe\Documents\GitHub\General_surgery_notes'
@@ -61,6 +73,18 @@ enabled = true
 scope = 'sandbox'
 risk_tags = ['sandbox']
 stack_tags = []
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
+id = 'google-sheet-appscript-connector'
+name = 'google_sheet_appscript_connector'
+path = 'C:\Users\ppyxe\Documents\GitHub\google_sheet_appscript_connector'
+remote = 'https://github.com/medphys23/google_sheet_appscript_connector.git'
+current_branch = 'main'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['node']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
@@ -122,8 +146,8 @@ remote = 'https://github.com/medphys23/ORSI.git'
 current_branch = 'main'
 enabled = true
 scope = 'research_training'
-risk_tags = ['not_clinical', 'not_robot_control', 'office_com', 'research']
-stack_tags = ['docx', 'office_com', 'pptx', 'python', 'streamlit']
+risk_tags = ['auth', 'credentials', 'external_webhooks', 'not_clinical', 'not_robot_control', 'office_com', 'research']
+stack_tags = ['docx', 'google_apps_script', 'node', 'office_com', 'pptx', 'python', 'slack', 'streamlit', 'vercel']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
@@ -139,6 +163,20 @@ stack_tags = ['nextjs', 'node', 'postgres', 'react', 'tailwind', 'typescript', '
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
+id = 'ponytail'
+name = 'ponytail'
+path = 'C:\Users\ppyxe\Documents\GitHub\ponytail'
+remote = 'https://github.com/dietrichgebert/ponytail.git'
+current_branch = 'main'
+enabled = true
+scope = 'third_party_reference'
+risk_tags = ['agent_behavior', 'hooks', 'not_owned', 'read_only_reference', 'supply_chain', 'third_party']
+stack_tags = ['codex', 'javascript', 'node', 'plugins', 'skills']
+harvest_mode = 'deep_when_clean'
+graphify_semantic = false
+notes = 'Upstream Ponytail agent-behavior plugin retained as a read-only learning reference; harvested knowledge remains candidate-only.'
+
+[[repositories]]
 id = 'ps-robot-adaptor'
 name = 'PS_robot_adaptor'
 path = 'C:\Users\ppyxe\Documents\GitHub\PS_robot_adaptor'
@@ -149,6 +187,20 @@ scope = 'simulation_research'
 risk_tags = ['no_real_robot_control', 'robotics', 'simulation_only']
 stack_tags = ['pygame', 'pyside6', 'pytest', 'python']
 harvest_mode = 'deep_when_clean'
+
+[[repositories]]
+id = 'skills'
+name = 'skills'
+path = 'C:\Users\ppyxe\Documents\GitHub\skills'
+remote = 'https://github.com/vercel-labs/skills.git'
+current_branch = 'main'
+enabled = true
+scope = 'third_party_reference'
+risk_tags = ['auth', 'filesystem_write', 'global_agent_configuration', 'network', 'not_owned', 'read_only_reference', 'subprocess', 'supply_chain', 'third_party']
+stack_tags = ['codex', 'cursor', 'node', 'pnpm', 'skills', 'typescript']
+harvest_mode = 'deep_when_clean'
+graphify_semantic = false
+notes = 'Upstream Vercel Labs skills CLI retained as a read-only learning reference; harvested knowledge remains candidate-only.'
 
 [[repositories]]
 id = 'travel-agent'

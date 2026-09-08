@@ -1,34 +1,60 @@
 {
   "continue_on_dirty": true,
   "failed_step": "",
-  "finished_at": "2026-08-09T21:40:45Z",
+  "finished_at": "2026-09-01T19:03:02Z",
   "log_file": "reports\\optimized-knowledge-cycle.log",
   "readiness": {
     "applied": false,
     "catalog_integrity": {
-      "catalog_entry_count": 207,
+      "catalog_entry_count": 241,
       "catalog_missing_record_paths": [],
       "dirty_blockers": [
         {
-          "dirty_count": 12,
-          "id": "general-surgery-notes"
+          "dirty_count": 2,
+          "id": "campania-transplant"
+        },
+        {
+          "dirty_count": 2,
+          "id": "general-work"
+        },
+        {
+          "dirty_count": 2,
+          "id": "investment-binance"
+        },
+        {
+          "dirty_count": 2,
+          "id": "kidney-federico"
+        },
+        {
+          "dirty_count": 2,
+          "id": "omniroute"
+        },
+        {
+          "dirty_count": 1,
+          "id": "practice-ops-dashboard"
+        },
+        {
+          "dirty_count": 2,
+          "id": "ps-robot-adaptor"
+        },
+        {
+          "dirty_count": 2,
+          "id": "travel-agent"
+        },
+        {
+          "dirty_count": 2,
+          "id": "xenios-finances"
         }
       ],
       "harvested_repositories": [
         "auto_learning_agent",
         "blender-voice-3d-print-designer",
-        "campania-transplant",
-        "general-work",
+        "cv",
+        "general-surgery-notes",
+        "google-sheet-appscript-connector",
         "graphify",
-        "investment-binance",
-        "kidney-federico",
-        "omniroute",
         "orsi",
-        "practice-ops-dashboard",
-        "ps-robot-adaptor",
-        "travel-agent",
-        "x-booking",
-        "xenios-finances"
+        "x-booking"
       ],
       "missing_required_record_families": {}
     },
@@ -66,12 +92,12 @@
         "passed": true
       },
       {
-        "detail": "1 dirty blocker(s)",
+        "detail": "9 dirty blocker(s)",
         "name": "no_dirty_blockers",
         "passed": false
       }
     ],
-    "generated_at": "2026-08-09T21:40:45Z",
+    "generated_at": "2026-09-01T19:03:02Z",
     "optimized_agents_exists": true,
     "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
     "requires_explicit_user_approval": true,
@@ -84,17 +110,17 @@
   },
   "skip_dependency_audit": false,
   "skip_graphify": false,
-  "started_at": "2026-08-09T21:29:11Z",
+  "started_at": "2026-09-01T18:53:14Z",
   "state_dirty_blockers": {
     "auto_learning_agent": {
       "branch": "main",
       "candidate_count": 33,
-      "commit": "723a5a2a2afaf6c05e31f013c8ce32b646a02dc3",
-      "digest": "6a58de38d15745b8723f421a535e31752b05ed90a38e101a6ca2406755032d05",
-      "dirty": "",
-      "dirty_count": 0,
-      "file_count": 514,
-      "fingerprinted_at": "2026-08-09T21:37:50Z",
+      "commit": "e71c9a39af725f6ab90ae6efa41bc0c499fc8372",
+      "digest": "81d2e54258b057ff2be8fb81ae1fb8b13e985d99e05f610a75f7ed540a397bc2",
+      "dirty": "M config/repositories.toml\n M knowledge/INDEX.md\n M knowledge/catalog.jsonl\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-11.json\n M knowledge/pending/auto-learning-agent-verification-command-12.json\n M knowledge/pending/auto-learning-agent-verification-command-13.json\n M knowledge/pending/auto-learning-agent-verification-command-14.json\n M knowledge/pending/auto-learning-agent-verification-command-15.json\n M knowledge/pending/auto-learning-agent-verification-command-16.json\n M knowledge/pending/auto-learning-agent-verification-command-17.json\n M knowledge/pending/auto-learning-agent-verification-command-18.json\n M knowledge/pending/auto-learning-agent-verification-command-19.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-20.json\n M knowledge/pending/auto-learning-agent-verification-command-21.json\n M knowledge/pending/auto-learning-agent-verification-command-22.json\n M knowledge/pending/auto-learning-agent-verification-command-23.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-federated-orchestrator-startup.json\n M knowledge/pending/auto-learning-agent-workflow-governed-graphify-integration.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M knowledge/pending/auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover.json\n M knowledge/pending/auto-learning-agent-workflow-risk-triggered-systems-engineering-review.json\n M knowledge/pending/orsi-repository-constraints.json\n M knowledge/pending/orsi-repository-profile.json\n M knowledge/pending/orsi-source-map.json\n M knowledge/pending/orsi-stack-dependency-profile.json\n M knowledge/pending/orsi-verification-command-1.json\n M knowledge/pending/orsi-verification-command-10.json\n M knowledge/pending/orsi-verification-command-11.json\n M knowledge/pending/orsi-verification-command-12.json\n M knowledge/pending/orsi-verification-command-13.json\n M knowledge/pending/orsi-verification-command-14.json\n M knowledge/pending/orsi-verification-command-15.json\n M knowledge/pending/orsi-verification-command-16.json\n M knowledge/pending/orsi-verification-command-17.json\n M knowledge/pending/orsi-verification-command-18.json\n M knowledge/pending/orsi-verification-command-19.json\n M knowledge/pending/orsi-verification-command-2.json\n M knowledge/pending/orsi-verification-command-20.json\n M knowledge/pending/orsi-verification-command-3.json\n M knowledge/pending/orsi-verification-command-4.json\n M knowledge/pending/orsi-verification-command-5.json\n M knowledge/pending/orsi-verification-command-6.json\n M knowledge/pending/orsi-verification-command-7.json\n M knowledge/pending/orsi-verification-command-8.json\n M knowledge/pending/orsi-verification-command-9.json\n M knowledge/pending/orsi-verification-profile.json\n M knowledge/pending/orsi-workflow-ad-astra-chapter.json\n M knowledge/pending/orsi-workflow-cholecystectomy-protocol-literature-updates.json\n M knowledge/pending/orsi-workflow-delphi-expert-threshold-evidence-deck.json\n M knowledge/pending/orsi-workflow-hugo-ras-preset-curation.json\n M knowledge/pending/orsi-workflow-hugo-ras-simulator-development.json\n M knowledge/pending/orsi-workflow-local-meeting-transcription.json\n M knowledge/pending/orsi-workflow-low-anterior-resection-metrics-deck.json\n M knowledge/pending/orsi-workflow-markitdown-read-path.json\n M knowledge/pending/orsi-workflow-office-pptx-metrics-decks.json\n M knowledge/pending/orsi-workflow-optimal-trocar-placement-app.json\n M knowledge/pending/orsi-workflow-repository-structure-hygiene.json\n M knowledge/pending/orsi-workflow-right-hemicolectomy-metrics-package.json\n M knowledge/pending/orsi-workflow-robotic-cholecystectomy-systematic-review.json\n M knowledge/pending/x-booking-repository-constraints.json\n M knowledge/pending/x-booking-repository-profile.json\n M knowledge/pending/x-booking-source-map.json\n M knowledge/pending/x-booking-stack-dependency-profile.json\n M knowledge/pending/x-booking-verification-command-1.json\n M knowledge/pending/x-booking-verification-command-2.json\n M knowledge/pending/x-booking-verification-command-3.json\n M knowledge/pending/x-booking-verification-command-4.json\n M knowledge/pending/x-booking-verification-command-5.json\n M knowledge/pending/x-booking-verification-command-6.json\n M knowledge/pending/x-booking-verification-command-7.json\n M knowledge/pending/x-booking-verification-command-8.json\n M knowledge/pending/x-booking-verification-command-9.json\n M knowledge/pending/x-booking-verification-profile.json\n M knowledge/pending/x-booking-workflow-client-onboarding-via-intake-csv.json\n M knowledge/pending/x-booking-workflow-development-on-dev01.json\n M knowledge/pending/x-booking-workflow-production-promotion-and-rollback.json\n M reports/optimized-cutover-readiness.json\n M reports/optimized-knowledge-cycle-summary.json\n M state/repository-snapshots.json\n?? knowledge/pending/cv-repository-profile.json\n?? knowledge/pending/cv-source-map.json\n?? knowledge/pending/cv-stack-dependency-profile.json\n?? knowledge/pending/cv-verification-command-1.json\n?? knowledge/pending/cv-verification-command-2.json\n?? knowledge/pending/cv-verification-profile.json\n?? knowledge/pending/cv-workflow-master-cv-synchronization.json\n?? knowledge/pending/cv-workflow-translation-review.json\n?? knowledge/pending/cv-workflow-vercel-release.json\n?? knowledge/pending/cv-workflow-visual-system-development.json\n?? knowledge/pending/general-surgery-notes-repository-profile.json\n?? knowledge/pending/general-surgery-notes-source-map.json\n?? knowledge/pending/general-surgery-notes-stack-dependency-profile.json\n?? knowledge/pending/general-surgery-notes-verification-command-1.json\n?? knowledge/pending/general-surgery-notes-verification-command-2.json\n?? knowledge/pending/general-surgery-notes-verification-command-3.json\n?? knowledge/pending/general-surgery-notes-verification-command-4.json\n?? knowledge/pending/general-surgery-notes-verification-command-5.json\n?? knowledge/pending/general-surgery-notes-verification-profile.json\n?? knowledge/pending/general-surgery-notes-workflow-image-heavy-word-documents.json\n?? knowledge/pending/general-surgery-notes-workflow-image-heavy-word-notes.json\n?? knowledge/pending/general-surgery-notes-workflow-learned-paragraph-and-list-standard-from-the-edited-atls-output.json\n?? knowledge/pending/google-sheet-appscript-connector-repository-profile.json\n?? knowledge/pending/google-sheet-appscript-connector-source-map.json\n?? knowledge/pending/google-sheet-appscript-connector-stack-dependency-profile.json\n?? knowledge/pending/google-sheet-appscript-connector-verification-profile.json\n?? knowledge/pending/react-source-component-kit-selection-catalog.json\n?? knowledge/pending/react-ui-library-selection-catalog.json\n?? knowledge/pending/x-booking-workflow-visual-system-development.json",
+      "dirty_count": 123,
+      "file_count": 546,
+      "fingerprinted_at": "2026-09-01T18:57:26Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -116,44 +142,71 @@
     },
     "campania-transplant": {
       "branch": "main",
-      "candidate_count": 7,
       "commit": "8d85d157a9304a4324f8f30e2ef58dbfcfefc1bd",
-      "digest": "a2c07e6e954164834a5144f3280afe44911fdf67a6597865fce1b7646a0d9b7b",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "04b5a3a57c2b461a58b25447a7b7746c1b2b3406e303f2055df3ad2af34b274c",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 59,
-      "fingerprinted_at": "2026-08-05T20:23:14Z",
+      "fingerprinted_at": "2026-09-01T18:57:30Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
       "remote": "https://github.com/medphys23/campania_transplant.git"
     },
+    "cv": {
+      "branch": "main",
+      "candidate_count": 10,
+      "commit": "c6f413f477e07f73decb7e34b679bf43f6f8c026",
+      "digest": "8af0deac488fb72e18558672b38f35a39367d4ad898cca5c7e5df9b4053149f1",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 64,
+      "fingerprinted_at": "2026-09-01T18:57:31Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
+      "remote": "https://github.com/medphys23/CV.git"
+    },
     "general-surgery-notes": {
       "branch": "main",
-      "commit": null,
-      "digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "dirty": "?? .cursor/\n?? .gitignore\n?? .graphifyignore\n?? AGENTS.md\n?? README.md\n?? config/\n?? pyproject.toml\n?? scripts/\n?? skills.md\n?? src/\n?? tests/\n?? uv.lock",
-      "dirty_count": 12,
-      "file_count": 0,
-      "fingerprinted_at": "2026-08-09T21:37:54Z",
+      "candidate_count": 11,
+      "commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
+      "digest": "70d4872905c6191585910d11e72f120ce5f71f8fb9e7f0334cb401f3f4795bfe",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 42,
+      "fingerprinted_at": "2026-08-22T10:21:32Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "blocked_dirty_worktree",
+      "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
       "remote": "https://github.com/medphys23/General_surgery_notes.git"
     },
     "general-work": {
       "branch": "main",
-      "candidate_count": 5,
       "commit": "bf611c9cd2c9b13a3b7cab7cb768b2ed823d9b39",
-      "digest": "cb2ccf851d45f7fde47d29bf2c5a7edba15b0e7c4fe045812dd5d3b2ebc3793c",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "d6b5361f4e972658454d3ad33be318a6a6cdb99fdaf71b2b7fe16dd4bb85b788",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 8,
-      "fingerprinted_at": "2026-08-05T20:23:15Z",
+      "fingerprinted_at": "2026-09-01T18:57:33Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
       "remote": "https://github.com/medphys23/general_work.git"
+    },
+    "google-sheet-appscript-connector": {
+      "branch": "main",
+      "candidate_count": 4,
+      "commit": "c89a25e736f40a308250d314a34ebabbb7963cb9",
+      "digest": "f2f55a1ed13bd37001cbbd447e69c1c0ab6c72cd34256a417e8b4cd22dd74916",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 27,
+      "fingerprinted_at": "2026-08-13T09:32:11Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector",
+      "remote": "https://github.com/medphys23/google_sheet_appscript_connector.git"
     },
     "graphify": {
       "branch": "v8",
@@ -171,55 +224,52 @@
     },
     "investment-binance": {
       "branch": "main",
-      "candidate_count": 9,
       "commit": "90cd59a85e7c6cd4eee6d48248c1d0b362d69375",
-      "digest": "7d122b1f7b15bc8691ab27d339fc38e2ab10cd36622bf8b0dba6b0a1651d88b8",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "61cd1fa56d31b6da1199ce619fe595763240796af6dd95053a309730048cb588",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 34,
-      "fingerprinted_at": "2026-08-05T20:23:15Z",
+      "fingerprinted_at": "2026-09-01T18:57:45Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
       "remote": "https://github.com/medphys23/Investment_binance.git"
     },
     "kidney-federico": {
       "branch": "main",
-      "candidate_count": 8,
       "commit": "0462682236543d7a715a9cb85b77b468893c47b6",
-      "digest": "eda07b5f043c0af80e632988f97db67197f82e46215bea0a40bd76b31c6e47c7",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "d47b1e51d8e68b4b4c686863b5f97be2c5e9bea4d1c680639938d6c8cd4dbcd8",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 172,
-      "fingerprinted_at": "2026-08-05T20:23:16Z",
+      "fingerprinted_at": "2026-09-01T18:57:49Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
       "remote": "https://github.com/medphys23/kidney_federico.git"
     },
     "omniroute": {
       "branch": "release/v3.8.50",
-      "candidate_count": 5,
       "commit": "7f36b192f00a533306722f86d4af3b1ff317110c",
-      "digest": "f0717123ac10a001e44a08f5dd97283bc34277607a91285b86bba96b05fb8128",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "52bbb5f3c7a8e64ee7f047d59b741f693fdcd8df4e8d50c20a9d8c1093917898",
+      "dirty": "M .gitignore\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 10636,
-      "fingerprinted_at": "2026-08-09T21:38:20Z",
+      "fingerprinted_at": "2026-09-01T19:01:32Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
       "remote": "https://github.com/medphys23/OmniRoute.git"
     },
     "orsi": {
       "branch": "main",
-      "candidate_count": 38,
-      "commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
-      "digest": "e66fbaf77015a3a21da4e95218efae8bdca72f2042fe6a9c4370ecc11682764a",
+      "candidate_count": 44,
+      "commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
+      "digest": "0e12d8156e784acbb9b650a5899a6310fd0079d1da1a6d297e714a0bb209902a",
       "dirty": "",
       "dirty_count": 0,
-      "file_count": 309,
-      "fingerprinted_at": "2026-08-09T21:39:09Z",
+      "file_count": 448,
+      "fingerprinted_at": "2026-09-01T19:01:36Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
@@ -227,55 +277,52 @@
     },
     "practice-ops-dashboard": {
       "branch": "main",
-      "candidate_count": 17,
-      "commit": "b7bd064b98b96ed5750da58febcc5d1e68801952",
-      "digest": "5f4d0707074c41f9679ce9f6dc8d2def111856161951c917dde693a179944596",
-      "dirty": "",
-      "dirty_count": 0,
-      "file_count": 187,
-      "fingerprinted_at": "2026-08-05T20:23:42Z",
+      "commit": "3aed37699ddf56fbb9bda1825d47ebedca69402f",
+      "digest": "7e4db755f7080fb9b35980033fed4d3ed481ce8ab0f36a3ec8b2dd675f237587",
+      "dirty": "?? .cache/",
+      "dirty_count": 1,
+      "file_count": 220,
+      "fingerprinted_at": "2026-09-01T19:01:41Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
       "remote": "https://github.com/medphys23/practice-ops-dashboard.git"
     },
     "ps-robot-adaptor": {
       "branch": "main",
-      "candidate_count": 6,
       "commit": "5c4263c0cdc0366c84d03aef3c413d22a76885a4",
-      "digest": "7cb69982336b8284f2c38dd388f7167e9405b15167aa801f5bfeb022e8c98f55",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "566aa26753290a1a31b54ea09a7565600b894acffbe29a477d66b01e93a45fe1",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 64,
-      "fingerprinted_at": "2026-08-05T20:23:44Z",
+      "fingerprinted_at": "2026-09-01T19:01:42Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
       "remote": "https://github.com/medphys23/PS_robot_adaptor.git"
     },
     "travel-agent": {
       "branch": "main",
-      "candidate_count": 16,
       "commit": "be2a3c870ebe3498fb78bc872aec79527a1b8a00",
-      "digest": "ac04e52d3dfc023ca0cb02b2a2d5d2523186248914743a8fedf2c0fd78185909",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "a00dd10ab7e53753187efc9287a01f4c0d0b4006eedb4ead78f989570f492e40",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 33,
-      "fingerprinted_at": "2026-08-09T21:39:13Z",
+      "fingerprinted_at": "2026-09-01T19:01:43Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
       "remote": "https://github.com/medphys23/travel_agent.git"
     },
     "x-booking": {
       "branch": "dev01",
-      "candidate_count": 17,
-      "commit": "0808d6eefb6b67ac3949a53bce90a240297c8372",
-      "digest": "c030759065e926f3a48ad26baeae10282dec4908bdf89db493a0c135532ba085",
+      "candidate_count": 18,
+      "commit": "919e7823c70cc068c90fbece13f2d57cd9eb9602",
+      "digest": "47618260c568e2e471f98ec414f56ef4b48979d047312e54cb6c1d6d664228b4",
       "dirty": "",
       "dirty_count": 0,
-      "file_count": 82,
-      "fingerprinted_at": "2026-08-09T21:39:14Z",
+      "file_count": 117,
+      "fingerprinted_at": "2026-09-01T19:01:44Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
@@ -283,15 +330,14 @@
     },
     "xenios-finances": {
       "branch": "main",
-      "candidate_count": 7,
       "commit": "7db6cd341883664ed201a12e57d82d9a4e17923c",
-      "digest": "195eda0df892d07aaf21cb7662817eb999aeb188622e05ebe5f92ff555024cfb",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "5d3bd292a52e3a4145e613f0ddc5055b9aae7584e2b1fdcad8011cd66ce52b1a",
+      "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
+      "dirty_count": 2,
       "file_count": 44,
-      "fingerprinted_at": "2026-08-05T20:23:45Z",
+      "fingerprinted_at": "2026-09-01T19:01:46Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
       "remote": "https://github.com/medphys23/Xenios_FInances.git"
     }
@@ -304,12 +350,12 @@
         "scripts/discover_repositories.py",
         "--write-registry"
       ],
-      "elapsed_seconds": 3.016,
+      "elapsed_seconds": 3.985,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:29:14Z",
+      "finished_at": "2026-09-01T18:53:18Z",
       "name": "discover repositories",
-      "output_lines": 15,
-      "started_at": "2026-08-09T21:29:11Z"
+      "output_lines": 17,
+      "started_at": "2026-09-01T18:53:14Z"
     },
     {
       "command": [
@@ -318,24 +364,24 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 514.25,
+      "elapsed_seconds": 246.922,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:37:48Z",
+      "finished_at": "2026-09-01T18:57:25Z",
       "name": "refresh repository graphs",
-      "output_lines": 70,
-      "started_at": "2026-08-09T21:29:14Z"
+      "output_lines": 79,
+      "started_at": "2026-09-01T18:53:18Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 86.125,
+      "elapsed_seconds": 260.313,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:39:15Z",
+      "finished_at": "2026-09-01T19:01:46Z",
       "name": "harvest repositories",
-      "output_lines": 15,
-      "started_at": "2026-08-09T21:37:48Z"
+      "output_lines": 17,
+      "started_at": "2026-09-01T18:57:25Z"
     },
     {
       "command": [
@@ -344,12 +390,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 88.375,
+      "elapsed_seconds": 74.922,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:40:43Z",
+      "finished_at": "2026-09-01T19:03:01Z",
       "name": "audit dependency catalog",
       "output_lines": 2,
-      "started_at": "2026-08-09T21:39:15Z"
+      "started_at": "2026-09-01T19:01:46Z"
     },
     {
       "command": [
@@ -361,12 +407,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 1.515,
+      "elapsed_seconds": 1.422,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:40:44Z",
+      "finished_at": "2026-09-01T19:03:02Z",
       "name": "synthesize optimized instructions",
       "output_lines": 2,
-      "started_at": "2026-08-09T21:40:43Z"
+      "started_at": "2026-09-01T19:03:01Z"
     },
     {
       "command": [
@@ -375,12 +421,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 0.282,
+      "elapsed_seconds": 0.234,
       "exit_code": 0,
-      "finished_at": "2026-08-09T21:40:45Z",
+      "finished_at": "2026-09-01T19:03:02Z",
       "name": "audit context budget",
       "output_lines": 2,
-      "started_at": "2026-08-09T21:40:44Z"
+      "started_at": "2026-09-01T19:03:02Z"
     }
   ],
   "strict": false,

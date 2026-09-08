@@ -1,0 +1,103 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "beautifulsoup4",
+      "node",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "languages": [
+      "beautifulsoup4",
+      "node",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "919e7823c70cc068c90fbece13f2d57cd9eb9602",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "x-booking-workflow-visual-system-development",
+  "incompatible_when": [],
+  "procedure": [
+    "- Preserve client-specific RGB values in `ClientConfig.theme`; expose semantic colors and radii through `layout.tsx`, `globals.css`, and `tailwind.config.ts`.",
+    "- Prefer source-owned primitives in `src/components/ui` over one-off button/card/dialog styling. Add only the primitives the product uses.",
+    "- Use Lucide for generic interface icons. Keep icons decorative when adjacent text supplies the accessible name; label icon-only controls.",
+    "- Keep Anime.js as the sole general-purpose animation engine. Reuse `src/lib/motion/tokens.ts`, keep movement restrained, and preserve visible no-JavaScript/reduced-motion content.",
+    "- Keep native page scrolling. Do not place scroll interception or entrance animation over the Google Appointment Scheduling iframe.",
+    "- Keep generic behavior client-neutral; do not embed Dr. Alexia-specific presentation logic in shared components.",
+    "- Store approved media under `public/clients/<client-id>/` and reference it only through validated `branding.images` config. Keep localized alt text and crop focal points with the asset metadata; shared components must never import a named ",
+    "- 2026-08-10: Added config-driven client hero/portrait/meet-doctor/clinic media, editorial portrait treatment, bilingual display typography, and the homepage visual-chapter pattern.",
+    "- 2026-08-10: Added the selective shadcn-compatible source foundation, unified Lucide icon language, shared motion tokens, Radix Sheet navigation, and explicit Greek-header/mobile-phone regression coverage."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T19:01:44Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T19:01:44Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Use this workflow for shared UI primitives, theme tokens, icons, and motion changes.",
+  "tags": [
+    "beautifulsoup4",
+    "branch_sensitive",
+    "contact_data",
+    "no_patient_data",
+    "node",
+    "openpyxl",
+    "playwright",
+    "python",
+    "repo-workflow",
+    "scraper",
+    "skills-md",
+    "tqdm",
+    "x-booking"
+  ],
+  "title": "X_booking workflow: Visual-system development",
+  "trigger_phrases": [
+    "X_booking",
+    "Visual-system development"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

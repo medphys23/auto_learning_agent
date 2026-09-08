@@ -1,0 +1,151 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "node",
+      "pnpm",
+      "skills",
+      "typescript"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "node",
+      "pnpm",
+      "skills",
+      "typescript"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "80feb48868972d518436f26711509bc78595b5cb",
+    "source_paths": [
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\skills",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "skills-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "dependencies": [
+        "tar",
+        "yaml"
+      ],
+      "dev_dependencies": [
+        "@clack/prompts",
+        "@types/bun",
+        "@types/node",
+        "@vercel/detect-agent",
+        "husky",
+        "lint-staged",
+        "obuild",
+        "picocolors",
+        "prettier",
+        "simple-git",
+        "typescript",
+        "vitest",
+        "xdg-basedir"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "build",
+        "dev",
+        "exec:test",
+        "format",
+        "format:check",
+        "generate-licenses",
+        "prepare",
+        "prepublishOnly",
+        "publish:snapshot",
+        "test",
+        "type-check"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-09-08T18:56:16Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-08T18:56:16Z"
+  },
+  "registry_stack_tags": [
+    "codex",
+    "cursor",
+    "node",
+    "pnpm",
+    "skills",
+    "typescript"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for skills: registry tags codex, cursor, node, pnpm, skills, typescript; 1 tracked manifest file(s).",
+  "tags": [
+    "auth",
+    "codex",
+    "cursor",
+    "dependency-profile",
+    "filesystem_write",
+    "global_agent_configuration",
+    "manifest-profile",
+    "network",
+    "node",
+    "not_owned",
+    "pnpm",
+    "read_only_reference",
+    "skills",
+    "stack-profile",
+    "subprocess",
+    "supply_chain",
+    "third_party",
+    "typescript"
+  ],
+  "title": "skills stack and dependency profile",
+  "trigger_phrases": [
+    "skills",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

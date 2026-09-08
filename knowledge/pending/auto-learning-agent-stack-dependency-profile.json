@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "723a5a2a2afaf6c05e31f013c8ce32b646a02dc3",
+    "source_commit": "e71c9a39af725f6ab90ae6efa41bc0c499fc8372",
     "source_paths": [
       "requirements.txt"
     ],
@@ -56,13 +56,13 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:37:51Z",
+    "created_at": "2026-09-08T18:53:07Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:37:51Z"
+    "updated_at": "2026-09-08T18:53:07Z"
   },
   "registry_stack_tags": [
     "codex",

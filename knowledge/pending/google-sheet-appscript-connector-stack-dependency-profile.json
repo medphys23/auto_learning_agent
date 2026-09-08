@@ -1,0 +1,113 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c89a25e736f40a308250d314a34ebabbb7963cb9",
+    "source_paths": [
+      "package-lock.json",
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "google-sheet-appscript-connector-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "name": "package-lock.json",
+      "path": "package-lock.json",
+      "summary": "Tracked manifest file `package-lock.json` is present."
+    },
+    {
+      "dependencies": [],
+      "dev_dependencies": [
+        "@google/clasp",
+        "@types/node",
+        "tsx",
+        "typescript"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "auth",
+        "lint",
+        "smoke",
+        "start",
+        "test",
+        "verify"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-08-13T09:32:12Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "package-lock.json",
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-13T09:32:12Z"
+  },
+  "registry_stack_tags": [
+    "node"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for google_sheet_appscript_connector: registry tags node; 2 tracked manifest file(s).",
+  "tags": [
+    "dependency-profile",
+    "google-sheet-appscript-connector",
+    "manifest-profile",
+    "node",
+    "stack-profile"
+  ],
+  "title": "google_sheet_appscript_connector stack and dependency profile",
+  "trigger_phrases": [
+    "google_sheet_appscript_connector",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

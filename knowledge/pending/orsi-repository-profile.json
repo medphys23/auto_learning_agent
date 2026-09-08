@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -49,18 +57,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:10Z",
+    "created_at": "2026-09-01T19:01:36Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:10Z"
+    "updated_at": "2026-09-01T19:01:36Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 309,
-    "harvestable_text_file_count": 36,
+    "file_count": 448,
+    "harvestable_text_file_count": 62,
     "purpose_excerpt": "ORSI **metric-based robotic surgery training materials**: proficiency-based progression (PBP) metrics, Delphi-ready DOCX masters, and PowerPoint review decks for cholecystectomy, low anterior resection, and right hemicolectomy. The repo als",
     "remote": "https://github.com/medphys23/ORSI.git",
     "stack_excerpt": "Python 3.11+ build scripts under `Orsi_Metrics_Research/scripts/`."
@@ -78,8 +86,13 @@
   "status": "candidate",
   "summary": "ORSI **metric-based robotic surgery training materials**: proficiency-based progression (PBP) metrics, Delphi-ready DOCX masters, and PowerPoint review decks for cholecystectomy, low anterior resection, and right hemicolectomy. The repo als",
   "tags": [
+    "auth",
+    "credentials",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
     "local-github-analysis",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -88,7 +101,9 @@
     "python",
     "repository-profile",
     "research",
-    "streamlit"
+    "slack",
+    "streamlit",
+    "vercel"
   ],
   "title": "ORSI repository profile",
   "trigger_phrases": [

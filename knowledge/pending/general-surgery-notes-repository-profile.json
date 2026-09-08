@@ -1,0 +1,87 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-surgery-notes-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository."
+  ],
+  "provenance": {
+    "created_at": "2026-08-22T10:21:33Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-22T10:21:33Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 42,
+    "harvestable_text_file_count": 39,
+    "purpose_excerpt": "This repository standardizes one Microsoft Word note at a time against the retained General Surgery master DOCX. It is a document-formatting tool, not a medical-content editor.",
+    "remote": "https://github.com/medphys23/General_surgery_notes.git",
+    "stack_excerpt": ""
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "This repository standardizes one Microsoft Word note at a time against the retained General Surgery master DOCX. It is a document-formatting tool, not a medical-content editor.",
+  "tags": [
+    "general-surgery-notes",
+    "local-github-analysis",
+    "python",
+    "repository-profile"
+  ],
+  "title": "General_surgery_notes repository profile",
+  "trigger_phrases": [
+    "General_surgery_notes",
+    "general-surgery-notes",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

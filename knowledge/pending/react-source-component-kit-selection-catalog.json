@@ -1,0 +1,190 @@
+{
+  "id": "react-source-component-kit-selection-catalog",
+  "title": "React source component kit selection catalog",
+  "type": "reference",
+  "scope": "stack",
+  "status": "candidate",
+  "summary": "Selection reference for Watermelon UI and Motion Primitives, two MIT-licensed source-component kits for React and Next.js. Use it to evaluate a specific shadcn-compatible or animated React component without treating either registry as a blanket dependency recommendation.",
+  "trigger_phrases": [
+    "use Watermelon UI",
+    "use Motion Primitives",
+    "add animated React components",
+    "choose a shadcn registry",
+    "copy paste React components",
+    "use source-owned UI components",
+    "choose a React component kit"
+  ],
+  "tags": [
+    "accessibility",
+    "animated-components",
+    "animation",
+    "copy-paste-components",
+    "dependency-selection",
+    "motion",
+    "motion-primitives",
+    "nextjs",
+    "react",
+    "shadcn",
+    "shadcn-registry",
+    "source-components",
+    "tailwind-css",
+    "typescript",
+    "ui-library",
+    "watermelon-ui"
+  ],
+  "applicability": {
+    "languages": ["typescript", "javascript"],
+    "frameworks": ["react", "nextjs"],
+    "runtimes": ["browser", "node"],
+    "operating_systems": ["cross-platform"],
+    "deployment_targets": ["web"],
+    "repository_markers": ["package.json", "react", "tailwindcss"]
+  },
+  "incompatible_when": [
+    "There is no concrete UI or interaction requirement for the component being considered.",
+    "The repository cannot accept copied source code and ongoing ownership of its maintenance, security, and accessibility.",
+    "The component's generated files or dependencies conflict with the repository's framework, React version, Tailwind version, design system, bundle budget, or client-component policy.",
+    "The proposed animation cannot provide an equivalent reduced-motion experience or would distract from a high-stakes workflow.",
+    "A registry entry cannot be reviewed completely before its code and dependencies are added."
+  ],
+  "procedure": [
+    "Define the specific missing component and its semantic, responsive, accessibility, and visual acceptance criteria before opening a registry.",
+    "Inspect the exact registry JSON, copied source, transitive package requests, current license, upstream status, and recent security advisories before adoption; never bulk-import a registry.",
+    "Distinguish open-source core components from paid or separately licensed products and exclude commercial assets unless the repository has explicit purchase and license approval.",
+    "Obtain approval before adding any production dependency, then import only one named component or the smallest coherent set and review every generated file and manifest change.",
+    "Treat copied components as repository-owned code: adapt them to local tokens and conventions, remove unused variants and dependencies, and keep the source understandable without the registry.",
+    "For Next.js, place animation and browser-only behavior in the smallest practical client boundary while leaving surrounding data loading and static content in Server Components.",
+    "Implement keyboard, screen-reader, focus, contrast, touch, responsive, and prefers-reduced-motion behavior before retaining the component.",
+    "Recheck live versions, peer dependencies, registry contents, and license terms each time a component is adopted because source registries can change without a package release."
+  ],
+  "verification": [
+    "Confirm the selected component's current source license and preserve required copyright and license notices.",
+    "Review the exact files and dependencies produced by the registry or CLI; reject unrelated components, assets, analytics, utilities, and packages.",
+    "Verify React, Next.js, Tailwind, path-alias, and runtime-package compatibility against the target repository's locked versions.",
+    "Test semantic structure, keyboard operation, focus behavior, screen-reader labels, touch behavior, responsive layout, and prefers-reduced-motion behavior.",
+    "Run the target repository's dependency, lint, type, unit, accessibility, browser, build, and bundle checks required by its local instructions."
+  ],
+  "rollback": [
+    "Remove rejected copied files, imports, styles, assets, and registry configuration introduced for the component.",
+    "Remove newly added packages only when no retained code uses them, using the target repository's package manager so its lockfile stays consistent.",
+    "Restore the prior local component or semantic implementation and rerun the target repository's canonical verification.",
+    "Keep this record at candidate status, or delete it before promotion if its evidence becomes stale or incorrect."
+  ],
+  "libraries": [
+    {
+      "name": "Watermelon UI",
+      "license": "MIT",
+      "distribution_model": "shadcn-compatible source-component registry; selected component source is copied into the consuming repository rather than supplied as one monolithic runtime package",
+      "versioning_note": "The registry is mutable and does not provide one stable runtime package version for all components; inspect the exact registry JSON and upstream source at adoption time.",
+      "prerequisites": ["React 18 or newer", "Tailwind CSS 4", "an @/ source path alias for the documented CLI flow"],
+      "suited_for": ["selectively filling a concrete component gap", "source-owned React UI primitives", "projects already compatible with Tailwind CSS 4 and shadcn registry conventions", "teams prepared to maintain copied component code"],
+      "avoid_when": ["the goal is to import an entire visual system", "the repository already has an adequate local primitive", "generated dependencies or styling conflict with the local design system", "the component cannot be fully audited before use"],
+      "integration_notes": [
+        "Use the official shadcn registry URL for one named component or copy that component manually; do not clone or import the full catalog into an application.",
+        "Inspect each component's registry JSON because dependency requirements vary. The upstream registry uses React 19, Tailwind CSS 4, Radix-family primitives, Framer Motion or Motion, Recharts, and other component-specific packages, but a consumer should keep only what its selected component requires.",
+        "Review all generated files before keeping them, align styles with repository tokens, and remove demo content, remote assets, analytics hooks, and unused variants.",
+        "Mark only components that use browser state, effects, or animation as client components in Next.js."
+      ],
+      "accessibility_notes": [
+        "Do not assume a composed component is accessible merely because it uses an accessible primitive library.",
+        "Verify names, roles, states, focus trapping and restoration, escape behavior, keyboard interaction, contrast, touch targets, responsive behavior, and reduced-motion behavior for the exact imported component."
+      ],
+      "official_docs": [
+        "https://github.com/WatermelonCorp/watermellon-registry",
+        "https://github.com/WatermelonCorp/watermellon-registry/blob/main/LICENSE",
+        "https://registry.watermelon.sh/"
+      ]
+    },
+    {
+      "name": "Motion Primitives",
+      "license": "MIT for the open-source core",
+      "distribution_model": "copy-paste source components installed individually through the motion-primitives CLI or copied manually; Motion is a separate runtime dependency",
+      "release_status": "The upstream project describes the open-source core as beta and warns that significant updates can occur.",
+      "packages": [
+        {
+          "name": "motion-primitives",
+          "purpose": "Optional source-copying CLI, not the component runtime",
+          "observed_version": "0.1.0",
+          "license": "MIT"
+        },
+        {
+          "name": "motion",
+          "purpose": "Animation runtime used by the copied components",
+          "observed_version": "13.1.0",
+          "license": "MIT",
+          "observed_peer_dependencies": {
+            "react": "^18.0.0 || ^19.0.0",
+            "react-dom": "^18.0.0 || ^19.0.0"
+          }
+        }
+      ],
+      "prerequisites": ["Tailwind CSS", "motion", "a clsx and tailwind-merge class utility", "lucide-react for components that use the documented icons"],
+      "suited_for": ["one purposeful animated interaction", "marketing or product surfaces where motion supports comprehension", "teams prepared to own copied animation source", "React applications that can accept the Motion runtime"],
+      "avoid_when": ["animation is decorative or distracting", "a CSS transition meets the requirement", "the workflow is high-stakes or speed-sensitive", "the project cannot absorb beta source changes", "reduced-motion behavior is undefined"],
+      "integration_notes": [
+        "Import one named core component at a time and inspect the copied source and requested packages before retaining it.",
+        "Keep Motion-driven code inside the smallest practical client component in Next.js and avoid hydrating surrounding static content.",
+        "Prefer transform and opacity animations, avoid layout instability, and measure bundle and runtime cost after adoption.",
+        "Motion Primitives Pro is a separately purchased product with a non-MIT commercial license; do not copy, catalog, or use Pro assets as open-source core components."
+      ],
+      "accessibility_notes": [
+        "Provide an equivalent prefers-reduced-motion path that removes nonessential movement and avoids long transitions.",
+        "Animation must not obscure focus, delay required actions, convey essential state only through motion, or introduce flashing, vestibular, keyboard, or screen-reader barriers."
+      ],
+      "official_docs": [
+        "https://motion-primitives.com/docs",
+        "https://motion-primitives.com/docs/installation",
+        "https://github.com/ibelick/motion-primitives",
+        "https://github.com/ibelick/motion-primitives/blob/main/LICENCE.md",
+        "https://pro.motion-primitives.com/docs/licence"
+      ]
+    }
+  ],
+  "evidence": {
+    "source_repository": "Official project repositories, documentation, and npm registry",
+    "source_commit": "",
+    "source_paths": [
+      "https://github.com/WatermelonCorp/watermellon-registry",
+      "https://github.com/WatermelonCorp/watermellon-registry/blob/main/LICENSE",
+      "https://registry.watermelon.sh/",
+      "https://motion-primitives.com/docs/installation",
+      "https://github.com/ibelick/motion-primitives",
+      "https://github.com/ibelick/motion-primitives/blob/main/LICENCE.md",
+      "https://pro.motion-primitives.com/docs/licence",
+      "https://registry.npmjs.org/"
+    ],
+    "task_or_issue": "user-requested-source-component-catalog-2026-08-14",
+    "tests_executed": [
+      "npm view motion-primitives version license repository dependencies --json",
+      "npm view motion version license peerDependencies --json",
+      "Reviewed the live Watermelon UI repository manifest and official registry documentation"
+    ],
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "accepted_by_user": true,
+    "production_observation_window": "",
+    "npm_metadata_observed_at": "2026-08-14"
+  },
+  "provenance": {
+    "created_at": "2026-08-14T00:00:00Z",
+    "updated_at": "2026-08-14T00:00:00Z",
+    "created_by": "codex",
+    "supersedes": [],
+    "derived_from": [
+      "official project repositories and documentation",
+      "live npm registry metadata",
+      "practice-ops-dashboard architecture and dependency assessment",
+      "react-ui-library-selection-catalog"
+    ]
+  },
+  "confidence": {
+    "score": 0.9,
+    "rationale": "Core licenses, distribution models, prerequisites, current CLI and Motion runtime metadata, beta status, and the separate Pro license were checked against official sources on 2026-08-14. The record remains a candidate because mutable registries, package versions, and project requirements must be revalidated for each adoption."
+  },
+  "reuse": {
+    "retrieval_count": 0,
+    "successful_reuse_count": 0,
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null
+  }
+}

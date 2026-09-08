@@ -1,0 +1,185 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c6f413f477e07f73decb7e34b679bf43f6f8c026",
+    "source_paths": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/ci.yml",
+      "AGENTS.md",
+      "next-env.d.ts",
+      "next.config.ts",
+      "src/app/(root)/layout.tsx",
+      "src/app/(root)/page.tsx",
+      "src/app/[locale]/[...missing]/page.tsx",
+      "tests/content.test.ts",
+      "tests/e2e/portfolio.spec.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "cv-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T18:57:31Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/ci.yml",
+      "AGENTS.md",
+      "next-env.d.ts",
+      "next.config.ts",
+      "src/app/(root)/layout.tsx",
+      "src/app/(root)/page.tsx",
+      "src/app/[locale]/[...missing]/page.tsx",
+      "tests/content.test.ts",
+      "tests/e2e/portfolio.spec.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T18:57:31Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/app/(root)/layout.tsx",
+          "src/app/(root)/page.tsx",
+          "src/app/[locale]/[...missing]/page.tsx",
+          "src/app/[locale]/cv/page.tsx",
+          "src/app/[locale]/journey/[slug]/page.tsx",
+          "src/app/[locale]/layout.tsx",
+          "src/app/[locale]/not-found.tsx",
+          "src/app/[locale]/opengraph-image.tsx"
+        ],
+        "file_count": 35,
+        "graph_node_count": 133,
+        "suffixes": {
+          ".css": 1,
+          ".json": 1,
+          ".ts": 7,
+          ".tsx": 26
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "next-env.d.ts",
+          "next.config.ts",
+          "package.json",
+          "playwright.config.ts",
+          "README.md",
+          "skills.md",
+          "tsconfig.json"
+        ],
+        "file_count": 10,
+        "graph_node_count": 117,
+        "suffixes": {
+          ".json": 3,
+          ".md": 3,
+          ".ts": 4
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/content.test.ts",
+          "tests/e2e/portfolio.spec.ts"
+        ],
+        "file_count": 2,
+        "graph_node_count": 2,
+        "suffixes": {
+          ".ts": 2
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 2
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/workflows/ci.yml"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".yml": 1
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 284,
+    "graph_source_file_count": 50,
+    "harvestable_text_file_count": 50
+  },
+  "status": "candidate",
+  "summary": "Safe source map for CV: 5 harvestable areas, led by src, ., tests, .cursor, .github.",
+  "tags": [
+    "architecture-map",
+    "cv",
+    "local-github-analysis",
+    "node",
+    "source-map"
+  ],
+  "title": "CV source and architecture map",
+  "trigger_phrases": [
+    "CV",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

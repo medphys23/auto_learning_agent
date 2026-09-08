@@ -1,0 +1,99 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.78
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c89a25e736f40a308250d314a34ebabbb7963cb9",
+    "source_paths": [
+      "AGENTS.md",
+      "tests/appscript.test.ts",
+      "tests/google.test.ts",
+      "tests/project.test.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "google-sheet-appscript-connector-verification-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use AGENTS.md verification commands first.",
+    "Use test and CI signals to broaden verification when touching shared behavior.",
+    "Do not claim production readiness from deployment files alone."
+  ],
+  "provenance": {
+    "created_at": "2026-08-13T09:32:12Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md",
+      "tests/appscript.test.ts",
+      "tests/google.test.ts",
+      "tests/project.test.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-13T09:32:12Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Verification profile for google_sheet_appscript_connector: 0 AGENTS command(s), 3 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "tags": [
+    "ci",
+    "deployment-signals",
+    "google-sheet-appscript-connector",
+    "node",
+    "tests",
+    "verification-profile"
+  ],
+  "test_ci_deployment_signals": {
+    "ci": [],
+    "deployment": [],
+    "tests": [
+      "tests/appscript.test.ts",
+      "tests/google.test.ts",
+      "tests/project.test.ts"
+    ]
+  },
+  "title": "google_sheet_appscript_connector verification, tests, CI, and deployment signals",
+  "trigger_phrases": [
+    "google_sheet_appscript_connector",
+    "test",
+    "verification",
+    "ci",
+    "deployment"
+  ],
+  "type": "reference",
+  "verification": [
+    "Run applicable AGENTS.md verification commands before reporting readiness."
+  ],
+  "verification_commands": []
+}

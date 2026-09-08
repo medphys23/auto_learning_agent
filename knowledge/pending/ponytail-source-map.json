@@ -1,0 +1,273 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "javascript",
+      "node",
+      "plugins",
+      "skills"
+    ],
+    "languages": [
+      "codex",
+      "javascript",
+      "node",
+      "plugins",
+      "skills"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "356918eba965ee1eac64bd3a7f0dd02108350de5",
+    "source_paths": [
+      ".cursor/rules/ponytail.mdc",
+      ".github/FUNDING.yml",
+      ".github/copilot-instructions.md",
+      ".github/plugin/marketplace.json",
+      "AGENTS.md",
+      "__init__.py",
+      "after-install.md",
+      "benchmarks/README.md",
+      "benchmarks/agentic/README.md",
+      "examples/README.md",
+      "pi-extension/package.json",
+      "ponytail-mcp/README.md",
+      "ponytail-mcp/package.json",
+      "scripts/build-openclaw-skills.js",
+      "scripts/check-rule-copies.js",
+      "scripts/check-versions.js",
+      "tests/behavior.test.js",
+      "tests/commands.test.js",
+      "tests/copilot-plugin.test.js"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ponytail",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "ponytail-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-09-08T18:56:13Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/ponytail.mdc",
+      ".github/FUNDING.yml",
+      ".github/copilot-instructions.md",
+      ".github/plugin/marketplace.json",
+      "AGENTS.md",
+      "__init__.py",
+      "after-install.md",
+      "benchmarks/README.md",
+      "benchmarks/agentic/README.md",
+      "examples/README.md",
+      "pi-extension/package.json",
+      "ponytail-mcp/README.md",
+      "ponytail-mcp/package.json",
+      "scripts/build-openclaw-skills.js",
+      "scripts/check-rule-copies.js",
+      "scripts/check-versions.js",
+      "tests/behavior.test.js",
+      "tests/commands.test.js",
+      "tests/copilot-plugin.test.js"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-08T18:56:13Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "tests",
+        "examples": [
+          "tests/behavior.test.js",
+          "tests/commands.test.js",
+          "tests/copilot-plugin.test.js",
+          "tests/correctness.test.js",
+          "tests/gemini-extension.test.js",
+          "tests/grok-plugin.test.js",
+          "tests/hermes-plugin.test.js",
+          "tests/hooks-windows.test.js"
+        ],
+        "file_count": 15,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".js": 15
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "__init__.py",
+          "after-install.md",
+          "AGENTS.md",
+          "gemini-extension.json",
+          "opencode.json",
+          "package.json",
+          "plugin.json",
+          "plugin.yaml"
+        ],
+        "file_count": 11,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 4,
+          ".md": 5,
+          ".py": 1,
+          ".yaml": 1
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/copilot-instructions.md",
+          ".github/FUNDING.yml",
+          ".github/plugin/marketplace.json",
+          ".github/plugin/plugin.json",
+          ".github/workflows/publish.yml",
+          ".github/workflows/test.yml"
+        ],
+        "file_count": 6,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 2,
+          ".md": 1,
+          ".yml": 3
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/build-openclaw-skills.js",
+          "scripts/check-rule-copies.js",
+          "scripts/check-versions.js",
+          "scripts/publish-openclaw-skills.js",
+          "scripts/uninstall.js"
+        ],
+        "file_count": 5,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".js": 5
+        }
+      },
+      {
+        "area": "benchmarks",
+        "examples": [
+          "benchmarks/agentic/README.md",
+          "benchmarks/README.md"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 2
+        }
+      },
+      {
+        "area": "ponytail-mcp",
+        "examples": [
+          "ponytail-mcp/package.json",
+          "ponytail-mcp/README.md"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 1,
+          ".md": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/ponytail.mdc"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 1
+        }
+      },
+      {
+        "area": "examples",
+        "examples": [
+          "examples/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "pi-extension",
+        "examples": [
+          "pi-extension/package.json"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 1
+        }
+      }
+    ],
+    "graph_index_used": false,
+    "graph_node_count": 0,
+    "graph_source_file_count": 0,
+    "harvestable_text_file_count": 44
+  },
+  "status": "candidate",
+  "summary": "Safe source map for ponytail: 9 harvestable areas, led by tests, ., .github, scripts, benchmarks, ponytail-mcp, .cursor, examples.",
+  "tags": [
+    "agent_behavior",
+    "architecture-map",
+    "codex",
+    "hooks",
+    "javascript",
+    "local-github-analysis",
+    "node",
+    "not_owned",
+    "plugins",
+    "ponytail",
+    "read_only_reference",
+    "skills",
+    "source-map",
+    "supply_chain",
+    "third_party"
+  ],
+  "title": "ponytail source and architecture map",
+  "trigger_phrases": [
+    "ponytail",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

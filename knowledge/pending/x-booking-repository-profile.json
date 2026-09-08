@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "0808d6eefb6b67ac3949a53bce90a240297c8372",
+    "source_commit": "919e7823c70cc068c90fbece13f2d57cd9eb9602",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -51,18 +51,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:14Z",
+    "created_at": "2026-09-01T19:01:44Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:14Z"
+    "updated_at": "2026-09-01T19:01:44Z"
   },
   "repository_metadata": {
     "branch": "dev01",
-    "file_count": 82,
-    "harvestable_text_file_count": 71,
+    "file_count": 117,
+    "harvestable_text_file_count": 102,
     "purpose_excerpt": "Plan and build a reusable bilingual medical practice website and appointment-booking platform. The current pilot target is Dr. Alexia's pediatric practice in Cyprus, but the codebase must be reusable for other doctors and appointment-based ",
     "remote": "https://github.com/medphys23/X_booking.git",
     "stack_excerpt": "Application stack: Next.js App Router, TypeScript, React Server Components, Tailwind CSS, and Zod for runtime validation. Deployment target is Vercel."

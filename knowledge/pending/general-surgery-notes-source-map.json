@@ -1,0 +1,210 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
+    "source_paths": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "config/example.toml",
+      "config/overrides/ambulatory_surgery.toml",
+      "config/overrides/atls_and_trauma.toml",
+      "pyproject.toml",
+      "scripts/generate_word_fixtures.py",
+      "src/general_surgery_notes/__init__.py",
+      "src/general_surgery_notes/__main__.py",
+      "src/general_surgery_notes/audit.py",
+      "tests/test_config.py",
+      "tests/test_ooxml.py",
+      "tests/test_overrides.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "general-surgery-notes-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-22T10:21:34Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      "AGENTS.md",
+      "README.md",
+      "config/example.toml",
+      "config/overrides/ambulatory_surgery.toml",
+      "config/overrides/atls_and_trauma.toml",
+      "pyproject.toml",
+      "scripts/generate_word_fixtures.py",
+      "src/general_surgery_notes/__init__.py",
+      "src/general_surgery_notes/__main__.py",
+      "src/general_surgery_notes/audit.py",
+      "tests/test_config.py",
+      "tests/test_ooxml.py",
+      "tests/test_overrides.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-22T10:21:34Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/general_surgery_notes/__init__.py",
+          "src/general_surgery_notes/__main__.py",
+          "src/general_surgery_notes/audit.py",
+          "src/general_surgery_notes/cli.py",
+          "src/general_surgery_notes/config.py",
+          "src/general_surgery_notes/models.py",
+          "src/general_surgery_notes/ooxml.py",
+          "src/general_surgery_notes/overrides.py"
+        ],
+        "file_count": 12,
+        "graph_node_count": 140,
+        "suffixes": {
+          ".py": 12
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/test_config.py",
+          "tests/test_ooxml.py",
+          "tests/test_overrides.py",
+          "tests/test_processing.py"
+        ],
+        "file_count": 4,
+        "graph_node_count": 54,
+        "suffixes": {
+          ".py": 4
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/generate_word_fixtures.py"
+        ],
+        "file_count": 1,
+        "graph_node_count": 3,
+        "suffixes": {
+          ".py": 1
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "pyproject.toml",
+          "README.md",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 1,
+        "suffixes": {
+          ".md": 3,
+          ".toml": 1
+        }
+      },
+      {
+        "area": "config",
+        "examples": [
+          "config/example.toml",
+          "config/overrides/ambulatory_surgery.toml",
+          "config/overrides/atls_and_trauma.toml",
+          "config/overrides/breast_cancer.toml",
+          "config/overrides/colon_pdta.toml",
+          "config/overrides/endoscopy_english_translation.toml",
+          "config/overrides/exocrine_pancreatic_tumors.toml",
+          "config/overrides/infections_and.toml"
+        ],
+        "file_count": 15,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 1,
+          ".md": 1,
+          ".toml": 13
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 3,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 3
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 222,
+    "graph_source_file_count": 18,
+    "harvestable_text_file_count": 39
+  },
+  "status": "candidate",
+  "summary": "Safe source map for General_surgery_notes: 6 harvestable areas, led by src, tests, scripts, ., config, .cursor.",
+  "tags": [
+    "architecture-map",
+    "general-surgery-notes",
+    "local-github-analysis",
+    "python",
+    "source-map"
+  ],
+  "title": "General_surgery_notes source and architecture map",
+  "trigger_phrases": [
+    "General_surgery_notes",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

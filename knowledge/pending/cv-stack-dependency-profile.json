@@ -1,0 +1,139 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.74
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c6f413f477e07f73decb7e34b679bf43f6f8c026",
+    "source_paths": [
+      "package.json"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "cv-stack-dependency-profile",
+  "incompatible_when": [],
+  "manifest_signals": [
+    {
+      "dependencies": [
+        "@react-three/fiber",
+        "@vercel/analytics",
+        "@vercel/speed-insights",
+        "clsx",
+        "lucide-react",
+        "motion",
+        "next",
+        "react",
+        "react-dom",
+        "tailwind-merge",
+        "three"
+      ],
+      "dev_dependencies": [
+        "@axe-core/playwright",
+        "@playwright/test",
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "@types/three",
+        "eslint",
+        "eslint-config-next",
+        "pdfjs-dist",
+        "postcss",
+        "tailwindcss",
+        "typescript",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "package.json",
+      "scripts": [
+        "build",
+        "cv:accept",
+        "cv:check",
+        "cv:extract",
+        "dev",
+        "lint",
+        "prebuild",
+        "predev",
+        "start",
+        "test",
+        "test:e2e",
+        "test:watch",
+        "typecheck",
+        "typegen",
+        "validate:production",
+        "verify",
+        "verify:launch"
+      ]
+    }
+  ],
+  "procedure": [
+    "Use registry stack tags and manifest signals to select tools and verification commands.",
+    "Before adding dependencies, follow repo AGENTS.md dependency-isolation rules.",
+    "Do not infer approval to install new dependencies from this profile."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T18:57:31Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "package.json"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T18:57:31Z"
+  },
+  "registry_stack_tags": [
+    "node"
+  ],
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Stack and dependency profile for CV: registry tags node; 1 tracked manifest file(s).",
+  "tags": [
+    "cv",
+    "dependency-profile",
+    "manifest-profile",
+    "node",
+    "stack-profile"
+  ],
+  "title": "CV stack and dependency profile",
+  "trigger_phrases": [
+    "CV",
+    "dependencies",
+    "stack",
+    "package scripts",
+    "requirements"
+  ],
+  "type": "reference",
+  "verification": [
+    "Parse tracked manifests again before changing dependencies or package scripts."
+  ]
+}

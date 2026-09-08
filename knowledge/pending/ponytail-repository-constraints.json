@@ -1,0 +1,96 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "javascript",
+      "node",
+      "plugins",
+      "skills"
+    ],
+    "languages": [
+      "codex",
+      "javascript",
+      "node",
+      "plugins",
+      "skills"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.6
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "356918eba965ee1eac64bd3a7f0dd02108350de5",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ponytail",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "ponytail-repository-constraints",
+  "incompatible_when": [],
+  "procedure": [
+    "Apply risk tags before reusing knowledge: agent_behavior, hooks, not_owned, read_only_reference, supply_chain, third_party"
+  ],
+  "provenance": {
+    "created_at": "2026-09-08T18:56:13Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-08T18:56:13Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Safety and applicability constraints for ponytail.",
+  "tags": [
+    "agent_behavior",
+    "codex",
+    "hooks",
+    "javascript",
+    "node",
+    "not_owned",
+    "plugins",
+    "ponytail",
+    "read_only_reference",
+    "repo-agents",
+    "repository-constraints",
+    "skills",
+    "supply_chain",
+    "third_party"
+  ],
+  "title": "ponytail repository constraints",
+  "trigger_phrases": [
+    "ponytail",
+    "constraints",
+    "safety",
+    "risk"
+  ],
+  "type": "constraint",
+  "verification": [
+    "Check AGENTS.md constraints before reusing this repository pattern elsewhere."
+  ]
+}

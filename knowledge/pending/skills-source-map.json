@@ -1,0 +1,228 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "codex",
+      "cursor",
+      "node",
+      "pnpm",
+      "skills",
+      "typescript"
+    ],
+    "languages": [
+      "codex",
+      "cursor",
+      "node",
+      "pnpm",
+      "skills",
+      "typescript"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "80feb48868972d518436f26711509bc78595b5cb",
+    "source_paths": [
+      ".github/ISSUE_TEMPLATE/agent-request.yml",
+      ".github/ISSUE_TEMPLATE/bug-report.yml",
+      ".github/ISSUE_TEMPLATE/config.yml",
+      "AGENTS.md",
+      "package.json",
+      "pnpm-lock.yaml",
+      "scripts/execute-tests.ts",
+      "scripts/generate-licenses.ts",
+      "scripts/sync-agents.ts",
+      "src/add-prompt.test.ts",
+      "src/add.test.ts",
+      "src/add.ts",
+      "tests/archive.test.ts",
+      "tests/blob-fetch-tree-auth.test.ts",
+      "tests/blob-root-skill.test.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\skills",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "skills-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-09-08T18:56:16Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".github/ISSUE_TEMPLATE/agent-request.yml",
+      ".github/ISSUE_TEMPLATE/bug-report.yml",
+      ".github/ISSUE_TEMPLATE/config.yml",
+      "AGENTS.md",
+      "package.json",
+      "pnpm-lock.yaml",
+      "scripts/execute-tests.ts",
+      "scripts/generate-licenses.ts",
+      "scripts/sync-agents.ts",
+      "src/add-prompt.test.ts",
+      "src/add.test.ts",
+      "src/add.ts",
+      "tests/archive.test.ts",
+      "tests/blob-fetch-tree-auth.test.ts",
+      "tests/blob-root-skill.test.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-08T18:56:16Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/add-prompt.test.ts",
+          "src/add.test.ts",
+          "src/add.ts",
+          "src/agents.ts",
+          "src/archive.ts",
+          "src/blob.ts",
+          "src/cli.test.ts",
+          "src/cli.ts"
+        ],
+        "file_count": 51,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".ts": 51
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/archive.test.ts",
+          "tests/blob-fetch-tree-auth.test.ts",
+          "tests/blob-root-skill.test.ts",
+          "tests/cross-platform-paths.test.ts",
+          "tests/direct-download-add.test.ts",
+          "tests/dist.test.ts",
+          "tests/download-source.test.ts",
+          "tests/eve-agent.test.ts"
+        ],
+        "file_count": 45,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".ts": 45
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/ISSUE_TEMPLATE/agent-request.yml",
+          ".github/ISSUE_TEMPLATE/bug-report.yml",
+          ".github/ISSUE_TEMPLATE/config.yml",
+          ".github/ISSUE_TEMPLATE/feature-request.yml",
+          ".github/RELEASE_TEMPLATE.md",
+          ".github/workflows/agents.yml",
+          ".github/workflows/ci.yml",
+          ".github/workflows/publish.yml"
+        ],
+        "file_count": 8,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1,
+          ".yml": 7
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "package.json",
+          "pnpm-lock.yaml",
+          "README.md",
+          "ThirdPartyNoticeText.txt",
+          "tsconfig.json"
+        ],
+        "file_count": 6,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 2,
+          ".md": 2,
+          ".txt": 1,
+          ".yaml": 1
+        }
+      },
+      {
+        "area": "scripts",
+        "examples": [
+          "scripts/execute-tests.ts",
+          "scripts/generate-licenses.ts",
+          "scripts/sync-agents.ts",
+          "scripts/validate-agents.ts"
+        ],
+        "file_count": 4,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".ts": 4
+        }
+      }
+    ],
+    "graph_index_used": false,
+    "graph_node_count": 0,
+    "graph_source_file_count": 0,
+    "harvestable_text_file_count": 114
+  },
+  "status": "candidate",
+  "summary": "Safe source map for skills: 5 harvestable areas, led by src, tests, .github, ., scripts.",
+  "tags": [
+    "architecture-map",
+    "auth",
+    "codex",
+    "cursor",
+    "filesystem_write",
+    "global_agent_configuration",
+    "local-github-analysis",
+    "network",
+    "node",
+    "not_owned",
+    "pnpm",
+    "read_only_reference",
+    "skills",
+    "source-map",
+    "subprocess",
+    "supply_chain",
+    "third_party",
+    "typescript"
+  ],
+  "title": "skills source and architecture map",
+  "trigger_phrases": [
+    "skills",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

@@ -3,17 +3,25 @@
     "deployment_targets": [],
     "frameworks": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
       "docx",
+      "google_apps_script",
+      "node",
       "office_com",
       "pptx",
       "python",
-      "streamlit"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -32,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d61a6a24ddb3f32bd8a749e47069b051ddf9fe3c",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
     "source_paths": [
       ".cursor/rules/ad-astra-references.mdc",
       ".cursor/rules/graphify.mdc",
@@ -49,7 +57,13 @@
       "Optimal_Trocar_Placement/trocar_model/README.md",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt",
+      "PBP Surgical training/AGENTS.md",
+      "PBP Surgical training/README.md",
+      "PBP Surgical training/skills.md",
       "README.md",
+      "integrations/davinci-slack-calendar/README.md",
+      "integrations/davinci-slack-calendar/package-lock.json",
+      "integrations/davinci-slack-calendar/package.json",
       "skills.md"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
@@ -64,7 +78,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:39:11Z",
+    "created_at": "2026-09-01T19:01:37Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/ad-astra-references.mdc",
@@ -82,11 +96,17 @@
       "Optimal_Trocar_Placement/trocar_model/README.md",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
       "Orsi_Metrics_Research/requirements.txt",
+      "PBP Surgical training/AGENTS.md",
+      "PBP Surgical training/README.md",
+      "PBP Surgical training/skills.md",
       "README.md",
+      "integrations/davinci-slack-calendar/README.md",
+      "integrations/davinci-slack-calendar/package-lock.json",
+      "integrations/davinci-slack-calendar/package.json",
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:39:11Z"
+    "updated_at": "2026-09-01T19:01:37Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -145,6 +165,20 @@
         }
       },
       {
+        "area": "integrations",
+        "examples": [
+          "integrations/davinci-slack-calendar/package-lock.json",
+          "integrations/davinci-slack-calendar/package.json",
+          "integrations/davinci-slack-calendar/README.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 16,
+        "suffixes": {
+          ".json": 2,
+          ".md": 1
+        }
+      },
+      {
         "area": "AD_Astra",
         "examples": [
           "AD_Astra/README.md",
@@ -181,11 +215,26 @@
           ".cursor/skills/ad-astra-chapter/SKILL.md",
           ".cursor/skills/cholecystectomy-protocol-literature/SKILL.md"
         ],
-        "file_count": 19,
+        "file_count": 39,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 13,
-          ".mdc": 6
+          ".json": 1,
+          ".md": 30,
+          ".mdc": 6,
+          ".yaml": 2
+        }
+      },
+      {
+        "area": "PBP Surgical training",
+        "examples": [
+          "PBP Surgical training/AGENTS.md",
+          "PBP Surgical training/README.md",
+          "PBP Surgical training/skills.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 3
         }
       },
       {
@@ -201,16 +250,21 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 2610,
-    "graph_source_file_count": 215,
-    "harvestable_text_file_count": 36
+    "graph_node_count": 2838,
+    "graph_source_file_count": 238,
+    "harvestable_text_file_count": 62
   },
   "status": "candidate",
-  "summary": "Safe source map for ORSI: 7 harvestable areas, led by HUGO_RAS, ., DART, AD_Astra, Optimal_Trocar_Placement, .cursor, Orsi_Metrics_Research.",
+  "summary": "Safe source map for ORSI: 9 harvestable areas, led by HUGO_RAS, ., DART, integrations, AD_Astra, Optimal_Trocar_Placement, .cursor, PBP Surgical training.",
   "tags": [
     "architecture-map",
+    "auth",
+    "credentials",
     "docx",
+    "external_webhooks",
+    "google_apps_script",
     "local-github-analysis",
+    "node",
     "not_clinical",
     "not_robot_control",
     "office_com",
@@ -218,8 +272,10 @@
     "pptx",
     "python",
     "research",
+    "slack",
     "source-map",
-    "streamlit"
+    "streamlit",
+    "vercel"
   ],
   "title": "ORSI source and architecture map",
   "trigger_phrases": [

@@ -1,0 +1,124 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-da-vinci-slack-calendar-integration",
+  "incompatible_when": [],
+  "procedure": [
+    "- Keep `davinci-slack-calendar` separate from the existing Vercel project `orsi`; its Git root is `integrations/davinci-slack-calendar` on `main`.",
+    "- Keep Google Calendar as source of truth, Slack booking cards as the assignment surface, and Canvas `F0BTKBGP9RQ` as a read-only projection. Preserve `davinciAssigneeSlackId` plus `davinciAssigneeEmail` as private extended properties.",
+    "- Never print, pull locally, or commit Slack tokens, signing secrets, or the Apps Script shared secret.",
+    "- Do not disable the hourly `Da Vinci Booking Sync` until Production passes creation, rescheduling, assignment, reassignment, attendee preservation, cancellation/deletion, Canvas reconciliation, and duplicate processing.",
+    "1. Read the integration README, Vercel configuration, Slack manifest, both API handlers, libraries, and Apps Script sources before editing.",
+    "2. Preserve `/api/google/calendar-event`, `/api/slack/interactions`, `/api/health`, channel `C0BTHDF7ZB8`, Canvas `F0BTKBGP9RQ`, action `davinci_assign_person`, manager allowlist enforcement, signature freshness, and current-channel members",
+    "3. Run local checks before external configuration; use mocks for Slack and a sandboxed `Code.gs` test rather than live credentials.",
+    "4. Configure secrets only through Vercel Environment Variables and Apps Script Script Properties. Apply the committed Slack manifest, approve `canvases:read`/`canvases:write`, re-authorize if required, and keep the existing bot in the targe",
+    "5. Deploy Apps Script as the owner, set the Vercel webhook URL, run `installCalendarTrigger()` once, and verify exactly one EventUpdated trigger. For later `Code.gs` updates, publish a new web-app version without creating a second trigger.",
+    "6. Require all `/api/health` configuration flags to be true before live testing.",
+    "7. Validate the same event ID through create, date/time changes, assignment, reassignment, and duplicate-trigger passes; confirm one Slack card and one Canvas row with the original booker preserved.",
+    "8. Test cancellation and deletion separately: retain cancelled Slack audit cards, remove Canvas rows, and never recreate deleted Calendar events.",
+    "9. Inspect Vercel and Apps Script logs in the runbook order; Canvas failure must not roll back a valid Calendar mutation, and security controls must not be weakened.",
+    "- Run `git diff --check`, inspect `git status`, and perform a boolean-only tracked-file credential scan before committing.",
+    "- Query `https://davinci-slack-calendar.vercel.app/api/health`; require HTTP 200 and six true flags without secret values.",
+    "- Refresh the governed ORSI Graphify graph with `run_graphify_cycle.py --repo orsi --code-only --strict`, then verify the webhook paths against source.",
+    "- Confirm bot/Canvas access and scopes, eligible-member filtering, Calendar attendee/private-property changes, Slack update/thread confirmation, scoped Canvas table replacement, cancellation/deletion removal, duplicate safety, invalid-signa",
+    "- 2026-08-29: Added event-driven synchronization of the existing Slack Canvas, full-snapshot reconciliation, scoped table replacement, safer cancellation classification, and expanded live acceptance gates.",
+    "- 2026-08-29: Added the production deployment workflow, API-only health convention, attendee-preservation safety rule, built-in Node tests, and governed Graphify coverage."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T19:01:37Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T19:01:37Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** changing, deploying, configuring, or validating `integrations/davinci-slack-calendar/` and its Google Calendar \u2192 Apps Script \u2192 Vercel \u2192 Slack booking-card/Canvas workflow.",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Da Vinci Slack\u2013Calendar integration",
+  "trigger_phrases": [
+    "ORSI",
+    "Da Vinci Slack\u2013Calendar integration"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

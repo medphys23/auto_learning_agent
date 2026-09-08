@@ -1,0 +1,161 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c89a25e736f40a308250d314a34ebabbb7963cb9",
+    "source_paths": [
+      ".cursor/rules/graphify.mdc",
+      "AGENTS.md",
+      "package-lock.json",
+      "package.json",
+      "src/cli.ts",
+      "src/google.ts",
+      "src/project.ts",
+      "tests/appscript.test.ts",
+      "tests/google.test.ts",
+      "tests/project.test.ts"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "google-sheet-appscript-connector-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-08-13T09:32:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/graphify.mdc",
+      "AGENTS.md",
+      "package-lock.json",
+      "package.json",
+      "src/cli.ts",
+      "src/google.ts",
+      "src/project.ts",
+      "tests/appscript.test.ts",
+      "tests/google.test.ts",
+      "tests/project.test.ts"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-13T09:32:11Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "src",
+        "examples": [
+          "src/cli.ts",
+          "src/google.ts",
+          "src/project.ts",
+          "src/types.ts"
+        ],
+        "file_count": 4,
+        "graph_node_count": 61,
+        "suffixes": {
+          ".ts": 4
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "package-lock.json",
+          "package.json",
+          "README.md",
+          "tsconfig.json"
+        ],
+        "file_count": 5,
+        "graph_node_count": 37,
+        "suffixes": {
+          ".json": 3,
+          ".md": 2
+        }
+      },
+      {
+        "area": "tests",
+        "examples": [
+          "tests/appscript.test.ts",
+          "tests/google.test.ts",
+          "tests/project.test.ts"
+        ],
+        "file_count": 3,
+        "graph_node_count": 7,
+        "suffixes": {
+          ".ts": 3
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 1
+        }
+      }
+    ],
+    "graph_index_used": true,
+    "graph_node_count": 114,
+    "graph_source_file_count": 10,
+    "harvestable_text_file_count": 13
+  },
+  "status": "candidate",
+  "summary": "Safe source map for google_sheet_appscript_connector: 4 harvestable areas, led by src, ., tests, .cursor.",
+  "tags": [
+    "architecture-map",
+    "google-sheet-appscript-connector",
+    "local-github-analysis",
+    "node",
+    "source-map"
+  ],
+  "title": "google_sheet_appscript_connector source and architecture map",
+  "trigger_phrases": [
+    "google_sheet_appscript_connector",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

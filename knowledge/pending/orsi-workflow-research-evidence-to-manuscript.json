@@ -1,0 +1,125 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-research-evidence-to-manuscript",
+  "incompatible_when": [],
+  "procedure": [
+    "- Invoke [`research-evidence-to-manuscript`](.cursor/skills/research-evidence-to-manuscript/SKILL.md). Read [scientific controls](.cursor/skills/research-evidence-to-manuscript/references/scientific-controls.md) before protocol, extraction,",
+    "- Load [orchestrator-protocol.md](.cursor/skills/research-evidence-to-manuscript/references/orchestrator-protocol.md) only for a substantial multi-wave program. Do not paste it into worker prompts.",
+    "- On `PBP Surgical training/`, read [xenophon_session.md](PBP%20Surgical%20training/registry/xenophon_session.md) first and follow [cheap-mode.md](.cursor/skills/research-evidence-to-manuscript/references/cheap-mode.md). That folder is the ",
+    "- State the decision problem, audience, consequences of error, atomic claims, review type, source boundary, reviewer model, amendment policy, and stopping rule before searching.",
+    "- Preserve the nearest project instructions. Write into the existing project scaffold; do not create a parallel `research/` tree.",
+    "- Do not create a worker unless you can complete: \"This worker exists because ____, and no existing worker owns this responsibility.\" On an already-ingested corpus the default team is **Xenophon alone**. Use 5\u20137 workers only for a large unb",
+    "1. Define the question and only the necessary non-overlapping evidence domains. Before any delegate, confirm what needs to be known, whether it is already in a canonical artifact, which one domain owns it, the minimum context, whether an ex",
+    "2. Run sequential waves: search protocol \u2192 domain retrieval \u2192 corpus stabilize \u2192 structured extraction \u2192 appraisal separate from extraction \u2192 status-quo synthesis \u2192 contradictions \u2192 red team \u2192 gaps \u2192 research program. Never send multiple ag",
+    "3. Lock the declared review method and human gates before treating searches as protocol-controlled. Decompose the thesis into atomic descriptive, measurement, comparative, causal, threshold, implementation, and design claims; record falsifi",
+    "4. Log exact searches, filters, result counts, exports, citation tracing, failed retrievals, and lawful full-text provenance. Retrieve by domain from one inclusion framework unless Xenophon authorizes a documented exception.",
+    "5. Hash sources before moving; use canonical author-year-title names; record exact and bibliographic duplicates; read cached MarkItDown text. Keep primary studies, secondary syntheses, official frameworks, and navigation aids distinct.",
+    "6. Extract into evidence cards or an evidence matrix; do not ask retrieval agents for free-prose literature summaries. Appraise source quality separately from A/B/C claim status. Enter every material claim in the claim ledger before prose p",
+    "7. Synthesize the status quo as ESTABLISHED / PROBABLE / PLAUSIBLE BUT UNCERTAIN / INSUFFICIENT EVIDENCE / CONTRADICTED. Record contradictions explicitly. Red-team the synthesis and fix CRITICAL findings before identifying gaps or designing",
+    "8. Advance the manifest state only through recorded human gates. Keep Markdown canonical, version reviewed drafts, and archive superseded deliverables. Reject unjustified `systematic`, `exhaustive`, `validated`, `causal`, `effective`, or `g",
+    "- Copy and adapt `.cursor/skills/research-evidence-to-manuscript/assets/project-scaffold/` for a new research project (include `registry/xenophon_session.md`).",
+    "- The scaffold supplies project `AGENTS.md`, `README.md`, `skills.md`, safe ignore defaults, session card, and protocol, search, screening, source, evidence-card, appraisal, manifest, claim-ledger, manuscript-versioning, and validation cont",
+    "- **Portable kernel is global** (`~/.cursor/skills/research-evidence-to-manuscript/` and Codex pointer). ORSI `.cursor/skills/research-evidence-to-manuscript/` is the development copy \u2014 sync the kernel (not the PBP session card) after every",
+    "- Run the bundled skill validator against `.cursor/skills/research-evidence-to-manuscript/` when present.",
+    "- Complete the activated project's scientific validation checklist.",
+    "- Require every material manuscript sentence to resolve to approved ledger records and source locations, with exact values checked and overclaim terms reviewed."
+  ],
+  "provenance": {
+    "created_at": "2026-09-01T19:01:37Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-01T19:01:37Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Agent identity:** **Xenophon \u2014 Research Evidence to Manuscript**, named in honor of the project owner's late grandfather, a nuclear physicist. Xenophon is the **lead research orchestrator**, not a swarm of independent researchers.",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Research evidence to manuscript",
+  "trigger_phrases": [
+    "ORSI",
+    "Research evidence to manuscript"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

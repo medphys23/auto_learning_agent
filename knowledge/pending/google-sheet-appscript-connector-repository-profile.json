@@ -1,0 +1,87 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "node"
+    ],
+    "languages": [
+      "node"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "c89a25e736f40a308250d314a34ebabbb7963cb9",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "google-sheet-appscript-connector-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\google_sheet_appscript_connector` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository."
+  ],
+  "provenance": {
+    "created_at": "2026-08-13T09:32:11Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-08-13T09:32:11Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 27,
+    "harvestable_text_file_count": 13,
+    "purpose_excerpt": "",
+    "remote": "https://github.com/medphys23/google_sheet_appscript_connector.git",
+    "stack_excerpt": ""
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "google_sheet_appscript_connector repository profile from local Git checkout.",
+  "tags": [
+    "google-sheet-appscript-connector",
+    "local-github-analysis",
+    "node",
+    "repository-profile"
+  ],
+  "title": "google_sheet_appscript_connector repository profile",
+  "trigger_phrases": [
+    "google_sheet_appscript_connector",
+    "google-sheet-appscript-connector",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}
