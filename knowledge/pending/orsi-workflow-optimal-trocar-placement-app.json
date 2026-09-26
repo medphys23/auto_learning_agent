@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
     "source_paths": [
       "skills.md"
     ],
@@ -72,13 +72,13 @@
     "- 2026-05-26: Created the v1 app workflow after adding `Optimal_Trocar_Placement/trocar_model/`. Required deltas: manual geometric model only, future CT readiness through structured data models, no CT/DICOM dependencies, and Streamlit smoke"
   ],
   "provenance": {
-    "created_at": "2026-09-01T19:01:37Z",
+    "created_at": "2026-09-26T07:55:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-01T19:01:37Z"
+    "updated_at": "2026-09-26T07:55:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

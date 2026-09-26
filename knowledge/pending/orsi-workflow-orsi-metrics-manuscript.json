@@ -1,0 +1,117 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-orsi-metrics-manuscript",
+  "incompatible_when": [],
+  "procedure": [
+    "- Read `Orsi_Metrics_Research/projects/Manuscript_template/AGENTS.md` and the detailed local workflow.",
+    "- Verify `SP_BSS_manuscript_final.docx` has SHA-256 `8AA7096FD69EE5402F4F784BB78BA0DE6929CBE81220E470BF824975B2B54C8D`; keep it byte-for-byte unchanged.",
+    "- Require target-journal instructions, an approved protocol/SAP, locked analysis outputs, author/affiliation data, declarations, references, and final tables/figures. Journal and protocol/SAP requirements override house defaults.",
+    "1. Use the reference only for structure and appearance; never reuse its facts, claims, author data, ethics details, results, or citations as evidence.",
+    "2. Build the title page, structured abstract, numbered IMRAD body, conclusion, Vancouver references, and figure legends in the order documented by the local workflow.",
+    "3. Preserve the staged results narrative when supported by the design: consensus/content evidence -> expert-versus-novice construct evidence -> agreement/reliability -> proficiency benchmark.",
+    "4. Follow the locked SAP. Keep full-cohort and prespecified critical-error-free analyses distinct; report exact denominators, estimates, 95% confidence intervals, and exact p-values consistently.",
+    "5. Report raw agreement separately from chance-corrected reliability or ICC. Derive benchmarks from the declared expert distribution, use one exact inequality everywhere, and label cohort-derived thresholds provisional until externally or p",
+    "6. Apply the cleaned Word standard: A4, 2.54 cm margins, reference-matched type roles, Arial 11 pt double-spaced body, real heading numbering at 0.64/1.27/0.63 cm, sequential italic subsections, and hanging Vancouver references. Use page/se",
+    "7. Remove all reference-specific content and metadata; reconcile table/figure counts and legends; render every page through Word and inspect at 100%.",
+    "8. Deliver a versioned DOCX plus a validation receipt covering reference hash, journal deviations, statistical consistency, artifact completeness, privacy/metadata, visual QA, skipped checks, and residual risks.",
+    "- 2026-09-09: Established the cleaned ORSI metrics-manuscript standard from the fellow-authored SP BSS article and added safeguards against copying its numbering, threshold, pagination, statistical, and missing-artifact defects."
+  ],
+  "provenance": {
+    "created_at": "2026-09-26T07:55:55Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-26T07:55:55Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** creating, revising, formatting, or validating a publication-facing ORSI surgical metrics-development or metrics-validation article, including Delphi metrics, construct validity, inter-rater agreement/reliability, critical-",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: ORSI metrics manuscript",
+  "trigger_phrases": [
+    "ORSI",
+    "ORSI metrics manuscript"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

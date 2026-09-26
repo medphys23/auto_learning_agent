@@ -1,12 +1,16 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 241,
+    "catalog_entry_count": 251,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
         "dirty_count": 2,
         "id": "campania-transplant"
+      },
+      {
+        "dirty_count": 3,
+        "id": "cv"
       },
       {
         "dirty_count": 2,
@@ -23,6 +27,10 @@
       {
         "dirty_count": 2,
         "id": "omniroute"
+      },
+      {
+        "dirty_count": 4,
+        "id": "orsi"
       },
       {
         "dirty_count": 1,
@@ -44,11 +52,11 @@
     "harvested_repositories": [
       "auto_learning_agent",
       "blender-voice-3d-print-designer",
-      "cv",
       "general-surgery-notes",
       "google-sheet-appscript-connector",
       "graphify",
-      "orsi",
+      "ponytail",
+      "skills",
       "x-booking"
     ],
     "missing_required_record_families": {}
@@ -87,12 +95,12 @@
       "passed": true
     },
     {
-      "detail": "9 dirty blocker(s)",
+      "detail": "11 dirty blocker(s)",
       "name": "no_dirty_blockers",
       "passed": false
     }
   ],
-  "generated_at": "2026-09-01T19:03:02Z",
+  "generated_at": "2026-09-08T18:59:50Z",
   "optimized_agents_exists": true,
   "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
   "requires_explicit_user_approval": true,

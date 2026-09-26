@@ -2,20 +2,26 @@
   "applicability": {
     "deployment_targets": [],
     "frameworks": [
-      "beautifulsoup4",
+      "docx",
+      "google_apps_script",
       "node",
-      "openpyxl",
-      "playwright",
+      "office_com",
+      "pptx",
       "python",
-      "tqdm"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "languages": [
-      "beautifulsoup4",
+      "docx",
+      "google_apps_script",
       "node",
-      "openpyxl",
-      "playwright",
+      "office_com",
+      "pptx",
       "python",
-      "tqdm"
+      "slack",
+      "streamlit",
+      "vercel"
     ],
     "operating_systems": [
       "windows"
@@ -34,27 +40,27 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "69aede35749dfa9d39fec6014f47350180581f2c",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
     "source_paths": [
       "AGENTS.md"
     ],
-    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
     "task_or_issue": "local-github-repository-analysis",
     "tests_executed": []
   },
-  "id": "x-booking-verification-command-4",
+  "id": "orsi-verification-command-25",
   "incompatible_when": [],
   "procedure": [
-    "npm run test"
+    ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\archive\\build_cholecystectomy_metrics_package.py"
   ],
   "provenance": {
-    "created_at": "2026-09-26T07:56:09Z",
+    "created_at": "2026-09-26T07:55:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T07:56:09Z"
+    "updated_at": "2026-09-26T07:55:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -67,27 +73,32 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Canonical verification command from X_booking: npm run test",
+  "summary": "Canonical verification command from ORSI: .\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\archive\\build_cholecystectomy_metrics_package.py",
   "tags": [
-    "beautifulsoup4",
-    "branch_sensitive",
-    "contact_data",
-    "no_patient_data",
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
     "node",
-    "openpyxl",
-    "playwright",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
     "python",
     "repo-agents",
-    "scraper",
-    "tqdm",
-    "verification-command",
-    "x-booking"
+    "research",
+    "slack",
+    "streamlit",
+    "vercel",
+    "verification-command"
   ],
-  "title": "X_booking verification command 4",
+  "title": "ORSI verification command 25",
   "trigger_phrases": [
-    "X_booking",
+    "ORSI",
     "verification",
-    "npm run test"
+    ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\metrics\\archive\\build_cholecystectomy_metrics_package.py"
   ],
   "type": "command",
   "verification": [

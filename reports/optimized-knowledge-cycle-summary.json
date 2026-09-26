@@ -1,126 +1,22 @@
 {
   "continue_on_dirty": true,
-  "failed_step": "",
-  "finished_at": "2026-09-01T19:03:02Z",
+  "failed_step": "audit dependency catalog",
+  "finished_at": "2026-09-26T07:56:58Z",
   "log_file": "reports\\optimized-knowledge-cycle.log",
-  "readiness": {
-    "applied": false,
-    "catalog_integrity": {
-      "catalog_entry_count": 241,
-      "catalog_missing_record_paths": [],
-      "dirty_blockers": [
-        {
-          "dirty_count": 2,
-          "id": "campania-transplant"
-        },
-        {
-          "dirty_count": 2,
-          "id": "general-work"
-        },
-        {
-          "dirty_count": 2,
-          "id": "investment-binance"
-        },
-        {
-          "dirty_count": 2,
-          "id": "kidney-federico"
-        },
-        {
-          "dirty_count": 2,
-          "id": "omniroute"
-        },
-        {
-          "dirty_count": 1,
-          "id": "practice-ops-dashboard"
-        },
-        {
-          "dirty_count": 2,
-          "id": "ps-robot-adaptor"
-        },
-        {
-          "dirty_count": 2,
-          "id": "travel-agent"
-        },
-        {
-          "dirty_count": 2,
-          "id": "xenios-finances"
-        }
-      ],
-      "harvested_repositories": [
-        "auto_learning_agent",
-        "blender-voice-3d-print-designer",
-        "cv",
-        "general-surgery-notes",
-        "google-sheet-appscript-connector",
-        "graphify",
-        "orsi",
-        "x-booking"
-      ],
-      "missing_required_record_families": {}
-    },
-    "cutover_allowed": false,
-    "decision": "NO-GO",
-    "gates": [
-      {
-        "detail": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\master\\optimized\\codex\\AGENTS.md",
-        "name": "optimized_agents_exists",
-        "passed": true
-      },
-      {
-        "detail": "5468/8192 bytes",
-        "name": "optimized_agents_within_byte_budget",
-        "passed": true
-      },
-      {
-        "detail": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\master\\optimized\\codex\\skills-index.md",
-        "name": "optimized_skills_index_exists",
-        "passed": true
-      },
-      {
-        "detail": "0 missing path(s)",
-        "name": "catalog_record_paths_exist",
-        "passed": true
-      },
-      {
-        "detail": "0 repo(s) missing required families",
-        "name": "harvested_repos_have_core_records",
-        "passed": true
-      },
-      {
-        "detail": "delta=10970",
-        "name": "optimized_tokens_materially_below_legacy",
-        "passed": true
-      },
-      {
-        "detail": "9 dirty blocker(s)",
-        "name": "no_dirty_blockers",
-        "passed": false
-      }
-    ],
-    "generated_at": "2026-09-01T19:03:02Z",
-    "optimized_agents_exists": true,
-    "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
-    "requires_explicit_user_approval": true,
-    "token_delta": {
-      "delta_tokens": 10970,
-      "legacy_master_agents_estimated_tokens": 12323,
-      "materially_below_legacy": true,
-      "optimized_master_agents_estimated_tokens": 1353
-    }
-  },
+  "readiness": {},
   "skip_dependency_audit": false,
   "skip_graphify": false,
-  "started_at": "2026-09-01T18:53:14Z",
+  "started_at": "2026-09-26T07:47:09Z",
   "state_dirty_blockers": {
     "auto_learning_agent": {
       "branch": "main",
       "candidate_count": 33,
-      "commit": "e71c9a39af725f6ab90ae6efa41bc0c499fc8372",
-      "digest": "81d2e54258b057ff2be8fb81ae1fb8b13e985d99e05f610a75f7ed540a397bc2",
-      "dirty": "M config/repositories.toml\n M knowledge/INDEX.md\n M knowledge/catalog.jsonl\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-11.json\n M knowledge/pending/auto-learning-agent-verification-command-12.json\n M knowledge/pending/auto-learning-agent-verification-command-13.json\n M knowledge/pending/auto-learning-agent-verification-command-14.json\n M knowledge/pending/auto-learning-agent-verification-command-15.json\n M knowledge/pending/auto-learning-agent-verification-command-16.json\n M knowledge/pending/auto-learning-agent-verification-command-17.json\n M knowledge/pending/auto-learning-agent-verification-command-18.json\n M knowledge/pending/auto-learning-agent-verification-command-19.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-20.json\n M knowledge/pending/auto-learning-agent-verification-command-21.json\n M knowledge/pending/auto-learning-agent-verification-command-22.json\n M knowledge/pending/auto-learning-agent-verification-command-23.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-federated-orchestrator-startup.json\n M knowledge/pending/auto-learning-agent-workflow-governed-graphify-integration.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M knowledge/pending/auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover.json\n M knowledge/pending/auto-learning-agent-workflow-risk-triggered-systems-engineering-review.json\n M knowledge/pending/orsi-repository-constraints.json\n M knowledge/pending/orsi-repository-profile.json\n M knowledge/pending/orsi-source-map.json\n M knowledge/pending/orsi-stack-dependency-profile.json\n M knowledge/pending/orsi-verification-command-1.json\n M knowledge/pending/orsi-verification-command-10.json\n M knowledge/pending/orsi-verification-command-11.json\n M knowledge/pending/orsi-verification-command-12.json\n M knowledge/pending/orsi-verification-command-13.json\n M knowledge/pending/orsi-verification-command-14.json\n M knowledge/pending/orsi-verification-command-15.json\n M knowledge/pending/orsi-verification-command-16.json\n M knowledge/pending/orsi-verification-command-17.json\n M knowledge/pending/orsi-verification-command-18.json\n M knowledge/pending/orsi-verification-command-19.json\n M knowledge/pending/orsi-verification-command-2.json\n M knowledge/pending/orsi-verification-command-20.json\n M knowledge/pending/orsi-verification-command-3.json\n M knowledge/pending/orsi-verification-command-4.json\n M knowledge/pending/orsi-verification-command-5.json\n M knowledge/pending/orsi-verification-command-6.json\n M knowledge/pending/orsi-verification-command-7.json\n M knowledge/pending/orsi-verification-command-8.json\n M knowledge/pending/orsi-verification-command-9.json\n M knowledge/pending/orsi-verification-profile.json\n M knowledge/pending/orsi-workflow-ad-astra-chapter.json\n M knowledge/pending/orsi-workflow-cholecystectomy-protocol-literature-updates.json\n M knowledge/pending/orsi-workflow-delphi-expert-threshold-evidence-deck.json\n M knowledge/pending/orsi-workflow-hugo-ras-preset-curation.json\n M knowledge/pending/orsi-workflow-hugo-ras-simulator-development.json\n M knowledge/pending/orsi-workflow-local-meeting-transcription.json\n M knowledge/pending/orsi-workflow-low-anterior-resection-metrics-deck.json\n M knowledge/pending/orsi-workflow-markitdown-read-path.json\n M knowledge/pending/orsi-workflow-office-pptx-metrics-decks.json\n M knowledge/pending/orsi-workflow-optimal-trocar-placement-app.json\n M knowledge/pending/orsi-workflow-repository-structure-hygiene.json\n M knowledge/pending/orsi-workflow-right-hemicolectomy-metrics-package.json\n M knowledge/pending/orsi-workflow-robotic-cholecystectomy-systematic-review.json\n M knowledge/pending/x-booking-repository-constraints.json\n M knowledge/pending/x-booking-repository-profile.json\n M knowledge/pending/x-booking-source-map.json\n M knowledge/pending/x-booking-stack-dependency-profile.json\n M knowledge/pending/x-booking-verification-command-1.json\n M knowledge/pending/x-booking-verification-command-2.json\n M knowledge/pending/x-booking-verification-command-3.json\n M knowledge/pending/x-booking-verification-command-4.json\n M knowledge/pending/x-booking-verification-command-5.json\n M knowledge/pending/x-booking-verification-command-6.json\n M knowledge/pending/x-booking-verification-command-7.json\n M knowledge/pending/x-booking-verification-command-8.json\n M knowledge/pending/x-booking-verification-command-9.json\n M knowledge/pending/x-booking-verification-profile.json\n M knowledge/pending/x-booking-workflow-client-onboarding-via-intake-csv.json\n M knowledge/pending/x-booking-workflow-development-on-dev01.json\n M knowledge/pending/x-booking-workflow-production-promotion-and-rollback.json\n M reports/optimized-cutover-readiness.json\n M reports/optimized-knowledge-cycle-summary.json\n M state/repository-snapshots.json\n?? knowledge/pending/cv-repository-profile.json\n?? knowledge/pending/cv-source-map.json\n?? knowledge/pending/cv-stack-dependency-profile.json\n?? knowledge/pending/cv-verification-command-1.json\n?? knowledge/pending/cv-verification-command-2.json\n?? knowledge/pending/cv-verification-profile.json\n?? knowledge/pending/cv-workflow-master-cv-synchronization.json\n?? knowledge/pending/cv-workflow-translation-review.json\n?? knowledge/pending/cv-workflow-vercel-release.json\n?? knowledge/pending/cv-workflow-visual-system-development.json\n?? knowledge/pending/general-surgery-notes-repository-profile.json\n?? knowledge/pending/general-surgery-notes-source-map.json\n?? knowledge/pending/general-surgery-notes-stack-dependency-profile.json\n?? knowledge/pending/general-surgery-notes-verification-command-1.json\n?? knowledge/pending/general-surgery-notes-verification-command-2.json\n?? knowledge/pending/general-surgery-notes-verification-command-3.json\n?? knowledge/pending/general-surgery-notes-verification-command-4.json\n?? knowledge/pending/general-surgery-notes-verification-command-5.json\n?? knowledge/pending/general-surgery-notes-verification-profile.json\n?? knowledge/pending/general-surgery-notes-workflow-image-heavy-word-documents.json\n?? knowledge/pending/general-surgery-notes-workflow-image-heavy-word-notes.json\n?? knowledge/pending/general-surgery-notes-workflow-learned-paragraph-and-list-standard-from-the-edited-atls-output.json\n?? knowledge/pending/google-sheet-appscript-connector-repository-profile.json\n?? knowledge/pending/google-sheet-appscript-connector-source-map.json\n?? knowledge/pending/google-sheet-appscript-connector-stack-dependency-profile.json\n?? knowledge/pending/google-sheet-appscript-connector-verification-profile.json\n?? knowledge/pending/react-source-component-kit-selection-catalog.json\n?? knowledge/pending/react-ui-library-selection-catalog.json\n?? knowledge/pending/x-booking-workflow-visual-system-development.json",
-      "dirty_count": 123,
-      "file_count": 546,
-      "fingerprinted_at": "2026-09-01T18:57:26Z",
+      "commit": "fdf5277d6a58df4d8b3bf7ad47907eb053cc3b12",
+      "digest": "8a3211197ac31401dd2bc332552d6e30f23c25263f82ee03e0b465defb2c36ae",
+      "dirty": "M config/repositories.toml\n M knowledge/INDEX.md\n M knowledge/pending/auto-learning-agent-repository-constraints.json\n M knowledge/pending/auto-learning-agent-repository-profile.json\n M knowledge/pending/auto-learning-agent-source-map.json\n M knowledge/pending/auto-learning-agent-stack-dependency-profile.json\n M knowledge/pending/auto-learning-agent-verification-command-1.json\n M knowledge/pending/auto-learning-agent-verification-command-10.json\n M knowledge/pending/auto-learning-agent-verification-command-11.json\n M knowledge/pending/auto-learning-agent-verification-command-12.json\n M knowledge/pending/auto-learning-agent-verification-command-13.json\n M knowledge/pending/auto-learning-agent-verification-command-14.json\n M knowledge/pending/auto-learning-agent-verification-command-15.json\n M knowledge/pending/auto-learning-agent-verification-command-16.json\n M knowledge/pending/auto-learning-agent-verification-command-17.json\n M knowledge/pending/auto-learning-agent-verification-command-18.json\n M knowledge/pending/auto-learning-agent-verification-command-19.json\n M knowledge/pending/auto-learning-agent-verification-command-2.json\n M knowledge/pending/auto-learning-agent-verification-command-20.json\n M knowledge/pending/auto-learning-agent-verification-command-21.json\n M knowledge/pending/auto-learning-agent-verification-command-22.json\n M knowledge/pending/auto-learning-agent-verification-command-23.json\n M knowledge/pending/auto-learning-agent-verification-command-3.json\n M knowledge/pending/auto-learning-agent-verification-command-4.json\n M knowledge/pending/auto-learning-agent-verification-command-5.json\n M knowledge/pending/auto-learning-agent-verification-command-6.json\n M knowledge/pending/auto-learning-agent-verification-command-7.json\n M knowledge/pending/auto-learning-agent-verification-command-8.json\n M knowledge/pending/auto-learning-agent-verification-command-9.json\n M knowledge/pending/auto-learning-agent-verification-profile.json\n M knowledge/pending/auto-learning-agent-workflow-federated-orchestrator-startup.json\n M knowledge/pending/auto-learning-agent-workflow-governed-graphify-integration.json\n M knowledge/pending/auto-learning-agent-workflow-local-mvp-orchestrator-bootstrap.json\n M knowledge/pending/auto-learning-agent-workflow-optimized-knowledge-cycle-and-cutover.json\n M knowledge/pending/auto-learning-agent-workflow-risk-triggered-systems-engineering-review.json\n M reports/optimized-cutover-readiness.json\n M reports/optimized-knowledge-cycle-summary.json\n M state/repository-snapshots.json",
+      "dirty_count": 38,
+      "file_count": 591,
+      "fingerprinted_at": "2026-09-26T07:52:08Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -129,12 +25,12 @@
     "blender-voice-3d-print-designer": {
       "branch": "main",
       "candidate_count": 15,
-      "commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
-      "digest": "b74f7bcdf5e693a949ab26dc63fc05682dd59f2c32dc480f08c47c143129de40",
+      "commit": "138dc7f483e93585c45f9300951c0492b7bd28f8",
+      "digest": "2313accf4933f5e1a615a59f19503778c85a8d1c25059d63b12e462c55178150",
       "dirty": "",
       "dirty_count": 0,
-      "file_count": 117,
-      "fingerprinted_at": "2026-08-09T21:37:52Z",
+      "file_count": 206,
+      "fingerprinted_at": "2026-09-26T07:52:10Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\3d-printing",
@@ -147,7 +43,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 59,
-      "fingerprinted_at": "2026-09-01T18:57:30Z",
+      "fingerprinted_at": "2026-09-26T07:52:11Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
@@ -155,15 +51,14 @@
     },
     "cv": {
       "branch": "main",
-      "candidate_count": 10,
       "commit": "c6f413f477e07f73decb7e34b679bf43f6f8c026",
-      "digest": "8af0deac488fb72e18558672b38f35a39367d4ad898cca5c7e5df9b4053149f1",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "365ac8a3ad50b60b08d8c5b9b569cc3c8d49f56f899b622a44ab801a397d52ad",
+      "dirty": "M .graphifyignore\n M AGENTS.md\n?? .cursor/rules/graphify.mdc",
+      "dirty_count": 3,
       "file_count": 64,
-      "fingerprinted_at": "2026-09-01T18:57:31Z",
+      "fingerprinted_at": "2026-09-26T07:52:12Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
       "remote": "https://github.com/medphys23/CV.git"
     },
@@ -188,7 +83,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 8,
-      "fingerprinted_at": "2026-09-01T18:57:33Z",
+      "fingerprinted_at": "2026-09-26T07:52:13Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
@@ -229,7 +124,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 34,
-      "fingerprinted_at": "2026-09-01T18:57:45Z",
+      "fingerprinted_at": "2026-09-26T07:52:24Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
@@ -242,7 +137,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 172,
-      "fingerprinted_at": "2026-09-01T18:57:49Z",
+      "fingerprinted_at": "2026-09-26T07:52:28Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
@@ -255,7 +150,7 @@
       "dirty": "M .gitignore\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 10636,
-      "fingerprinted_at": "2026-09-01T19:01:32Z",
+      "fingerprinted_at": "2026-09-26T07:55:53Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
@@ -263,28 +158,42 @@
     },
     "orsi": {
       "branch": "main",
-      "candidate_count": 44,
-      "commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
-      "digest": "0e12d8156e784acbb9b650a5899a6310fd0079d1da1a6d297e714a0bb209902a",
+      "candidate_count": 50,
+      "commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
+      "digest": "5208e43dcb049789c501cbb55f6b1ffc83b65ff6be8b583aad2c76cafe3d4828",
       "dirty": "",
       "dirty_count": 0,
-      "file_count": 448,
-      "fingerprinted_at": "2026-09-01T19:01:36Z",
+      "file_count": 585,
+      "fingerprinted_at": "2026-09-26T07:55:54Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
       "remote": "https://github.com/medphys23/ORSI.git"
     },
-    "practice-ops-dashboard": {
+    "ponytail": {
       "branch": "main",
-      "commit": "3aed37699ddf56fbb9bda1825d47ebedca69402f",
-      "digest": "7e4db755f7080fb9b35980033fed4d3ed481ce8ab0f36a3ec8b2dd675f237587",
-      "dirty": "?? .cache/",
-      "dirty_count": 1,
-      "file_count": 220,
-      "fingerprinted_at": "2026-09-01T19:01:41Z",
+      "commit": "356918eba965ee1eac64bd3a7f0dd02108350de5",
+      "digest": "9b897bf4eca443996621ae9cc88e56ab92976eb46018ac731b5a14426d67d2e8",
+      "dirty": "M .gitignore\n M AGENTS.md\n?? .cursor/rules/graphify.mdc\n?? .graphifyignore",
+      "dirty_count": 4,
+      "file_count": 159,
+      "fingerprinted_at": "2026-09-26T07:55:58Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ponytail",
+      "remote": "https://github.com/dietrichgebert/ponytail.git"
+    },
+    "practice-ops-dashboard": {
+      "branch": "main",
+      "candidate_count": 17,
+      "commit": "54e041ca018b5f19d169f1b19077a313be586f7d",
+      "digest": "2de430edc81e763dc9734b105dc031ec6d7ea661177fd06bfda83f5741df853a",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 222,
+      "fingerprinted_at": "2026-09-26T07:56:02Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\practice-ops-dashboard",
       "remote": "https://github.com/medphys23/practice-ops-dashboard.git"
     },
@@ -295,11 +204,24 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 64,
-      "fingerprinted_at": "2026-09-01T19:01:42Z",
+      "fingerprinted_at": "2026-09-26T07:56:03Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
       "remote": "https://github.com/medphys23/PS_robot_adaptor.git"
+    },
+    "skills": {
+      "branch": "main",
+      "commit": "80feb48868972d518436f26711509bc78595b5cb",
+      "digest": "06a10085dca004b0d76eab7dc6a8442eebdb6ec76756eaa232775400984dba53",
+      "dirty": "M .gitignore\n M AGENTS.md\n?? .graphifyignore",
+      "dirty_count": 3,
+      "file_count": 121,
+      "fingerprinted_at": "2026-09-26T07:56:06Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "blocked_dirty_worktree",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\skills",
+      "remote": "https://github.com/vercel-labs/skills.git"
     },
     "travel-agent": {
       "branch": "main",
@@ -308,7 +230,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 33,
-      "fingerprinted_at": "2026-09-01T19:01:43Z",
+      "fingerprinted_at": "2026-09-26T07:56:06Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
@@ -317,12 +239,12 @@
     "x-booking": {
       "branch": "dev01",
       "candidate_count": 18,
-      "commit": "919e7823c70cc068c90fbece13f2d57cd9eb9602",
-      "digest": "47618260c568e2e471f98ec414f56ef4b48979d047312e54cb6c1d6d664228b4",
+      "commit": "69aede35749dfa9d39fec6014f47350180581f2c",
+      "digest": "dd7e023ea01f88dff1f0542b590e39f92f0999366878ac7ab9e7fe439454d8eb",
       "dirty": "",
       "dirty_count": 0,
-      "file_count": 117,
-      "fingerprinted_at": "2026-09-01T19:01:44Z",
+      "file_count": 113,
+      "fingerprinted_at": "2026-09-26T07:56:08Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
@@ -335,14 +257,14 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 44,
-      "fingerprinted_at": "2026-09-01T19:01:46Z",
+      "fingerprinted_at": "2026-09-26T07:56:10Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
       "remote": "https://github.com/medphys23/Xenios_FInances.git"
     }
   },
-  "status": "completed",
+  "status": "failed",
   "steps": [
     {
       "command": [
@@ -350,12 +272,12 @@
         "scripts/discover_repositories.py",
         "--write-registry"
       ],
-      "elapsed_seconds": 3.985,
+      "elapsed_seconds": 10.063,
       "exit_code": 0,
-      "finished_at": "2026-09-01T18:53:18Z",
+      "finished_at": "2026-09-26T07:47:19Z",
       "name": "discover repositories",
-      "output_lines": 17,
-      "started_at": "2026-09-01T18:53:14Z"
+      "output_lines": 19,
+      "started_at": "2026-09-26T07:47:09Z"
     },
     {
       "command": [
@@ -364,24 +286,24 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 246.922,
+      "elapsed_seconds": 288.656,
       "exit_code": 0,
-      "finished_at": "2026-09-01T18:57:25Z",
+      "finished_at": "2026-09-26T07:52:08Z",
       "name": "refresh repository graphs",
-      "output_lines": 79,
-      "started_at": "2026-09-01T18:53:18Z"
+      "output_lines": 96,
+      "started_at": "2026-09-26T07:47:19Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 260.313,
+      "elapsed_seconds": 242.75,
       "exit_code": 0,
-      "finished_at": "2026-09-01T19:01:46Z",
+      "finished_at": "2026-09-26T07:56:10Z",
       "name": "harvest repositories",
-      "output_lines": 17,
-      "started_at": "2026-09-01T18:57:25Z"
+      "output_lines": 19,
+      "started_at": "2026-09-26T07:52:08Z"
     },
     {
       "command": [
@@ -390,43 +312,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 74.922,
-      "exit_code": 0,
-      "finished_at": "2026-09-01T19:03:01Z",
+      "elapsed_seconds": 47.438,
+      "exit_code": 1,
+      "finished_at": "2026-09-26T07:56:58Z",
       "name": "audit dependency catalog",
-      "output_lines": 2,
-      "started_at": "2026-09-01T19:01:46Z"
-    },
-    {
-      "command": [
-        "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
-        "scripts/synthesize_top_level_instructions.py",
-        "--preview",
-        "--profile",
-        "optimized",
-        "--reports-dir",
-        "reports"
-      ],
-      "elapsed_seconds": 1.422,
-      "exit_code": 0,
-      "finished_at": "2026-09-01T19:03:02Z",
-      "name": "synthesize optimized instructions",
-      "output_lines": 2,
-      "started_at": "2026-09-01T19:03:01Z"
-    },
-    {
-      "command": [
-        "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
-        "scripts/audit_context_budget.py",
-        "--reports-dir",
-        "reports"
-      ],
-      "elapsed_seconds": 0.234,
-      "exit_code": 0,
-      "finished_at": "2026-09-01T19:03:02Z",
-      "name": "audit context budget",
-      "output_lines": 2,
-      "started_at": "2026-09-01T19:03:02Z"
+      "output_lines": 29,
+      "started_at": "2026-09-26T07:56:10Z"
     }
   ],
   "strict": false,

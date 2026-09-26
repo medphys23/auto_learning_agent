@@ -1,0 +1,119 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-basic-skills-course-calendar",
+  "incompatible_when": [],
+  "procedure": [
+    "- Read the project's `AGENTS.md`, `README.md`, and `skills.md`.",
+    "- Keep Production ORSI/Google credentials out of Preview and Git; never expose participant names in logs or responses.",
+    "- Keep this service separate from `integrations/davinci-slack-calendar/`.",
+    "- Vercel Root Directory for `basic_skills_calendar` is `integrations/basic-skills-course-calendar`. Leave `davinci-slack-calendar` at `integrations/davinci-slack-calendar`.",
+    "1. Preserve fresh native ORSI authentication and normalized-header parsing for course, session, registration, and optional E-learning columns. Drupal Antibot login forms must POST to `data-action` with `antibot_key` from `drupalSettings`, n",
+    "2. Complete every source read and validation before Google writes. Fail closed on incomplete tables, duplicate IDs, or ambiguous adoption.",
+    "3. Preserve deterministic IDs, private transparent events, exact statuses, counted-versus-total registration distinctions, and non-deleting removal behavior.",
+    "4. Run the local dry run and review adoption/duplicate counts before enabling writes.",
+    "5. Keep the single daily Hobby UTC cron (`0 23 * * *`) and documented one-hour winter shift unless the user changes the plan. Course-event descriptions include `Last updated:`; timestamp-only drift is not a content change. Overnight proof o",
+    "6. Require protected ORSI/Calendar health checks, reviewed baseline adoption, and an idempotent second pass before declaring Production complete. Confirm later nights from the heartbeat timestamp, not from Vercel logs.",
+    "- 2026-09-19: Include live ORSI title `Basic Surgical Skills - Urology`. Discovery matches `Basic Skills Course` or `Basic Surgical Skills`; do not revert to the older `basic skills course` substring only.",
+    "- 2026-09-05: Hobby logs do not persist. Overnight proof is one purple heartbeat event rewritten after every successful Production sync; course events still no-op on timestamp-only drift.",
+    "- 2026-09-03: After the move into `integrations/`, the Vercel Root Directory must be `integrations/basic-skills-course-calendar`.",
+    "- 2026-09-02: Replaced the Monday/Friday pair with one daily Hobby cron (`0 23 * * *`, 01:00 Europe/Brussels in summer). Event descriptions now start with `Last updated:`; timestamp-only drift remains a no-op."
+  ],
+  "provenance": {
+    "created_at": "2026-09-26T07:55:55Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-26T07:55:55Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** changing, configuring, deploying, validating, or troubleshooting `integrations/basic-skills-course-calendar/`, including ORSI parsing, Google event adoption, dry runs, health checks, and Hobby scheduling.",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Basic Skills Course Calendar",
+  "trigger_phrases": [
+    "ORSI",
+    "Basic Skills Course Calendar"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

@@ -151,18 +151,6 @@ stack_tags = ['docx', 'google_apps_script', 'node', 'office_com', 'pptx', 'pytho
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
-id = 'practice-ops-dashboard'
-name = 'practice-ops-dashboard'
-path = 'C:\Users\ppyxe\Documents\GitHub\practice-ops-dashboard'
-remote = 'https://github.com/medphys23/practice-ops-dashboard.git'
-current_branch = 'main'
-enabled = true
-scope = 'medical_practice_operations'
-risk_tags = ['auth', 'database', 'medical_practice_data']
-stack_tags = ['nextjs', 'node', 'postgres', 'react', 'tailwind', 'typescript', 'vercel']
-harvest_mode = 'deep_when_clean'
-
-[[repositories]]
 id = 'ponytail'
 name = 'ponytail'
 path = 'C:\Users\ppyxe\Documents\GitHub\ponytail'
@@ -175,6 +163,18 @@ stack_tags = ['codex', 'javascript', 'node', 'plugins', 'skills']
 harvest_mode = 'deep_when_clean'
 graphify_semantic = false
 notes = 'Upstream Ponytail agent-behavior plugin retained as a read-only learning reference; harvested knowledge remains candidate-only.'
+
+[[repositories]]
+id = 'practice-ops-dashboard'
+name = 'practice-ops-dashboard'
+path = 'C:\Users\ppyxe\Documents\GitHub\practice-ops-dashboard'
+remote = 'https://github.com/medphys23/practice-ops-dashboard.git'
+current_branch = 'main'
+enabled = true
+scope = 'medical_practice_operations'
+risk_tags = ['auth', 'database', 'medical_practice_data']
+stack_tags = ['nextjs', 'node', 'postgres', 'react', 'tailwind', 'typescript', 'vercel']
+harvest_mode = 'deep_when_clean'
 
 [[repositories]]
 id = 'ps-robot-adaptor'

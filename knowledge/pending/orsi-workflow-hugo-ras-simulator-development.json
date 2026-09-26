@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "4ba9db8a93d660747ebc0550ba3c1663b1e82ee7",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
     "source_paths": [
       "skills.md"
     ],
@@ -53,27 +53,28 @@
   "procedure": [
     "- Read `HUGO_RAS/AGENTS.md` before changing implementation files.",
     "- Preserve the simulation-only, non-clinical, no-real-device boundary and the visible `SIMULATION ONLY \u2014 NOT FOR CLINICAL USE` banner.",
-    "- Current product schema is `PROJECT_SCHEMA_VERSION` `3.0.0` (`SimulationProjectV3`); keep V1/V2 migration paths working in persistence.",
-    "- Arm topology may be paper-informed; all cart dimensions, link geometry, joint axes/limits, IK parameters, and motion-sweep defaults remain configurable illustrative proxy data \u2014 never manufacturer measurements or proprietary CAD.",
+    "- Current product schema is `PROJECT_SCHEMA_VERSION` `4.0.0` (`SimulationProjectV4`, with `SimulationProjectV1` as the latest-runtime alias); keep V1/V2/V3.0/V3.1 migration paths working in persistence.",
+    "- Arm topology may be paper-informed. V4 uses a provenance-tagged URDF-style graph (6 physical assemblies, 7 robotic DoF, mechanical RCM). Cart 0.84 \u00d7 0.82 m is manufacturer-labeling paraphrase; per-axis limits, internal link lengths, IK pa",
     "- Node.js 24 (`HUGO_RAS/.nvmrc`); use `npm ci` with the committed lockfile.",
-    "1. Work from `HUGO_RAS/`. Keep domain schemas in `src/domain/`, presets in `src/presets/`, pure analysis in `src/geometry/` (`analyze`, `docking`, `kinematics`, `physicalModel`, primitives/transforms), persistence/export in `src/persistence",
+    "1. Work from `HUGO_RAS/`. Keep domain schemas in `src/domain/`, presets in `src/presets/`, pure analysis in `src/geometry/` (`analyze`, `docking`, `kinematicGraph`, `armModel`, `rcm`, `ik`, `collision`, `deployment`, `romValidation`, `physi",
     "2. Preserve metres/radians internally and centimetres/degrees at the UI boundary; keep +X patient-left, +Y head, +Z upward.",
     "3. Treat launch (`StartScreen`), wizard (`SetupWizard`), and expert workspace as distinct app views; do not collapse custom-setup staging into silent defaults.",
-    "4. Keep docking collision-aware and deterministic: approach sectors, cart paths, Ready/blocker reporting, and sequential docking order belong in `geometry/docking` + `physicalModel`, not ad-hoc UI math.",
-    "5. Keep FK/IK, RCM constraints, capsule clearances, triangulation, and motion envelopes unit-tested; keep heavy solves out of React render paths and select the narrowest Zustand slices.",
-    "6. When changing persistence, library keys, exports, or project contracts, extend unit tests (`docking`, `kinematics`, `project`, `store`, `geometry`, `App`) and Playwright e2e coverage together.",
-    "7. Do not add CT/DICOM, cloud auth, real HID/robot protocols, proprietary geometry reverse-engineering, or clinical decision language.",
+    "4. Keep docking collision-aware and deterministic: approach sectors, cart paths, Ready/blocker reporting, and sequential docking order belong in `geometry/docking` + `physicalModel`, not ad-hoc UI math. Docked pose and simulated deployment ",
+    "5. Keep rigid FK, constrained IK, mechanical RCM, arm-self collision, staged deployment, triangulation, and motion envelopes unit-tested; keep heavy solves out of React render paths and select the narrowest Zustand slices.",
+    "6. When changing persistence, library keys, exports, or project contracts, extend unit tests (`kinematicGraph`, `rcm`, `selfCollision`, `deployment`, `romValidation`, `migration.v4`, `benchmarks`, plus existing docking/kinematics/project/st",
+    "7. Do not add CT/DICOM, cloud auth, real HID/robot protocols, proprietary geometry reverse-engineering, or clinical decision language. Do not invent DH numbers or URLs.",
     "8. When dependencies or workflows change, update `HUGO_RAS/README.md`, `HUGO_RAS/AGENTS.md`, `HUGO_RAS/skills.md`, this section, and both root and `HUGO_RAS/.cursor/skills/` mirrors together.",
-    "- 2026-07-15: Added root catalog entry after the V3 docking/collision rework. Required deltas: `SimulationProjectV3` + library migration, `StartScreen`/`SetupWizard`, articulated six-joint proxy with FK/IK/RCM, collision-aware docking, moti"
+    "- 2026-07-15: Added root catalog entry after the V3 docking/collision rework. Required deltas: `SimulationProjectV3` + library migration, `StartScreen`/`SetupWizard`, articulated six-joint proxy with FK/IK/RCM, collision-aware docking, moti",
+    "- 2026-09-19: V4 kinematic refactor. Required deltas: schema `4.0.0`, URDF-style rigid graph (6 assemblies / 7 DoF), mechanical RCM, arm-self collision, staged sequential deployment, simulated ROM, source registry, cholecystectomy regressio"
   ],
   "provenance": {
-    "created_at": "2026-09-01T19:01:37Z",
+    "created_at": "2026-09-26T07:55:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-01T19:01:37Z"
+    "updated_at": "2026-09-26T07:55:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -86,7 +87,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Triggered by:** building, editing, debugging, reviewing, or verifying the standalone Modular RAS Setup Simulator V3 under `HUGO_RAS/`.",
+  "summary": "**Triggered by:** building, editing, debugging, reviewing, or verifying the standalone Modular RAS Setup Simulator V4 under `HUGO_RAS/`.",
   "tags": [
     "auth",
     "credentials",

@@ -1,0 +1,123 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-da-vinci-versus-pbp-study",
+  "incompatible_when": [],
+  "procedure": [
+    "- Read the project `AGENTS.md`, `registry/xenophon_session.md`, `registry/evidence_manifest.json`, and `PROJECT.md`.",
+    "- Keep the manifest as machine authority, `PROJECT.md` as the human dashboard, and the session card as Xenophon's adapter; synchronize all three after gate changes.",
+    "- Reuse `study_protocol/source/source_register.json`. Do not create a parallel `research/`, `sources/`, or source-registry tree.",
+    "- Keep participant data outside Git and recruitment blocked until every required pre-recruitment gate is complete and an ethics approval number exists.",
+    "1. Confirm the current workflow state and the one gate in scope; reuse existing extraction and deliverables before rebuilding.",
+    "2. Verify, hash, and register new sources with provenance. Do not copy the external `SRC-003` attachment; require a sanitized investigator-approved local replacement.",
+    "3. For evidence work, invoke Xenophon and obtain human approval of `protocol/review_protocol.md` before any protocol-controlled search. After the local-corpus-only lock, do not run a database search until a written amendment.",
+    "4. Keep primary findings, A/B/C inference/design status, and source quality separate; preserve the PBP v15 Delphi-ready/non-validated limitation.",
+    "5. Update the structured extraction and proposed crosswalk before regenerating DOCX/XLSX artifacts.",
+    "6. Update manifest, dashboard, and session state together; never complete a gate without explicit approval and supporting evidence.",
+    "7. Preserve archived protocol v1-v5 and SAP v1 byte-for-byte. Build clinical protocol v6 from the exact investigator-edited v5 baseline, leave SAP v2 unchanged, enforce `study_protocol/planning/protocol_formatting_spec_v2.md`, and preserve ",
+    "- 2026-09-02: Corrected the project path to `DaVinci_versus_PBP` and added the Xenophon governance scaffold, human dashboard, seven pre-recruitment gates, and validation controls around the existing v1 package.",
+    "- 2026-09-02: GATE-05 lock keeps recruitment blocked after numbered gates are complete until an ethics approval number is assigned.",
+    "- 2026-09-03: Promoted protocol v2 from the immutable investigator-edited v1 archive; corrected recruitment inflation to 45; expanded Sections 20\u201323 with native Word equations and deterministic formatting/OMML validation.",
+    "- 2026-09-03: Derived protocol v3 from the frozen v2 baseline; restricted the study universe to Phase V\u2013X non-bagging activity; added proposed crosswalk v2.0, five audited taxonomy-network figures, 31 displayed equations, and 92 inline OMat",
+    "- 2026-09-03: Refactored the immutable v3 scientific specification into clinically readable protocol v4 plus governed SAP v1. Protocol v4 retains four numbered study-specific equations; SAP v1 preserves all 31 v3 equations, detailed impleme",
+    "- 2026-09-04: Archived protocol v4 and SAP v1 byte-for-byte and promoted protocol v5/SAP v2. Primary-estimand precision now drives the prospective target of 40 complete participants (45 recruited); the full IRR design is unchanged and its a",
+    "- 2026-09-07: Archived the exact investigator-edited protocol v5 and promoted protocol v6 with 28 sequential retained sections and governed Word-list geometry. Added a two-sheet 104-row supervisor-review derivative while preserving the 18-s"
+  ],
+  "provenance": {
+    "created_at": "2026-09-26T07:55:55Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-09-26T07:55:55Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** changing the prospective robotic-cholecystectomy study protocol, native da Vinci simulator dictionary, PBP v15 extraction, error crosswalk, supporting evidence state, project dashboard, recruitment gates, source provenance",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Da Vinci versus PBP study",
+  "trigger_phrases": [
+    "ORSI",
+    "Da Vinci versus PBP study"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

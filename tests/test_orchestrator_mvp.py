@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import tomllib
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,7 +16,7 @@ SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
 from audit_context_budget import audit_context_budget  # noqa: E402
-from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line  # noqa: E402
+from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line, safe_manifest_paths  # noqa: E402
 from discover_repositories import discover_repositories, merge_registry, write_registry  # noqa: E402
 from harvest_repositories import harvest_repositories, manifest_signals, source_map_summary  # noqa: E402
 from orchestrator_common import (  # noqa: E402
@@ -460,6 +462,47 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertIn("colorama", audited["missing_from_global_catalog"])
             self.assertIn("vitest", audited["missing_from_repo_catalog"])
             self.assertTrue((base / "reports" / "dependency-catalog-audit.md").exists())
+
+    def test_safe_manifest_paths_skip_gitignored_and_vendor_trees(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self.init_git_repo(repo)
+            (repo / ".gitignore").write_text("/imaging/\n", encoding="utf-8")
+            (repo / "requirements.txt").write_text("requests==2.32.0\n", encoding="utf-8")
+            imaging = repo / "imaging" / "input" / "benchmarks"
+            imaging.mkdir(parents=True)
+            (imaging / "requirements.txt").write_text("numpy==2.0.0\n", encoding="utf-8")
+            vendor = repo / "node_modules" / "pkg"
+            vendor.mkdir(parents=True)
+            (vendor / "package.json").write_text('{"name":"pkg"}\n', encoding="utf-8")
+            nested = repo / "src"
+            nested.mkdir()
+            (nested / "package.json").write_text('{"name":"app"}\n', encoding="utf-8")
+
+            found = {path.relative_to(repo).as_posix() for path in safe_manifest_paths(repo)}
+
+            self.assertEqual(found, {"requirements.txt", "src/package.json"})
+
+    def test_safe_manifest_paths_tolerate_unreadable_directories(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            (repo / "requirements.txt").write_text("requests==2.32.0\n", encoding="utf-8")
+            (repo / "imaging").mkdir()
+
+            real_walk = os.walk
+
+            def walking(root, topdown=True, onerror=None, followlinks=False):
+                if onerror is None:
+                    raise AssertionError("manifest walk must ignore unreadable directories")
+                for dirpath, dirnames, filenames in real_walk(root, topdown=topdown, onerror=onerror, followlinks=followlinks):
+                    if Path(dirpath) == repo:
+                        onerror(FileNotFoundError(3, "The system cannot find the path specified", str(repo / "imaging")))
+                    yield dirpath, dirnames, filenames
+
+            with mock.patch("audit_dependency_catalog.os.walk", walking):
+                found = [path.name for path in safe_manifest_paths(repo)]
+
+            self.assertEqual(found, ["requirements.txt"])
 
     def test_requirement_line_parser_skips_options_and_extracts_names(self) -> None:
         self.assertEqual(parse_requirement_line("pandas[excel]>=2.0 ; python_version>'3.10'", "requirements.txt")["name"], "pandas")

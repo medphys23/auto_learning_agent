@@ -36,7 +36,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
+    "source_commit": "138dc7f483e93585c45f9300951c0492b7bd28f8",
     "source_paths": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
@@ -44,9 +44,13 @@
       ".pre-commit-config.yaml",
       "AGENTS.md",
       "CHANGELOG.md",
+      "config/fusion_policy.toml",
+      "config/hpb_ontology.toml",
+      "config/model_registry.toml",
+      "environment/README.md",
       "scripts/dev.ps1",
       "scripts/diagnose_graph.py",
-      "scripts/generate_schemas.py",
+      "scripts/dints_infer_cpu.py",
       "src/blender_voice_3d_print_designer/__init__.py",
       "src/blender_voice_3d_print_designer/__main__.py",
       "src/blender_voice_3d_print_designer/api.py",
@@ -66,7 +70,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:37:53Z",
+    "created_at": "2026-09-26T07:52:10Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
@@ -75,9 +79,13 @@
       ".pre-commit-config.yaml",
       "AGENTS.md",
       "CHANGELOG.md",
+      "config/fusion_policy.toml",
+      "config/hpb_ontology.toml",
+      "config/model_registry.toml",
+      "environment/README.md",
       "scripts/dev.ps1",
       "scripts/diagnose_graph.py",
-      "scripts/generate_schemas.py",
+      "scripts/dints_infer_cpu.py",
       "src/blender_voice_3d_print_designer/__init__.py",
       "src/blender_voice_3d_print_designer/__main__.py",
       "src/blender_voice_3d_print_designer/api.py",
@@ -86,7 +94,7 @@
       "tests/contract/test_protocol.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:37:53Z"
+    "updated_at": "2026-09-26T07:52:10Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -112,10 +120,10 @@
           "src/blender_voice_3d_print_designer/exporters/__init__.py",
           "src/blender_voice_3d_print_designer/exporters/mesh.py"
         ],
-        "file_count": 30,
-        "graph_node_count": 198,
+        "file_count": 67,
+        "graph_node_count": 646,
         "suffixes": {
-          ".py": 30
+          ".py": 67
         }
       },
       {
@@ -126,15 +134,15 @@
           "tests/contract/test_protocol.py",
           "tests/fixtures/acceptance_prompts.json",
           "tests/integration/test_api_flow.py",
-          "tests/unit/test_exports.py",
-          "tests/unit/test_paths.py",
-          "tests/unit/test_planner.py"
+          "tests/integration/test_totalsegmentator_environment.py",
+          "tests/unit/test_adjudication.py",
+          "tests/unit/test_annotation_reconstruction.py"
         ],
-        "file_count": 11,
-        "graph_node_count": 41,
+        "file_count": 22,
+        "graph_node_count": 144,
         "suffixes": {
           ".json": 1,
-          ".py": 10
+          ".py": 21
         }
       },
       {
@@ -142,15 +150,18 @@
         "examples": [
           "scripts/dev.ps1",
           "scripts/diagnose_graph.py",
+          "scripts/dints_infer_cpu.py",
+          "scripts/download_benchmarks.py",
+          "scripts/download_vsnet_msd303.py",
+          "scripts/fetch_hpb_idc_samples.py",
           "scripts/generate_schemas.py",
-          "scripts/run_blender_tests.py",
-          "scripts/validate_architecture.py"
+          "scripts/manage_models.py"
         ],
-        "file_count": 5,
-        "graph_node_count": 9,
+        "file_count": 17,
+        "graph_node_count": 59,
         "suffixes": {
-          ".ps1": 1,
-          ".py": 4
+          ".ps1": 2,
+          ".py": 15
         }
       },
       {
@@ -159,16 +170,16 @@
           ".pre-commit-config.yaml",
           "AGENTS.md",
           "CHANGELOG.md",
+          "CONTINUE_MULTIMODEL_HPB.md",
           "CONTRIBUTING.md",
           "pyproject.toml",
           "README.md",
-          "SECURITY.md",
-          "skills.md"
+          "SECURITY.md"
         ],
-        "file_count": 8,
+        "file_count": 10,
         "graph_node_count": 1,
         "suffixes": {
-          ".md": 6,
+          ".md": 8,
           ".toml": 1,
           ".yaml": 1
         }
@@ -178,22 +189,48 @@
         "examples": [
           ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
-          ".cursor/rules/repo-verification.mdc"
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/dicom-reconstruction/SKILL.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1,
+          ".mdc": 3
+        }
+      },
+      {
+        "area": "config",
+        "examples": [
+          "config/fusion_policy.toml",
+          "config/hpb_ontology.toml",
+          "config/model_registry.toml"
         ],
         "file_count": 3,
         "graph_node_count": 0,
         "suffixes": {
-          ".mdc": 3
+          ".toml": 3
+        }
+      },
+      {
+        "area": "environment",
+        "examples": [
+          "environment/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
         }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 364,
-    "graph_source_file_count": 53,
-    "harvestable_text_file_count": 57
+    "graph_node_count": 1069,
+    "graph_source_file_count": 115,
+    "harvestable_text_file_count": 124
   },
   "status": "candidate",
-  "summary": "Safe source map for 3d-printing: 5 harvestable areas, led by src, tests, scripts, ., .cursor.",
+  "summary": "Safe source map for 3d-printing: 7 harvestable areas, led by src, tests, scripts, ., .cursor, config, environment.",
   "tags": [
     "architecture-map",
     "blender",

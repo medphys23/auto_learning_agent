@@ -36,7 +36,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "53cda6a76e7e80e85f41801362d3cc0001cbc2e9",
+    "source_commit": "138dc7f483e93585c45f9300951c0492b7bd28f8",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -50,13 +50,13 @@
     ".\\.venv\\Scripts\\python.exe -m ruff check ."
   ],
   "provenance": {
-    "created_at": "2026-08-09T21:37:53Z",
+    "created_at": "2026-09-26T07:52:10Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-09T21:37:53Z"
+    "updated_at": "2026-09-26T07:52:10Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

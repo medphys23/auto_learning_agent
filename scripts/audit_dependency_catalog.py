@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import tomllib
 from pathlib import Path
 from typing import Any
 
-from orchestrator_common import git_dirty_lines, load_repository_registry, utc_now, write_json
+from orchestrator_common import git_dirty_lines, load_repository_registry, run_git, utc_now, write_json
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +17,8 @@ CURSOR_HOME = Path.home() / ".cursor"
 DEFAULT_REGISTRY = REPO_ROOT / "config" / "repositories.toml"
 DEFAULT_REPORTS_DIR = REPO_ROOT / "reports"
 MAX_MANIFEST_BYTES = 4 * 1024 * 1024
+# Stay under the classic Windows 260-character path limit, including NUL.
+MAX_WALK_PATH_CHARS = 240
 
 MANIFEST_NAMES = {
     "requirements.txt",
@@ -63,20 +66,57 @@ def dependency(name: str, *, source: str, family: str, kind: str, section: str =
     }
 
 
+def git_visible_relpaths(repo_path: Path) -> list[str] | None:
+    """Return tracked and untracked paths, excluding gitignored files. None if git cannot list the repo."""
+    listed = run_git(repo_path, "ls-files", "-co", "--exclude-standard", "-z")
+    if listed is None:
+        return None
+    return [item for item in listed.split("\0") if item]
+
+
+def walked_manifest_paths(repo_path: Path) -> list[Path]:
+    found: list[Path] = []
+
+    def skip_error(_exc: OSError) -> None:
+        return None
+
+    for dirpath, dirnames, filenames in os.walk(repo_path, onerror=skip_error):
+        dirnames[:] = [
+            name
+            for name in dirnames
+            if name.lower() not in SKIP_DIRS and len(os.path.join(dirpath, name)) <= MAX_WALK_PATH_CHARS
+        ]
+        for filename in filenames:
+            if filename.lower() not in MANIFEST_NAMES:
+                continue
+            candidate = Path(dirpath) / filename
+            if len(str(candidate)) > MAX_WALK_PATH_CHARS:
+                continue
+            found.append(candidate)
+    return found
+
+
 def safe_manifest_paths(repo_path: Path) -> list[Path]:
+    listed = git_visible_relpaths(repo_path)
+    if listed is None:
+        candidates = walked_manifest_paths(repo_path)
+    else:
+        candidates = []
+        for rel in listed:
+            rel_path = Path(rel)
+            if rel_path.name.lower() not in MANIFEST_NAMES:
+                continue
+            if any(part.lower() in SKIP_DIRS for part in rel_path.parts):
+                continue
+            candidates.append(repo_path / rel_path)
     paths: list[Path] = []
-    for path in repo_path.rglob("*"):
-        if not path.is_file():
-            continue
+    for path in candidates:
         try:
-            rel_parts = path.relative_to(repo_path).parts
-        except ValueError:
-            continue
-        if any(part.lower() in SKIP_DIRS for part in rel_parts):
-            continue
-        if path.name.lower() not in MANIFEST_NAMES:
-            continue
-        if path.stat().st_size > MAX_MANIFEST_BYTES:
+            if not path.is_file():
+                continue
+            if path.stat().st_size > MAX_MANIFEST_BYTES:
+                continue
+        except OSError:
             continue
         paths.append(path)
     return sorted(paths)
