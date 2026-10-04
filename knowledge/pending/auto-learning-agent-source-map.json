@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "fdf5277d6a58df4d8b3bf7ad47907eb053cc3b12",
+    "source_commit": "65cfbbc768c831bb32b66055654e3101834b9563",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/quality_release_reviewer.toml",
@@ -68,7 +68,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-09-26T07:52:09Z",
+    "created_at": "2026-09-26T08:46:26Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -96,7 +96,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T07:52:09Z"
+    "updated_at": "2026-09-26T08:46:26Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -123,7 +123,7 @@
           "scripts/orchestrator_common.py"
         ],
         "file_count": 30,
-        "graph_node_count": 332,
+        "graph_node_count": 335,
         "suffixes": {
           ".ps1": 6,
           ".py": 24
@@ -135,7 +135,7 @@
           "tests/test_orchestrator_mvp.py"
         ],
         "file_count": 1,
-        "graph_node_count": 59,
+        "graph_node_count": 61,
         "suffixes": {
           ".py": 1
         }
@@ -248,7 +248,7 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 589,
+    "graph_node_count": 594,
     "graph_source_file_count": 34,
     "harvestable_text_file_count": 114
   },

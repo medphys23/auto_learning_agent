@@ -1,7 +1,7 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 251,
+    "catalog_entry_count": 258,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
@@ -30,15 +30,15 @@
       },
       {
         "dirty_count": 4,
-        "id": "orsi"
-      },
-      {
-        "dirty_count": 1,
-        "id": "practice-ops-dashboard"
+        "id": "ponytail"
       },
       {
         "dirty_count": 2,
         "id": "ps-robot-adaptor"
+      },
+      {
+        "dirty_count": 3,
+        "id": "skills"
       },
       {
         "dirty_count": 2,
@@ -55,8 +55,8 @@
       "general-surgery-notes",
       "google-sheet-appscript-connector",
       "graphify",
-      "ponytail",
-      "skills",
+      "orsi",
+      "practice-ops-dashboard",
       "x-booking"
     ],
     "missing_required_record_families": {}
@@ -100,7 +100,7 @@
       "passed": false
     }
   ],
-  "generated_at": "2026-09-08T18:59:50Z",
+  "generated_at": "2026-09-26T08:49:59Z",
   "optimized_agents_exists": true,
   "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
   "requires_explicit_user_approval": true,

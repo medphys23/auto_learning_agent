@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "fdf5277d6a58df4d8b3bf7ad47907eb053cc3b12",
+    "source_commit": "65cfbbc768c831bb32b66055654e3101834b9563",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -44,13 +44,13 @@
     ".\\.venv\\Scripts\\python.exe scripts\\audit_context_budget.py"
   ],
   "provenance": {
-    "created_at": "2026-09-26T07:52:09Z",
+    "created_at": "2026-09-26T08:46:26Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T07:52:09Z"
+    "updated_at": "2026-09-26T08:46:26Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

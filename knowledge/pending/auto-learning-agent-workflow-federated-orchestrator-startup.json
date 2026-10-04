@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "fdf5277d6a58df4d8b3bf7ad47907eb053cc3b12",
+    "source_commit": "65cfbbc768c831bb32b66055654e3101834b9563",
     "source_paths": [
       "skills.md"
     ],
@@ -52,13 +52,13 @@
     "- 2026-07-11: Added `run-startup.ps1` / `run_startup.py` as the one-command operator entrypoint; global publish now includes `07-graphify.mdc` and gates GPT-5.6 parent model on runtime smoke unless explicitly forced or skipped."
   ],
   "provenance": {
-    "created_at": "2026-09-26T07:52:09Z",
+    "created_at": "2026-09-26T08:46:26Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T07:52:09Z"
+    "updated_at": "2026-09-26T08:46:26Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

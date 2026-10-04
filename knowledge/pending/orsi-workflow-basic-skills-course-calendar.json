@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d7428206fd4a3ad0919d5e77452a30e3c2a6392d",
+    "source_commit": "d62bb913e9f85af34284548cd5ef89a49a871748",
     "source_paths": [
       "skills.md"
     ],
@@ -57,23 +57,26 @@
     "- Vercel Root Directory for `basic_skills_calendar` is `integrations/basic-skills-course-calendar`. Leave `davinci-slack-calendar` at `integrations/davinci-slack-calendar`.",
     "1. Preserve fresh native ORSI authentication and normalized-header parsing for course, session, registration, and optional E-learning columns. Drupal Antibot login forms must POST to `data-action` with `antibot_key` from `drupalSettings`, n",
     "2. Complete every source read and validation before Google writes. Fail closed on incomplete tables, duplicate IDs, or ambiguous adoption.",
-    "3. Preserve deterministic IDs, private transparent events, exact statuses, counted-versus-total registration distinctions, and non-deleting removal behavior.",
+    "3. Preserve deterministic IDs, private transparent events, exact statuses, and counted-versus-total registration distinctions. Missing/canceled sessions remain non-destructive; delete only sync-managed events for past sessions with any exac",
     "4. Run the local dry run and review adoption/duplicate counts before enabling writes.",
-    "5. Keep the single daily Hobby UTC cron (`0 23 * * *`) and documented one-hour winter shift unless the user changes the plan. Course-event descriptions include `Last updated:`; timestamp-only drift is not a content change. Overnight proof o",
+    "5. Keep the daily Hobby UTC triggers at `0 5 * * *` and `0 6 * * *`; run only the trigger arriving during 07:00\u201307:59 Europe/Brussels. Course-event descriptions include `Last updated:`; timestamp-only drift is not a content change. Move the",
     "6. Require protected ORSI/Calendar health checks, reviewed baseline adoption, and an idempotent second pass before declaring Production complete. Confirm later nights from the heartbeat timestamp, not from Vercel logs.",
+    "7. For a manual Production cron test, open the production site and paste `integrations/basic-skills-course-calendar/scripts/browser-console-cron-check.js` into that tab\u2019s console. The prompt collects `CRON_SECRET`. The call runs the full sy",
+    "- 2026-09-26: Manual Production cron tests paste `scripts/browser-console-cron-check.js` into the production site console. The prompt collects `CRON_SECRET`, and the call always runs the full sync.",
+    "- 2026-09-26: Guarded 05:00/06:00 UTC triggers keep the full sync in the Brussels 07:00 hour. The heartbeat follows the run date and past sessions with an exact `Completed` registration delete only sync-managed events.",
     "- 2026-09-19: Include live ORSI title `Basic Surgical Skills - Urology`. Discovery matches `Basic Skills Course` or `Basic Surgical Skills`; do not revert to the older `basic skills course` substring only.",
     "- 2026-09-05: Hobby logs do not persist. Overnight proof is one purple heartbeat event rewritten after every successful Production sync; course events still no-op on timestamp-only drift.",
     "- 2026-09-03: After the move into `integrations/`, the Vercel Root Directory must be `integrations/basic-skills-course-calendar`.",
     "- 2026-09-02: Replaced the Monday/Friday pair with one daily Hobby cron (`0 23 * * *`, 01:00 Europe/Brussels in summer). Event descriptions now start with `Last updated:`; timestamp-only drift remains a no-op."
   ],
   "provenance": {
-    "created_at": "2026-09-26T07:55:55Z",
+    "created_at": "2026-09-26T08:49:42Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T07:55:55Z"
+    "updated_at": "2026-09-26T08:49:42Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
