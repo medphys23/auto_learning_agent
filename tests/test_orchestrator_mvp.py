@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
+from console_style import phase_done, style_child_line  # noqa: E402
 from audit_context_budget import audit_context_budget  # noqa: E402
 from audit_dependency_catalog import audit_dependency_catalog, parse_requirement_line, safe_manifest_paths  # noqa: E402
 from discover_repositories import discover_repositories, merge_registry, write_registry  # noqa: E402
@@ -504,6 +505,41 @@ class OrchestratorMvpTests(unittest.TestCase):
 
             self.assertEqual(found, ["requirements.txt"])
 
+    def test_child_log_levels_and_rich_progress_counts(self) -> None:
+        import io
+
+        import operator_progress
+        from rich.console import Console
+
+        plain, level = style_child_line("discover repositories", "ORSI: branch=main dirty=2 scope=research")
+        self.assertEqual(level, "warn")
+        plain, level = style_child_line("harvest repositories", "orsi: harvested (clean worktree, candidates=12)")
+        self.assertEqual(plain.split(":")[0], "orsi")
+        self.assertEqual(level, "ok")
+        _text, done_level = phase_done(1, 2, "discover repositories", exit_code=1, elapsed=1.0, lines=3)
+        self.assertEqual(done_level, "fail")
+
+        buffer = io.StringIO()
+        fake = Console(file=buffer, force_terminal=True, width=120, highlight=False)
+        previous = operator_progress._CONSOLE
+        operator_progress._CONSOLE = fake
+        try:
+            with operator_progress.OperatorProgress("graphify repos", 2, live=True) as progress:
+                progress.set_item("orsi: extract")
+                operator_progress.emit("[graphify] orsi: built", "ok")
+                progress.finish(saved=True)
+                progress.finish(saved=False)
+            rendered = buffer.getvalue()
+        finally:
+            operator_progress._CONSOLE = previous
+            operator_progress._STACK.clear()
+        self.assertEqual(progress.saved, 1)
+        self.assertEqual(progress.deferred, 1)
+        self.assertEqual(progress.finished, 2)
+        self.assertIn("orsi", rendered)
+        self.assertIn("saved 1", rendered)
+        self.assertIn("deferred 1", rendered)
+
     def test_requirement_line_parser_skips_options_and_extracts_names(self) -> None:
         self.assertEqual(parse_requirement_line("pandas[excel]>=2.0 ; python_version>'3.10'", "requirements.txt")["name"], "pandas")
         self.assertIsNone(parse_requirement_line("--extra-index-url https://example.invalid", "requirements.txt"))
@@ -751,10 +787,10 @@ class OrchestratorMvpTests(unittest.TestCase):
 
             self.assertIn("Preserve this rule", agents)
             self.assertIn("Orchestrator Knowledge Layer", agents)
-            self.assertIn("colorama", agents)
+            self.assertIn("`rich`", agents)
             self.assertIn("### tqdm progress bars", skills)
             self.assertIn("### Orchestrator knowledge control plane", skills)
-            self.assertIn("colorama", cursor_stack)
+            self.assertIn("| Orchestrator startup pipeline | rich |", cursor_stack)
             self.assertEqual(config["features"]["memories"], False)
             self.assertIn("workflow_router", config["agents"])
             self.assertTrue((base / "master" / "cursor" / "rules" / "06-orchestrator-knowledge.mdc").exists())

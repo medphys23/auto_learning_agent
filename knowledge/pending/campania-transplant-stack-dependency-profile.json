@@ -34,8 +34,10 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8d85d157a9304a4324f8f30e2ef58dbfcfefc1bd",
+    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
     "source_paths": [
+      "cyprus_transplant/film/package.json",
+      "cyprus_transplant/web/package.json",
       "requirements.txt"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
@@ -45,6 +47,69 @@
   "id": "campania-transplant-stack-dependency-profile",
   "incompatible_when": [],
   "manifest_signals": [
+    {
+      "dependencies": [
+        "@remotion/cli",
+        "react",
+        "react-dom",
+        "remotion"
+      ],
+      "dev_dependencies": [
+        "@types/react",
+        "typescript"
+      ],
+      "name": "package.json",
+      "path": "cyprus_transplant/film/package.json",
+      "scripts": [
+        "render:desktop",
+        "render:mobile",
+        "render:proof",
+        "studio"
+      ]
+    },
+    {
+      "dependencies": [
+        "animejs",
+        "class-variance-authority",
+        "clsx",
+        "lucide-react",
+        "next",
+        "radix-ui",
+        "react",
+        "react-dom",
+        "tailwind-merge"
+      ],
+      "dev_dependencies": [
+        "@axe-core/playwright",
+        "@playwright/test",
+        "@tailwindcss/postcss",
+        "@testing-library/jest-dom",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@types/jsdom",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "eslint",
+        "eslint-config-next",
+        "jsdom",
+        "postcss",
+        "tailwindcss",
+        "typescript",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "cyprus_transplant/web/package.json",
+      "scripts": [
+        "build",
+        "dev",
+        "lint",
+        "start",
+        "test",
+        "test:e2e",
+        "typecheck"
+      ]
+    },
     {
       "name": "requirements.txt",
       "path": "requirements.txt",
@@ -63,13 +128,15 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:14Z",
+    "created_at": "2026-10-14T20:30:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      "cyprus_transplant/film/package.json",
+      "cyprus_transplant/web/package.json",
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:14Z"
+    "updated_at": "2026-10-14T20:30:55Z"
   },
   "registry_stack_tags": [
     "docx",
@@ -90,7 +157,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for campania_transplant: registry tags docx, graphviz, matplotlib, numpy, python, streamlit; 1 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for campania_transplant: registry tags docx, graphviz, matplotlib, numpy, python, streamlit; 3 tracked manifest file(s).",
   "tags": [
     "campania-transplant",
     "dependency-profile",

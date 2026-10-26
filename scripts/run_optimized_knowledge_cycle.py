@@ -10,7 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from console_style import cprint, ensure_colors, paint, phase_banner, phase_done, style_child_line
+from console_style import cprint, phase_banner, phase_done, style_child_line
+from operator_progress import OperatorProgress, emit, note_current
 from orchestrator_common import read_json, utc_now
 from plan_optimized_cutover import plan_optimized_cutover
 
@@ -71,7 +72,7 @@ def build_steps(*, python_executable: str, reports_dir: Path, skip_dependency_au
     ]
 
 
-def run_step(step: CycleStep, *, log_handle: Any, progress: Any, stream_output: bool) -> dict[str, Any]:
+def run_step(step: CycleStep, *, log_handle: Any, stream_output: bool) -> dict[str, Any]:
     started = utc_now()
     start = time.monotonic()
     log_handle.write(f"\n## {step.name}\n")
@@ -100,7 +101,9 @@ def run_step(step: CycleStep, *, log_handle: Any, progress: Any, stream_output: 
         if stream_output:
             text = line.rstrip()
             if text:
-                progress.write(style_child_line(step.name, text))
+                plain, level = style_child_line(step.name, text)
+                emit(plain, level)
+                note_current(plain)
     exit_code = process.wait()
     elapsed = round(time.monotonic() - start, 3)
     finished = utc_now()
@@ -161,11 +164,10 @@ def run_cycle(
     quiet: bool,
 ) -> int:
     try:
-        from tqdm import tqdm
+        import rich  # noqa: F401
     except ModuleNotFoundError:
-        print("ERROR: tqdm and colorama are required. Install repo requirements into .venv first.")
+        print("ERROR: rich is required. Install repo requirements into .venv first.")
         return 3
-    ensure_colors()
     # Live child logs are on by default; --quiet restores the old top-level-only view.
     stream_output = not quiet or verbose
     reports_dir.mkdir(parents=True, exist_ok=True)
@@ -178,62 +180,62 @@ def run_cycle(
     )
     results: list[dict[str, Any]] = []
     failed_step = ""
+    readiness: dict[str, Any] = {}
     with log_file.open("w", encoding="utf-8") as log_handle:
         log_handle.write("# Optimized Knowledge Cycle Log\n")
         log_handle.write(f"Started: {started}\n")
         log_handle.write(f"Stream child output: {str(stream_output).lower()}\n")
         phase_total = len(steps) + 1
         cprint(f"optimized knowledge cycle: {len(steps)} work steps + readiness", "phase")
-        with tqdm(total=phase_total, desc="optimized knowledge", unit="step", dynamic_ncols=True) as progress:
+        with OperatorProgress("optimized knowledge", phase_total) as progress:
             for step in steps:
-                progress.set_postfix_str(f"{step.index}/{step.total} {step.name[:32]}")
-                for banner_line in phase_banner(
+                progress.set_item(f"{step.index}/{step.total} {step.name}")
+                for banner_text, banner_level in phase_banner(
                     step.index,
                     step.total,
                     step.name,
-                    done_so_far=progress.n,
+                    done_so_far=progress.finished,
                     phase_total=phase_total,
-                ).splitlines():
-                    progress.write(banner_line)
-                result = run_step(step, log_handle=log_handle, progress=progress, stream_output=stream_output)
+                ):
+                    emit(banner_text, banner_level)
+                result = run_step(step, log_handle=log_handle, stream_output=stream_output)
                 results.append(result)
-                progress.write(
-                    phase_done(
-                        step.index,
-                        step.total,
-                        step.name,
-                        exit_code=int(result["exit_code"]),
-                        elapsed=float(result["elapsed_seconds"]),
-                        lines=int(result["output_lines"]),
-                    )
+                done_text, done_level = phase_done(
+                    step.index,
+                    step.total,
+                    step.name,
+                    exit_code=int(result["exit_code"]),
+                    elapsed=float(result["elapsed_seconds"]),
+                    lines=int(result["output_lines"]),
                 )
-                progress.update(1)
+                emit(done_text, done_level)
+                progress.finish(saved=int(result["exit_code"]) == 0)
                 if result["exit_code"] != 0:
                     failed_step = step.name
                     break
-            readiness: dict[str, Any] = {}
             if not failed_step:
-                progress.set_postfix_str(f"{phase_total}/{phase_total} readiness gates")
-                for banner_line in phase_banner(
+                progress.set_item("readiness gates")
+                for banner_text, banner_level in phase_banner(
                     phase_total,
                     phase_total,
                     "readiness gates",
-                    done_so_far=progress.n,
+                    done_so_far=progress.finished,
                     phase_total=phase_total,
-                ).splitlines():
-                    progress.write(banner_line)
+                ):
+                    emit(banner_text, banner_level)
                 readiness = plan_optimized_cutover(reports_dir=reports_dir)
                 decision = str(readiness.get("decision", "unknown"))
-                progress.write(paint(f"[readiness] {decision}", "fail" if decision == "NO-GO" else "ok"))
+                emit(f"[readiness] {decision}", "fail" if decision == "NO-GO" else "ok")
+                gate_failures = 0
                 for gate in readiness.get("gates", []):
                     passed = bool(gate.get("passed"))
-                    progress.write(
-                        paint(
-                            f"  gate {gate.get('name')}: {'pass' if passed else 'fail'} — {gate.get('detail', '')}",
-                            "ok" if passed else "warn",
-                        )
+                    if not passed:
+                        gate_failures += 1
+                    emit(
+                        f"  gate {gate.get('name')}: {'pass' if passed else 'fail'} — {gate.get('detail', '')}",
+                        "ok" if passed else "warn",
                     )
-                progress.update(1)
+                progress.finish(saved=gate_failures == 0)
     finished = utc_now()
     failures = strict_failures(readiness, continue_on_dirty) if readiness else []
     status = "failed" if failed_step or (strict and failures) else "completed"

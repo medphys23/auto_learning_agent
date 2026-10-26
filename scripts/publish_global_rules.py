@@ -726,6 +726,8 @@ def main() -> int:
         help="Apply GPT-5.6 Sol parent model even when runtime smoke fails.",
     )
     args = parser.parse_args()
+    from console_style import cprint
+
     runtime_smoke_flag: bool | None = None
     if args.runtime_smoke:
         runtime_smoke_flag = True
@@ -747,14 +749,14 @@ def main() -> int:
             agents_only=args.agents_only,
         )
     except RuntimeError as exc:
-        print(f"ERROR: {exc}")
+        cprint(f"ERROR: {exc}", "fail")
         return 2
-    print(f"Publication mode: {result['mode']}")
-    print(f"Report: {result['report']}")
+    cprint(f"Publication mode: {result['mode']}", "phase")
+    cprint(f"Report: {result['report']}", "dim")
     if result.get("backup_root"):
-        print(f"Backup root: {result['backup_root']}")
+        cprint(f"Backup root: {result['backup_root']}", "dim")
     if result.get("pruned_backups"):
-        print(f"Pruned backups: {len(result['pruned_backups'])}")
+        cprint(f"Pruned backups: {len(result['pruned_backups'])}", "dim")
     return 0
 
 

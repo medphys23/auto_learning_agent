@@ -6,11 +6,14 @@ import sys
 from pathlib import Path
 
 
+from console_style import cprint
+
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def run(command: list[str]) -> int:
-    print(" ".join(f'"{item}"' if " " in item else item for item in command))
+    cprint(" ".join(f'"{item}"' if " " in item else item for item in command), "dim")
     process = subprocess.run(command, cwd=ROOT)
     return int(process.returncode)
 
@@ -107,10 +110,10 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.apply_global and not args.confirm_global_write:
-        print("ERROR: --apply-global requires --confirm-global-write")
+        cprint("ERROR: --apply-global requires --confirm-global-write", "fail")
         return 2
     if args.apply_repo_hints and not args.confirm_repo_write:
-        print("ERROR: --apply-repo-hints requires --confirm-repo-write")
+        cprint("ERROR: --apply-repo-hints requires --confirm-repo-write", "fail")
         return 2
 
     python_executable = ensure_venv(sys.executable)
@@ -131,8 +134,8 @@ def main() -> int:
         )
     )
     if cycle_exit != 0:
-        print("ERROR: optimized knowledge cycle failed.")
-        print(r"Review reports\optimized-cutover-readiness.md and reports\optimized-knowledge-cycle.log")
+        cprint("ERROR: optimized knowledge cycle failed.", "fail")
+        cprint(r"Review reports\optimized-cutover-readiness.md and reports\optimized-knowledge-cycle.log", "dim")
         return cycle_exit
 
     publish_exit = run(
@@ -146,7 +149,7 @@ def main() -> int:
         )
     )
     if publish_exit != 0:
-        print("ERROR: optimized publication failed.")
+        cprint("ERROR: optimized publication failed.", "fail")
         return publish_exit
 
     if args.apply_global and args.apply_repo_hints:
@@ -159,17 +162,17 @@ def main() -> int:
             ]
         )
         if hints_exit != 0:
-            print("ERROR: repository hint propagation failed.")
+            cprint("ERROR: repository hint propagation failed.", "fail")
             return hints_exit
 
     if args.apply_global:
-        print("Startup completed with global publication applied.")
+        cprint("Startup completed with global publication applied.", "ok")
         if args.apply_repo_hints:
-            print("Repository retrieval hints applied.")
+            cprint("Repository retrieval hints applied.", "ok")
     else:
-        print("Startup preview completed. No global files were changed.")
-        print("To publish globals: .\\scripts\\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite")
-    print(r"Reports: reports\optimized-knowledge-cycle-summary.md, reports\optimized-cutover-readiness.md")
+        cprint("Startup preview completed. No global files were changed.", "ok")
+        cprint("To publish globals: .\\scripts\\run-startup.ps1 -ApplyGlobal -ConfirmGlobalWrite", "dim")
+    cprint(r"Reports: reports\optimized-knowledge-cycle-summary.md, reports\optimized-cutover-readiness.md", "dim")
     return 0
 
 

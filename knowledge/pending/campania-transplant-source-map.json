@@ -34,13 +34,16 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8d85d157a9304a4324f8f30e2ef58dbfcfefc1bd",
+    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
     "source_paths": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "app.py",
+      "cyprus_transplant/AGENTS.md",
+      "cyprus_transplant/README.md",
+      "cyprus_transplant/film/package.json",
       "model/__init__.py",
       "model/engine.py",
       "model/params.py",
@@ -61,7 +64,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:14Z",
+    "created_at": "2026-10-14T20:30:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
@@ -69,6 +72,9 @@
       ".cursor/rules/repo-verification.mdc",
       "AGENTS.md",
       "app.py",
+      "cyprus_transplant/AGENTS.md",
+      "cyprus_transplant/README.md",
+      "cyprus_transplant/film/package.json",
       "model/__init__.py",
       "model/engine.py",
       "model/params.py",
@@ -78,7 +84,7 @@
       "scripts/map_docx_media.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:14Z"
+    "updated_at": "2026-10-14T20:30:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -92,6 +98,25 @@
   "scope": "repository",
   "source_map": {
     "areas": [
+      {
+        "area": "cyprus_transplant",
+        "examples": [
+          "cyprus_transplant/AGENTS.md",
+          "cyprus_transplant/film/package.json",
+          "cyprus_transplant/README.md",
+          "cyprus_transplant/skills.md",
+          "cyprus_transplant/sources/README.md",
+          "cyprus_transplant/web/AGENTS.md",
+          "cyprus_transplant/web/package.json",
+          "cyprus_transplant/web/README.md"
+        ],
+        "file_count": 8,
+        "graph_node_count": 90,
+        "suffixes": {
+          ".json": 2,
+          ".md": 6
+        }
+      },
       {
         "area": "scripts",
         "examples": [
@@ -108,6 +133,19 @@
         }
       },
       {
+        "area": "model",
+        "examples": [
+          "model/__init__.py",
+          "model/engine.py",
+          "model/params.py"
+        ],
+        "file_count": 3,
+        "graph_node_count": 29,
+        "suffixes": {
+          ".py": 3
+        }
+      },
+      {
         "area": ".",
         "examples": [
           "AGENTS.md",
@@ -119,24 +157,11 @@
           "skills.md"
         ],
         "file_count": 7,
-        "graph_node_count": 45,
+        "graph_node_count": 3,
         "suffixes": {
           ".md": 4,
           ".py": 1,
           ".txt": 2
-        }
-      },
-      {
-        "area": "model",
-        "examples": [
-          "model/__init__.py",
-          "model/engine.py",
-          "model/params.py"
-        ],
-        "file_count": 3,
-        "graph_node_count": 29,
-        "suffixes": {
-          ".py": 3
         }
       },
       {
@@ -154,12 +179,12 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 180,
-    "graph_source_file_count": 20,
-    "harvestable_text_file_count": 18
+    "graph_node_count": 1426,
+    "graph_source_file_count": 130,
+    "harvestable_text_file_count": 26
   },
   "status": "candidate",
-  "summary": "Safe source map for campania_transplant: 4 harvestable areas, led by scripts, ., model, .cursor.",
+  "summary": "Safe source map for campania_transplant: 5 harvestable areas, led by cyprus_transplant, scripts, model, ., .cursor.",
   "tags": [
     "architecture-map",
     "campania-transplant",

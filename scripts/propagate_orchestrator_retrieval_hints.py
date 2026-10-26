@@ -114,6 +114,8 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--confirm-repo-write", action="store_true")
     args = parser.parse_args()
+    from console_style import cprint
+
     try:
         result = propagate_hints(
             repositories_path=args.repositories,
@@ -123,10 +125,10 @@ def main() -> int:
             confirm_repo_write=args.confirm_repo_write,
         )
     except RuntimeError as exc:
-        print(f"ERROR: {exc}")
+        cprint(f"ERROR: {exc}", "fail")
         return 2
-    print(f"Repo hint mode: {'apply' if args.apply else 'preview'}")
-    print(f"Report: {result['report']}")
+    cprint(f"Repo hint mode: {'apply' if args.apply else 'preview'}", "phase")
+    cprint(f"Report: {result['report']}", "dim")
     return 0
 
 

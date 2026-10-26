@@ -1,11 +1,11 @@
 {
   "applied": false,
   "catalog_integrity": {
-    "catalog_entry_count": 258,
+    "catalog_entry_count": 263,
     "catalog_missing_record_paths": [],
     "dirty_blockers": [
       {
-        "dirty_count": 2,
+        "dirty_count": 1,
         "id": "campania-transplant"
       },
       {
@@ -27,6 +27,10 @@
       {
         "dirty_count": 2,
         "id": "omniroute"
+      },
+      {
+        "dirty_count": 1,
+        "id": "orsi"
       },
       {
         "dirty_count": 4,
@@ -55,7 +59,6 @@
       "general-surgery-notes",
       "google-sheet-appscript-connector",
       "graphify",
-      "orsi",
       "practice-ops-dashboard",
       "x-booking"
     ],
@@ -95,12 +98,12 @@
       "passed": true
     },
     {
-      "detail": "11 dirty blocker(s)",
+      "detail": "12 dirty blocker(s)",
       "name": "no_dirty_blockers",
       "passed": false
     }
   ],
-  "generated_at": "2026-09-26T08:49:59Z",
+  "generated_at": "2026-10-26T07:19:02Z",
   "optimized_agents_exists": true,
   "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
   "requires_explicit_user_approval": true,

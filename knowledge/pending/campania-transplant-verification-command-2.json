@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8d85d157a9304a4324f8f30e2ef58dbfcfefc1bd",
+    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -48,13 +48,13 @@
     ".\\.venv\\Scripts\\python.exe -m compileall model figures scripts app.py -q"
   ],
   "provenance": {
-    "created_at": "2026-08-05T20:23:14Z",
+    "created_at": "2026-10-14T20:30:55Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-08-05T20:23:14Z"
+    "updated_at": "2026-10-14T20:30:55Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

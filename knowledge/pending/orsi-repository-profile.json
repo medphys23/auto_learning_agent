@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "d62bb913e9f85af34284548cd5ef89a49a871748",
+    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -57,18 +57,18 @@
     "Use the stack section in AGENTS.md to route verification and dependency handling."
   ],
   "provenance": {
-    "created_at": "2026-09-26T08:49:41Z",
+    "created_at": "2026-10-04T09:17:24Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-09-26T08:49:41Z"
+    "updated_at": "2026-10-04T09:17:24Z"
   },
   "repository_metadata": {
     "branch": "main",
-    "file_count": 586,
-    "harvestable_text_file_count": 83,
+    "file_count": 587,
+    "harvestable_text_file_count": 84,
     "purpose_excerpt": "ORSI **metric-based robotic surgery training materials**: proficiency-based progression (PBP) metrics, Delphi-ready DOCX masters, and PowerPoint review decks for cholecystectomy, low anterior resection, and right hemicolectomy. The repo als",
     "remote": "https://github.com/medphys23/ORSI.git",
     "stack_excerpt": "Python 3.11+ build scripts under `Orsi_Metrics_Research/scripts/`."

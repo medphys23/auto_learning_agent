@@ -1,0 +1,112 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-telesurgery-telementoring-rayyan-screening",
+  "incompatible_when": [],
+  "procedure": [
+    "- Read the nearest project `AGENTS.md`, `registry/xenophon_session.md`, `protocol/screening_constitution.md`, `screening/workflow_state.json`, and the checkpoint for the active phase.",
+    "- Keep Rayyan blind. Never reveal hidden authors/journals, use Rayyan AI, add notes or labels, attach files, or use bulk decisions.",
+    "- Phase 1 is DOM-by-DOM from the Rayyan Screening view only. Run `scripts/run_phase1_capture.ps1` with one visible Chrome window; do not pass `--headless`. The resumable scraper is canonical and manual capture is only a recovery path. It ca",
+    "1. Phase 1 captures positions 968-1935 into ignored `screening/records.jsonl`, using 100-record working batches and validated 10-record microcheckpoints. Capture only position, stable Rayyan ID, exact title, year, abstract availability/text",
+    "2. Phase 2 starts only after `screening_workflow.py phase1-validate --complete` passes. Apply the controlled constitution to the local capture; preserve the 160 pre-phase-split recommendations as append-only provisional history; checkpoint ",
+    "3. Phase 3 starts only after the user confirms review of the final XLSX and explicitly calls the phase. Run the readiness check, obtain action-time confirmation, then verify ID/title and apply one Reviewer 1 decision at a time, appending `a",
+    "- 2026-10-03: Phase 1, Calogero, and Federica captures use one visible Chrome window and the colored Rich spinner. Five parallel headless tabs caused Rayyan to stop serving the Blind mode screening page; `--headless` is ignored. Do not run "
+  ],
+  "provenance": {
+    "created_at": "2026-10-04T09:17:25Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-10-04T09:17:25Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** the user calling `Phase 1 - capture all records`, `Phase 2 - make decisions`, or `Phase 3 - apply to Rayyan` for `Orsi_Metrics_Research/projects/telesurgery_telementoring_training/`.",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Telesurgery telementoring Rayyan screening",
+  "trigger_phrases": [
+    "ORSI",
+    "Telesurgery telementoring Rayyan screening"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

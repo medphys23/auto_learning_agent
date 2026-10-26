@@ -352,44 +352,20 @@ def export_wiki(executable: Path, graph: Path, *, cwd: Path, env: dict[str, str]
     }
 
 
-_COLORAMA_READY = False
-_FORE: Any = None
-_STYLE: Any = None
-
-
-def ensure_colorama() -> None:
-    global _COLORAMA_READY, _FORE, _STYLE
-    if _COLORAMA_READY:
-        return
-    try:
-        from colorama import Fore, Style, init as colorama_init
-
-        colorama_init()
-        _FORE = Fore
-        _STYLE = Style
-    except ModuleNotFoundError:
-        _FORE = None
-        _STYLE = None
-    _COLORAMA_READY = True
-
-
 def log_graphify(message: str, *, level: str = "info") -> None:
-    """Print a Graphify progress line; color only the tag / terminal status."""
-    ensure_colorama()
-    tag = "[graphify]"
-    if _FORE is None or _STYLE is None:
-        print(f"{tag} {message}", flush=True)
-        return
-    dim = getattr(_FORE, "LIGHTBLACK_EX", _FORE.WHITE)
-    # Routine progress: dim tag, plain message. Outcomes: color the whole line.
-    if level == "ok":
-        print(f"{_FORE.GREEN}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
-    elif level in {"warn", "skip"}:
-        print(f"{_FORE.YELLOW}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
-    elif level == "fail":
-        print(f"{_FORE.RED}{tag} {message}{_STYLE.RESET_ALL}", flush=True)
-    else:
-        print(f"{dim}{tag}{_STYLE.RESET_ALL} {message}", flush=True)
+    """Print a Graphify progress line above the Rich bar when one is active."""
+    from operator_progress import emit, note_current
+
+    mapped = {
+        "ok": "ok",
+        "warn": "warn",
+        "skip": "skip",
+        "fail": "fail",
+        "start": "start",
+        "info": "info",
+    }.get(level, "info")
+    emit(f"[graphify] {message}", mapped)
+    note_current(message)
 
 
 def build_repository_graph(
@@ -733,41 +709,34 @@ def run_cycle(
     if not repositories:
         raise RuntimeError("no enabled repositories selected")
     ast_workers = max(1, (os.cpu_count() or 2) // max(1, max_parallel))
-    try:
-        from tqdm.auto import tqdm
-    except ModuleNotFoundError:
-        tqdm = None  # type: ignore[assignment]
-    ensure_colorama()
+    from operator_progress import OperatorProgress
+
     results: list[dict[str, Any]] = []
-    log_graphify(
-        f"building {len(repositories)} repo graph(s) with max_parallel={max_parallel} "
-        f"graphify={version.strip()}",
-        level="info",
-    )
-    with ThreadPoolExecutor(max_workers=max(1, max_parallel)) as executor:
-        futures = {
-            executor.submit(
-                build_repository_graph,
-                repo,
-                executable,
-                force=force,
-                ast_workers=ast_workers,
-                graphify_version=version,
-                semantic=semantic,
-                wiki=wiki,
-            ): repo
-            for repo in repositories
-        }
-        if tqdm is None:
+    with OperatorProgress("graphify repos", len(repositories)) as progress:
+        log_graphify(
+            f"building {len(repositories)} repo graph(s) with max_parallel={max_parallel} "
+            f"graphify={version.strip()}",
+            level="info",
+        )
+        with ThreadPoolExecutor(max_workers=max(1, max_parallel)) as executor:
+            futures = {
+                executor.submit(
+                    build_repository_graph,
+                    repo,
+                    executable,
+                    force=force,
+                    ast_workers=ast_workers,
+                    graphify_version=version,
+                    semantic=semantic,
+                    wiki=wiki,
+                ): repo
+                for repo in repositories
+            }
             for future in as_completed(futures):
-                results.append(future.result())
-        else:
-            with tqdm(total=len(futures), desc="graphify repos", unit="repo", dynamic_ncols=True, leave=True) as bar:
-                for future in as_completed(futures):
-                    item = future.result()
-                    results.append(item)
-                    bar.set_postfix_str(f"{item['id']}:{item['status']}"[:40])
-                    bar.update(1)
+                item = future.result()
+                results.append(item)
+                progress.set_item(f"{item['id']}: {item['status']}")
+                progress.finish(saved=str(item["status"]) in {"built", "unchanged"})
     current = [item for item in results if item["status"] in {"built", "empty", "unchanged"}]
     failed = [item for item in results if item["status"] not in {"built", "empty", "unchanged"}]
     federated = ROOT / "graphify-out" / "federated" / "graph.json"
@@ -864,7 +833,6 @@ def run_cycle(
     reports_dir.mkdir(parents=True, exist_ok=True)
     write_json(reports_dir / "graphify-cycle-summary.json", result)
     write_cycle_report(reports_dir / "graphify-cycle-summary.md", result)
-    ensure_colorama()
     status_level = {"completed": "ok", "degraded": "warn", "failed": "fail"}.get(status, "info")
     for item in result["repositories"]:
         reason = item.get("reason", "")
@@ -912,7 +880,6 @@ def main() -> int:
     )
     parser.add_argument("--wiki", action="store_true", help="Export agent-crawlable wikis for built graphs and the federated graph.")
     args = parser.parse_args()
-    ensure_colorama()
     try:
         return run_cycle(
             repository_ids=args.repo,

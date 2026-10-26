@@ -61,7 +61,7 @@ git status --short --ignored
 - 2026-07-05: Added Shadow v1 token-optimization profile; legacy remains default, optimized writes preview artifacts under `master/optimized/` and refuses global apply.
 - 2026-07-09: Optimized profile became the default local profile with guarded global apply, slim global skills index generation, repo-scoped retrieval, repo hint previews, and a manual optimized knowledge cycle.
 - 2026-07-09: Added one-command optimized cutover wrapper for harvest, readiness, preview, and optional confirmed global publication.
-- 2026-07-09: Added a local `auto_learning_agent` dirty-harvest exception; other dirty registered repos remain blocked unless explicitly approved and configured.
+- 2026-10-04: APPLY-EVERYTHING startup logs use Rich. The knowledge cycle and Graphify refresh keep one live line (spinner, current item, rate, elapsed, remaining, saved, deferred) and print event lines above it.
 
 ### Governed Graphify integration
 

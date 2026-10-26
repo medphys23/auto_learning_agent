@@ -195,9 +195,11 @@ def main() -> int:
     parser.add_argument("--reports-dir", type=Path, default=REPO_ROOT / "reports")
     parser.add_argument("--config", type=Path, default=REPO_ROOT / "config" / "context-optimization.toml")
     args = parser.parse_args()
+    from console_style import cprint
+
     result = plan_optimized_cutover(master_root=args.master_root, reports_dir=args.reports_dir, config_path=args.config)
-    print(f"Optimized cutover readiness: {result['decision']}")
-    print(f"Report: {args.reports_dir / 'optimized-cutover-readiness.md'}")
+    cprint(f"Optimized cutover readiness: {result['decision']}", "fail" if result["decision"] == "NO-GO" else "ok")
+    cprint(f"Report: {args.reports_dir / 'optimized-cutover-readiness.md'}", "dim")
     return 0 if result["cutover_allowed"] else 1
 
 

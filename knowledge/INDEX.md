@@ -2,7 +2,7 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-09-26T08:49:55Z
+Generated: 2026-10-26T07:18:56Z
 
 ## Coverage
 
@@ -19,19 +19,19 @@ Generated: 2026-09-26T08:49:55Z
 | investment-binance | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 3 | yes |
 | kidney-federico | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 3 | yes |
 | omniroute | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 12 | yes |
-| orsi | harvested | 50 | yes | yes | yes | yes | 20 | 26 | yes |
+| orsi | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 21 | 26 | yes |
 | ponytail | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
 | practice-ops-dashboard | skipped | 17 | yes | yes | yes | yes | 7 | 5 | yes |
 | ps-robot-adaptor | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 1 | yes |
 | skills | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
 | travel-agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 7 | yes |
-| x-booking | skipped | 19 | yes | yes | yes | yes | 5 | 9 | yes |
+| x-booking | skipped | 23 | yes | yes | yes | yes | 6 | 12 | yes |
 | xenios-finances | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
 
 ## Catalog Summary
 
-Status counts: candidate=258.
-Type counts: anti_pattern=1, command=110, constraint=16, pattern=5, reference=78, workflow=48.
+Status counts: candidate=263.
+Type counts: anti_pattern=1, command=113, constraint=16, pattern=5, reference=78, workflow=50.
 
 No promoted knowledge records exist yet; current reusable knowledge remains candidate-first.
 

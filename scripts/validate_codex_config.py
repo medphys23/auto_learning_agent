@@ -131,13 +131,18 @@ def main() -> int:
     errors = validate_files(files) + validate_references(root, global_mode=args.global_mode) + validate_agent_files(root, global_mode=args.global_mode)
     if args.global_mode:
         errors += validate_global_config_policy(root)
+    from console_style import cprint
+
     if errors:
-        print("TOML validation failed:")
+        cprint("TOML validation failed:", "fail")
         for error in errors:
-            print(f"- {error}")
+            cprint(f"- {error}", "fail")
         return 1
-    print(f"TOML validation OK: {len(files)} files parsed.")
-    print("Schema validation note: no live Codex JSON schema validator is bundled; this script validates parseability and local references only.")
+    cprint(f"TOML validation OK: {len(files)} files parsed.", "ok")
+    cprint(
+        "Schema validation note: no live Codex JSON schema validator is bundled; this script validates parseability and local references only.",
+        "dim",
+    )
     return 0
 
 

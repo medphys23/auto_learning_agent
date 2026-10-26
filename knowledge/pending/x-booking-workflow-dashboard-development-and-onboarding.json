@@ -1,0 +1,100 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "beautifulsoup4",
+      "node",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "languages": [
+      "beautifulsoup4",
+      "node",
+      "openpyxl",
+      "playwright",
+      "python",
+      "tqdm"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "2a54a82453d36d2faba796fc5346db9bdd76c873",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\X_booking",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "x-booking-workflow-dashboard-development-and-onboarding",
+  "incompatible_when": [],
+  "procedure": [
+    "1. Confirm a clean `dev03` worktree and compare it with `dashboard`.",
+    "2. Add or preview config with `npm run import:dashboard-client -- --csv <file> --row <n> --dry-run`; generated files contain configuration only.",
+    "3. Set server-only `ACTIVE_CLIENT`, `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `DASHBOARD_ALLOWED_EMAILS`, and `VERCEL_TOKEN` outside Git.",
+    "4. Run `npm run verify:dashboard`, then `npm run test:e2e:dashboard` with both `ACTIVE_CLIENT=dr-alexia` and `ACTIVE_CLIENT=sample-analytics`, `npm audit --audit-level=high`, and Gitleaks.",
+    "5. Verify the `dev03` preview, OAuth callback, Search Console property access, provider statuses, logs, and desktop/tablet/390px layouts.",
+    "6. Stop before merging to `dashboard`. Promotion requires explicit approval and a recorded rollback deployment/Git SHA."
+  ],
+  "provenance": {
+    "created_at": "2026-10-14T20:33:51Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-10-14T20:33:51Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Use only `dev03` for private analytics work and reserve `dashboard` for approved production promotion. The other families are `dev01` -> `main` (doctor), `dev02` -> `production` (sales), and `scraping` (scraper); do not share deployments or",
+  "tags": [
+    "beautifulsoup4",
+    "branch_sensitive",
+    "contact_data",
+    "no_patient_data",
+    "node",
+    "openpyxl",
+    "playwright",
+    "python",
+    "repo-workflow",
+    "scraper",
+    "skills-md",
+    "tqdm",
+    "x-booking"
+  ],
+  "title": "X_booking workflow: Dashboard development and onboarding",
+  "trigger_phrases": [
+    "X_booking",
+    "Dashboard development and onboarding"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

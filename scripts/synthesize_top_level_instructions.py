@@ -307,13 +307,13 @@ AGENT_REGISTRATIONS = {
 }
 
 ORCHESTRATOR_STACK_ROW = (
-    "| **Orchestrator startup pipeline** | `tqdm`, `colorama` | auto_learning_agent | "
-    "Progress bars and colorized clean/dirty/blocked repository status output; install only in the repo-local `.venv` |"
+    "| **Orchestrator startup pipeline** | `rich` | auto_learning_agent | "
+    "Live progress for the startup cycle: spinner, current step, rate, elapsed time, and saved/deferred counts |"
 )
 
 CURSOR_ORCHESTRATOR_STACK_ROW = (
-    "| Orchestrator startup pipeline | tqdm, colorama | auto_learning_agent | "
-    "Progress bars plus colorized clean/dirty/blocked repository status; repo-local `.venv` only |"
+    "| Orchestrator startup pipeline | rich | auto_learning_agent | "
+    "Live progress for the startup cycle: spinner, current step, rate, elapsed time, and saved/deferred counts |"
 )
 
 OPTIMIZED_AGENTS_MAX_BYTES = 8192

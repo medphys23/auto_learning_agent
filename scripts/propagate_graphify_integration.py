@@ -182,6 +182,8 @@ def main() -> int:
     parser.add_argument("--confirm-repo-write", action="store_true")
     parser.add_argument("--skip-build", action="store_true", help="Apply policy files without starting the graph cycle.")
     args = parser.parse_args()
+    from console_style import cprint
+
     try:
         result = propagate_graphify(
             repositories_path=args.repositories,
@@ -191,10 +193,10 @@ def main() -> int:
             confirm_repo_write=args.confirm_repo_write,
         )
     except RuntimeError as exc:
-        print(f"ERROR: {exc}")
+        cprint(f"ERROR: {exc}", "fail")
         return 2
-    print(f"Graphify propagation mode: {'apply' if args.apply else 'preview'}")
-    print(f"Report: {result['report']}")
+    cprint(f"Graphify propagation mode: {'apply' if args.apply else 'preview'}", "phase")
+    cprint(f"Report: {result['report']}", "dim")
     if args.apply and not args.skip_build:
         from run_graphify_cycle import run_cycle
 
