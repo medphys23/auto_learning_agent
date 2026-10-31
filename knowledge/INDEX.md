@@ -2,7 +2,7 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-10-26T07:18:56Z
+Generated: 2026-10-31T07:28:21Z
 
 ## Coverage
 
@@ -10,7 +10,7 @@ Generated: 2026-10-26T07:18:56Z
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
 | auto_learning_agent | harvested | 33 | yes | yes | yes | yes | 5 | 23 | yes |
 | blender-voice-3d-print-designer | skipped | 15 | yes | yes | yes | yes | 0 | 10 | yes |
-| campania-transplant | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
+| campania-transplant | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 | cv | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 2 | no |
 | general-surgery-notes | skipped | 12 | yes | yes | yes | yes | 3 | 5 | no |
 | general-work | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |

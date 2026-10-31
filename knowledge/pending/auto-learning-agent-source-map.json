@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "8a9419d3f7ca9b1cffba5edc5bb38dc446e81b92",
+    "source_commit": "c8eacbe6e885807076debd1de3222090b768f873",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/quality_release_reviewer.toml",
@@ -68,7 +68,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-10-26T07:15:22Z",
+    "created_at": "2026-10-31T07:24:11Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -96,7 +96,7 @@
       "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-26T07:15:22Z"
+    "updated_at": "2026-10-31T07:24:11Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -120,13 +120,13 @@
           "scripts/console_style.py",
           "scripts/discover_repositories.py",
           "scripts/harvest_repositories.py",
-          "scripts/orchestrator_common.py"
+          "scripts/operator_progress.py"
         ],
-        "file_count": 30,
-        "graph_node_count": 334,
+        "file_count": 31,
+        "graph_node_count": 357,
         "suffixes": {
           ".ps1": 6,
-          ".py": 24
+          ".py": 25
         }
       },
       {
@@ -250,7 +250,7 @@
     "graph_index_used": true,
     "graph_node_count": 618,
     "graph_source_file_count": 35,
-    "harvestable_text_file_count": 114
+    "harvestable_text_file_count": 115
   },
   "status": "candidate",
   "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, tests, ., backups, .codex, config, .cursor, master.",

@@ -34,20 +34,22 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
+    "source_commit": "06c3cef0de10adf163f4a550953a6d2c5ad901f2",
     "source_paths": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/deployment-pair-gate.yml",
+      ".github/workflows/wave8-cloud-readiness.yml",
       "AGENTS.md",
       "app.py",
+      "codex-extension-restart-report.txt",
       "cyprus_transplant/AGENTS.md",
-      "cyprus_transplant/README.md",
+      "cyprus_transplant/api/requirements.txt",
       "cyprus_transplant/film/package.json",
       "model/__init__.py",
       "model/engine.py",
       "model/params.py",
-      "packages.txt",
       "scripts/compare_docx_versions.py",
       "scripts/extract_docx.py",
       "scripts/map_docx_media.py"
@@ -64,27 +66,29 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-10-14T20:30:55Z",
+    "created_at": "2026-10-31T07:24:18Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/graphify.mdc",
       ".cursor/rules/repo-core.mdc",
       ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/deployment-pair-gate.yml",
+      ".github/workflows/wave8-cloud-readiness.yml",
       "AGENTS.md",
       "app.py",
+      "codex-extension-restart-report.txt",
       "cyprus_transplant/AGENTS.md",
-      "cyprus_transplant/README.md",
+      "cyprus_transplant/api/requirements.txt",
       "cyprus_transplant/film/package.json",
       "model/__init__.py",
       "model/engine.py",
       "model/params.py",
-      "packages.txt",
       "scripts/compare_docx_versions.py",
       "scripts/extract_docx.py",
       "scripts/map_docx_media.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-14T20:30:55Z"
+    "updated_at": "2026-10-31T07:24:18Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -102,19 +106,20 @@
         "area": "cyprus_transplant",
         "examples": [
           "cyprus_transplant/AGENTS.md",
+          "cyprus_transplant/api/requirements.txt",
           "cyprus_transplant/film/package.json",
           "cyprus_transplant/README.md",
           "cyprus_transplant/skills.md",
           "cyprus_transplant/sources/README.md",
           "cyprus_transplant/web/AGENTS.md",
-          "cyprus_transplant/web/package.json",
-          "cyprus_transplant/web/README.md"
+          "cyprus_transplant/web/package.json"
         ],
-        "file_count": 8,
-        "graph_node_count": 90,
+        "file_count": 10,
+        "graph_node_count": 93,
         "suffixes": {
           ".json": 2,
-          ".md": 6
+          ".md": 7,
+          ".txt": 1
         }
       },
       {
@@ -150,18 +155,21 @@
         "examples": [
           "AGENTS.md",
           "app.py",
+          "codex-extension-restart-report.txt",
           "packages.txt",
           "PUSH_INSTRUCTIONS.md",
+          "pyproject.toml",
           "README.md",
-          "requirements.txt",
-          "skills.md"
+          "requirements.txt"
         ],
-        "file_count": 7,
-        "graph_node_count": 3,
+        "file_count": 10,
+        "graph_node_count": 15,
         "suffixes": {
+          ".json": 1,
           ".md": 4,
           ".py": 1,
-          ".txt": 2
+          ".toml": 1,
+          ".txt": 3
         }
       },
       {
@@ -169,22 +177,36 @@
         "examples": [
           ".cursor/rules/graphify.mdc",
           ".cursor/rules/repo-core.mdc",
-          ".cursor/rules/repo-verification.mdc"
+          ".cursor/rules/repo-verification.mdc",
+          ".cursor/skills/wave8-vercel-preview/SKILL.md"
         ],
-        "file_count": 3,
+        "file_count": 4,
         "graph_node_count": 0,
         "suffixes": {
+          ".md": 1,
           ".mdc": 3
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/workflows/deployment-pair-gate.yml",
+          ".github/workflows/wave8-cloud-readiness.yml"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".yml": 2
         }
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 1426,
-    "graph_source_file_count": 130,
-    "harvestable_text_file_count": 26
+    "graph_node_count": 5209,
+    "graph_source_file_count": 305,
+    "harvestable_text_file_count": 34
   },
   "status": "candidate",
-  "summary": "Safe source map for campania_transplant: 5 harvestable areas, led by cyprus_transplant, scripts, model, ., .cursor.",
+  "summary": "Safe source map for campania_transplant: 6 harvestable areas, led by cyprus_transplant, scripts, model, ., .cursor, .github.",
   "tags": [
     "architecture-map",
     "campania-transplant",

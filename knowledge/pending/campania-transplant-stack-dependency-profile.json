@@ -34,10 +34,12 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
+    "source_commit": "06c3cef0de10adf163f4a550953a6d2c5ad901f2",
     "source_paths": [
+      "cyprus_transplant/api/requirements.txt",
       "cyprus_transplant/film/package.json",
       "cyprus_transplant/web/package.json",
+      "pyproject.toml",
       "requirements.txt"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
@@ -47,6 +49,13 @@
   "id": "campania-transplant-stack-dependency-profile",
   "incompatible_when": [],
   "manifest_signals": [
+    {
+      "name": "requirements.txt",
+      "path": "cyprus_transplant/api/requirements.txt",
+      "requirements": [
+        "fastapi==0.143.3"
+      ]
+    },
     {
       "dependencies": [
         "@remotion/cli",
@@ -72,6 +81,7 @@
         "animejs",
         "class-variance-authority",
         "clsx",
+        "katex",
         "lucide-react",
         "next",
         "radix-ui",
@@ -103,11 +113,20 @@
       "scripts": [
         "build",
         "dev",
+        "dev:api",
         "lint",
         "start",
         "test",
         "test:e2e",
         "typecheck"
+      ]
+    },
+    {
+      "name": "pyproject.toml",
+      "path": "pyproject.toml",
+      "sections": [
+        "project",
+        "tool.vercel"
       ]
     },
     {
@@ -128,15 +147,17 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-10-14T20:30:55Z",
+    "created_at": "2026-10-31T07:24:19Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
+      "cyprus_transplant/api/requirements.txt",
       "cyprus_transplant/film/package.json",
       "cyprus_transplant/web/package.json",
+      "pyproject.toml",
       "requirements.txt"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-14T20:30:55Z"
+    "updated_at": "2026-10-31T07:24:19Z"
   },
   "registry_stack_tags": [
     "docx",
@@ -157,7 +178,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for campania_transplant: registry tags docx, graphviz, matplotlib, numpy, python, streamlit; 3 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for campania_transplant: registry tags docx, graphviz, matplotlib, numpy, python, streamlit; 5 tracked manifest file(s).",
   "tags": [
     "campania-transplant",
     "dependency-profile",

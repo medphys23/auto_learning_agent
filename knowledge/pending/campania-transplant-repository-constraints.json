@@ -34,7 +34,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "5ac907a1615ee286c729938da56ab9a152a21e91",
+    "source_commit": "06c3cef0de10adf163f4a550953a6d2c5ad901f2",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -49,13 +49,13 @@
     "Do not commit patient data, raw clinical exports, or unlicensed copies of third-party material."
   ],
   "provenance": {
-    "created_at": "2026-10-14T20:30:55Z",
+    "created_at": "2026-10-31T07:24:19Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-14T20:30:55Z"
+    "updated_at": "2026-10-31T07:24:19Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
