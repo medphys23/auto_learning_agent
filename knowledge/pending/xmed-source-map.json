@@ -1,0 +1,225 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.72
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "07fd386afff3d5062dc67e6afbb958e5f7515dda",
+    "source_paths": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/verify.yml",
+      "AGENTS.md",
+      "README.md",
+      "apps/web/README.md",
+      "apps/web/package.json",
+      "db/README.md",
+      "deployment/README.md",
+      "legacy/README.md",
+      "legacy/reference/python/requirements.txt",
+      "requirements.txt",
+      "tests/integration/test_authorization.py",
+      "tests/integration/test_clinical_authorization.py",
+      "tests/integration/test_database.py"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\XMED",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "xmed-source-map",
+  "incompatible_when": [],
+  "procedure": [
+    "Use this map to choose entry points before opening source files.",
+    "Open only the listed areas relevant to the current task.",
+    "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
+  ],
+  "provenance": {
+    "created_at": "2026-11-11T13:13:10Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      ".cursor/rules/graphify.mdc",
+      ".cursor/rules/repo-core.mdc",
+      ".cursor/rules/repo-verification.mdc",
+      ".github/workflows/verify.yml",
+      "AGENTS.md",
+      "README.md",
+      "apps/web/README.md",
+      "apps/web/package.json",
+      "db/README.md",
+      "deployment/README.md",
+      "legacy/README.md",
+      "legacy/reference/python/requirements.txt",
+      "requirements.txt",
+      "tests/integration/test_authorization.py",
+      "tests/integration/test_clinical_authorization.py",
+      "tests/integration/test_database.py"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-11-11T13:13:10Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "source_map": {
+    "areas": [
+      {
+        "area": "tests",
+        "examples": [
+          "tests/integration/test_authorization.py",
+          "tests/integration/test_clinical_authorization.py",
+          "tests/integration/test_database.py",
+          "tests/integration/test_doid_import.py",
+          "tests/integration/test_m32_controls.py",
+          "tests/integration/test_outpatient_authorization.py",
+          "tests/integration/test_terminology_foundation.py",
+          "tests/README.md"
+        ],
+        "file_count": 13,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1,
+          ".py": 12
+        }
+      },
+      {
+        "area": ".",
+        "examples": [
+          "AGENTS.md",
+          "README.md",
+          "requirements.txt",
+          "skills.md"
+        ],
+        "file_count": 4,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 3,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".cursor",
+        "examples": [
+          ".cursor/rules/graphify.mdc",
+          ".cursor/rules/repo-core.mdc",
+          ".cursor/rules/repo-verification.mdc"
+        ],
+        "file_count": 3,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".mdc": 3
+        }
+      },
+      {
+        "area": "apps",
+        "examples": [
+          "apps/web/package.json",
+          "apps/web/README.md"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".json": 1,
+          ".md": 1
+        }
+      },
+      {
+        "area": "legacy",
+        "examples": [
+          "legacy/README.md",
+          "legacy/reference/python/requirements.txt"
+        ],
+        "file_count": 2,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1,
+          ".txt": 1
+        }
+      },
+      {
+        "area": ".github",
+        "examples": [
+          ".github/workflows/verify.yml"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".yml": 1
+        }
+      },
+      {
+        "area": "db",
+        "examples": [
+          "db/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
+        }
+      },
+      {
+        "area": "deployment",
+        "examples": [
+          "deployment/README.md"
+        ],
+        "file_count": 1,
+        "graph_node_count": 0,
+        "suffixes": {
+          ".md": 1
+        }
+      }
+    ],
+    "graph_index_used": false,
+    "graph_node_count": 0,
+    "graph_source_file_count": 0,
+    "harvestable_text_file_count": 27
+  },
+  "status": "candidate",
+  "summary": "Safe source map for XMED: 8 harvestable areas, led by tests, ., .cursor, apps, legacy, .github, db, deployment.",
+  "tags": [
+    "architecture-map",
+    "local-github-analysis",
+    "python",
+    "source-map",
+    "xmed"
+  ],
+  "title": "XMED source and architecture map",
+  "trigger_phrases": [
+    "XMED",
+    "architecture",
+    "source map",
+    "where code lives"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm source paths still exist and the repository fingerprint matches the candidate provenance."
+  ]
+}

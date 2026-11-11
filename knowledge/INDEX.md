@@ -2,7 +2,7 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-10-31T07:28:21Z
+Generated: 2026-11-11T13:13:10Z
 
 ## Coverage
 
@@ -10,28 +10,30 @@ Generated: 2026-10-31T07:28:21Z
 | --- | --- | ---: | --- | --- | --- | --- | ---: | ---: | --- |
 | auto_learning_agent | harvested | 33 | yes | yes | yes | yes | 5 | 23 | yes |
 | blender-voice-3d-print-designer | skipped | 15 | yes | yes | yes | yes | 0 | 10 | yes |
-| campania-transplant | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
+| campania-transplant | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
 | cv | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 2 | no |
-| general-surgery-notes | skipped | 12 | yes | yes | yes | yes | 3 | 5 | no |
+| general-surgery-notes | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 3 | 5 | no |
 | general-work | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
 | google-sheet-appscript-connector | skipped | 4 | yes | yes | yes | yes | 0 | 0 | no |
 | graphify | skipped | 5 | yes | yes | yes | yes | 0 | 0 | yes |
 | investment-binance | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 1 | 3 | yes |
 | kidney-federico | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 3 | yes |
 | omniroute | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 12 | yes |
-| orsi | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 21 | 26 | yes |
+| orsi | harvested | 51 | yes | yes | yes | yes | 21 | 26 | yes |
 | ponytail | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
 | practice-ops-dashboard | skipped | 17 | yes | yes | yes | yes | 7 | 5 | yes |
 | ps-robot-adaptor | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 1 | yes |
 | skills | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 0 | yes |
 | travel-agent | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 4 | 7 | yes |
+| video-fixer | harvested | 7 | yes | yes | yes | yes | 0 | 2 | yes |
 | x-booking | skipped | 23 | yes | yes | yes | yes | 6 | 12 | yes |
 | xenios-finances | blocked_dirty_worktree | 0 | yes | yes | yes | yes | 0 | 2 | yes |
+| xmed | harvested | 4 | yes | yes | yes | yes | 0 | 0 | no |
 
 ## Catalog Summary
 
-Status counts: candidate=263.
-Type counts: anti_pattern=1, command=113, constraint=16, pattern=5, reference=78, workflow=50.
+Status counts: candidate=274.
+Type counts: anti_pattern=1, command=115, constraint=17, pattern=5, reference=86, workflow=50.
 
 No promoted knowledge records exist yet; current reusable knowledge remains candidate-first.
 

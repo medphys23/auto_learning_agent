@@ -4,6 +4,12 @@
 
 The repository is deliberately not a raw mirror of every project. It captures safe, reusable knowledge from local Git checkouts: architecture maps, workflows, verification commands, stack and dependency signals, safety constraints, tests/CI/deployment signals, and concise source summaries. It excludes secrets, credentials, PHI, private datasets, scraped contact exports, SQLite/runtime state, caches, dependencies, binaries, and generated artifacts.
 
+## Windows storage audit
+
+Run `./scripts/audit-windows-storage.ps1` from PowerShell to inventory environments, development caches, and Docker/WSL virtual disks on `C:\`. The command reads the drive and writes `reports/windows-storage-audit.md` plus `reports/windows-storage-inventory.csv`; it does not remove anything. Use `-Root D:\` to audit a different drive. Review the report's hardlink caveat before estimating space that a cleanup would recover.
+
+Run `./scripts/audit-windows-drive.ps1` for a full-drive, metadata-only category audit. It writes `reports/windows-drive-audit.md` and `reports/windows-drive-inventory.csv`, including top folders, large files, and a review shortlist. It does not clean files or change Windows settings.
+
 ## Current Phase
 
 The repo is in the **optimized orchestrator + federated Graphify** phase.

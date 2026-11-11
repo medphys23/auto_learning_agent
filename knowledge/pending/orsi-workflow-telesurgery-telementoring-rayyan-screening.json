@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
+    "source_commit": "bacc3429c8e59b474ef0dae3cd7af623469af8e4",
     "source_paths": [
       "skills.md"
     ],
@@ -56,17 +56,22 @@
     "- Phase 1 is DOM-by-DOM from the Rayyan Screening view only. Run `scripts/run_phase1_capture.ps1` with one visible Chrome window; do not pass `--headless`. The resumable scraper is canonical and manual capture is only a recovery path. It ca",
     "1. Phase 1 captures positions 968-1935 into ignored `screening/records.jsonl`, using 100-record working batches and validated 10-record microcheckpoints. Capture only position, stable Rayyan ID, exact title, year, abstract availability/text",
     "2. Phase 2 starts only after `screening_workflow.py phase1-validate --complete` passes. Apply the controlled constitution to the local capture; preserve the 160 pre-phase-split recommendations as append-only provisional history; checkpoint ",
-    "3. Phase 3 starts only after the user confirms review of the final XLSX and explicitly calls the phase. Run the readiness check, obtain action-time confirmation, then verify ID/title and apply one Reviewer 1 decision at a time, appending `a",
+    "3. Phase 3 starts only after the user confirms review of the final XLSX and explicitly calls the phase. Build `screening/phase3_apply_queue.jsonl` from Decisions column G of the audited workbook (`scripts/build_phase3_apply_queue.py`); colu",
+    "- 2026-10-05: If two reopens after a decision click still show the correct card as undecided, Phase 3 clicks that decision once more and does not click it a third time.",
+    "- 2026-10-05: A wrong card at the same `article=` slot retries Sort by: Title and reopens that URL without clicking. Phase 3 stops only after those retries still show a different Rayyan ID.",
+    "- 2026-10-04: Phase 3 post-action checks reopen the same Rayyan ID and exact title, then stay on that card until the saved stage hydrates. A decision or reason control is clicked at most once per record in a run.",
+    "- 2026-10-05: The Phase 3 launcher uses one visible Chrome window, automatically skips verified records and runs from the first unverified record through position 1935, logs column J rationale locally, verifies every ID/title/decision/reaso",
+    "- 2026-10-04: Phase 3 preparation reads Decisions column G from the audited workbook into `screening/phase3_apply_queue.jsonl`. Positions are the title-sort rank; `article=` is `position - 1`. Independent Audit dispositions are not the clic",
     "- 2026-10-03: Phase 1, Calogero, and Federica captures use one visible Chrome window and the colored Rich spinner. Five parallel headless tabs caused Rayyan to stop serving the Blind mode screening page; `--headless` is ignored. Do not run "
   ],
   "provenance": {
-    "created_at": "2026-10-04T09:17:25Z",
+    "created_at": "2026-11-11T13:12:49Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-04T09:17:25Z"
+    "updated_at": "2026-11-11T13:12:49Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

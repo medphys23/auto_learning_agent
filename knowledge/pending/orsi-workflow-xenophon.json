@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
+    "source_commit": "bacc3429c8e59b474ef0dae3cd7af623469af8e4",
     "source_paths": [
       "skills.md"
     ],
@@ -51,7 +51,7 @@
   "id": "orsi-workflow-xenophon",
   "incompatible_when": [],
   "procedure": [
-    "- Invoke [`research-evidence-to-manuscript`](.cursor/skills/research-evidence-to-manuscript/SKILL.md). Read [scientific controls](.cursor/skills/research-evidence-to-manuscript/references/scientific-controls.md) before protocol, extraction,",
+    "- Invoke [`$xenophon`](.cursor/skills/xenophon/SKILL.md), which resolves to the shared [`research-evidence-to-manuscript`](.cursor/skills/research-evidence-to-manuscript/SKILL.md) kernel. Read [scientific controls](.cursor/skills/research-e",
     "- Load [orchestrator-protocol.md](.cursor/skills/research-evidence-to-manuscript/references/orchestrator-protocol.md) only for a substantial multi-wave program. Do not paste it into worker prompts.",
     "- On `PBP Surgical training/`, read [xenophon_session.md](PBP%20Surgical%20training/registry/xenophon_session.md) first and follow [cheap-mode.md](.cursor/skills/research-evidence-to-manuscript/references/cheap-mode.md). That folder is the ",
     "- State the decision problem, audience, consequences of error, atomic claims, review type, source boundary, reviewer model, amendment policy, and stopping rule before searching.",
@@ -73,13 +73,13 @@
     "- Require every material manuscript sentence to resolve to approved ledger records and source locations, with exact values checked and overclaim terms reviewed."
   ],
   "provenance": {
-    "created_at": "2026-10-04T09:17:25Z",
+    "created_at": "2026-11-11T13:12:49Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-04T09:17:25Z"
+    "updated_at": "2026-11-11T13:12:49Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -92,7 +92,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "**Workflow identity:** **Xenophon**, named in honor of the project owner's late grandfather, a nuclear physicist and great researcher. The technical skill ID is `research-evidence-to-manuscript`; **Xenophon is the human-facing workflow name",
+  "summary": "**Workflow identity:** **Xenophon**, named in honor of the project owner's late grandfather, a nuclear physicist and great researcher. The preferred explicit skill ID is `$xenophon`; `$research-evidence-to-manuscript` remains the stable com",
   "tags": [
     "auth",
     "credentials",

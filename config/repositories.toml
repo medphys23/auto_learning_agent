@@ -215,6 +215,18 @@ stack_tags = ['python']
 harvest_mode = 'deep_when_clean'
 
 [[repositories]]
+id = 'video-fixer'
+name = 'video_fixer'
+path = 'C:\Users\ppyxe\Documents\GitHub\video_fixer'
+remote = 'https://github.com/medphys23/video_fixer.git'
+current_branch = 'main'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['python']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
 id = 'x-booking'
 name = 'X_booking'
 path = 'C:\Users\ppyxe\Documents\GitHub\X_booking'
@@ -236,4 +248,16 @@ enabled = true
 scope = 'personal_finance'
 risk_tags = ['finance', 'local_only', 'mysql']
 stack_tags = ['bootstrap', 'chartjs', 'mysql', 'php', 'python']
+harvest_mode = 'deep_when_clean'
+
+[[repositories]]
+id = 'xmed'
+name = 'XMED'
+path = 'C:\Users\ppyxe\Documents\GitHub\XMED'
+remote = 'https://github.com/medphys23/XMED.git'
+current_branch = 'dev01'
+enabled = true
+scope = 'unclassified'
+risk_tags = []
+stack_tags = ['python']
 harvest_mode = 'deep_when_clean'

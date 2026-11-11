@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
+    "source_commit": "bacc3429c8e59b474ef0dae3cd7af623469af8e4",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -54,13 +54,13 @@
     ".\\.venv\\Scripts\\python.exe Orsi_Metrics_Research\\scripts\\robotic_cholecystectomy\\study_protocol\\build_cholecystectomy_study_protocol.py"
   ],
   "provenance": {
-    "created_at": "2026-10-04T09:17:25Z",
+    "created_at": "2026-11-11T13:12:49Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-04T09:17:25Z"
+    "updated_at": "2026-11-11T13:12:49Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

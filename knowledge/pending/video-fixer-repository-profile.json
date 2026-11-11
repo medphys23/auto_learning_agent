@@ -1,0 +1,88 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "python"
+    ],
+    "languages": [
+      "python"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "f97ed3b6711139916d07f1a99661fb027d122dbd",
+    "source_paths": [
+      "AGENTS.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\video_fixer",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "video-fixer-repository-profile",
+  "incompatible_when": [],
+  "procedure": [
+    "Use local checkout `C:\\Users\\ppyxe\\Documents\\GitHub\\video_fixer` as the first source of truth for this repository.",
+    "Read AGENTS.md and skills.md before planning implementation work.",
+    "Apply risk tags before reusing knowledge in another repository.",
+    "Use the stack section in AGENTS.md to route verification and dependency handling."
+  ],
+  "provenance": {
+    "created_at": "2026-11-11T13:12:59Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "AGENTS.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-11-11T13:12:59Z"
+  },
+  "repository_metadata": {
+    "branch": "main",
+    "file_count": 10,
+    "harvestable_text_file_count": 8,
+    "purpose_excerpt": "Repair truncated MediCapture MVR Pro MP4 recordings that were interrupted before the `moov` index was written. The mapping comes from a healthy MVR Pro file: Baseline H.264, 1280x1024, level 4.2, TV range, bt470bg / smpte170m, PPS `68ce06e2",
+    "remote": "https://github.com/medphys23/video_fixer.git",
+    "stack_excerpt": "Python 3.11, repo-root `.venv` created with `uv venv --python 3.11 .venv`"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "Repair truncated MediCapture MVR Pro MP4 recordings that were interrupted before the `moov` index was written. The mapping comes from a healthy MVR Pro file: Baseline H.264, 1280x1024, level 4.2, TV range, bt470bg / smpte170m, PPS `68ce06e2",
+  "tags": [
+    "local-github-analysis",
+    "python",
+    "repository-profile",
+    "video-fixer"
+  ],
+  "title": "video_fixer repository profile",
+  "trigger_phrases": [
+    "video_fixer",
+    "video-fixer",
+    "repository profile"
+  ],
+  "type": "reference",
+  "verification": [
+    "Confirm the repository branch, dirty state, and AGENTS.md before reuse."
+  ]
+}

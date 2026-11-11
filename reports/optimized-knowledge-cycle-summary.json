@@ -1,17 +1,25 @@
 {
   "continue_on_dirty": true,
   "failed_step": "",
-  "finished_at": "2026-10-31T07:28:29Z",
+  "finished_at": "2026-11-11T13:13:17Z",
   "log_file": "reports\\optimized-knowledge-cycle.log",
   "readiness": {
     "applied": false,
     "catalog_integrity": {
-      "catalog_entry_count": 263,
+      "catalog_entry_count": 274,
       "catalog_missing_record_paths": [],
       "dirty_blockers": [
         {
+          "dirty_count": 48,
+          "id": "campania-transplant"
+        },
+        {
           "dirty_count": 3,
           "id": "cv"
+        },
+        {
+          "dirty_count": 8,
+          "id": "general-surgery-notes"
         },
         {
           "dirty_count": 2,
@@ -28,10 +36,6 @@
         {
           "dirty_count": 2,
           "id": "omniroute"
-        },
-        {
-          "dirty_count": 1,
-          "id": "orsi"
         },
         {
           "dirty_count": 4,
@@ -57,12 +61,13 @@
       "harvested_repositories": [
         "auto_learning_agent",
         "blender-voice-3d-print-designer",
-        "campania-transplant",
-        "general-surgery-notes",
         "google-sheet-appscript-connector",
         "graphify",
+        "orsi",
         "practice-ops-dashboard",
-        "x-booking"
+        "video-fixer",
+        "x-booking",
+        "xmed"
       ],
       "missing_required_record_families": {}
     },
@@ -100,12 +105,12 @@
         "passed": true
       },
       {
-        "detail": "11 dirty blocker(s)",
+        "detail": "12 dirty blocker(s)",
         "name": "no_dirty_blockers",
         "passed": false
       }
     ],
-    "generated_at": "2026-10-31T07:28:28Z",
+    "generated_at": "2026-11-11T13:13:16Z",
     "optimized_agents_exists": true,
     "optimized_agents_sha256": "8c2bf57a799faaa18c5c71481ce0f1188c30c84ccdb6e80adc9adbf6489e26ae",
     "requires_explicit_user_approval": true,
@@ -118,17 +123,17 @@
   },
   "skip_dependency_audit": false,
   "skip_graphify": false,
-  "started_at": "2026-10-31T07:18:52Z",
+  "started_at": "2026-11-11T13:04:26Z",
   "state_dirty_blockers": {
     "auto_learning_agent": {
       "branch": "main",
       "candidate_count": 33,
-      "commit": "c8eacbe6e885807076debd1de3222090b768f873",
-      "digest": "2fefc2ce7c314fcf7f1a6ea3bea89511315acfb8e7b23eed4f0269b868939964",
-      "dirty": "",
-      "dirty_count": 0,
+      "commit": "cfec295099a1f7f835fe32c2fafd790475cd41ad",
+      "digest": "7662fd7844b7f3eeb02be6d26dfa9741959587a5fba317d13c66d62d4c5bf54e",
+      "dirty": "M .gitignore\n M README.md\n M config/repositories.toml\n?? scripts/audit-windows-drive.ps1\n?? scripts/audit-windows-storage.ps1\n?? scripts/audit_windows_drive.py\n?? scripts/audit_windows_storage.py\n?? tests/test_windows_drive_audit.py\n?? tests/test_windows_storage_audit.py",
+      "dirty_count": 9,
       "file_count": 605,
-      "fingerprinted_at": "2026-10-31T07:24:11Z",
+      "fingerprinted_at": "2026-11-11T13:09:23Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
@@ -150,15 +155,14 @@
     },
     "campania-transplant": {
       "branch": "dev01",
-      "candidate_count": 7,
       "commit": "06c3cef0de10adf163f4a550953a6d2c5ad901f2",
-      "digest": "f05ff9ac7a95a9cc62767721561a521c56fd0137bb0af0861a9d68d7cb8ea91d",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "ed072bb093a8e122d717f5191fca73729b07618535def62cc9b2fcc6530f9eb3",
+      "dirty": "M cyprus_transplant/film/src/Journey.tsx\n M cyprus_transplant/film/storyboard.md\n M cyprus_transplant/scripts/build_public_manuscript_pdf.py\n M cyprus_transplant/web/e2e/app.spec.ts\n M cyprus_transplant/web/e2e/data-studio.spec.ts\n M cyprus_transplant/web/e2e/population-flow.spec.ts\n M cyprus_transplant/web/e2e/public-release.spec.ts\n M cyprus_transplant/web/eslint.config.mjs\n M cyprus_transplant/web/playwright.config.ts\n M cyprus_transplant/web/public/film/captions.vtt\n M cyprus_transplant/web/public/film/cyprus-journey-desktop.mp4\n M cyprus_transplant/web/public/film/cyprus-journey-desktop.webm\n M cyprus_transplant/web/public/film/cyprus-journey-mobile.mp4\n M cyprus_transplant/web/public/film/cyprus-journey-mobile.webm\n M cyprus_transplant/web/src/app/page.tsx\n M cyprus_transplant/web/src/app/reference-classifier/page.tsx\n M cyprus_transplant/web/src/app/research/page.tsx\n M cyprus_transplant/web/src/components/charts/DashboardCharts.tsx\n M cyprus_transplant/web/src/components/data-studio/DataStudio.tsx\n M cyprus_transplant/web/src/components/data-studio/ResultsDashboard.tsx\n M cyprus_transplant/web/src/components/film/FilmPlayer.tsx\n M cyprus_transplant/web/src/components/layout/HistoricalPageNotice.tsx\n M cyprus_transplant/web/src/components/layout/SiteFooter.tsx\n M cyprus_transplant/web/src/components/layout/SiteHeader.tsx\n M cyprus_transplant/web/src/components/policy-studio/CalculationFlow.tsx\n M cyprus_transplant/web/src/components/policy-studio/PopulationCharts.tsx\n M cyprus_transplant/web/src/components/policy-studio/PopulationInputs.tsx\n M cyprus_transplant/web/src/components/policy-studio/PopulationSensitivitySuite.tsx\n M cyprus_transplant/web/src/components/policy-studio/PopulationStudio.tsx\n M cyprus_transplant/web/src/components/workflow/ClinicalPolicyFlow.tsx\n M cyprus_transplant/web/src/components/workflow/workflowSteps.ts\n M cyprus_transplant/web/src/content/filmTranscript.ts\n M cyprus_transplant/web/src/domain/modelApi.ts\n M cyprus_transplant/web/tests/components/FilmPlayer.test.tsx\n M cyprus_transplant/web/tests/components/clinicalPolicyFlow.test.tsx\n M cyprus_transplant/web/tests/components/m3PolicyStudio.test.tsx\n M cyprus_transplant/web/tests/components/policyStudio.test.tsx\n M cyprus_transplant/web/tests/components/populationInputs.test.tsx\n M cyprus_transplant/web/tests/dataStudio.test.ts\n?? cyprus_transplant/manuscript/drafts/manuscript_v0.4.md\n?? cyprus_transplant/manuscript/v0.4/\n?? cyprus_transplant/scripts/build_manuscript_v0_4.py\n?? cyprus_transplant/tests/test_manuscript_v0_4.py\n?? cyprus_transplant/web/public/research/current-manuscript.json\n?? cyprus_transplant/web/public/research/manuscript-v0.4-release-manifest.json\n?? cyprus_transplant/web/public/research/manuscript-v0.4-review.pdf\n?? cyprus_transplant/web/tests/components/populationCharts.test.tsx\n?? tmp/",
+      "dirty_count": 48,
       "file_count": 637,
-      "fingerprinted_at": "2026-10-31T07:24:17Z",
+      "fingerprinted_at": "2026-11-11T13:09:29Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\campania_transplant",
       "remote": "https://github.com/medphys23/campania_transplant.git"
     },
@@ -169,7 +173,7 @@
       "dirty": "M .graphifyignore\n M AGENTS.md\n?? .cursor/rules/graphify.mdc",
       "dirty_count": 3,
       "file_count": 64,
-      "fingerprinted_at": "2026-10-31T07:24:21Z",
+      "fingerprinted_at": "2026-11-11T13:09:30Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\CV",
@@ -177,15 +181,14 @@
     },
     "general-surgery-notes": {
       "branch": "main",
-      "candidate_count": 11,
       "commit": "b46378202c37643102a3cb287a73ab1f98a8b5ae",
-      "digest": "70d4872905c6191585910d11e72f120ce5f71f8fb9e7f0334cb401f3f4795bfe",
-      "dirty": "",
-      "dirty_count": 0,
+      "digest": "ae413c598bffd9e3a259c61bad6db8f20b4b9811bb82e4f29399d122c03686d3",
+      "dirty": "M src/general_surgery_notes/ooxml.py\n M src/general_surgery_notes/overrides.py\n M src/general_surgery_notes/processing.py\n M src/general_surgery_notes/verification.py\n M tests/test_ooxml.py\n M tests/test_overrides.py\n M tests/test_processing.py\n?? config/overrides/trauma.toml",
+      "dirty_count": 8,
       "file_count": 42,
-      "fingerprinted_at": "2026-08-22T10:21:32Z",
+      "fingerprinted_at": "2026-11-11T13:09:31Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "harvested",
+      "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\General_surgery_notes",
       "remote": "https://github.com/medphys23/General_surgery_notes.git"
     },
@@ -196,7 +199,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 8,
-      "fingerprinted_at": "2026-10-31T07:24:22Z",
+      "fingerprinted_at": "2026-11-11T13:09:31Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\general_work",
@@ -237,7 +240,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 34,
-      "fingerprinted_at": "2026-10-31T07:24:34Z",
+      "fingerprinted_at": "2026-11-11T13:09:42Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Investment_binance",
@@ -250,7 +253,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 172,
-      "fingerprinted_at": "2026-10-31T07:24:38Z",
+      "fingerprinted_at": "2026-11-11T13:09:46Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\kidney_federico",
@@ -263,7 +266,7 @@
       "dirty": "M .gitignore\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 10636,
-      "fingerprinted_at": "2026-10-31T07:27:56Z",
+      "fingerprinted_at": "2026-11-11T13:12:43Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\OmniRoute",
@@ -271,14 +274,15 @@
     },
     "orsi": {
       "branch": "main",
-      "commit": "45cd06336be8731df17606559f8d9f733b53e0f4",
-      "digest": "5e1efa043242422f7fec71b6ea5a248553c8b054ef51b62d06fda5bc031257c5",
-      "dirty": "M \"Orsi_Metrics_Research/projects/Robot-assisted Stapled Small Bowel Anastomosis/15_10_2026/Small_bowel_recording_checklist_15_10_2026.xlsx\"",
-      "dirty_count": 1,
+      "candidate_count": 51,
+      "commit": "bacc3429c8e59b474ef0dae3cd7af623469af8e4",
+      "digest": "c200a588ae80a23079b09d8d3ab6dee0689e19ea09b97a9b51ebb63ad6b755be",
+      "dirty": "",
+      "dirty_count": 0,
       "file_count": 608,
-      "fingerprinted_at": "2026-10-31T07:28:07Z",
+      "fingerprinted_at": "2026-11-11T13:12:47Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
-      "harvest_status": "blocked_dirty_worktree",
+      "harvest_status": "harvested",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
       "remote": "https://github.com/medphys23/ORSI.git"
     },
@@ -289,7 +293,7 @@
       "dirty": "M .gitignore\n M AGENTS.md\n?? .cursor/rules/graphify.mdc\n?? .graphifyignore",
       "dirty_count": 4,
       "file_count": 159,
-      "fingerprinted_at": "2026-10-31T07:28:10Z",
+      "fingerprinted_at": "2026-11-11T13:12:52Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\ponytail",
@@ -316,7 +320,7 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 64,
-      "fingerprinted_at": "2026-10-31T07:28:14Z",
+      "fingerprinted_at": "2026-11-11T13:12:56Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\PS_robot_adaptor",
@@ -329,7 +333,7 @@
       "dirty": "M .gitignore\n M AGENTS.md\n?? .graphifyignore",
       "dirty_count": 3,
       "file_count": 121,
-      "fingerprinted_at": "2026-10-31T07:28:17Z",
+      "fingerprinted_at": "2026-11-11T13:12:58Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\skills",
@@ -342,11 +346,25 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 33,
-      "fingerprinted_at": "2026-10-31T07:28:18Z",
+      "fingerprinted_at": "2026-11-11T13:12:59Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\travel_agent",
       "remote": "https://github.com/medphys23/travel_agent.git"
+    },
+    "video-fixer": {
+      "branch": "main",
+      "candidate_count": 7,
+      "commit": "f97ed3b6711139916d07f1a99661fb027d122dbd",
+      "digest": "01b5600da9a8a11048ac41cc44b255a3ee48db21a0e2c0146b06b1f0d7843794",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 10,
+      "fingerprinted_at": "2026-11-11T13:12:59Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\video_fixer",
+      "remote": "https://github.com/medphys23/video_fixer.git"
     },
     "x-booking": {
       "branch": "dashboard",
@@ -369,11 +387,25 @@
       "dirty": "M .cursor/rules/graphify.mdc\n M AGENTS.md",
       "dirty_count": 2,
       "file_count": 44,
-      "fingerprinted_at": "2026-10-31T07:28:21Z",
+      "fingerprinted_at": "2026-11-11T13:13:03Z",
       "harvest_schema_version": "safe-repo-knowledge-v5",
       "harvest_status": "blocked_dirty_worktree",
       "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\Xenios_FInances",
       "remote": "https://github.com/medphys23/Xenios_FInances.git"
+    },
+    "xmed": {
+      "branch": "dev01",
+      "candidate_count": 4,
+      "commit": "07fd386afff3d5062dc67e6afbb958e5f7515dda",
+      "digest": "f83e0d5b76634e7b43c598f328677201dc9aa7f8804766d03af2bf5e450beccb",
+      "dirty": "",
+      "dirty_count": 0,
+      "file_count": 353,
+      "fingerprinted_at": "2026-11-11T13:13:10Z",
+      "harvest_schema_version": "safe-repo-knowledge-v5",
+      "harvest_status": "harvested",
+      "path": "C:\\Users\\ppyxe\\Documents\\GitHub\\XMED",
+      "remote": "https://github.com/medphys23/XMED.git"
     }
   },
   "status": "completed",
@@ -384,12 +416,12 @@
         "scripts/discover_repositories.py",
         "--write-registry"
       ],
-      "elapsed_seconds": 7.468,
+      "elapsed_seconds": 3.531,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:19:00Z",
+      "finished_at": "2026-11-11T13:04:30Z",
       "name": "discover repositories",
-      "output_lines": 19,
-      "started_at": "2026-10-31T07:18:52Z"
+      "output_lines": 24,
+      "started_at": "2026-11-11T13:04:26Z"
     },
     {
       "command": [
@@ -398,24 +430,24 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 309.703,
+      "elapsed_seconds": 292.25,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:24:09Z",
+      "finished_at": "2026-11-11T13:09:22Z",
       "name": "refresh repository graphs",
-      "output_lines": 76,
-      "started_at": "2026-10-31T07:19:00Z"
+      "output_lines": 90,
+      "started_at": "2026-11-11T13:04:30Z"
     },
     {
       "command": [
         "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent\\.venv\\Scripts\\python.exe",
         "scripts/harvest_repositories.py"
       ],
-      "elapsed_seconds": 252.406,
+      "elapsed_seconds": 228.578,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:28:22Z",
+      "finished_at": "2026-11-11T13:13:11Z",
       "name": "harvest repositories",
-      "output_lines": 25,
-      "started_at": "2026-10-31T07:24:09Z"
+      "output_lines": 30,
+      "started_at": "2026-11-11T13:09:22Z"
     },
     {
       "command": [
@@ -424,12 +456,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 3.938,
+      "elapsed_seconds": 3.594,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:28:26Z",
+      "finished_at": "2026-11-11T13:13:14Z",
       "name": "audit dependency catalog",
       "output_lines": 2,
-      "started_at": "2026-10-31T07:28:22Z"
+      "started_at": "2026-11-11T13:13:11Z"
     },
     {
       "command": [
@@ -441,12 +473,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 1.891,
+      "elapsed_seconds": 1.609,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:28:28Z",
+      "finished_at": "2026-11-11T13:13:16Z",
       "name": "synthesize optimized instructions",
       "output_lines": 3,
-      "started_at": "2026-10-31T07:28:26Z"
+      "started_at": "2026-11-11T13:13:14Z"
     },
     {
       "command": [
@@ -455,12 +487,12 @@
         "--reports-dir",
         "reports"
       ],
-      "elapsed_seconds": 0.625,
+      "elapsed_seconds": 0.438,
       "exit_code": 0,
-      "finished_at": "2026-10-31T07:28:28Z",
+      "finished_at": "2026-11-11T13:13:16Z",
       "name": "audit context budget",
       "output_lines": 2,
-      "started_at": "2026-10-31T07:28:28Z"
+      "started_at": "2026-11-11T13:13:16Z"
     }
   ],
   "strict": false,

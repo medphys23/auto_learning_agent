@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "99cda5c943eb82f38acccd06bc4e222dd3f37a09",
+    "source_commit": "bacc3429c8e59b474ef0dae3cd7af623469af8e4",
     "source_paths": [
       ".cursor/rules/ad-astra-references.mdc",
       ".cursor/rules/graphify.mdc",
@@ -78,7 +78,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-10-04T09:17:25Z",
+    "created_at": "2026-11-11T13:12:48Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/ad-astra-references.mdc",
@@ -106,7 +106,7 @@
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-10-04T09:17:25Z"
+    "updated_at": "2026-11-11T13:12:48Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -219,14 +219,14 @@
           ".cursor/skills/ad-astra-chapter/SKILL.md",
           ".cursor/skills/basic-skills-course-calendar/agents/openai.yaml"
         ],
-        "file_count": 56,
+        "file_count": 58,
         "graph_node_count": 0,
         "suffixes": {
           ".json": 5,
-          ".md": 40,
+          ".md": 41,
           ".mdc": 6,
           ".py": 1,
-          ".yaml": 4
+          ".yaml": 5
         }
       },
       {
@@ -256,9 +256,9 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 3771,
-    "graph_source_file_count": 329,
-    "harvestable_text_file_count": 84
+    "graph_node_count": 4083,
+    "graph_source_file_count": 342,
+    "harvestable_text_file_count": 86
   },
   "status": "candidate",
   "summary": "Safe source map for ORSI: 9 harvestable areas, led by HUGO_RAS, ., integrations, DART, AD_Astra, Optimal_Trocar_Placement, .cursor, PBP Surgical training.",

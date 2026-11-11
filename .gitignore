@@ -8,6 +8,8 @@ logs/
 Optimize Token Usage.pdf
 backups/global-sync/
 reports/*.md
+reports/windows-storage-inventory.csv
+reports/windows-drive-inventory.csv
 reports/dependency-catalog-audit.json
 reports/context-budget-baseline.json
 reports/optimized-config-merge-preview.json
