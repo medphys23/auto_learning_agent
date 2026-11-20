@@ -14,6 +14,8 @@ Run `./scripts/audit-windows-drive.ps1` for a full-drive, metadata-only category
 
 The repo is in the **optimized orchestrator + federated Graphify** phase.
 
+The [UI Design Engineer operator guide](docs/ui-design-engineer.md) covers local invocation, browser verification, the Codex publication preview, and the future XMED pilot.
+
 - Global Codex/Cursor rules publish from `master/optimized/` with guarded apply and backups.
 - The local registry tracks GitHub checkouts under `C:\Users\ppyxe\Documents\GitHub`, including a read-only upstream Graphify clone (`graphify_cycle = false`).
 - Each registered repository can maintain a local Graphify graph under `<repo>/graphify-out/` (AST code graphs by default; semantic docs only when opted in).

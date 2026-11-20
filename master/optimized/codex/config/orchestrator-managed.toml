@@ -7,6 +7,10 @@ max_depth = 1
 job_max_runtime_seconds = 1800
 interrupt_message = true
 
+[agents.ui_design_engineer]
+description = "Audits, designs, and implements scoped frontend improvements using the repository's design system and rendered evidence."
+config_file = "agents/ui_design_engineer.toml"
+
 [agents.workflow_router]
 description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
 config_file = "agents/workflow-router.toml"

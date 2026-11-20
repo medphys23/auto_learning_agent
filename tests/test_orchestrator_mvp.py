@@ -969,6 +969,55 @@ class OrchestratorMvpTests(unittest.TestCase):
             self.assertTrue((cursor / "rules" / "07-graphify.mdc").exists())
             self.assertTrue((cursor / "skills" / "lead-scraper" / "SKILL.md").exists())
             self.assertTrue((codex / "skills" / "lead-scraper" / "SKILL.md").exists())
+            self.assertTrue((cursor / "rules" / "10-humanize-deliverables.mdc").exists())
+            self.assertTrue((cursor / "skills" / "humanize-text" / "SKILL.md").exists())
+            self.assertTrue((codex / "skills" / "humanize-text" / "SKILL.md").exists())
+            self.assertTrue((cursor / "skills" / "humanize-text" / "scripts" / "audit_prose.py").exists())
+            self.assertTrue((codex / "skills" / "humanize-text" / "references" / "domain-profiles.md").exists())
+            self.assertIn("humanize-text", (codex / "skills.md").read_text(encoding="utf-8"))
+            self.assertIn("xenophon", (codex / "skills.md").read_text(encoding="utf-8"))
+
+    def test_repo_hint_propagation_skips_third_party_references_on_apply(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            owned = base / "owned"
+            ref_repo = base / "ref"
+            owned.mkdir()
+            ref_repo.mkdir()
+            (owned / "AGENTS.md").write_text("# Owned\n", encoding="utf-8")
+            (ref_repo / "AGENTS.md").write_text("# Upstream\n", encoding="utf-8")
+            registry = base / "repositories.toml"
+            registry.write_text(
+                "[[repositories]]\n"
+                "id = 'owned-repo'\n"
+                f"path = '{owned.as_posix()}'\n"
+                "enabled = true\n"
+                "scope = 'research'\n"
+                "risk_tags = []\n\n"
+                "[[repositories]]\n"
+                "id = 'third-party-ref'\n"
+                f"path = '{ref_repo.as_posix()}'\n"
+                "enabled = true\n"
+                "scope = 'third_party_reference'\n"
+                "risk_tags = ['not_owned', 'third_party']\n",
+                encoding="utf-8",
+            )
+            config = base / "context.toml"
+            config.write_text("allow_other_repository_writes = true\n", encoding="utf-8")
+
+            result = propagate_hints(
+                repositories_path=registry,
+                reports_dir=base / "reports",
+                config_path=config,
+                apply=True,
+                confirm_repo_write=True,
+            )
+
+            statuses = {row["id"]: row["status"] for row in result["results"]}
+            self.assertEqual(statuses["owned-repo"], "written")
+            self.assertEqual(statuses["third-party-ref"], "skipped_third_party_reference")
+            self.assertIn("humanize-text", (owned / "AGENTS.md").read_text(encoding="utf-8"))
+            self.assertEqual((ref_repo / "AGENTS.md").read_text(encoding="utf-8"), "# Upstream\n")
 
     def test_agents_only_publication_is_guarded_idempotent_and_preserving(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,316 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+model = "gpt-6-sol"
+model_reasoning_effort = "high"
+personality = "pragmatic"
+project_doc_max_bytes = 65536
+
+# OmniRoute provider — default model/provider above is unchanged (still direct
+# OpenAI/ChatGPT). This block only exists so that `-p <name>` profile overlays
+# under ~/.codex/*.config.toml (which set model_provider = "omniroute") can
+# resolve the provider without duplicating it in every profile file.
+
+service_tier = "default"
+notify = [ "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\cua_node\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended" ]
+[model_providers.omniroute]
+name = "OmniRoute"
+base_url = "http://127.0.0.1:20128/v1"
+requires_openai_auth = false
+wire_api = "responses"
+
+notify = [ "C:\\Users\\ppyxe\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\fb8898c05a62885e\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended" ]
+[windows]
+sandbox = "elevated"
+
+[plugins."canva@openai-curated"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."binance@openai-curated"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."google-drive@openai-curated"]
+enabled = true
+
+[plugins."gmail@openai-curated"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[projects.'c:\users\ppyxe\documents\github\ps_robot_adaptor']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\ar_pipeline']
+trust_level = "trusted"
+
+[projects.'g:\my drive\general surgery\orsi\published papers by fellows']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\orsi']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\general_work']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\campania_transplant']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\kidney_federico']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\Xenios_FInances']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-03\files-mentioned-by-the-user-buona']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\investment']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\investment_binance']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\x_booking']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-29\thi']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-06-29\check-why-my-minor-fourth-pc']
+trust_level = "trusted"
+
+[projects.'g:\my drive\alexia_eleftheriadou_practise_documents']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\practice-ops-dashboard']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\auto_learning_agent']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\travel_agent']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\omniroute']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\3d-printing']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\general_surgery_notes']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\google_sheet_appscript_connector']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\github\cv']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-09-08\h']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-09-18\hooks']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-09-18\hooks-3']
+trust_level = "trusted"
+
+[projects.'c:\users\ppyxe\documents\codex\2026-09-18\hooks-4']
+trust_level = "trusted"
+
+[projects.'C:\Users\ppyxe\Documents\GitHub\campania_transplant']
+trust_level = "trusted"
+
+[projects.'C:\Users\ppyxe\Documents\GitHub\XMED']
+trust_level = "trusted"
+
+[projects.'C:\Users\ppyxe\Documents\GitHub\General_surgery_notes']
+trust_level = "trusted"
+
+[projects.'C:\Users\ppyxe\Documents\GitHub\ORSI']
+trust_level = "trusted"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = '\\?\C:\Users\ppyxe\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = '\\?\C:\Users\ppyxe\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[marketplaces.ponytail]
+last_updated = "2026-09-17T12:27:29Z"
+last_revision = "e3ba2aa6f1e6f0bc4d69eb09c9f0d0a93af56156"
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = false
+keepRemoteControlAwakeWhilePluggedIn = true
+selected-avatar-id = "bsod"
+migratedFollowUpQueueToSteer = true
+followUpQueueMode = "queue"
+
+[features]
+js_repl = false
+
+memories = false
+[mcp_servers.node_repl]
+args = []
+command = 'C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources\cua_node\bin\node_repl.exe'
+env_vars = ["BROWSER_USE_ACCESS_EXECUTOR_ID", "BROWSER_USE_ACCESS_PIPE_PATH", "BROWSER_USE_ACCESS_VERIFYING_IDENTITY", "CODEX_WINDOWS_REGISTERED_CORE"]
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = 'C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources\cua_node\bin\node_modules'
+NODE_REPL_NODE_PATH = 'C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources\cua_node\bin\node.exe'
+NODE_REPL_TRUSTED_CODE_PATHS = 'C:\Users\ppyxe\.codex;C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources\cua_node\bin\node_modules'
+CODEX_HOME = 'C:\Users\ppyxe\.codex'
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab,mcpapps"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.1111.21308"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"C:/Users/ppyxe/.codex/plugins/cache/openai-bundled/browser/26.1111.21308/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_NATIVE_PIPE = "1"
+SKY_CUA_NATIVE_PIPE_DIRECTORY = '\\.\pipe\codex-computer-use-04673bc3-9949-429a-bd7b-62f85c55bae5'
+CODEX_CLI_PATH = 'C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources\codex.exe'
+NODE_REPL_UNTRUSTED_ENV_ALLOWLIST = "CODEX_WINDOWS_REGISTERED_CORE"
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
+
+[hooks.state]
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:146eedfa10f48cfcb6d2cfb2c8fc36e8d8bb8751d2167ba205fa0b967c8a7f6e"
+enabled = true
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:1"]
+trusted_hash = "sha256:1b7bf88920f9d93c5bd508088299ba969739865da51a3043b931819328abf7d5"
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_start:0:2"]
+trusted_hash = "sha256:7c0c78b3d111a81aed993357e32d997f3996cf32bbf4ab475efe9ce08772673a"
+
+[hooks.state.'C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\.codex\hooks.json:pre_tool_use:0:0']
+trusted_hash = "sha256:e4cfd04d61670e78d9dea6270bcb0b2449b2051270bbe13e70dfe0a1eaba176e"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:session_start:0:0"]
+trusted_hash = "sha256:defea43402fc8edba23234c694a1117cf80efc2da38968a40a1004cd9d63f725"
+trusted_content_hash = "sha256:8ee50d0beb27590f3bfde68171d6ebcab041a6d74a1f5cc7855b7a6110e1b568"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:5aa5ec474e0bb546f207794993b37fdf7507e54a64e09216be164c5b7b42a197"
+trusted_content_hash = "sha256:8ee50d0beb27590f3bfde68171d6ebcab041a6d74a1f5cc7855b7a6110e1b568"
+
+[hooks.state."ponytail@ponytail:hooks/claude-codex-hooks.json:subagent_start:0:0"]
+trusted_hash = "sha256:5b2c1dfa8c7ecc5e8881c8e69479f65d46ed727e0bc5b8e7b4553cee9e5c3daf"
+trusted_content_hash = "sha256:8ee50d0beb27590f3bfde68171d6ebcab041a6d74a1f5cc7855b7a6110e1b568"
+
+[hooks.state."vercel-plugin@plugins-cli:hooks/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:9414154878f7ed6af2691aa2d61f3c57d866fb27b65aa638e7ddd635a2cc75a5"
+
+[hooks.state.'c:\Users\ppyxe\Documents\GitHub\auto_learning_agent\.codex\hooks.json:pre_tool_use:0:0']
+trusted_hash = "sha256:e4cfd04d61670e78d9dea6270bcb0b2449b2051270bbe13e70dfe0a1eaba176e"
+
+[plugins."vercel-plugin@plugins-cli"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."latex@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+job_max_runtime_seconds = 1800
+
+interrupt_message = true
+[agents.workflow_router]
+description = "Classifies tasks and retrieves the minimum compatible central and local knowledge."
+config_file = "agents/workflow-router.toml"
+
+[agents.repository_harvester]
+description = "Inspects registered repositories read-only and creates evidence-backed knowledge candidates."
+config_file = "agents/repository-harvester.toml"
+
+[agents.knowledge_synthesizer]
+description = "Deduplicates candidates and proposes scoped promotions or deprecations."
+config_file = "agents/knowledge-synthesizer.toml"
+
+[agents.verifier]
+description = "Validates implementation, evidence, configuration, and publication readiness."
+config_file = "agents/verifier.toml"
+
+[agents.luna_worker]
+description = "Fast worker for explicit, repetitive, deterministic, low-risk, and easily validated tasks."
+config_file = "agents/luna_worker.toml"
+
+[agents.terra_worker]
+description = "General engineering worker for routine implementation, debugging, refactoring, testing, and repository analysis."
+config_file = "agents/terra_worker.toml"
+
+[agents.sol_specialist]
+description = "Deep specialist for ambiguous, complex, high-risk, high-value, security-sensitive, or architecture-critical work."
+config_file = "agents/sol_specialist.toml"
+
+[shell_environment_policy.set]
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "8676faca28eddb6424d4b54116fe8305e2da6a0ca4e5271e8758fc3c55c3b8fc"
+
+[tui]
+screen_reader_detection_done = true
+
+[tui.model_availability_nux]
+gpt-6-astra = 1
+"gpt-6.1-sol" = 1
+
+[agents.systems_architect]
+description = "Maps system boundaries, flows, state ownership, non-functional requirements, ADR candidates, and cross-cutting impact read-only."
+config_file = "agents/systems_architect.toml"
+
+[agents.reliability_operations_reviewer]
+description = "Reviews reliability and operational failure handling, readiness, recovery, observability, and shutdown read-only."
+config_file = "agents/reliability_operations_reviewer.toml"
+
+[agents.security_boundary_reviewer]
+description = "Reviews trust boundaries, identity, validation, secrets, SSRF, subprocesses, logging, and retention read-only."
+config_file = "agents/security_boundary_reviewer.toml"
+
+[agents.quality_release_reviewer]
+description = "Reviews risk-based tests, gates, ratchets, artifacts, provenance, documentation contracts, and rollback read-only."
+config_file = "agents/quality_release_reviewer.toml"

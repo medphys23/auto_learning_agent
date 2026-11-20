@@ -1,0 +1,13 @@
+---
+description: Explicit-only routing for phased automation discovery and operation
+alwaysApply: true
+---
+
+# Athos IT Department routing
+
+- Activate the full Athos workflow only when the user explicitly invokes `$athos-it-department` or says `Athos IT Department` for the task.
+- Load `~/.cursor/skills/athos-it-department/SKILL.md`; do not infer activation from an ordinary browser or coding request.
+- Round one is read-only browser discovery and decision-complete planning. No external submit, upload, send, delete, or settings change is allowed.
+- Round two uses project-specific numbered launchers with dry-run defaults, explicit apply gates, bound checkpoints, operator logs, throttling controls, and read-back verification.
+- CAPTCHA, WAF, bot detection, access controls, and security challenges are boundaries, not obstacles to evade. Checkpoint, pause for the user, and revalidate before resuming.
+- Keep the Codex and Cursor Athos skill directories synchronized when the workflow changes.

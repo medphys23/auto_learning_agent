@@ -8,6 +8,7 @@ logs/
 Optimize Token Usage.pdf
 backups/global-sync/
 reports/*.md
+reports/ui-design-engineer/
 reports/windows-storage-inventory.csv
 reports/windows-drive-inventory.csv
 reports/dependency-catalog-audit.json

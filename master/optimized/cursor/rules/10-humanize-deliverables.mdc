@@ -1,0 +1,12 @@
+---
+description: Pre-deliverable prose humanization and fact-preservation gate
+alwaysApply: true
+---
+
+# Deliverable prose humanization (`humanize-text`)
+
+Before finalizing human-facing deliverable prose (>100 words) — Markdown syntheses/manuscripts, Word/PowerPoint COM text, PDF guides, READMEs, or PR descriptions — apply `humanize-text` (`~/.cursor/skills/humanize-text/SKILL.md` / `~/.codex/skills/humanize-text/SKILL.md`) using the matching domain profile (`academic`, `clinical-protocol`, `grant-proposal`, `technical-docs`, `general`, or `commit`).
+
+- Strip staging (`not X, but Y`, dramatic one-line closers, staged openers), Tier 1A AI vocabulary, leaked citation/UTM tokens, zero-width/homoglyph Unicode, and academic slop (citation laundering, manuscript boilerplate, methodology pseudo-precision).
+- Preserve every number, unit, denominator, confidence interval, p-value, cite key, calibrated epistemic hedge, IMRaD Methods passive voice, fenced/inline code, table, and binary PBP step/error checklist.
+- For Xenophon and evidence-backed deliverables, verify zero numeric or citation drift via `audit_prose.py --compare <before> --strict`.

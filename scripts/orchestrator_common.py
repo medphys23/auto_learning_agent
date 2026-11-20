@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import re
+import stat
 import subprocess
 import tomllib
 from datetime import UTC, datetime
@@ -269,6 +270,25 @@ def should_harvest_text_file(path: Path | str, repo_root: Path | None = None) ->
         "kyd_scraping",
         "orsimetrics",
     } or len(rel_parts) == 1
+
+
+def approved_file_path(root: Path, relative: str) -> Path:
+    parts = relative.split("/")
+    if any(not re.fullmatch(r"\.?[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*", part) for part in parts):
+        raise RuntimeError(f"Unsafe publication path: {relative}")
+    path = root
+    for index, part in enumerate(("", *parts)):
+        path /= part
+        try:
+            info = path.lstat()
+        except FileNotFoundError:
+            continue
+        if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT:
+            raise RuntimeError(f"Refusing linked publication path: {path}")
+        expected = stat.S_ISREG if index == len(parts) else stat.S_ISDIR
+        if not expected(info.st_mode):
+            raise RuntimeError(f"Invalid publication path type: {path}")
+    return path
 
 
 def sha256_file(path: Path) -> str:

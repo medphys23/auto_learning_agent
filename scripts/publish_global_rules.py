@@ -2,24 +2,41 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import hashlib
+import json
 import shutil
 from pathlib import Path
+from tempfile import NamedTemporaryFile
 from typing import Any
 
-from orchestrator_common import sha256_file, utc_now
+from orchestrator_common import approved_file_path, sha256_file, utc_now
 from synthesize_top_level_instructions import (
     AGENT_REGISTRATIONS,
     CODEX_HOME,
     CURSOR_HOME,
+    OPTIMIZED_SKILLS,
     REPO_ROOT,
+    UI_AGENT,
+    UI_SKILL,
+    UI_SKILL_FILES,
     insert_key_in_table,
     read_toml_text,
     synthesize,
+    synthesize_ui_design,
 )
 
 
 TARGET_PARENT_MODEL = "gpt-5.6-sol"
 TARGET_PARENT_REASONING_EFFORT = "high"
+OPTIMIZED_SKILL_PACKAGES = {
+    **{name: ("SKILL.md",) for name in OPTIMIZED_SKILLS},
+    "humanize-text": (
+        "SKILL.md",
+        "references/domain-profiles.md",
+        "references/pattern-catalog.md",
+        "scripts/audit_prose.py",
+    ),
+}
 
 
 def write_text(path: Path, content: str) -> None:
@@ -59,15 +76,47 @@ def optimized_file_targets(master_root: Path, codex_home: Path, cursor_home: Pat
         (optimized_root / "codex" / "AGENTS.md", codex_home / "AGENTS.md", "codex/AGENTS.md"),
         (optimized_root / "codex" / "skills-index.md", codex_home / "skills.md", "codex/skills.md"),
     ]
-    for source in sorted((optimized_root / "codex" / "agents").glob("*.toml")):
-        targets.append((source, codex_home / "agents" / source.name, f"codex/agents/{source.name}"))
-    for source in sorted((optimized_root / "agents" / "skills").glob("*/SKILL.md")):
-        name = source.parent.name
-        targets.append((source, cursor_home / "skills" / name / "SKILL.md", f"cursor/skills/{name}/SKILL.md"))
-        targets.append((source, codex_home / "skills" / name / "SKILL.md", f"codex/skills/{name}/SKILL.md"))
+    targets.extend(row for row in agent_only_targets(master_root, codex_home) if row[0].stem != UI_AGENT)
+    for name, files in sorted(OPTIMIZED_SKILL_PACKAGES.items()):
+        for file in files:
+            relative = f"skills/{name}/{file}"
+            source = approved_file_path(master_root, f"optimized/agents/{relative}")
+            for client, home in (("codex", codex_home), ("cursor", cursor_home)):
+                targets.append((source, approved_file_path(home, relative), f"{client}/{relative}"))
+    targets.extend(ui_design_targets(master_root, codex_home))
     for source in sorted((optimized_root / "cursor" / "rules").glob("*.mdc")):
         targets.append((source, cursor_home / "rules" / source.name, f"cursor/rules/{source.name}"))
     return targets
+
+
+def ui_design_targets(master_root: Path, codex_home: Path) -> list[tuple[Path, Path, str]]:
+    registration = AGENT_REGISTRATIONS[UI_AGENT]["config_file"]
+    targets = [
+        (approved_file_path(master_root, f"optimized/codex/{registration}"),
+         approved_file_path(codex_home, registration), f"codex/{registration}"),
+    ]
+    for file in UI_SKILL_FILES:
+        relative = f"skills/{UI_SKILL}/{file}"
+        targets.append((approved_file_path(master_root, f"optimized/agents/{relative}"),
+                        approved_file_path(codex_home, relative), f"codex/{relative}"))
+    return targets
+
+
+def package_file_plan(targets: list[tuple[Path, Path, str]]) -> list[dict[str, str | None]]:
+    validate_master_targets(targets)
+    names: set[str] = set()
+    plan = []
+    for source, target, label in targets:
+        key = str(target.resolve()).casefold()
+        if key in names or source.resolve() == target.resolve():
+            raise RuntimeError(f"Publication path collision at {target}")
+        names.add(key)
+        source_hash = sha256_file(source)
+        target_hash = sha256_file(target) if target.exists() else None
+        if target_hash is not None and target_hash != source_hash:
+            raise RuntimeError(f"Refusing to overwrite differing publication file: {target}")
+        plan.append({"label": label, "source_hash": source_hash, "target_hash": target_hash})
+    return plan
 
 
 def agent_only_targets(master_root: Path, codex_home: Path) -> list[tuple[Path, Path, str]]:
@@ -78,10 +127,12 @@ def agent_only_targets(master_root: Path, codex_home: Path) -> list[tuple[Path, 
     ]
 
 
-def validate_agent_only_sources(targets: list[tuple[Path, Path, str]]) -> None:
+def validate_agent_only_sources(
+    targets: list[tuple[Path, Path, str]], registrations: dict[str, dict[str, str]] = AGENT_REGISTRATIONS
+) -> None:
     validate_master_targets(targets)
     names: dict[str, Path] = {}
-    config_files = {values["config_file"]: name for name, values in AGENT_REGISTRATIONS.items()}
+    config_files = {values["config_file"]: name for name, values in registrations.items()}
     for source, target, _ in targets:
         data = read_toml_text(source.read_text(encoding="utf-8"))
         name = data.get("name")
@@ -101,7 +152,7 @@ def validate_agent_only_sources(targets: list[tuple[Path, Path, str]]) -> None:
             target_name = target_data.get("name")
             if target_name != name:
                 raise RuntimeError(f"Refusing agent target collision at {target}: expected {name}, found {target_name}")
-    missing = sorted(set(AGENT_REGISTRATIONS) - set(names))
+    missing = sorted(set(registrations) - set(names))
     if missing:
         raise RuntimeError("generated agent files missing registrations: " + ", ".join(missing))
 
@@ -120,7 +171,9 @@ def config_without_managed_agent_registrations(data: dict[str, Any]) -> dict[str
     return result
 
 
-def merge_agent_registrations(active_config: str) -> tuple[str, list[str]]:
+def merge_agent_registrations(
+    active_config: str, registrations: dict[str, dict[str, str]] = AGENT_REGISTRATIONS
+) -> tuple[str, list[str]]:
     merged = active_config
     report: list[str] = []
     before = read_toml_text(active_config) if active_config.strip() else {}
@@ -129,22 +182,23 @@ def merge_agent_registrations(active_config: str) -> tuple[str, list[str]]:
         raise RuntimeError("[agents] exists but is not a TOML table")
     if not isinstance(agents, dict):
         agents = {}
-    for name, values in AGENT_REGISTRATIONS.items():
+    newline = "\r\n" if "\r\n" in active_config else "\n"
+    for name, values in registrations.items():
         existing = agents.get(name)
         if existing is not None:
             if not isinstance(existing, dict) or existing.get("config_file") != values["config_file"]:
                 raise RuntimeError(f"Refusing to overwrite existing custom agent registration: {name}")
             continue
-        merged = merged.rstrip() + (
+        merged += (
             f"\n\n[agents.{name}]\n"
             f"description = \"{values['description']}\"\n"
             f"config_file = \"{values['config_file']}\"\n"
-        )
+        ).replace("\n", newline)
         report.append(f"Inserted agents.{name}.")
     after = read_toml_text(merged)
     if config_without_managed_agent_registrations(before) != config_without_managed_agent_registrations(after):
         raise RuntimeError("agents-only merge changed non-agent configuration")
-    return merged.rstrip() + "\n", report
+    return merged, report
 
 
 def protected_hashes(codex_home: Path) -> dict[str, str | None]:
@@ -155,13 +209,14 @@ def protected_hashes(codex_home: Path) -> dict[str, str | None]:
     return {label: sha256_file(path) if path.exists() else None for label, path in paths.items()}
 
 
-def write_config_merge_preview(path: Path, before: str, after: str, report: list[str]) -> None:
+def write_config_merge_preview(path: Path, before: str, after: str, report: list[str], *, scoped: bool = False) -> None:
     diff = "\n".join(
         difflib.unified_diff(
             before.splitlines(),
             after.splitlines(),
             fromfile="active/codex/config.toml",
-            tofile="agents-only/codex/config.toml",
+            tofile="planned/codex/config.toml",
+            n=0 if scoped else 3,
             lineterm="",
         )
     )
@@ -397,10 +452,33 @@ def apply_optimized_config(
     return {"label": "codex/config.toml", "target": str(target), "sha256": sha256_file(target), "merge_report": report}
 
 
-def apply_targets(targets: list[tuple[Path, Path, str]]) -> list[dict[str, Any]]:
+def stage_publication_file(target: Path, content: bytes, *, replace: bool) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with NamedTemporaryFile(dir=target.parent, delete=False) as output:
+        temporary = Path(output.name)
+        try:
+            output.write(content)
+            output.close()
+            if replace:
+                shutil.copymode(target, temporary)
+                temporary.replace(target)
+            else:
+                target.hardlink_to(temporary)
+        except FileExistsError as exc:
+            raise RuntimeError(f"Publication target appeared after preview: {target}") from exc
+        finally:
+            temporary.unlink(missing_ok=True)
+
+
+def apply_targets(
+    targets: list[tuple[Path, Path, str]], *, new_only: bool = False
+) -> list[dict[str, Any]]:
     applied: list[dict[str, Any]] = []
     for source, target, label in targets:
-        copy_tree_file(source, target)
+        if new_only:
+            stage_publication_file(target, source.read_bytes(), replace=False)
+        else:
+            copy_tree_file(source, target)
         source_hash = sha256_file(source)
         target_hash = sha256_file(target)
         if source_hash != target_hash:
@@ -417,9 +495,15 @@ def write_publication_reports(
     backed_up: list[str],
     pruned_backups: list[str],
     applied: list[dict[str, Any]],
+    plan: list[dict[str, str | None]] | None = None,
 ) -> Path:
     reports_dir.mkdir(parents=True, exist_ok=True)
-    report = reports_dir / ("publication-applied.md" if applied else "publication-preview.md")
+    report_name = "publication-preview.md"
+    if mode.endswith("-applied") or applied:
+        report_name = "publication-applied.md"
+    if mode.endswith("-apply-prepared"):
+        report_name = "publication-apply-prepared.md"
+    report = reports_dir / report_name
     lines = [
         "# Publication Report",
         "",
@@ -429,7 +513,7 @@ def write_publication_reports(
         f"- Global writes performed: {'true' if applied else 'false'}",
         (
             "- Target folders: `C:\\Users\\ppyxe\\.codex` only"
-            if mode.startswith("agents-only")
+            if mode.startswith(("agents-only", "ui-design-engineer"))
             else "- Target folders: `C:\\Users\\ppyxe\\.codex`, `C:\\Users\\ppyxe\\.cursor`"
         ),
     ]
@@ -438,6 +522,15 @@ def write_publication_reports(
     if pruned_backups:
         lines.append(f"- Pruned backups: {len(pruned_backups)}")
     lines.append("")
+    if plan is not None:
+        lines.extend(["## File plan", "", "| Target | Planned SHA-256 | Current SHA-256 | Rollback |", "|---|---|---|---|"])
+        for item in plan:
+            current = item["target_hash"]
+            rollback = item.get("rollback") or (
+                "Keep" if current == item["source_hash"] else "Restore backup" if current else "Remove if unchanged"
+            )
+            lines.append(f"| `{item['label']}` | `{item['source_hash']}` | {current or 'Missing'} | {rollback} |")
+        lines.append("")
     if applied:
         lines.append("## Applied files")
         for item in applied:
@@ -457,6 +550,17 @@ def write_publication_reports(
     ]
     if backup_root:
         rollback_lines.append(f"Restore files from `{backup_root}` to the matching global paths.")
+        if mode.startswith("ui-design-engineer"):
+            rollback_lines.append(
+                "Use `codex/config.toml.registration.json` to reverse the appended registration. "
+                "The metadata records the prior byte length and both hashes without storing the active config. "
+                "If the published hash still matches, truncate to the recorded length and check the prior hash. "
+                "Otherwise review the current config and remove only the matching registration."
+            )
+        rollback_lines.append(
+            "Review subsequent edits before restoring. For a `.missing` marker, remove only the corresponding "
+            "published file after checking its publication hash. Do not remove whole skill directories."
+        )
         rollback_lines.append("")
         rollback_lines.append("Backed up targets:")
         rollback_lines.extend(f"- `{item}`" for item in backed_up)
@@ -484,7 +588,96 @@ def publish_global_rules(
     runtime_smoke: bool | None = None,
     force_parent_model: bool = False,
     agents_only: bool = False,
+    ui_design_engineer: bool = False,
 ) -> dict[str, Any]:
+    if profile == "optimized" and apply and not agents_only:
+        config = REPO_ROOT / "config" / "context-optimization.toml"
+        if config.exists():
+            data = read_toml_text(config.read_text(encoding="utf-8"))
+            if not bool(data.get("allow_global_apply", False)):
+                raise RuntimeError("optimized global apply is disabled by config/context-optimization.toml")
+    if ui_design_engineer:
+        if profile != "optimized" or agents_only or runtime_smoke is not None or force_parent_model:
+            raise RuntimeError("--ui-design-engineer requires optimized without agents-only or model flags")
+        if apply and not confirm_global_write:
+            raise RuntimeError("global publication requires --confirm-global-write")
+        for local in (master_root, reports_dir, backup_base):
+            if any(local.resolve().is_relative_to(home.resolve()) for home in (codex_home, cursor_home)):
+                raise RuntimeError(f"Publication output must stay outside active homes: {local}")
+        active = approved_file_path(codex_home, "config.toml")
+        synthesize_ui_design(master_root)
+        targets = ui_design_targets(master_root, codex_home)
+        plan = package_file_plan(targets)
+        registrations = {UI_AGENT: AGENT_REGISTRATIONS[UI_AGENT]}
+        validate_agent_only_sources(targets[:1], registrations)
+        for other in sorted((codex_home / "agents").glob("*.toml")):
+            if other != targets[0][1]:
+                other = approved_file_path(codex_home, f"agents/{other.name}")
+                if read_toml_text(other.read_text(encoding="utf-8")).get("name") == UI_AGENT:
+                    raise RuntimeError(f"Duplicate UI Design Engineer agent at {other}")
+        active_existed = active.exists()
+        before = active.read_bytes() if active_existed else b""
+        before_text = before.decode("utf-8")
+        merged, merge_report = merge_agent_registrations(before_text, registrations)
+        merged_bytes = merged.encode("utf-8")
+        merged_hash = hashlib.sha256(merged_bytes).hexdigest()
+        plan.append({
+            "label": "codex/config.toml",
+            "source_hash": merged_hash,
+            "target_hash": hashlib.sha256(before).hexdigest() if active_existed else None,
+            "rollback": "Remove appended registration" if active_existed and merge_report else None,
+        })
+        write_config_merge_preview(
+            reports_dir / "ui-design-engineer-config-merge-preview.md", before_text, merged, merge_report, scoped=True
+        )
+        applied = []
+        backed_up = []
+        backup_root = None
+        if apply:
+            changes = [row for row, item in zip(targets, plan) if item["target_hash"] is None]
+            if changes or merge_report:
+                timestamp = utc_now().replace(":", "").replace("-", "")
+                backup_root = backup_base / f"{timestamp}-ui-design-engineer"
+                suffix = 1
+                while backup_root.exists():
+                    backup_root = backup_base / f"{timestamp}-ui-design-engineer-{suffix}"
+                    suffix += 1
+                backed_up = backup_targets(changes, backup_root)
+                if merge_report:
+                    if active_existed:
+                        label = "codex/config.toml.registration.json"
+                        metadata = {
+                            "prior_bytes": len(before),
+                            "prior_sha256": plan[-1]["target_hash"],
+                            "published_sha256": merged_hash,
+                        }
+                        write_text(backup_root / label, json.dumps(metadata, indent=2))
+                        backed_up.append(label)
+                    else:
+                        backed_up.extend(backup_targets([(active, active, "codex/config.toml")], backup_root))
+                if (active.exists() != active_existed or
+                        (active.read_bytes() if active_existed else b"") != before or
+                        package_file_plan(targets) != plan[:-1]):
+                    raise RuntimeError("UI Design Engineer publication inputs changed after backup")
+                write_publication_reports(
+                    reports_dir, mode="ui-design-engineer-apply-prepared", backup_root=backup_root,
+                    backed_up=backed_up, pruned_backups=[], applied=[], plan=plan,
+                )
+                applied = apply_targets(changes, new_only=True)
+                if merge_report:
+                    if active.exists() != active_existed or (active_existed and active.read_bytes() != before):
+                        raise RuntimeError("Codex registration changed during publication")
+                    stage_publication_file(active, merged_bytes, replace=active_existed)
+                    if sha256_file(active) != merged_hash:
+                        raise RuntimeError("Hash mismatch after writing codex/config.toml")
+                    applied.append({"label": "codex/config.toml", "target": str(active), "sha256": merged_hash})
+        mode = "ui-design-engineer-applied" if apply else "ui-design-engineer-preview"
+        report = write_publication_reports(
+            reports_dir, mode=mode, backup_root=backup_root, backed_up=backed_up, pruned_backups=[],
+            applied=applied, plan=plan,
+        )
+        return {"mode": mode, "report": str(report), "applied": applied, "plan": plan,
+                "backup_root": str(backup_root) if backup_root else None}
     if agents_only:
         if profile != "optimized":
             raise RuntimeError("--agents-only requires --profile optimized")
@@ -497,11 +690,12 @@ def publish_global_rules(
             reports_dir=reports_dir,
             profile="optimized",
         )
-        targets = agent_only_targets(master_root, codex_home)
-        validate_agent_only_sources(targets)
+        targets = [row for row in agent_only_targets(master_root, codex_home) if row[0].stem != UI_AGENT]
+        registrations = {name: values for name, values in AGENT_REGISTRATIONS.items() if name != UI_AGENT}
+        validate_agent_only_sources(targets, registrations)
         active_config_path = codex_home / "config.toml"
         active_config = active_config_path.read_text(encoding="utf-8") if active_config_path.exists() else ""
-        merged_config, merge_report = merge_agent_registrations(active_config)
+        merged_config, merge_report = merge_agent_registrations(active_config, registrations)
         protected_before = protected_hashes(codex_home)
         write_config_merge_preview(
             reports_dir / "agents-only-config-merge-preview.md",
@@ -566,18 +760,19 @@ def publish_global_rules(
             "pruned_backups": pruned_backups,
             "applied": applied,
         }
-    if profile == "optimized" and apply:
-        config = REPO_ROOT / "config" / "context-optimization.toml"
-        if config.exists():
-            data = read_toml_text(config.read_text(encoding="utf-8"))
-            if not bool(data.get("allow_global_apply", False)):
-                raise RuntimeError("optimized global apply is disabled by config/context-optimization.toml")
     synthesize(codex_home=codex_home, cursor_home=cursor_home, master_root=master_root, reports_dir=reports_dir, profile=profile)
     if profile == "optimized":
         optimized_agents = master_root / "optimized" / "codex" / "AGENTS.md"
         optimized_skills_index = master_root / "optimized" / "codex" / "skills-index.md"
         optimized_config = master_root / "optimized" / "codex" / "config" / "orchestrator-managed.toml"
         targets = optimized_file_targets(master_root, codex_home, cursor_home)
+        package_targets = [
+            row for row in targets if "/skills/" in row[2] or row[2] == f"codex/agents/{UI_AGENT}.toml"
+        ]
+        package_plan = package_file_plan(package_targets)
+        active = approved_file_path(codex_home, "config.toml")
+        merge_agent_registrations(active.read_text(encoding="utf-8") if active.exists() else "",
+                                  {UI_AGENT: AGENT_REGISTRATIONS[UI_AGENT]})
         validate_master_targets(
             [
                 (optimized_agents, codex_home / "AGENTS.md", "optimized/codex/AGENTS.md"),
@@ -589,6 +784,8 @@ def publish_global_rules(
         if apply:
             if not confirm_global_write:
                 raise RuntimeError("global publication requires --confirm-global-write")
+            unchanged = {item["label"] for item in package_plan if item["target_hash"] is not None}
+            targets = [row for row in targets if row[2] not in unchanged]
             timestamp = utc_now().replace(":", "").replace("-", "")
             backup_root = backup_base / timestamp
             legacy_snapshot = create_legacy_pre_optimized_snapshot(
@@ -599,7 +796,9 @@ def publish_global_rules(
                 snapshot_base=backup_base.parent / "legacy-pre-optimized",
             )
             backed_up = optimized_backup_targets(targets, codex_home, backup_root)
-            applied = apply_targets(targets)
+            package_labels = {item["label"] for item in package_plan}
+            applied = apply_targets([row for row in targets if row[2] in package_labels], new_only=True)
+            applied.extend(apply_targets([row for row in targets if row[2] not in package_labels]))
             apply_parent_model = True
             smoke_summary = ""
             if force_parent_model:
@@ -634,6 +833,7 @@ def publish_global_rules(
                 backed_up=backed_up + [f"legacy pre-optimized snapshot: {legacy_snapshot}"],
                 pruned_backups=pruned_backups,
                 applied=applied,
+                plan=package_plan,
             )
             return {
                 "mode": "optimized-applied",
@@ -650,6 +850,7 @@ def publish_global_rules(
             backed_up=[],
             pruned_backups=[],
             applied=[],
+            plan=package_plan,
         )
         return {"mode": "optimized-preview", "report": str(report), "applied": []}
     targets = publication_targets(master_root, codex_home, cursor_home)
@@ -701,14 +902,19 @@ def main() -> int:
     parser.add_argument("--backup-keep", type=int, default=2, help="Number of newest backup roots to retain after apply.")
     parser.add_argument("--codex-home", type=Path, default=CODEX_HOME)
     parser.add_argument("--cursor-home", type=Path, default=CURSOR_HOME)
-    parser.add_argument("--preview", action="store_true", help="Generate master files and reports without global writes.")
-    parser.add_argument("--apply", action="store_true", help="Apply generated files to global Codex/Cursor folders.")
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument("--preview", action="store_true", help="Generate master files and reports without global writes.")
+    action.add_argument("--apply", action="store_true", help="Apply generated files to global Codex/Cursor folders.")
     parser.add_argument("--confirm-global-write", action="store_true", help="Required with --apply.")
     parser.add_argument("--profile", choices=("legacy", "optimized"), default=default_profile)
     parser.add_argument(
         "--agents-only",
         action="store_true",
         help="Publish only generated agent TOMLs and [agents.<role>] registrations; requires the optimized profile.",
+    )
+    parser.add_argument(
+        "--ui-design-engineer", action="store_true",
+        help="Publish only the UI Design Engineer agent, its skill package, and its Codex registration.",
     )
     parser.add_argument(
         "--runtime-smoke",
@@ -747,6 +953,7 @@ def main() -> int:
             runtime_smoke=runtime_smoke_flag,
             force_parent_model=args.force_parent_model,
             agents_only=args.agents_only,
+            ui_design_engineer=args.ui_design_engineer,
         )
     except RuntimeError as exc:
         cprint(f"ERROR: {exc}", "fail")

@@ -56,5 +56,9 @@ config_file = "agents/security_boundary_reviewer.toml"
 description = "Reviews risk-based tests, gates, ratchets, artifacts, provenance, documentation contracts, and rollback read-only."
 config_file = "agents/quality_release_reviewer.toml"
 
+[agents.ui_design_engineer]
+description = "Audits, designs, and implements scoped frontend improvements using the repository's design system and rendered evidence."
+config_file = "agents/ui_design_engineer.toml"
+
 [sandbox_workspace_write]
 network_access = false

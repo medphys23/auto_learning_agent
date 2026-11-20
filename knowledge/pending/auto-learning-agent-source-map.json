@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "cfec295099a1f7f835fe32c2fafd790475cd41ad",
+    "source_commit": "2ee2adc03e9e46e8ca69977b672768d66e1bf887",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/quality_release_reviewer.toml",
@@ -52,9 +52,11 @@
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
       "scripts/apply-everything.ps1",
-      "scripts/audit_context_budget.py",
-      "scripts/audit_dependency_catalog.py",
-      "tests/test_orchestrator_mvp.py"
+      "scripts/audit-windows-drive.ps1",
+      "scripts/audit-windows-storage.ps1",
+      "tests/test_orchestrator_mvp.py",
+      "tests/test_windows_drive_audit.py",
+      "tests/test_windows_storage_audit.py"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
     "task_or_issue": "local-github-repository-analysis",
@@ -68,7 +70,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-11-11T13:09:24Z",
+    "created_at": "2026-11-19T11:37:11Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -91,12 +93,14 @@
       "master/codex/skills.md",
       "master/optimized/codex/AGENTS.md",
       "scripts/apply-everything.ps1",
-      "scripts/audit_context_budget.py",
-      "scripts/audit_dependency_catalog.py",
-      "tests/test_orchestrator_mvp.py"
+      "scripts/audit-windows-drive.ps1",
+      "scripts/audit-windows-storage.ps1",
+      "tests/test_orchestrator_mvp.py",
+      "tests/test_windows_drive_audit.py",
+      "tests/test_windows_storage_audit.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-11T13:09:24Z"
+    "updated_at": "2026-11-19T11:37:11Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -114,30 +118,32 @@
         "area": "scripts",
         "examples": [
           "scripts/apply-everything.ps1",
+          "scripts/audit-windows-drive.ps1",
+          "scripts/audit-windows-storage.ps1",
           "scripts/audit_context_budget.py",
           "scripts/audit_dependency_catalog.py",
           "scripts/audit_global_instructions.py",
-          "scripts/console_style.py",
-          "scripts/discover_repositories.py",
-          "scripts/harvest_repositories.py",
-          "scripts/operator_progress.py"
+          "scripts/audit_windows_drive.py",
+          "scripts/audit_windows_storage.py"
         ],
-        "file_count": 31,
-        "graph_node_count": 357,
+        "file_count": 35,
+        "graph_node_count": 385,
         "suffixes": {
-          ".ps1": 6,
-          ".py": 25
+          ".ps1": 8,
+          ".py": 27
         }
       },
       {
         "area": "tests",
         "examples": [
-          "tests/test_orchestrator_mvp.py"
+          "tests/test_orchestrator_mvp.py",
+          "tests/test_windows_drive_audit.py",
+          "tests/test_windows_storage_audit.py"
         ],
-        "file_count": 1,
-        "graph_node_count": 62,
+        "file_count": 3,
+        "graph_node_count": 71,
         "suffixes": {
-          ".py": 1
+          ".py": 3
         }
       },
       {
@@ -248,9 +254,9 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 652,
-    "graph_source_file_count": 41,
-    "harvestable_text_file_count": 115
+    "graph_node_count": 738,
+    "graph_source_file_count": 46,
+    "harvestable_text_file_count": 121
   },
   "status": "candidate",
   "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, tests, ., backups, .codex, config, .cursor, master.",

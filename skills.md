@@ -166,3 +166,7 @@ graphify --version
 **Iteration notes:**
 - 2026-07-09: Added manual optimized harvest/readiness cycle, config-gated optimized publication, slim skills index, repo-scoped retrieval CLI, and preview-first repository hint propagation.
 - 2026-07-09: Added `run_optimized_cutover.py` and PowerShell wrapper for one-command harvest, readiness, preview, optional confirmed global publication, and registered repo hint propagation.
+
+### UI Design Engineering
+
+Use [`ui-design-engineering`](.agents/skills/ui-design-engineering/SKILL.md) for substantial frontend design, implementation, or visual review. Delegate `ui_design_engineer` with an explicit mode and scope. See the [operator guide](docs/ui-design-engineer.md) for verification and publication.

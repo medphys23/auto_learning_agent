@@ -1,0 +1,115 @@
+{
+  "applicability": {
+    "deployment_targets": [],
+    "frameworks": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "languages": [
+      "docx",
+      "google_apps_script",
+      "node",
+      "office_com",
+      "pptx",
+      "python",
+      "slack",
+      "streamlit",
+      "vercel"
+    ],
+    "operating_systems": [
+      "windows"
+    ],
+    "repository_markers": [
+      ".git"
+    ],
+    "runtimes": []
+  },
+  "confidence": {
+    "rationale": "Deterministic extraction from repository policy files.",
+    "score": 0.75
+  },
+  "evidence": {
+    "accepted_by_user": false,
+    "deployment_environment": "",
+    "deployment_evidence": "",
+    "production_observation_window": "",
+    "source_commit": "b826fcb5215f0e3a61f7cd9bc1df883032c5644c",
+    "source_paths": [
+      "skills.md"
+    ],
+    "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
+    "task_or_issue": "local-github-repository-analysis",
+    "tests_executed": []
+  },
+  "id": "orsi-workflow-humanize-text",
+  "incompatible_when": [],
+  "procedure": [
+    "- Canonical global copy lives in `~/.codex/skills/humanize-text/` and `~/.cursor/skills/humanize-text/` (published from `auto_learning_agent/templates/skills/humanize-text/`), mirrored locally in `.cursor/skills/humanize-text/`.",
+    "- Never rewrite source code, configs, Markdown tables, Xenophon `claim_ledger.csv` / evidence matrices, or binary PBP step/error checklist wording.",
+    "- Not a detector-evasion tool; remind users to follow publisher/journal AI-use disclosure rules.",
+    "1. Select domain profile (`academic`, `clinical-protocol`, `grant-proposal`, `technical-docs`, `general`, or `commit`), intensity (`light` default for `academic`/`clinical-protocol`; `standard` otherwise), and match any author writing sampl",
+    "2. Strip leaked AI tokens/UTMs, zero-width/homoglyph Unicode, staging (`not X, but Y`, dramatic closers, staged openers), inflation (`serves as`, Tier 1A words, superficial `-ing` tails), and academic slop (citation laundering, manuscript b",
+    "3. For `paraphrase`, list key points from `--source`, draft from the point list without looking at the source, keep citations attached and direct quotes in quotation marks, maintain `0.7x-1.3x` length parity, and eliminate `>=8`-word non-qu",
+    "4. Run a metacognitive self-audit (*\"What still makes this read as LLM-generated, and did any edit introduce Group G meaning drift?\"*) and targeted second pass.",
+    "5. Run `audit_prose.py` (`--ignore-references`, `--compare <before>`, `--source <source>` for paraphrases, and `--strict`) to confirm zero dropped/altered numbers, negations, hedges, scope words, scripts, or citations.",
+    "- 2026-11-14 (rev 2): Added `paraphrase` mode (`conservative`/`fluent`/`creative`), `--intensity` dial, `--review` sentence diff, `--ignore-references` and `--source` overlap checks, Group G meaning-drift traps + `patina`/Wikipedia patterns",
+    "- 2026-11-14: Added `humanize-text` with 42-pattern catalog, 6 domain profiles, Xenophon pre-deliverable prose gate, and zero-dependency stdlib `audit_prose.py` numeric/citation preservation check."
+  ],
+  "provenance": {
+    "created_at": "2026-11-19T11:40:52Z",
+    "created_by": "harvest_repositories.py",
+    "derived_from": [
+      "skills.md"
+    ],
+    "supersedes": [],
+    "updated_at": "2026-11-19T11:40:52Z"
+  },
+  "reuse": {
+    "failed_reuse_count": 0,
+    "last_retrieved_at": null,
+    "retrieval_count": 0,
+    "successful_reuse_count": 0
+  },
+  "rollback": [
+    "Keep the record as candidate or delete it before promotion."
+  ],
+  "scope": "repository",
+  "status": "candidate",
+  "summary": "**Triggered by:** explicit `$humanize-text` invocation (`detect`, `rewrite`, `edit`, or `paraphrase --source <file|text> --level conservative|fluent|creative`) or automatically before finalizing narrative prose (>100 words) for manuscripts,",
+  "tags": [
+    "auth",
+    "credentials",
+    "docx",
+    "external_webhooks",
+    "google_apps_script",
+    "node",
+    "not_clinical",
+    "not_robot_control",
+    "office_com",
+    "orsi",
+    "pptx",
+    "python",
+    "repo-workflow",
+    "research",
+    "skills-md",
+    "slack",
+    "streamlit",
+    "vercel"
+  ],
+  "title": "ORSI workflow: Humanize text",
+  "trigger_phrases": [
+    "ORSI",
+    "Humanize text"
+  ],
+  "type": "workflow",
+  "verification": [
+    "Follow the Verification section in the same skills.md workflow before promotion."
+  ]
+}

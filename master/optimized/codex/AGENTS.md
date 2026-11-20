@@ -12,6 +12,21 @@
 - Global publication and high-risk configuration changes require explicit approval.
 - Detailed workflows are loaded on demand from repository instructions, skills, or the orchestrator knowledge catalog.
 
+## Deliverable Prose Humanization (`humanize-text`)
+- Before finalizing human-facing deliverable prose (>100 words) — Markdown reports/manuscripts, Word/PowerPoint COM text, PDF guides, READMEs, or PR descriptions — apply `$humanize-text` (`~/.codex/skills/humanize-text/SKILL.md`) in the matching profile (`academic`, `clinical-protocol`, `grant-proposal`, `technical-docs`, `general`, or `commit`).
+- Strip staging (`not X, but Y`, dramatic closers), Tier 1A AI vocabulary, leaked citation/UTM tokens, zero-width Unicode, and academic slop while preserving every number, unit, denominator, CI, p-value, cite key, calibrated hedge, code span, and table.
+- Verify prose files (and `--compare <before>` on evidence-backed drafts) using `templates/skills/humanize-text/scripts/audit_prose.py` (published at `~/.codex/skills/humanize-text/scripts/audit_prose.py`).
+
+## Xenophon (research evidence to manuscript)
+- For substantial research reviews, evidence syntheses, or manuscript chains, prefer `$xenophon` (`$research-evidence-to-manuscript` compatible).
+- Read or create `registry/xenophon_session.md` first; follow `references/cheap-mode.md`; skip Graphify and orchestrator-knowledge retrieval for literature/claim/synthesis waves.
+- Before locking final narrative synthesis/manuscript prose or rendering deliverables, run `$humanize-text` inline (`academic` or `clinical-protocol`) and verify zero numeric/citation drift with `audit_prose.py --compare`.
+
+## Athos IT Department & Operator Standards
+- **Athos IT Department:** Load `$athos-it-department` only when explicitly invoked (`$athos-it-department` or `Athos IT Department`); Round 1 is read-only discovery/planning, Round 2 uses guarded dry-run launchers, and CAPTCHA/WAF challenges pause for the user.
+- **Operator progress logs:** Jobs >30s use Rich (child-process streaming) or tqdm (in-process) showing moving spinner, current item, finished/total, rate, ticking elapsed time, ETA, and saved vs deferred counts.
+- **Word list geometry:** Unless overridden by a template/publisher, first-level Word bullets use real Word list definitions at 0.64 cm marker / 1.27 cm text / 0.63 cm hanging indent (+0.64 cm per level).
+
 ## Orchestrator Knowledge
 - Use `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent` only for non-trivial cross-repo, migration, review, global-config, or repeatable-workflow tasks.
 - Query `knowledge/INDEX.md` and `knowledge/catalog.jsonl` before opening full records.
@@ -25,6 +40,7 @@
 - Use `luna_worker` for explicit, deterministic, repetitive, low-risk, easily validated work with no architectural decisions.
 - Use `terra_worker` for bounded routine engineering, noisy investigation, or independent non-overlapping parallel work.
 - Use `sol_specialist` for materially ambiguous, high-risk, security-sensitive, architecture-critical, repeated-failure, difficult-rollback, or production-significant work.
+- Consider `ui_design_engineer` for substantial frontend design, accessibility, and visual verification. Delegate an explicit mode and owned scope, and preserve existing model routing.
 - Escalate Luna to Terra when hidden complexity appears; escalate Luna or Terra to Sol when risk or ambiguity crosses the Sol threshold.
 - Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
 - Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.

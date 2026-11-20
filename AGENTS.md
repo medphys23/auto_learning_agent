@@ -85,6 +85,7 @@ When introducing a new library, skill, or tool here, update `~/.codex/AGENTS.md`
 - Index-first: `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\knowledge\INDEX.md` then `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\knowledge\catalog.jsonl`.
 - Repo-scoped retrieval: `C:\Users\ppyxe\Documents\GitHub\auto_learning_agent\scripts\retrieve_knowledge_for_repo.py --cwd C:\Users\ppyxe\Documents\GitHub\auto_learning_agent`.
 - Open only shortlisted full records; repo `AGENTS.md` overrides catalog guidance.
+- Deliverable prose gate: before finalizing human-facing prose (>100 words), apply `$humanize-text` (`~/.codex/skills/humanize-text/SKILL.md`) and verify numeric/citation retention with `scripts/audit_prose.py`.
 
 <!-- END ORCHESTRATOR-MANAGED: knowledge-retrieval -->
 

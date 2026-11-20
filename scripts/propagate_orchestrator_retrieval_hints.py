@@ -19,6 +19,13 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content.rstrip() + "\n", encoding="utf-8")
 
 
+def is_third_party_reference(repo: dict[str, Any]) -> bool:
+    if str(repo.get("scope", "")) == "third_party_reference":
+        return True
+    risk_tags = {str(tag) for tag in repo.get("risk_tags", [])}
+    return bool(risk_tags & {"not_owned", "third_party", "read_only_reference"})
+
+
 def hint_block(repo_path: Path) -> str:
     root = REPO_ROOT
     return f"""{BEGIN}
@@ -27,6 +34,7 @@ def hint_block(repo_path: Path) -> str:
 - Index-first: `{root}\\knowledge\\INDEX.md` then `{root}\\knowledge\\catalog.jsonl`.
 - Repo-scoped retrieval: `{root}\\scripts\\retrieve_knowledge_for_repo.py --cwd {repo_path}`.
 - Open only shortlisted full records; repo `AGENTS.md` overrides catalog guidance.
+- Deliverable prose gate: before finalizing human-facing prose (>100 words), apply `$humanize-text` (`~/.codex/skills/humanize-text/SKILL.md`) and verify numeric/citation retention with `scripts/audit_prose.py`.
 
 {END}"""
 
@@ -77,6 +85,16 @@ def propagate_hints(
     for repo in repositories:
         repo_path = Path(str(repo.get("path", "")))
         agents = repo_path / "AGENTS.md"
+        if is_third_party_reference(repo):
+            results.append(
+                {
+                    "id": repo.get("id"),
+                    "path": str(agents),
+                    "status": "skipped_third_party_reference",
+                    "changed": False,
+                }
+            )
+            continue
         if not agents.exists():
             results.append({"id": repo.get("id"), "path": str(agents), "status": "missing_agents"})
             continue

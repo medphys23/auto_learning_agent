@@ -1,0 +1,42 @@
+---
+description: Require informative live logs whenever an agent produces batch, capture, or export output
+alwaysApply: true
+---
+
+# Operator progress logs
+
+When an agent produces something the user has to wait on — a capture, scrape, export, migration, transcription, batch transform, or other multi-item job — the terminal log must show what is happening while it runs. A bar stuck at zero, a frozen clock, or a line that says "write" when nothing was saved is not an acceptable log.
+
+## Live line
+
+Use [Rich](https://pypi.org/project/rich/) for jobs that stream child-process output. An in-process Python loop may use [tqdm](https://pypi.org/project/tqdm/) only when the bar shows the same fields below.
+
+The live line must include:
+
+1. A spinner that keeps moving during waits.
+2. A short job name, plus the current item while that item is in progress.
+3. A bar, a percentage, and a finished/total count. Finished includes saved items and deferred or failed items. A run that is only failing must not stay at 0.
+4. A rate in items per minute, based on finished items.
+5. Elapsed time that advances during a wait, not a timestamp frozen at the last event.
+6. Remaining time or ETA.
+7. Separate saved and deferred counts. Name them for the job if those words do not fit, but keep success and failure apart.
+
+## Event lines
+
+Print these above the live line, in color:
+
+- Start of the current item.
+- Success, including the identity of what was saved. Green.
+- Deferred or failed item, including which item and why. Yellow. Keep going, and keep the good results already written.
+- A status line with saved, deferred, and what is next. Cyan. Do not say "write" unless a record was actually saved.
+- A fatal stop. Red.
+
+## Skip
+
+Skip the live display for a command that finishes in a few seconds, a unit test, or a one-line check.
+
+## Dual canonical
+
+Keep this file in sync with `~/.codex/AGENTS.md → ## Operator progress logs` and `~/.cursor/skills/operator-progress-logs/SKILL.md`.
+
+Reference shape: `Orsi_Metrics_Research/projects/telesurgery_telementoring_training/scripts/render_phase1_output.py`.

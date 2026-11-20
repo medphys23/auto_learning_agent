@@ -30,10 +30,12 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "cfec295099a1f7f835fe32c2fafd790475cd41ad",
+    "source_commit": "2ee2adc03e9e46e8ca69977b672768d66e1bf887",
     "source_paths": [
       "AGENTS.md",
-      "tests/test_orchestrator_mvp.py"
+      "tests/test_orchestrator_mvp.py",
+      "tests/test_windows_drive_audit.py",
+      "tests/test_windows_storage_audit.py"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
     "task_or_issue": "local-github-repository-analysis",
@@ -47,14 +49,16 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-11-11T13:09:24Z",
+    "created_at": "2026-11-19T11:37:12Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md",
-      "tests/test_orchestrator_mvp.py"
+      "tests/test_orchestrator_mvp.py",
+      "tests/test_windows_drive_audit.py",
+      "tests/test_windows_storage_audit.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-11T13:09:24Z"
+    "updated_at": "2026-11-19T11:37:12Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -67,7 +71,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for auto_learning_agent: 23 AGENTS command(s), 1 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for auto_learning_agent: 23 AGENTS command(s), 3 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
     "auto_learning_agent",
     "ci",
@@ -85,7 +89,9 @@
     "ci": [],
     "deployment": [],
     "tests": [
-      "tests/test_orchestrator_mvp.py"
+      "tests/test_orchestrator_mvp.py",
+      "tests/test_windows_drive_audit.py",
+      "tests/test_windows_storage_audit.py"
     ]
   },
   "title": "auto_learning_agent verification, tests, CI, and deployment signals",

@@ -8,12 +8,21 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from orchestrator_common import git_dirty_lines, load_repository_registry, read_toml, sha256_file, utc_now
+from orchestrator_common import approved_file_path, git_dirty_lines, load_repository_registry, read_toml, sha256_file, utc_now
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CODEX_HOME = Path.home() / ".codex"
 CURSOR_HOME = Path.home() / ".cursor"
+UI_AGENT = "ui_design_engineer"
+UI_SKILL = "ui-design-engineering"
+UI_AGENT_SOURCE = approved_file_path(REPO_ROOT, f".codex/agents/{UI_AGENT}.toml")
+UI_SKILL_FILES = (
+    "SKILL.md",
+    "references/design-brief.md",
+    "references/quality-rubric.md",
+    "references/visual-workflow.md",
+)
 
 ORCHESTRATOR_BLOCK_ID = "global-knowledge-layer"
 ORCHESTRATOR_BEGIN = f"<!-- BEGIN ORCHESTRATOR-MANAGED: {ORCHESTRATOR_BLOCK_ID} -->"
@@ -45,6 +54,7 @@ Operate as a narrow routing and retrieval agent.
 13. The parent owns delegation, decisions, edits, integration, and final validation; verifier owns the final READY / CONDITIONALLY READY / NOT READY verdict.
 14. Startup harvesting is deterministic and must never invoke model-backed specialists automatically.
 15. Do not provide broad summaries unrelated to execution.
+16. Recommend ui_design_engineer for substantial frontend presentation work such as dashboard redesign, mobile layout correction, theme refinement, and component accessibility. Leave trivial edits with the parent and keep database migrations, backend endpoint corrections, scientific manuscript editing, and authentication policy changes on their existing routes. Return AUDIT or DESIGN for read-only tasks and IMPLEMENT only with explicit frontend ownership. Keep model selection with the parent.
 \"\"\"
 """,
     "repository-harvester.toml": """name = "repository_harvester"
@@ -259,7 +269,13 @@ Return exactly these sections: conclusion; files inspected; evidence; findings o
 """,
 }
 
+AGENT_FILES[f"{UI_AGENT}.toml"] = UI_AGENT_SOURCE.read_text(encoding="utf-8")
+
 AGENT_REGISTRATIONS = {
+    UI_AGENT: {
+        "description": read_toml(UI_AGENT_SOURCE)["description"],
+        "config_file": f"agents/{UI_AGENT}.toml",
+    },
     "workflow_router": {
         "description": "Classifies tasks and retrieves the minimum compatible central and local knowledge.",
         "config_file": "agents/workflow-router.toml",
@@ -318,6 +334,7 @@ CURSOR_ORCHESTRATOR_STACK_ROW = (
 
 OPTIMIZED_AGENTS_MAX_BYTES = 8192
 OPTIMIZED_SKILLS_INDEX_MAX_BYTES = 4096
+TEMPLATES_SKILLS_DIR = REPO_ROOT / "templates" / "skills"
 
 OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 
@@ -333,6 +350,21 @@ OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 - Global publication and high-risk configuration changes require explicit approval.
 - Detailed workflows are loaded on demand from repository instructions, skills, or the orchestrator knowledge catalog.
 
+## Deliverable Prose Humanization (`humanize-text`)
+- Before finalizing human-facing deliverable prose (>100 words) — Markdown reports/manuscripts, Word/PowerPoint COM text, PDF guides, READMEs, or PR descriptions — apply `$humanize-text` (`~/.codex/skills/humanize-text/SKILL.md`) in the matching profile (`academic`, `clinical-protocol`, `grant-proposal`, `technical-docs`, `general`, or `commit`).
+- Strip staging (`not X, but Y`, dramatic closers), Tier 1A AI vocabulary, leaked citation/UTM tokens, zero-width Unicode, and academic slop while preserving every number, unit, denominator, CI, p-value, cite key, calibrated hedge, code span, and table.
+- Verify prose files (and `--compare <before>` on evidence-backed drafts) using `templates/skills/humanize-text/scripts/audit_prose.py` (published at `~/.codex/skills/humanize-text/scripts/audit_prose.py`).
+
+## Xenophon (research evidence to manuscript)
+- For substantial research reviews, evidence syntheses, or manuscript chains, prefer `$xenophon` (`$research-evidence-to-manuscript` compatible).
+- Read or create `registry/xenophon_session.md` first; follow `references/cheap-mode.md`; skip Graphify and orchestrator-knowledge retrieval for literature/claim/synthesis waves.
+- Before locking final narrative synthesis/manuscript prose or rendering deliverables, run `$humanize-text` inline (`academic` or `clinical-protocol`) and verify zero numeric/citation drift with `audit_prose.py --compare`.
+
+## Athos IT Department & Operator Standards
+- **Athos IT Department:** Load `$athos-it-department` only when explicitly invoked (`$athos-it-department` or `Athos IT Department`); Round 1 is read-only discovery/planning, Round 2 uses guarded dry-run launchers, and CAPTCHA/WAF challenges pause for the user.
+- **Operator progress logs:** Jobs >30s use Rich (child-process streaming) or tqdm (in-process) showing moving spinner, current item, finished/total, rate, ticking elapsed time, ETA, and saved vs deferred counts.
+- **Word list geometry:** Unless overridden by a template/publisher, first-level Word bullets use real Word list definitions at 0.64 cm marker / 1.27 cm text / 0.63 cm hanging indent (+0.64 cm per level).
+
 ## Orchestrator Knowledge
 - Use `C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent` only for non-trivial cross-repo, migration, review, global-config, or repeatable-workflow tasks.
 - Query `knowledge/INDEX.md` and `knowledge/catalog.jsonl` before opening full records.
@@ -346,6 +378,7 @@ OPTIMIZED_GLOBAL_AGENTS = """# Global Codex instructions
 - Use `luna_worker` for explicit, deterministic, repetitive, low-risk, easily validated work with no architectural decisions.
 - Use `terra_worker` for bounded routine engineering, noisy investigation, or independent non-overlapping parallel work.
 - Use `sol_specialist` for materially ambiguous, high-risk, security-sensitive, architecture-critical, repeated-failure, difficult-rollback, or production-significant work.
+- Consider `ui_design_engineer` for substantial frontend design, accessibility, and visual verification. Delegate an explicit mode and owned scope, and preserve existing model routing.
 - Escalate Luna to Terra when hidden complexity appears; escalate Luna or Terra to Sol when risk or ambiguity crosses the Sol threshold.
 - Prefer read-heavy parallelism. Do not permit concurrent writes to overlapping files; assign explicit file or module ownership.
 - Use the least expensive model capable of safely completing the work. Do not invoke all models by default, do not use Sol for mechanical work, and keep agent depth at one unless explicitly authorized.
@@ -393,7 +426,7 @@ description: Create or repair review-grade Word and PowerPoint deliverables on W
 
 # Office COM Deliverables
 
-Prefer Word/PowerPoint COM for review-grade `.docx` and `.pptx` authoring on Windows. Use Python Office libraries only for parsing, tests, fallback, or explicit user opt-in. Always close documents and quit COM apps in `finally`.
+Prefer Word/PowerPoint COM for review-grade `.docx` and `.pptx` authoring on Windows. Run `$humanize-text` on narrative deliverable prose before rendering (preserving exact protocol steps, tables, numbers, and citations). Use Python Office libraries only for parsing, tests, fallback, or explicit user opt-in. Always close documents and quit COM apps in `finally`.
 """,
     "document-read-path": """---
 name: document-read-path
@@ -421,7 +454,7 @@ disable-model-invocation: true
 
 # Repository Scaffold
 
-Create root `AGENTS.md`, `skills.md`, `.cursor/rules/`, and `.gitignore` entries for new trusted repositories. Keep global behavior minimal and repository behavior local.
+Create root `AGENTS.md`, `skills.md`, `.cursor/rules/`, and `.gitignore` entries for new trusted repositories. Keep global behavior minimal and repository behavior local. Inherit global `humanize-text` pre-deliverable prose rules (`~/.codex/skills/humanize-text/SKILL.md` and `~/.cursor/rules/10-humanize-deliverables.mdc`) in new repositories that emit reports, docs, or Office deliverables.
 """,
     "stack-selection": """---
 name: stack-selection
@@ -436,13 +469,20 @@ Use repository manifests, `AGENTS.md`, and dependency audit reports first. Promo
 
 
 OPTIMIZED_SKILLS_INDEX_TRIGGERS = {
+    "athos-it-department": "explicit-only phased discovery, planning, and operation for substantial browser automation or repeatable workflows",
+    "codex-cursor-extension-patch": "Codex UI fails to start in Cursor, renderer timeout, or secondary-sidebar view container; reapply the durable extension patch",
+    "document-read-path": "reading PDF, DOCX, PPTX, XLSX, or HTML inputs for analysis",
+    "humanize-text": "pre-deliverable prose humanization, source-grounded paraphrasing, AI-tell removal, and Xenophon/academic meaning-drift audit (`audit_prose.py`)",
+    "lead-scraper": "Playwright lead scrapers, resume checkpoints, tqdm, or contact-data safeguards",
+    "office-com-deliverable": "review-grade Word or PowerPoint authoring on Windows",
+    "operator-progress-logs": "live logs for a capture, scrape, export, migration, or other job the user waits on",
     "orchestrator-knowledge": "cross-repo work, reviews, migrations, global-config changes, or repeatable workflows",
     "python-environment": "repo-local Python bootstraps, dependency installs, or uv environment repair",
-    "office-com-deliverable": "review-grade Word or PowerPoint authoring on Windows",
-    "document-read-path": "reading PDF, DOCX, PPTX, XLSX, or HTML inputs for analysis",
-    "lead-scraper": "Playwright lead scrapers, resume checkpoints, tqdm, or contact-data safeguards",
     "repository-scaffold": "new trusted repositories under Documents/GitHub",
+    "research-evidence-to-manuscript": "automatic and technical compatibility entrypoint for Xenophon; not single-article extraction",
     "stack-selection": "choosing known stacks or deciding whether a dependency pattern should be promoted",
+    UI_SKILL: "substantial frontend UI audits, design plans, responsive or theme changes, accessibility, and visual regression verification",
+    "xenophon": "preferred explicit-only entrypoint for substantial evidence review, synthesis, or manuscript evidence chains",
 }
 
 
@@ -545,6 +585,22 @@ Activate for multi-file changes, unclear bugs, reviews, migrations, stack propag
 9. Record reusable non-obvious lessons as candidates in the orchestrator repository.
 
 Global/canonical/security/auth/network/database/deployment/cost/model/provider/MCP/sandbox/approval-policy changes require explicit approval.
+"""
+
+
+def cursor_humanize_rule() -> str:
+    return """---
+description: Pre-deliverable prose humanization and fact-preservation gate
+alwaysApply: true
+---
+
+# Deliverable prose humanization (`humanize-text`)
+
+Before finalizing human-facing deliverable prose (>100 words) — Markdown syntheses/manuscripts, Word/PowerPoint COM text, PDF guides, READMEs, or PR descriptions — apply `humanize-text` (`~/.cursor/skills/humanize-text/SKILL.md` / `~/.codex/skills/humanize-text/SKILL.md`) using the matching domain profile (`academic`, `clinical-protocol`, `grant-proposal`, `technical-docs`, `general`, or `commit`).
+
+- Strip staging (`not X, but Y`, dramatic one-line closers, staged openers), Tier 1A AI vocabulary, leaked citation/UTM tokens, zero-width/homoglyph Unicode, and academic slop (citation laundering, manuscript boilerplate, methodology pseudo-precision).
+- Preserve every number, unit, denominator, confidence interval, p-value, cite key, calibrated epistemic hedge, IMRaD Methods passive voice, fenced/inline code, table, and binary PBP step/error checklist.
+- For Xenophon and evidence-backed deliverables, verify zero numeric or citation drift via `audit_prose.py --compare <before> --strict`.
 """
 
 
@@ -726,6 +782,8 @@ def merge_codex_config(config_text: str) -> tuple[str, list[str]]:
         existing_agents = {}
 
     for name, values in AGENT_REGISTRATIONS.items():
+        if name == UI_AGENT:
+            continue
         existing = existing_agents.get(name)
         if existing:
             if not isinstance(existing, dict) or existing.get("config_file") != values["config_file"]:
@@ -803,7 +861,7 @@ def optimized_skills_index() -> str:
         "| Skill | Trigger |",
         "| --- | --- |",
     ]
-    for name in sorted(OPTIMIZED_SKILLS):
+    for name in sorted(OPTIMIZED_SKILLS_INDEX_TRIGGERS):
         lines.append(f"| `{name}` | {OPTIMIZED_SKILLS_INDEX_TRIGGERS[name]} |")
     lines.extend(
         [
@@ -929,6 +987,16 @@ def write_optimized_cutover_plan(reports_dir: Path, optimized_agents_path: Path)
     )
 
 
+def synthesize_ui_design(master_root: Path) -> None:
+    filename = f"{UI_AGENT}.toml"
+    target = approved_file_path(master_root, f"optimized/codex/agents/{filename}")
+    write_text(target, AGENT_FILES[filename])
+    for relative in UI_SKILL_FILES:
+        source = approved_file_path(REPO_ROOT, f".agents/skills/{UI_SKILL}/{relative}")
+        target = approved_file_path(master_root, f"optimized/agents/skills/{UI_SKILL}/{relative}")
+        write_text(target, source.read_text(encoding="utf-8"))
+
+
 def synthesize_optimized(
     *,
     codex_home: Path,
@@ -956,11 +1024,24 @@ def synthesize_optimized(
     fragment = optimized_config_fragment()
     write_text(optimized_codex / "config" / "orchestrator-managed.toml", fragment)
     for filename, content in AGENT_FILES.items():
-        write_text(optimized_codex / "agents" / filename, content)
+        if filename != f"{UI_AGENT}.toml":
+            write_text(optimized_codex / "agents" / filename, content)
     for name, content in OPTIMIZED_SKILLS.items():
         write_text(optimized_skills / name / "SKILL.md", content)
+    if TEMPLATES_SKILLS_DIR.exists():
+        for skill_dir in sorted(path for path in TEMPLATES_SKILLS_DIR.iterdir() if path.is_dir()):
+            dest_dir = optimized_skills / skill_dir.name
+            if dest_dir.exists():
+                shutil.rmtree(dest_dir)
+            shutil.copytree(
+                skill_dir,
+                dest_dir,
+                ignore=shutil.ignore_patterns("__pycache__", "*.py[cod]"),
+            )
+    synthesize_ui_design(master_root)
     write_text(optimized_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
     write_text(optimized_cursor / "rules" / "07-graphify.mdc", cursor_graphify_rule())
+    write_text(optimized_cursor / "rules" / "10-humanize-deliverables.mdc", cursor_humanize_rule())
     write_text(optimized_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
 
     write_optimized_config_preview(reports_dir, codex_config, fragment)
@@ -1030,7 +1111,8 @@ def synthesize(
     write_text(master_codex / "skills.md", generated_skills)
     write_text(master_codex / "config.toml", generated_config)
     for filename, content in AGENT_FILES.items():
-        write_text(master_codex / "agents" / filename, content)
+        if filename != f"{UI_AGENT}.toml":
+            write_text(master_codex / "agents" / filename, content)
 
     cursor_rule_dir = cursor_home / "rules"
     (master_cursor / "rules").mkdir(parents=True, exist_ok=True)
@@ -1041,6 +1123,7 @@ def synthesize(
             shutil.copy2(path, master_cursor / "rules" / path.name)
     write_text(master_cursor / "rules" / "06-orchestrator-knowledge.mdc", cursor_orchestrator_rule())
     write_text(master_cursor / "rules" / "07-graphify.mdc", cursor_graphify_rule())
+    write_text(master_cursor / "rules" / "10-humanize-deliverables.mdc", cursor_humanize_rule())
     write_text(master_cursor / "skills" / "orchestrator-knowledge" / "SKILL.md", cursor_orchestrator_skill())
 
     comparisons = [
