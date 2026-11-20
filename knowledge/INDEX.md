@@ -2,7 +2,7 @@
 
 This index is the first stop for orchestrator knowledge retrieval. It summarizes safe, reusable repository knowledge and points to catalog records rather than loading raw repository contents.
 
-Generated: 2026-11-19T11:41:12Z
+Generated: 2026-11-20T20:31:50Z
 
 ## Coverage
 

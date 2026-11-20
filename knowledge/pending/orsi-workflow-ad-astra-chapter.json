@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b826fcb5215f0e3a61f7cd9bc1df883032c5644c",
+    "source_commit": "a6fa3a1dd1bd54a839e39de754261fef6faae6c7",
     "source_paths": [
       "skills.md"
     ],
@@ -73,13 +73,13 @@
     "- For `ingest incoming`, confirm `.cache/incoming_literature/AD_Astra/` no longer contains staged PDFs, final-path caches exist, and `AD_Astra/chapter_working_files/*` maps/logs were updated where applicable."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:40:52Z",
+    "created_at": "2026-11-20T20:31:27Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:40:52Z"
+    "updated_at": "2026-11-20T20:31:27Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

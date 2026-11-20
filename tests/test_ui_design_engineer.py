@@ -65,7 +65,9 @@ class UIDesignEngineerTests(unittest.TestCase):
                          set(UI_SKILL_FILES))
         entry = (source / "SKILL.md").read_text(encoding="utf-8")
         self.assertRegex(entry, rf"^---\nname: {UI_SKILL}\ndescription: .+\n---")
-        self.assertEqual(set(re.findall(r"\]\(([^)]+)\)", entry)), set(UI_SKILL_FILES) - {"SKILL.md"})
+        self.assertEqual(set(re.findall(r"\]\(([^)]+)\)", entry)),
+                         {relative for relative in UI_SKILL_FILES if relative.startswith("references/")})
+        self.assertIn('display_name: "UI Engineer"', (source / "agents/openai.yaml").read_text(encoding="utf-8"))
         self.assertIn(UI_SKILL, optimized_skills_index())
         previous = None
         for _ in range(2):

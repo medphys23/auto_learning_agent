@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b826fcb5215f0e3a61f7cd9bc1df883032c5644c",
+    "source_commit": "a6fa3a1dd1bd54a839e39de754261fef6faae6c7",
     "source_paths": [
       "skills.md"
     ],
@@ -67,13 +67,13 @@
     "- 2026-07-13: Completed the token-free 4,048.192-second RA-Chole meeting transcription with 363 ordered segments using public sherpa-onnx diarization models and Whisper `large-v3-turbo`; retained generic speaker labels and used the transcri"
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:40:52Z",
+    "created_at": "2026-11-20T20:31:27Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:40:52Z"
+    "updated_at": "2026-11-20T20:31:27Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

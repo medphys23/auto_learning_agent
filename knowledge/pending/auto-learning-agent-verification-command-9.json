@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "2ee2adc03e9e46e8ca69977b672768d66e1bf887",
+    "source_commit": "567523b8b47506c8dc11b6beda0a5f49cdd269f0",
     "source_paths": [
       "AGENTS.md"
     ],
@@ -44,13 +44,13 @@
     ".\\.venv\\Scripts\\python.exe scripts\\retrieve_knowledge_for_repo.py --cwd ."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:37:12Z",
+    "created_at": "2026-11-20T20:27:54Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:37:12Z"
+    "updated_at": "2026-11-20T20:27:54Z"
   },
   "reuse": {
     "failed_reuse_count": 0,

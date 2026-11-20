@@ -30,7 +30,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "2ee2adc03e9e46e8ca69977b672768d66e1bf887",
+    "source_commit": "567523b8b47506c8dc11b6beda0a5f49cdd269f0",
     "source_paths": [
       ".codex/agents/knowledge-synthesizer.toml",
       ".codex/agents/quality_release_reviewer.toml",
@@ -54,9 +54,9 @@
       "scripts/apply-everything.ps1",
       "scripts/audit-windows-drive.ps1",
       "scripts/audit-windows-storage.ps1",
-      "tests/test_orchestrator_mvp.py",
-      "tests/test_windows_drive_audit.py",
-      "tests/test_windows_storage_audit.py"
+      "tests/fixtures/ui_design_browser_smoke.py",
+      "tests/test_audit_prose.py",
+      "tests/test_orchestrator_mvp.py"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\auto_learning_agent",
     "task_or_issue": "local-github-repository-analysis",
@@ -70,7 +70,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:37:11Z",
+    "created_at": "2026-11-20T20:27:53Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".codex/agents/knowledge-synthesizer.toml",
@@ -95,12 +95,12 @@
       "scripts/apply-everything.ps1",
       "scripts/audit-windows-drive.ps1",
       "scripts/audit-windows-storage.ps1",
-      "tests/test_orchestrator_mvp.py",
-      "tests/test_windows_drive_audit.py",
-      "tests/test_windows_storage_audit.py"
+      "tests/fixtures/ui_design_browser_smoke.py",
+      "tests/test_audit_prose.py",
+      "tests/test_orchestrator_mvp.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:37:11Z"
+    "updated_at": "2026-11-20T20:27:53Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -127,7 +127,7 @@
           "scripts/audit_windows_storage.py"
         ],
         "file_count": 35,
-        "graph_node_count": 385,
+        "graph_node_count": 386,
         "suffixes": {
           ".ps1": 8,
           ".py": 27
@@ -136,14 +136,17 @@
       {
         "area": "tests",
         "examples": [
+          "tests/fixtures/ui_design_browser_smoke.py",
+          "tests/test_audit_prose.py",
           "tests/test_orchestrator_mvp.py",
+          "tests/test_ui_design_engineer.py",
           "tests/test_windows_drive_audit.py",
           "tests/test_windows_storage_audit.py"
         ],
-        "file_count": 3,
-        "graph_node_count": 71,
+        "file_count": 6,
+        "graph_node_count": 96,
         "suffixes": {
-          ".py": 3
+          ".py": 6
         }
       },
       {
@@ -175,10 +178,10 @@
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/AGENTS.md",
           "backups/legacy-pre-optimized/20260709T120209Z/master/codex/skills.md"
         ],
-        "file_count": 48,
+        "file_count": 56,
         "graph_node_count": 0,
         "suffixes": {
-          ".md": 48
+          ".md": 56
         }
       },
       {
@@ -190,15 +193,15 @@
           ".codex/agents/repository-harvester.toml",
           ".codex/agents/security_boundary_reviewer.toml",
           ".codex/agents/systems_architect.toml",
-          ".codex/agents/verifier.toml",
-          ".codex/agents/workflow-router.toml"
+          ".codex/agents/ui_design_engineer.toml",
+          ".codex/agents/verifier.toml"
         ],
-        "file_count": 19,
+        "file_count": 20,
         "graph_node_count": 0,
         "suffixes": {
           ".json": 1,
           ".md": 9,
-          ".toml": 9
+          ".toml": 10
         }
       },
       {
@@ -254,9 +257,9 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 738,
+    "graph_node_count": 739,
     "graph_source_file_count": 46,
-    "harvestable_text_file_count": 121
+    "harvestable_text_file_count": 133
   },
   "status": "candidate",
   "summary": "Safe source map for auto_learning_agent: 9 harvestable areas, led by scripts, tests, ., backups, .codex, config, .cursor, master.",

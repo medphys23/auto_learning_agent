@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b826fcb5215f0e3a61f7cd9bc1df883032c5644c",
+    "source_commit": "a6fa3a1dd1bd54a839e39de754261fef6faae6c7",
     "source_paths": [
       "DART/requirements.txt",
       "HUGO_RAS/package-lock.json",
@@ -49,7 +49,8 @@
       "integrations/davinci-slack-calendar/package-lock.json",
       "integrations/davinci-slack-calendar/package.json",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
-      "Orsi_Metrics_Research/requirements.txt"
+      "Orsi_Metrics_Research/requirements.txt",
+      "X-grader/package.json"
     ],
     "source_repository": "C:\\Users\\ppyxe\\Documents\\GitHub\\ORSI",
     "task_or_issue": "local-github-repository-analysis",
@@ -204,6 +205,38 @@
         "tqdm>=4.66,<5",
         "bgutil-ytdlp-pot-provider>=1.3,<2"
       ]
+    },
+    {
+      "dependencies": [
+        "@neon/auth",
+        "@neondatabase/serverless",
+        "@vercel/blob",
+        "next",
+        "react",
+        "react-dom"
+      ],
+      "dev_dependencies": [
+        "@electric-sql/pglite",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "eslint",
+        "eslint-config-next",
+        "typescript",
+        "vitest"
+      ],
+      "name": "package.json",
+      "path": "X-grader/package.json",
+      "scripts": [
+        "build",
+        "check",
+        "db:migrate",
+        "dev",
+        "lint",
+        "start",
+        "test",
+        "typecheck"
+      ]
     }
   ],
   "procedure": [
@@ -212,7 +245,7 @@
     "Do not infer approval to install new dependencies from this profile."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:40:52Z",
+    "created_at": "2026-11-20T20:31:27Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "DART/requirements.txt",
@@ -222,10 +255,11 @@
       "integrations/davinci-slack-calendar/package-lock.json",
       "integrations/davinci-slack-calendar/package.json",
       "Optimal_Trocar_Placement/trocar_model/requirements.txt",
-      "Orsi_Metrics_Research/requirements.txt"
+      "Orsi_Metrics_Research/requirements.txt",
+      "X-grader/package.json"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:40:52Z"
+    "updated_at": "2026-11-20T20:31:27Z"
   },
   "registry_stack_tags": [
     "docx",
@@ -249,7 +283,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Stack and dependency profile for ORSI: registry tags docx, google_apps_script, node, office_com, pptx, python, slack, streamlit, vercel; 8 tracked manifest file(s).",
+  "summary": "Stack and dependency profile for ORSI: registry tags docx, google_apps_script, node, office_com, pptx, python, slack, streamlit, vercel; 9 tracked manifest file(s).",
   "tags": [
     "auth",
     "credentials",

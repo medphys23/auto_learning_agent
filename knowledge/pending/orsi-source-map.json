@@ -40,7 +40,7 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "b826fcb5215f0e3a61f7cd9bc1df883032c5644c",
+    "source_commit": "a6fa3a1dd1bd54a839e39de754261fef6faae6c7",
     "source_paths": [
       ".cursor/rules/ad-astra-references.mdc",
       ".cursor/rules/graphify.mdc",
@@ -61,6 +61,9 @@
       "PBP Surgical training/README.md",
       "PBP Surgical training/obsidian/README.md",
       "README.md",
+      "X-grader/AGENTS.md",
+      "X-grader/README.md",
+      "X-grader/package.json",
       "integrations/basic-skills-course-calendar/AGENTS.md",
       "integrations/basic-skills-course-calendar/README.md",
       "integrations/basic-skills-course-calendar/package.json",
@@ -78,7 +81,7 @@
     "Do not treat generated, data, cache, dependency, or secret paths as harvested knowledge."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:40:52Z",
+    "created_at": "2026-11-20T20:31:26Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       ".cursor/rules/ad-astra-references.mdc",
@@ -100,13 +103,16 @@
       "PBP Surgical training/README.md",
       "PBP Surgical training/obsidian/README.md",
       "README.md",
+      "X-grader/AGENTS.md",
+      "X-grader/README.md",
+      "X-grader/package.json",
       "integrations/basic-skills-course-calendar/AGENTS.md",
       "integrations/basic-skills-course-calendar/README.md",
       "integrations/basic-skills-course-calendar/package.json",
       "skills.md"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:40:52Z"
+    "updated_at": "2026-11-20T20:31:26Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -165,6 +171,20 @@
         "suffixes": {
           ".json": 3,
           ".md": 4
+        }
+      },
+      {
+        "area": "X-grader",
+        "examples": [
+          "X-grader/AGENTS.md",
+          "X-grader/package.json",
+          "X-grader/README.md"
+        ],
+        "file_count": 3,
+        "graph_node_count": 39,
+        "suffixes": {
+          ".json": 1,
+          ".md": 2
         }
       },
       {
@@ -257,12 +277,12 @@
       }
     ],
     "graph_index_used": true,
-    "graph_node_count": 4187,
-    "graph_source_file_count": 344,
-    "harvestable_text_file_count": 92
+    "graph_node_count": 4458,
+    "graph_source_file_count": 388,
+    "harvestable_text_file_count": 95
   },
   "status": "candidate",
-  "summary": "Safe source map for ORSI: 9 harvestable areas, led by HUGO_RAS, ., integrations, DART, AD_Astra, Optimal_Trocar_Placement, .cursor, PBP Surgical training.",
+  "summary": "Safe source map for ORSI: 10 harvestable areas, led by HUGO_RAS, ., integrations, X-grader, DART, AD_Astra, Optimal_Trocar_Placement, .cursor.",
   "tags": [
     "architecture-map",
     "auth",

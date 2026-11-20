@@ -30,10 +30,13 @@
     "deployment_environment": "",
     "deployment_evidence": "",
     "production_observation_window": "",
-    "source_commit": "2ee2adc03e9e46e8ca69977b672768d66e1bf887",
+    "source_commit": "567523b8b47506c8dc11b6beda0a5f49cdd269f0",
     "source_paths": [
       "AGENTS.md",
+      "tests/fixtures/ui_design_browser_smoke.py",
+      "tests/test_audit_prose.py",
       "tests/test_orchestrator_mvp.py",
+      "tests/test_ui_design_engineer.py",
       "tests/test_windows_drive_audit.py",
       "tests/test_windows_storage_audit.py"
     ],
@@ -49,16 +52,19 @@
     "Do not claim production readiness from deployment files alone."
   ],
   "provenance": {
-    "created_at": "2026-11-19T11:37:12Z",
+    "created_at": "2026-11-20T20:27:54Z",
     "created_by": "harvest_repositories.py",
     "derived_from": [
       "AGENTS.md",
+      "tests/fixtures/ui_design_browser_smoke.py",
+      "tests/test_audit_prose.py",
       "tests/test_orchestrator_mvp.py",
+      "tests/test_ui_design_engineer.py",
       "tests/test_windows_drive_audit.py",
       "tests/test_windows_storage_audit.py"
     ],
     "supersedes": [],
-    "updated_at": "2026-11-19T11:37:12Z"
+    "updated_at": "2026-11-20T20:27:54Z"
   },
   "reuse": {
     "failed_reuse_count": 0,
@@ -71,7 +77,7 @@
   ],
   "scope": "repository",
   "status": "candidate",
-  "summary": "Verification profile for auto_learning_agent: 23 AGENTS command(s), 3 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
+  "summary": "Verification profile for auto_learning_agent: 23 AGENTS command(s), 6 test signal(s), 0 CI signal(s), 0 deployment signal(s).",
   "tags": [
     "auto_learning_agent",
     "ci",
@@ -89,7 +95,10 @@
     "ci": [],
     "deployment": [],
     "tests": [
+      "tests/fixtures/ui_design_browser_smoke.py",
+      "tests/test_audit_prose.py",
       "tests/test_orchestrator_mvp.py",
+      "tests/test_ui_design_engineer.py",
       "tests/test_windows_drive_audit.py",
       "tests/test_windows_storage_audit.py"
     ]

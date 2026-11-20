@@ -19,6 +19,7 @@ UI_SKILL = "ui-design-engineering"
 UI_AGENT_SOURCE = approved_file_path(REPO_ROOT, f".codex/agents/{UI_AGENT}.toml")
 UI_SKILL_FILES = (
     "SKILL.md",
+    "agents/openai.yaml",
     "references/design-brief.md",
     "references/quality-rubric.md",
     "references/visual-workflow.md",
